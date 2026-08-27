@@ -1,0 +1,145 @@
+---
+title: "19-apis"
+---
+
+# TidyCensus
+
+Install `tidycensus` if not on maize:
+
+```{r}
+#| eval: false
+install.packages("tidycensus")
+```
+
+```{r}
+library(tidycensus)
+library(tidyverse)
+```
+
+## Example call:
+
+```{r}
+#| eval: false
+acs_mn_2020 <- tidycensus::get_acs(
+    year = 2020,
+    state = "MN",
+    geography = "county",
+    variables = c("B01003_001", "B19013_001"),
+    output = "wide",
+    geometry = TRUE
+)
+```
+
+## Storing your API key
+
+1. Create a new text file in the same folder as your .rmd
+2. Copy and paste your census key into the empty file
+3. Save the file as `census_api_key.txt`
+
+```{r}
+#| eval: false
+my_key <- readLines("census_api_key.txt")
+```
+
+and tell `tidycensus` what your API key is with:
+
+```{r}
+#| eval: false
+census_api_key(my_key)
+```
+
+*Do not commit and push `census_api_key.txt` to github*
+
+```{r}
+#| eval: false
+acs_mn_2020 |>
+  mutate(
+    name = str_remove(NAME, ", Minnesota"),
+    name = str_remove(name, " County")
+  ) |> 
+  ggplot(aes(x = B19013_001E, 
+                          xmin = B19013_001E - B19013_001M, 
+                          xmax = B19013_001E + B19013_001M, 
+                          y = fct_reorder(name, B19013_001E))) + 
+  geom_point() + 
+  geom_errorbarh() + 
+  labs(
+    x = "",
+    y = ""
+  )
+```
+
+
+
+## Links to more info about census
+
+<https://data.census.gov/>
+
+<https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/>
+
+## Try it
+
+Add "educational attainment" to the topic filters and take a look at the first table. What is it showing you?
+
+## Your turn
+
+- Search for the "Median earnings in the past 12 months by major" table that we looked at on the census website using `load_variables`
+- Run another call to `tidycensus::get_acs` to access this variable
+
+```{r}
+acs_vars <- load_variables(2020, "acs5", cache = TRUE) 
+acs_vars 
+```
+
+# httr2
+
+Install if not already installed:
+
+```{r}
+#| eval: false
+
+install.packages("httr2")
+```
+
+```{r}
+library(httr2)
+```
+
+## Example call
+
+```{r}
+#| eval: false
+hmong_state_request <- request("https://api.census.gov/data") %>% 
+    req_url_path_append("2019") %>% 
+    req_url_path_append("acs") %>% 
+    req_url_path_append("acs1") %>% 
+    req_url_query(get = c("NAME", "B02015_009E", "B02015_009M"), `for` = I("state:*"), key = my_key, .multi = "comma")
+```
+
+```{r}
+#| eval: false
+hmong_state_response <- req_perform(hmong_state_request)
+```
+
+```{r}
+#| eval: false
+hmong_state_tbl <- hmong_state_response %>%
+  resp_body_json(simplifyVector = TRUE) %>%
+  janitor::row_to_names(1) %>%
+  as_tibble()
+
+hmong_state_tbl
+```
+
+
+## Your Turn
+
+- Edit the `httr` code to access the `B15013_002E` variable from 2024 (median income for "computers, math, statistics" majors)
+  - To get US level estimates, use `I("us:1")` in the `for` argument
+  - To check your answer, copy the URL into a browser and make sure you get `"102338"`
+- Make a `httr` request to access the 1-year ACS data from 2022 and 2023. Make sure to save your results from each call! 
+- Combine all years into a single dataset (you may need to create a column for `year`)
+- Make a time series plot with your chosen variable on the `y-axis` and year on the `x-axis`
+    - You will need to do some cleaning of the data
+- Brainstorm some ways to make the graph more interesting through gathering more data from the census API, and implement those ideas if you have time!
+

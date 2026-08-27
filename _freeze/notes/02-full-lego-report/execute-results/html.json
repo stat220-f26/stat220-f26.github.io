@@ -1,0 +1,17 @@
+{
+  "hash": "5b8013a4563c22784b496818b5698053",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"An Overview of Lego Sets on Rebrickable\"\ndate: \"Last updated on 2026-01-05\"\nauthor: \"Amanda Luby\"\noutput: html_document\nparams:\n  data: \"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-09-06/sets.csv.gz\"\n  data_source: '[2022-09-09 repository](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-09-06) on [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday)'\n---\n\n\n\n\n::: {.cell}\n\n:::\n\n\n# Overview\n\n[Rebrickable](https://rebrickable.com) is a website that shows you which LEGO sets you can build from the LEGO sets and parts that you already own. To do this, Rebrickable maintains a database of the entire LEGO catalog. In this document, we’ll summarize the LEGO sets in this database.\n\nThe data set was originally obtained from the [2022-09-09 repository](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-09-06) on [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday).\n\n## Summarizing the Lego dataset\n\nIn the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\n\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()\n```\n\n::: {.cell-output-display}\n![](02-full-lego-report_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n:::\n\n\n",
+    "supporting": [
+      "02-full-lego-report_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

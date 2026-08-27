@@ -1,0 +1,17 @@
+{
+  "hash": "a51fe50502dfd5a98fd3a3b4c07002e8",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"`dplyr` 1: Verbs\"\n---\n\n\n\nClick the \"code\" button above to copy and paste the source code into your RStudio editor.\n\n# Warm up\n\nIdentify the verb (function) that does the following:\n\n-   Picks rows by their values\n-   Reorders the rows\n-   Picks variables by their names\n-   Creates new variables with functions of existing variables\n\n# Wrangling the `nycflights23` data\n\n## Practice with `filter`\n\n-   Find all flights that had an arrival delay of two or more hours.\n-   Find all flights to MSP\n-   Find all flights that arrived more than two hours late, but left less than one hour late\n-   (if time) Find all flights that were delayed by at least an hour, but made up over 30 minutes in flight\n\n## Practice with `arrange`\n\nUse `arrange` to answer the following questions:\n\n-   Which flights traveled the farthest?\n-   Which traveled the shortest?\n-   Which flights lasted the longest?\n-   Which lasted the shortest?\n\n## Practice with `mutate`\n\nCreate a new column in `flights` giving the *average speed* of the flight while it was in the air. What are the units of this variable? Make the variable in terms of miles per hour.\n\n## Practice with `case_when`\n\nSuppose that you don't think the FAA gives enough information in their definition of a delayed flight, so you come up with the following delay categories:\n\n-   `dep_delay <= 0` -\\> none\n-   `dep_delay` between 1 and 15 minutes -\\> minimal\n-   `dep_delay` between 16 and 30 minutes -\\> delayed\n-   `dep_delay` between 31 and 60 minutes -\\> major\n-   `dep_delay` over 60 minutes -\\> extreme\n\nUse `mutate()` and `case_when()` to create a `delay_category` variable in the `flights` data frame.\n\nand we can check with `select()`:\n\n## Practice with pipes\n\n*Chain* the last two parts together, so that the resulting dataset contains both `avg_speed` and `delay_category`. Pipe this new dataset into `ggplot()` to answer the question \"is there a relationship between average speed and how late a flight is delayed?\" You should use the `delay_category` variable you created to answer this question.\n\nIf you have time, create a new graph which only contains *flights to MSP*. Does your conclusion change?\n\n::: aside\nAdapted from Adam Loy's materials\n:::\n",
+    "supporting": [
+      "07-dplyr1_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

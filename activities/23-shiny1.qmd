@@ -1,0 +1,36 @@
+---
+title: "23-shiny"
+---
+
+
+# Editing a shiny app: Part 1
+
+[`app-w26.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/slides/23/manager-survey-app/app-w26.R) contains a starter shiny app. Your tasks for today are: 
+
+1. Run the app! What does it show us?
+
+2. Read the code: find the inputs and the outputs
+
+3. Adapt the app to allow the user to specify what variable maps to the point color in the scatterplot
+
+4. Adapt the app to allow the user to filter the data by `annual_salary`. Allow values between the minimum and maximum `annual_salary` selected. 
+
+::: callout-tip
+## Hint
+
+use `sliderInput` and specify a vector of lenth 2 for `value`
+:::
+
+5. Adapt the app to allow the user to select whether the plot should have a white background
+
+::: callout-tip
+## Hint
+
+use `checkBoxInput` for the user input and `theme_minimal()` with an `if` statement to control the theme of the plot
+:::
+
+6. Create an interactive histogram that allows the user to select what quantitative variable should be displayed and what categorical variable should be used to fill the bars. Add any other interactive elements (e.g., binwidth adjustments) that you want to.
+
+::: aside
+Credit: [Mine Çetinkaya-Rundel's](https://vizdata.org/) Ask a Manager application exercise
+:::

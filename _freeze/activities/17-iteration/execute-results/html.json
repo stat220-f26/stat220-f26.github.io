@@ -1,0 +1,15 @@
+{
+  "hash": "0e652eb5a92fd33fc8d6450fd3ba8f82",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"17: Iteration\"\n---\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n```\n:::\n\n\n# Load the Data\n\n\n::: {.cell}\n\n```{.r .cell-code}\nunscaled_cancer <- read_csv(\"https://raw.githubusercontent.com/UBC-DSCI/introduction-to-datascience/refs/heads/main/data/wdbc_unscaled.csv\")\n\nunscaled_cancer\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n# A tibble: 569 × 12\n        ID Class Radius Texture Perimeter  Area Smoothness Compactness Concavity\n     <dbl> <chr>  <dbl>   <dbl>     <dbl> <dbl>      <dbl>       <dbl>     <dbl>\n 1  8.42e5 M       18.0    10.4     123.  1001      0.118       0.278     0.300 \n 2  8.43e5 M       20.6    17.8     133.  1326      0.0847      0.0786    0.0869\n 3  8.43e7 M       19.7    21.2     130   1203      0.110       0.160     0.197 \n 4  8.43e7 M       11.4    20.4      77.6  386.     0.142       0.284     0.241 \n 5  8.44e7 M       20.3    14.3     135.  1297      0.100       0.133     0.198 \n 6  8.44e5 M       12.4    15.7      82.6  477.     0.128       0.17      0.158 \n 7  8.44e5 M       18.2    20.0     120.  1040      0.0946      0.109     0.113 \n 8  8.45e7 M       13.7    20.8      90.2  578.     0.119       0.164     0.0937\n 9  8.45e5 M       13      21.8      87.5  520.     0.127       0.193     0.186 \n10  8.45e7 M       12.5    24.0      84.0  476.     0.119       0.240     0.227 \n# ℹ 559 more rows\n# ℹ 3 more variables: Concave_Points <dbl>, Symmetry <dbl>,\n#   Fractal_Dimension <dbl>\n```\n\n\n:::\n:::\n\n\n## Your turn: For loop\n\nLoad the `palmerpenguins` package.\n\nWrite a `for` loop that calculates the mean of the numeric variables in the `penguins` data set and stores the means in a named vector.\n\n## Your turn: summary/table for loop\n\nRevisit the {palmerpenguins} `penguins` data.\n\nWrite a `for` loop that calculates the `summary()` of a numeric variable and the `table()` of a factor variable.\n\nStore the results in a list (it will have length 8).\n\n## Your turn: across\n\nUse `summarize` and `across` to find the range of any quantitative variables, and the number of levels of any factor variables in the `penguins` dataset.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

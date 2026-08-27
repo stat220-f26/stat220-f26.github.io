@@ -1,0 +1,17 @@
+{
+  "hash": "34322d7abab263682673407786846a99",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"22-interactivity\"\n---\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(palmerpenguins)\nlibrary(DT)\nlibrary(plotly)\nlibrary(flexdashboard)\nlibrary(leaflet)\n```\n:::\n\n\n# Plotly 1\n\nLoad the palmerpenguins data set and create a scatterplot of body_mass_g vs. flipper_length_mm from the penguins data set. Use color and shape to specify the species.\n\nOnce you have a static graphic you’re happy with, load plotly and convert it to an interactive graphic.\n\n- What tools tips are included by default?\n- Change the default tooltip to include “Species”\n- (If time) use stringr so that the tooltip shows: “Species: Adelie” instead of just “Adelie”\n\n# Plotly 2\n\nCreate a bar chart of species from the penguins data set, then convert it to an interactive bar chart.\n\n- What tools tips are included by default?\n- What would you change?\n\n# Leaflet\n\n- Find the names of the 3 islands in `penguins`\n- Find appropriate lat/long locations for each of the islands in `penguins` using the internet\n- Create a leaflet map with markers for each island (*Tip:* Start with the world map with no zoom)\n- Include a popup with the island name\n\n\n# DT Table\n\n- Create a {DT} table of the penguins dataset\n- Add the option to filter, and make the font size 14pt\n\n# Putting it all together \n\nLet's improve the `22-dashboard-example.qmd` Penguins data explorer:\n\n  - Make all graphs plotly's with appropriate tooltips\n  - Replace the data output with your {DT} datatable\n  - Include your leaflet map on a new *page* \n  - Add [value boxes](https://quarto.org/docs/dashboards/data-display.html#value-boxes) on the same page as your map that show the number of penguins that live on each island\n  - Change the [theme](https://quarto.org/docs/dashboards/theming.html) of the dashboard\n  \n\n",
+    "supporting": [
+      "22-interactivity_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,21 @@
+/.quarto/
+**/*.quarto_ipynb
+
+# Rendered site output (quarto publish manages gh-pages)
+/_site/
+
+# Rendered output from the package check / one-off doc renders
+/_playground/*.html
+/_playground/*.pdf
+/*_files/
+/*_cache/
+
+# macOS / editor cruft
+.DS_Store
+**/.DS_Store
+
+# R / RStudio / Positron
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata

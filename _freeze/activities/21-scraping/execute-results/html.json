@@ -1,0 +1,15 @@
+{
+  "hash": "b29812f8a8912ca0be99c19894879e61",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"21-scraping\"\n---\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(rvest)\n```\n:::\n\n\n# `paths_allowed`\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(robotstxt)\npaths_allowed(\"http://www.zillow.com\")\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] TRUE\n```\n\n\n:::\n:::\n\n\n# Box Office Mojo\n\n\n::: {.cell}\n\n```{.r .cell-code}\npage <- read_html(\"https://www.boxofficemojo.com/year/2024/\")\n```\n:::\n\n\n# Carleton Class Schedule \n\n<https://www.carleton.edu/catalog/current/search/?subject=STAT&term=25WI>\n\nView the page source to try to find the html elements where this data is located (e.g. 'h1', 'p', 'table')\n\n- Course number\n- Course title\n- Course description\n- Course meetings\n- Faculty\n- Course meetings\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlistings = read_html(\"https://www.carleton.edu/catalog/current/search/?subject=STAT&term=25WI\")\n```\n:::\n\n\n# SelectorGadget\n\n- Use the SelectorGadget to explore http://www.imdb.com/chart/top\n\n- What should the columns of our target dataset be? Do they correspond to any specific css selectors?\n\n# Scraping IMDb Movie Page \n\n\n::: {.cell}\n\n```{.r .cell-code}\nimdb <- read_html(\"http://www.imdb.com/chart/top\")\n```\n\n::: {.cell-output .cell-output-error}\n\n```\nError in read_xml.raw(raw, encoding = encoding, base_url = base_url, as_html = as_html, : Failed to parse text\n```\n\n\n:::\n:::\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n_______ <- imdb %>%\n  html_elements(\".with-margin .ipc-title__text\") %>%\n  html_text()\n\n_______ <- imdb %>%\n  html_elements(\".cli-title-metadata-item:nth-child(1)\") %>%\n  html_text()\n\n_______ <- imdb %>%\n  html_elements(\".cli-title-metadata-item:nth-child(2)\") %>%\n  html_text()\n\n_______ <- imdb %>%\n  html_elements(\".cli-title-metadata-item:nth-child(3)\") %>%\n  html_text()\n\nimdb_top_250 <- tibble(\n  \n  )\n\nimdb_top_250\n```\n:::\n\n\n# Your Turn: IMDb TV Shows Page\n\nIn an R script:\n\n  - Scrape the names, scores, and years of most popular TV shows on IMDB:\n  [www.imdb.com/chart/tvmeter](http://www.imdb.com/chart/tvmeter)\n  \n  - Create a data frame called `tvshows` with the variables:\n    `rank`, `title`, `stars`, `year`, `episodes`, `n_ratings`\n    \n  - Wrangle your resulting data so that all variable types are imported correctly\n  \n  - Use `write_csv` to save your file. If time, read it into the `21-scraping.rmd` and make a graph\n  \n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,509 @@
+---
+title: "Stat 220 — Package & Environment Check"
+subtitle: "Fall 2026"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    embed-resources: true
+    df-print: paged
+    code-tools: true
+execute:
+  error: true      # keep rendering even if a chunk errors — we WANT to see failures
+  warning: true    # show warnings (deprecation notices matter after a server update)
+  message: true
+  freeze: false
+---
+
+## What this file is for
+
+The Maize RStudio server was updated, which usually means updated R package
+versions. Render this document (**Render** button, or
+`quarto render playground/package-check.qmd` in the Terminal) to confirm the
+toolkit used in Stat 220 still works.
+
+**How to read the results**
+
+- The **availability table** lists every package the course uses and whether it
+  is installed, with its version. Anything in the **"MISSING"** callout needs to
+  be installed before the term starts.
+- The **functional checks** run a small piece of real code from each topic area.
+  Each line prints `PASS` or `FAIL: <message>`. A `FAIL` means a function the
+  course relies on changed or broke.
+- Warnings are printed on purpose. A new **deprecation warning** on code we teach
+  is worth a look even if it still `PASS`es.
+
+If something fails, see [If a check fails](#if-a-check-fails) at the bottom.
+
+```{r}
+#| label: setup
+
+# Load the everyday packages up front. `require()` (not `library()`) so a missing
+# one doesn't abort this chunk — the availability table below reports it clearly.
+for (p in c("tidyverse", "scales", "lubridate")) {
+  suppressPackageStartupMessages(require(p, character.only = TRUE))
+}
+
+# Toggle the network-dependent checks (APIs, scraping, remote database).
+# Set to FALSE if you're off the campus network / VPN and only want the
+# local package checks.
+run_network_checks <- TRUE
+
+# Helper: run an expression, print PASS / FAIL, never stop the render.
+ok <- function(label, expr) {
+  result <- tryCatch({
+    force(expr)
+    "PASS"
+  }, error = function(e) paste0("FAIL: ", conditionMessage(e)))
+  cat(sprintf("%-6s %s\n", result, label))
+  invisible(result)
+}
+```
+
+## R session
+
+```{r}
+#| label: session
+cat(R.version.string, "\n")
+cat("Platform:      ", R.version$platform, "\n")
+cat("Running under: ", sessionInfo()$running, "\n")
+cat("Pandoc:        ", as.character(rmarkdown::pandoc_version()), "\n")
+cat("Quarto:        ", as.character(quarto::quarto_version()), "\n")
+cat(".libPaths():\n"); cat(paste0("  ", .libPaths()), sep = "\n")
+```
+
+## Package availability
+
+```{r}
+#| label: availability
+
+pkg_groups <- list(
+  "Core tidyverse" = c(
+    "tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
+    "tibble", "stringr", "forcats", "lubridate"
+  ),
+  "Plotting add-ons" = c(
+    "ggthemes", "patchwork", "scales", "gghighlight", "cowplot",
+    "colorspace", "hrbrthemes", "ggdist", "viridisLite", "RColorBrewer"
+  ),
+  "Colour-vision / accessibility" = c("colorBlindness", "colorblindr", "thematic"),
+  "Data sets" = c(
+    "palmerpenguins", "nycflights23", "gapminder", "babynames",
+    "unvotes", "mdsr", "survivoR", "bakeoff", "maps"
+  ),
+  "Spatial / maps" = c("sf", "mapproj", "ggmap", "leaflet", "tidycensus"),
+  "Text" = c("tidytext", "textdata", "stopwords", "countrycode"),
+  "Web / APIs / scraping" = c(
+    "rvest", "httr2", "robotstxt", "googlesheets4", "gtrendsR", "nytimes"
+  ),
+  "Databases" = c("DBI", "dbplyr", "duckdb", "RMariaDB"),
+  "Interactive / tables" = c("shiny", "flexdashboard", "bslib", "plotly", "DT", "gt"),
+  "Reporting / infrastructure" = c(
+    "knitr", "rmarkdown", "quarto", "tinytex", "here", "janitor",
+    "kableExtra", "flextable", "fontawesome"
+  ),
+  "Instructor / slide authoring" = c("countdown", "flipbookr", "ymlthis", "tictoc"),
+  "Git / dev tools" = c("usethis", "gitcreds", "remotes", "devtools")
+)
+
+availability <- do.call(rbind, lapply(names(pkg_groups), function(g) {
+  pkgs <- pkg_groups[[g]]
+  data.frame(
+    group     = g,
+    package   = pkgs,
+    installed = vapply(pkgs, function(p) requireNamespace(p, quietly = TRUE), logical(1)),
+    version   = vapply(pkgs, function(p) {
+      tryCatch(as.character(packageVersion(p)), error = function(e) NA_character_)
+    }, character(1)),
+    row.names = NULL,
+    stringsAsFactors = FALSE
+  )
+}))
+
+knitr::kable(availability)
+```
+
+```{r}
+#| label: missing-summary
+missing <- availability$package[!availability$installed]
+if (length(missing) == 0) {
+  cat("All listed packages are installed.\n")
+} else {
+  cat("MISSING —", length(missing), "package(s) not installed:\n\n")
+  cat(paste0("  ", missing), sep = "\n")
+  cat('\n\nInstall the CRAN ones with:\n\n  install.packages(c(',
+      paste(sprintf('"%s"', setdiff(missing, c("colorblindr", "nytimes", "flipbookr"))), collapse = ", "),
+      '))\n', sep = "")
+  cat("\nGitHub-only packages (need `remotes`):\n",
+      '  remotes::install_github("clauswilke/colorblindr")\n',
+      '  remotes::install_github("EvaMaeRey/flipbookr")\n',
+      '  remotes::install_github("mkearney/nytimes")   # legacy, API demo only\n', sep = "")
+}
+```
+
+Notes on a few of these:
+
+- **`textdata`** downloads sentiment lexicons on first use (interactive prompt).
+  This file only checks that it loads.
+- **`ggmap`** / **`tidycensus`** need an API key to fetch data; only the load is
+  checked here.
+- **`nytimes`**, **`colorblindr`**, **`flipbookr`** are GitHub-only.
+
+## Functional checks
+
+### Core tidyverse
+
+```{r}
+#| label: check-core
+ok("readr::read_csv parses an inline CSV", {
+  d <- readr::read_csv(I("x,y\n1,a\n2,b\n"), show_col_types = FALSE)
+  stopifnot(nrow(d) == 2, is.numeric(d$x))
+})
+ok("dplyr group_by |> summarise |> arrange", {
+  mpg |>
+    dplyr::group_by(manufacturer) |>
+    dplyr::summarise(n = dplyr::n(), mean_hwy = mean(hwy), .groups = "drop") |>
+    dplyr::arrange(dplyr::desc(n))
+})
+ok("dplyr::mutate + across + case_when", {
+  mpg |> dplyr::mutate(
+    dplyr::across(c(displ, hwy), \(x) scales::rescale(x)),
+    size = dplyr::case_when(cyl <= 4 ~ "small", cyl <= 6 ~ "mid", TRUE ~ "big")
+  )
+})
+ok("tidyr pivot_longer -> pivot_wider round trip", {
+  wide <- tidyr::pivot_wider(
+    tidyr::pivot_longer(head(iris), -Species, names_to = "k", values_to = "v"),
+    names_from = k, values_from = v
+  )
+  stopifnot(ncol(wide) == ncol(head(iris)))
+})
+ok("purrr::map_dbl", {
+  stopifnot(purrr::map_dbl(1:5, \(x) x^2) == c(1, 4, 9, 16, 25))
+})
+ok("stringr regex (str_detect / str_extract / str_replace_all)", {
+  x <- c("STAT 220", "MATH 241", "seminar")
+  stopifnot(
+    stringr::str_detect(x, "[0-9]{3}") == c(TRUE, TRUE, FALSE),
+    stringr::str_extract("due 2026-09-14 at 5pm", "[0-9]{4}-[0-9]{2}-[0-9]{2}") == "2026-09-14",
+    stringr::str_replace_all("a1b2c3", "[0-9]", "") == "abc"
+  )
+})
+ok("forcats::fct_reorder / fct_lump", {
+  f <- forcats::fct_lump(factor(rep(letters[1:5], times = c(10, 5, 3, 1, 1))), n = 2)
+  forcats::fct_reorder(f, seq_along(f), .fun = length)
+})
+ok("lubridate parse + component + arithmetic", {
+  d <- lubridate::ymd("2026-09-14")
+  stopifnot(
+    lubridate::wday(d, label = TRUE) == "Mon",
+    d + lubridate::weeks(10) == lubridate::ymd("2026-11-23")
+  )
+})
+```
+
+### Plots (shown inline — eyeball these)
+
+```{r}
+#| label: check-plots
+#| fig-width: 8
+#| fig-height: 3
+library(ggplot2)
+
+p1 <- ggplot(mpg, aes(displ, hwy, colour = drv)) +
+  geom_point(alpha = .7) +
+  scale_colour_viridis_d() +
+  ggthemes::theme_fivethirtyeight() +
+  labs(title = "ggplot2 + scales + ggthemes")
+
+p2 <- ggplot(dplyr::count(mpg, class), aes(reorder(class, n), n)) +
+  geom_col(fill = "steelblue") +
+  scale_y_continuous(labels = scales::label_comma()) +
+  coord_flip() +
+  labs(title = "scales labels", x = NULL, y = NULL)
+
+# patchwork side-by-side
+p1 + p2
+```
+
+```{r}
+#| label: check-plots-2
+#| fig-width: 8
+#| fig-height: 3.5
+ok("gghighlight", {
+  print(
+    ggplot(mpg, aes(displ, hwy, colour = class)) + geom_point() +
+      gghighlight::gghighlight(class == "suv")
+  )
+})
+ok("cowplot::plot_grid", {
+  print(cowplot::plot_grid(p1, p2, labels = c("A", "B")))
+})
+ok("ggdist half-eye", {
+  print(
+    ggplot(mpg, aes(factor(cyl), hwy)) +
+      ggdist::stat_halfeye()
+  )
+})
+ok("colorspace::scale_colour_discrete_qualitative", {
+  print(
+    ggplot(mpg, aes(displ, hwy, colour = drv)) + geom_point() +
+      colorspace::scale_colour_discrete_qualitative()
+  )
+})
+```
+
+### Course data packages
+
+```{r}
+#| label: check-data
+ok("palmerpenguins::penguins", {
+  stopifnot(nrow(palmerpenguins::penguins) > 300,
+            "species" %in% names(palmerpenguins::penguins))
+})
+ok("nycflights23::flights", {
+  f <- nycflights23::flights
+  stopifnot(nrow(f) > 4e5, "carrier" %in% names(f))
+})
+ok("gapminder::gapminder", stopifnot(nrow(gapminder::gapminder) == 1704))
+ok("babynames::babynames", stopifnot("prop" %in% names(babynames::babynames)))
+ok("unvotes::un_votes", stopifnot(nrow(unvotes::un_votes) > 0))
+ok("mdsr (package loads)", stopifnot(requireNamespace("mdsr", quietly = TRUE)))
+ok("survivoR::castaways", stopifnot(nrow(survivoR::castaways) > 0))
+ok("bakeoff::bakers / ratings", stopifnot(nrow(bakeoff::ratings) > 0))
+ok("maps::map_data('state')", stopifnot(nrow(ggplot2::map_data("state")) > 1000))
+```
+
+### Maps / spatial
+
+```{r}
+#| label: check-spatial
+#| fig-width: 7
+#| fig-height: 4
+ok("sf::st_read + geom_sf (bundled nc.shp)", {
+  nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
+  print(ggplot(nc) + geom_sf(aes(fill = AREA)) + theme_void() +
+          labs(title = "sf + geom_sf"))
+})
+ok("mapproj via coord_map('albers')", {
+  states <- ggplot2::map_data("state")
+  print(
+    ggplot(states, aes(long, lat, group = group)) +
+      geom_polygon(fill = "grey90", colour = "white") +
+      coord_map("albers", lat0 = 39, lat1 = 45) +
+      theme_void()
+  )
+})
+ok("leaflet widget builds", {
+  m <- leaflet::leaflet() |> leaflet::addTiles() |>
+    leaflet::setView(-93.15, 44.46, zoom = 13)   # Northfield
+  stopifnot(inherits(m, "leaflet"))
+})
+ok("ggmap loads (API key needed for tiles)",
+   stopifnot(requireNamespace("ggmap", quietly = TRUE)))
+ok("tidycensus loads (API key needed for data)",
+   stopifnot(requireNamespace("tidycensus", quietly = TRUE)))
+```
+
+```{r}
+#| label: leaflet-show
+leaflet::leaflet() |> leaflet::addTiles() |>
+  leaflet::addMarkers(-93.1536, 44.4619, popup = "Carleton College")
+```
+
+### Text analysis
+
+```{r}
+#| label: check-text
+ok("tidytext::unnest_tokens + stop-word anti_join", {
+  txt <- tibble::tibble(
+    doc = c(1, 2),
+    text = c("The quick brown fox", "jumps over the lazy dog")
+  )
+  tokens <- txt |>
+    tidytext::unnest_tokens(word, text) |>
+    dplyr::anti_join(tidytext::get_stopwords(), by = "word")
+  stopifnot(nrow(tokens) >= 5, !"the" %in% tokens$word)
+})
+ok("stopwords::stopwords('en')", stopifnot(length(stopwords::stopwords("en")) > 100))
+ok("countrycode::countrycode", {
+  stopifnot(countrycode::countrycode("US", "iso2c", "country.name") == "United States")
+})
+ok("textdata loads (lexicons download on first use)",
+   stopifnot(requireNamespace("textdata", quietly = TRUE)))
+```
+
+### Reading spreadsheets
+
+```{r}
+#| label: check-import
+ok("readxl reads a bundled sample .xlsx", {
+  xl <- readxl::read_excel(readxl::readxl_example("clippy.xlsx"))
+  stopifnot(nrow(xl) > 0)
+})
+ok("googlesheets4 loads + gs4_deauth()", {
+  googlesheets4::gs4_deauth()
+  TRUE
+})
+```
+
+### Web / APIs / scraping
+
+```{r}
+#| label: check-scrape-local
+ok("rvest::read_html + html_table (no network)", {
+  h <- rvest::read_html(
+    "<table><tr><th>course</th><th>n</th></tr><tr><td>STAT220</td><td>25</td></tr></table>"
+  )
+  tbl <- rvest::html_table(h)[[1]]
+  stopifnot(nrow(tbl) == 1, tbl$course == "STAT220")
+})
+ok("httr2 builds a request + req_dry_run (no network)", {
+  req <- httr2::request("https://example.com/api") |>
+    httr2::req_url_query(subject = "STAT", term = "26FA") |>
+    httr2::req_headers(Accept = "application/json")
+  httr2::req_dry_run(req, quiet = TRUE)
+})
+```
+
+```{r}
+#| label: check-scrape-network
+#| eval: !expr run_network_checks
+cat("Network checks (set run_network_checks <- FALSE to skip):\n\n")
+ok("robotstxt::paths_allowed()", {
+  res <- robotstxt::paths_allowed("https://www.google.com/search")
+  stopifnot(is.logical(res))
+})
+ok("rvest fetches a live page", {
+  pg <- rvest::read_html("https://www.r-project.org")
+  stopifnot(length(rvest::html_elements(pg, "a")) > 0)
+})
+ok("httr2 performs a live request", {
+  resp <- httr2::request("https://httpbin.org/get") |>
+    httr2::req_timeout(15) |>
+    httr2::req_perform()
+  stopifnot(httr2::resp_status(resp) == 200)
+})
+ok("gtrendsR::gtrends", {
+  g <- gtrendsR::gtrends("r programming", time = "today 1-m")
+  stopifnot(is.list(g))
+})
+```
+
+### Databases
+
+```{r}
+#| label: check-db-local
+ok("DBI + duckdb + dbplyr: write, query, collect (all local)", {
+  con <- DBI::dbConnect(duckdb::duckdb())
+  on.exit(DBI::dbDisconnect(con, shutdown = TRUE), add = TRUE)
+  DBI::dbWriteTable(con, "mtcars", mtcars)
+  out <- dplyr::tbl(con, "mtcars") |>
+    dplyr::group_by(cyl) |>
+    dplyr::summarise(mpg = mean(mpg, na.rm = TRUE), .groups = "drop") |>
+    dplyr::collect()
+  stopifnot(nrow(out) == 3)
+})
+```
+
+```{r}
+#| label: check-db-network
+#| eval: !expr run_network_checks
+ok("mdsr::dbConnect_scidb('airlines') — needs campus network + RMariaDB", {
+  db <- mdsr::dbConnect_scidb("airlines")
+  on.exit(try(DBI::dbDisconnect(db), silent = TRUE), add = TRUE)
+  tbls <- DBI::dbListTables(db)
+  stopifnot(length(tbls) > 0)
+})
+```
+
+### Interactive output (htmlwidgets / tables)
+
+```{r}
+#| label: check-widgets
+ok("shiny UI + server objects build (not launched)", {
+  ui <- shiny::fluidPage(
+    shiny::sliderInput("n", "n", 1, 100, 30),
+    shiny::plotOutput("hist")
+  )
+  server <- function(input, output, session) {
+    output$hist <- shiny::renderPlot(hist(rnorm(input$n)))
+  }
+  stopifnot(inherits(ui, c("shiny.tag", "shiny.tag.list")), is.function(server))
+})
+ok("bslib::bs_theme()", stopifnot(inherits(bslib::bs_theme(), "bs_theme")))
+ok("flexdashboard loads", stopifnot(requireNamespace("flexdashboard", quietly = TRUE)))
+```
+
+```{r}
+#| label: gt-table
+mpg |>
+  dplyr::count(class, drv) |>
+  tidyr::pivot_wider(names_from = drv, values_from = n, values_fill = 0) |>
+  gt::gt() |>
+  gt::tab_header(title = "gt table renders")
+```
+
+```{r}
+#| label: dt-table
+DT::datatable(head(mpg, 20), options = list(pageLength = 5))
+```
+
+```{r}
+#| label: plotly-widget
+#| fig-width: 8
+#| fig-height: 4
+plotly::ggplotly(
+  ggplot(palmerpenguins::penguins, aes(bill_length_mm, body_mass_g, colour = species)) +
+    geom_point()
+)
+```
+
+### Reporting toolchain
+
+```{r}
+#| label: check-reporting
+ok("here::here()", stopifnot(dir.exists(here::here())))
+ok("janitor::clean_names()", {
+  d <- janitor::clean_names(data.frame(`A B` = 1, `c.d` = 2, check.names = FALSE))
+  stopifnot(identical(names(d), c("a_b", "c_d")))
+})
+ok("knitr::kable()", stopifnot(nchar(knitr::kable(head(mtcars))[1]) > 0))
+ok("kableExtra::kbl()", stopifnot(requireNamespace("kableExtra", quietly = TRUE)))
+ok("flextable::flextable()", stopifnot(inherits(flextable::flextable(head(mtcars)), "flextable")))
+ok("fontawesome::fa()", stopifnot(grepl("svg", fontawesome::fa("r-project"))))
+ok("tinytex installed?", {
+  cat("\n  tinytex::is_tinytex() = ", tinytex::is_tinytex(), "\n", sep = "")
+  TRUE
+})
+```
+
+## PDF rendering
+
+Portfolio "sketch drafts" and lab quizzes render to PDF, so the LaTeX toolchain
+matters too. `tinytex::is_tinytex()` above should be `TRUE`. To exercise the full
+path, run this in the Terminal:
+
+```bash
+quarto render playground/package-check.qmd --to pdf
+```
+
+If it fails on missing `.sty` files, `tinytex` normally auto-installs them; if it
+is broken after the server update, `tinytex::reinstall_tinytex()` fixes it.
+
+## If a check fails
+
+| Symptom | Fix |
+|---|---|
+| Package in the **MISSING** list | `install.packages("<pkg>")`, or the `remotes::install_github()` line printed above for GitHub-only ones |
+| `FAIL: could not find function "..."` | Function renamed/removed in an update — check the package's NEWS/changelog and update the course material that uses it |
+| New **deprecation warning** on taught code | Still works, but plan to update the example before students see it |
+| `duckdb` / `sf` fail to load with a system-library error | System dependency missing on the server — send the error to the sysadmin |
+| Network checks fail but local checks pass | Likely VPN/firewall, not a package problem — re-run on the campus network, or set `run_network_checks <- FALSE` |
+| PDF render fails | `tinytex::reinstall_tinytex()` |
+
+```{r}
+#| label: sessioninfo
+sessionInfo()
+```
