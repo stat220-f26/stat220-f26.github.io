@@ -14,7 +14,7 @@ library(googlesheets4)
 library(gt)
 library(tidyverse)
 gs4_deauth()
-d <- read_sheet("https://docs.google.com/spreadsheets/d/1gppV4Mk0-6cwL_RldZ2w3U30o173Uj908uFGSEtfR64/edit?usp=sharing")
+d <- read_sheet("https://docs.google.com/spreadsheets/d/1w8hVdViUXKvWPvNtdMrTuYmMi38eZSRNO4QlYVnfPl0/edit?usp=sharing")
 ```
 
 ```{r}
@@ -27,18 +27,18 @@ d |>
   mutate(materials = ifelse(date <= today() + days(1), materials, "tbd")) |>
   gt() |>
   fmt_date(date, date_style = 31) |>
-  sub_missing(columns = c(week, prepare, topic, materials, due), missing_text = "") |>
+  sub_missing(columns = c(week, dow, prepare, reference, topic, materials, due), missing_text = "") |>
   cols_align(
-    align = "center", 
-    columns = c(week)
+    align = "center",
+    columns = c(week, dow)
   ) |>
   cols_align(
-    align = "right", 
+    align = "right",
     columns = c(date)
   ) |>
   cols_align(
-    align = "left", 
-    columns = c(topic, prepare, materials, due)
+    align = "left",
+    columns = c(topic, prepare, reference, materials, due)
   ) |>
   tab_style(
     style = cell_borders(
@@ -47,16 +47,18 @@ d |>
       style = "solid"
     ),
     locations = cells_body(
-      columns = c(date, topic, prepare, materials)
+      columns = c(date, topic, prepare, reference, materials)
     )
   ) |>
   fmt_markdown(
-    columns = c(topic, prepare, materials, due)
+    columns = c(topic, prepare, reference, materials, due)
   ) |>
   cols_width(
     week ~ px(45),
-    date ~ px(100), 
+    dow ~ px(45),
+    date ~ px(100),
     prepare ~ px(300),
+    reference ~ px(200),
     topic ~ px(300),
     materials ~ px(150),
     due ~ px(300)

@@ -395,7 +395,7 @@ On Friday, we tidied data containing ratings from *The Great British Bakeoff*.
 *Before:*
 
 ```{r}
-messy_ratings2 <- read_csv("https://stat220-f26.github.io/data/messy_ratings2.csv")
+messy_ratings2 <- read_csv("../../data/messy_ratings2.csv") # https://stat220-f26.github.io/data/messy_ratings2.csv
 messy_ratings2 %>% slice(1:3)
 ```
 

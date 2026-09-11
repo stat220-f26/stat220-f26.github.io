@@ -1,0 +1,206 @@
+---
+title: "Portfolio Project 1"
+subtitle: "Real or fake? Interrogating a dataset"
+---
+
+<!-- DRAFT — replacement for the old Portfolio Project 1 ("Posing and answering
+research questions"). Lives in _playground/ until finalized. Move to
+portfolio/portfolio-1.qmd when ready. See TODO-before-term.md for the open
+decisions (numbering, pairs, due date, class scaffolding, shortlist vetting). -->
+
+# Overview
+
+A surprising amount of the data on Kaggle isn't real. Some of it is openly
+synthetic (generated to look like a real dataset), some is simulated from a
+textbook or a model, some is a real dataset that has been quietly padded,
+duplicated, or "cleaned" beyond recognition, and some is exactly what it claims
+to be. It's easy to get several hours into an analysis before you realize the
+patterns you're describing were never in the world at all.
+
+In this project you'll build that instinct on purpose. You'll pick one dataset,
+investigate how it was really produced, and make a **data-driven argument** about
+whether it reflects a genuine data-collection process or was fabricated,
+simulated, or synthetically generated.
+
+**The verdict is not the point of the project. The evidence is.** A careful
+report that concludes "I found strong but not conclusive signs this is synthetic"
+&mdash; or "this is real, but it has serious data-quality problems that would
+have bitten me later" &mdash; earns full marks if the investigation is good. What
+you're being graded on is whether you can use `ggplot2` and basic wrangling to
+interrogate a dataset and reason about it under uncertainty.
+
+## What your report should contain
+
+Keep it short &mdash; about 3 pages if rendered to PDF.
+
+1. **Introduction** &mdash; one paragraph: what the dataset is, where on Kaggle
+   you found it (link), what it claims to be, and what its data card / description
+   says about where it came from.
+2. **At least three lines of evidence.** Each one is a short subsection with:
+   - the question you're asking of the data ("do the ages cluster on round
+     numbers?", "should these two columns agree, and do they?"),
+   - a single graph *or* summary table that addresses it,
+   - two or three sentences on what it shows and how it moves your thinking.
+3. **Verdict** &mdash; your best judgment, stated with a confidence level (e.g.
+   "likely synthetic", "probably real but poorly documented", "genuinely can't
+   tell, and here's why"), justified by the evidence above.
+4. **Reflection** &mdash; one short paragraph: if you'd found this out on day one,
+   how would it change what you'd do with this dataset next? Or: what would you
+   need from the dataset's authors to be confident?
+
+Your rendered file should **not** `echo` the code, but the code in your `.qmd`
+should be clean and readable.
+
+## Lines of inquiry to try
+
+You don't need all of these, and a good project usually goes deep on a few rather
+than shallow on all. We'll work through several of these together in class.
+
+- **Distributions that are too clean** &mdash; suspiciously uniform, perfectly
+  bell-shaped, no outliers, variance that doesn't grow with the mean the way it
+  usually does in real measurements.
+- **Impossible or contradictory records** &mdash; a `0` where a `0` can't happen
+  (zero blood pressure, zero price), an end date before a start date, a total
+  that doesn't equal the sum of its parts, a city in the wrong state.
+- **Duplicates and near-duplicates** &mdash; exact repeated rows, or rows that
+  differ only in an ID. Real collection produces some; a lot is a red flag.
+- **Round-number clustering** &mdash; humans and generators both love round
+  numbers, but real instruments usually don't.
+- **Decimal precision** &mdash; every value to exactly two decimals, or a column
+  of "measurements" with more precision than any real instrument would give.
+- **Correlation structure** &mdash; variables that *should* be related in the
+  real world (height and weight, price and size) but aren't, or vice versa.
+- **Categorical balance** &mdash; categories split almost exactly evenly, or a
+  grouping variable with implausibly equal group sizes.
+- **Time structure** &mdash; timestamps at perfectly regular intervals, no
+  weekday/weekend effect, no gaps.
+- **External benchmarks** &mdash; does the mean / range / proportion match what
+  you can look up about the real world?
+- **The paper trail** &mdash; the data card, the uploader's other datasets, a
+  cited source you can go check, a "generated with" note in the description.
+
+# Dataset shortlist
+
+Pick one of these, **or** bring your own (see below). Download the CSV from
+Kaggle and commit it to the `data/` folder of your project repo.
+
+Your report should not just repeat what someone else concluded &mdash; if you
+find a discussion of the dataset's authenticity online, cite it, but the analysis
+must be your own.
+
+1. **Medical Cost Personal Datasets** (`insurance.csv`) &mdash;
+   <https://www.kaggle.com/datasets/mirichoi0218/insurance>. Age, sex, BMI,
+   number of children, smoker status, region, and annual medical charges for
+   ~1,300 people.
+2. **Students Performance in Exams** &mdash;
+   <https://www.kaggle.com/datasets/spscientist/students-performance-in-exams>.
+   Demographic fields plus math, reading, and writing scores for 1,000 students.
+3. **Pima Indians Diabetes Database** &mdash;
+   <https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database>. Eight
+   clinical measurements and a diabetes outcome for 768 women.
+4. **Red Wine Quality (Cortez et al., 2009)** &mdash;
+   <https://www.kaggle.com/datasets/uciml/red-wine-quality-cortez-et-al-2009>.
+   Eleven physicochemical measurements and a quality rating for ~1,600 Portuguese
+   wines.
+5. **Superstore Sales** &mdash; search Kaggle for "Superstore dataset" (e.g.
+   `vivek468/superstore-dataset-final`). ~10,000 retail orders with customer,
+   product, geography, sales, and profit fields.
+6. **Spotify Tracks Dataset** &mdash;
+   <https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset>.
+   Audio features (danceability, tempo, loudness, &hellip;), popularity, and
+   genre for a large sample of tracks.
+
+*Also worth a look:* the "Heart Disease Dataset" reuploads on Kaggle, which vary
+a lot in size &mdash; comparing two of them can itself be a line of evidence.
+
+## Bring your own
+
+If none of these grab you, choose your own Kaggle dataset, subject to:
+
+- at least **6 variables**, with at least **2 quantitative** and **2
+  categorical**,
+- at least **500 rows**,
+- provenance that is **genuinely ambiguous** &mdash; do not pick a dataset whose
+  description already tells you it's synthetic, and don't pick something so
+  famous the answer is common knowledge,
+- **run your choice by me on Ed before you start** so I know the dataset.
+
+# Submission
+
+Work in a `quarto` file. Render to `gfm`, `pdf`, or `html`. I'll distribute a
+GitHub skeleton repo; fill it in as you work, commit your final `.qmd` and
+rendered output, and link the repo to Gradescope. Give your report an informative
+title.
+
+# Rubric
+
+A **successful** project will:
+
+- [ ] Include all necessary components pushed to GitHub and linked to Gradescope
+    - There should be at least two commits with substantial changes between them
+- [ ] Contain code, graphs, and written summary in a single `.qmd` document
+- [ ] The `.qmd` contains all necessary code for recreation and no unnecessary code
+- [ ] The rendered document does **not** echo the code
+- [ ] Use a dataset that meets the requirements above, with genuinely ambiguous
+      provenance (not self-declared synthetic)
+- [ ] State what the dataset claims to be and where it was found
+- [ ] Present **at least three distinct lines of evidence**, each supported by a
+      graph or a summary table
+- [ ] Interpret the evidence correctly &mdash; written claims match what the
+      graph or table actually shows
+- [ ] Use at least two different `geom`s across the report
+- [ ] Reach a clear verdict with a stated confidence level, justified by the
+      evidence (a well-argued "I can't be sure" is acceptable)
+- [ ] Meet minimum submission quality standards
+    - Very few grammatical mistakes, spelling mistakes, or typos
+    - Informative report title; readable theme; appropriate labels and font sizes
+    - No package-loading messages, warnings, or other clutter in the output
+
+An **excellent** project will meet all of the requirements for a successful
+project, plus
+
+- [ ] At least one line of evidence goes beyond single-variable distributions
+      &mdash; e.g. a cross-variable consistency check, correlation structure that
+      should or shouldn't exist, duplicate / near-duplicate detection, decimal or
+      digit-pattern analysis, or a comparison to an external real-world benchmark
+- [ ] At least one graph uses two or more layers, or a `ggplot2` element beyond
+      what we covered in class
+- [ ] Graphs use a consistent theme customized beyond a full theme (e.g. past
+      `theme_minimal()`), and at least one graph uses a custom `scale_` element
+- [ ] The reflection genuinely engages with the "so what" &mdash; how an early
+      finding would have changed the downstream analysis, or what would be needed
+      to resolve the ambiguity
+- [ ] A clear commit history that shows the investigation developing
+- [ ] Meet high submission quality standards (no typos; polished throughout)
+
+::: callout-note
+## On not being sure
+
+For some datasets you will not be able to *prove* anything &mdash; that's
+realistic, and it's fine. Grade yourself on whether your evidence is varied and
+correctly read and your argument is honest about its own limits. And remember
+only 2 of the 3 portfolio projects need to hit "excellent" for an A, so it's OK
+to decide a given dataset isn't giving you enough to work with and say so.
+:::
+
+# Can I work with someone?
+
+This is an **individual** portfolio project. You may brainstorm, get feedback on
+graphs, and get conceptual debugging help, but the analysis and writing must be
+your own. Cite any resources you use (title, author, link, and one line on what
+you used it for).
+
+A note/reminder on AI: *Large-language models (e.g. ChatGPT, Gemini, etc.) should
+only be used for coding or debugging help after you've attempted to solve the
+problem on your own. You should never copy and paste any course materials into a
+large-language model, and you should never copy and paste anything out of a
+large-language model into your course materials. Copying, paraphrasing,
+summarizing, or submitting work generated by anyone but yourself without proper
+attribution is considered academic dishonesty (this includes output from LLMs).
+You are not allowed to upload datasets or assignment prompts into a large
+language model.*
+
+# FAQ
+
+If you have any questions, please post them to Ed with the "portfolio projects"
+tag.

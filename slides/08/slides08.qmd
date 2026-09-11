@@ -352,7 +352,7 @@ colleges %>%
 . . .
 
 ```{r}
-bakeoff_ratings <- read_csv("https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv")
+bakeoff_ratings <- read_csv("../../data/bakeoff_messy_ratings.csv") # https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv
 bakeoff_ratings
 ```
 
@@ -611,7 +611,7 @@ Tidy this data set by
 :::
 
 ```{r echo=TRUE}
-messy_ratings2 <- read_csv("https://stat220-f26.github.io/data/messy_ratings2.csv")
+messy_ratings2 <- read_csv("../../data/messy_ratings2.csv") # https://stat220-f26.github.io/data/messy_ratings2.csv
 messy_ratings2
 ```
 

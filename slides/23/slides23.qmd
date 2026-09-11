@@ -226,7 +226,7 @@ Some findings [here](https://www.askamanager.org/2021/05/some-findings-from-2400
 
 ```{r}
 #| message: false
-manager <- read_csv("https://stat220-f26.github.io/data/manager-survey.csv")
+manager <- read_csv("../../data/manager-survey.csv") # https://stat220-f26.github.io/data/manager-survey.csv
 manager
 ```
 

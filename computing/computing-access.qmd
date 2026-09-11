@@ -4,7 +4,7 @@ title: "Computing Setup"
 
 ## R/RStudio
 
-I expect you to use RStudio to run R in this course. You have two options for using RStudio:
+I expect you to use RStudio to run R in this course. (*Note:* if you're familiar with a different IDE and can run R successfully there, that's also fine, but I won't be able to provide the same level of support) You have two options for using RStudio:
 
 ### Server version
 
@@ -82,7 +82,7 @@ Directions for both Windows & Mac here at
 
 ## LaTeX
 
-You need a LaTeX compiler to create a pdf document from a R Markdown file. If you use the maize server, you don’t need to install anything (the server already has a LaTeX compiler). If you are using a local RStudio, you should install a Latex compiler.
+You need a LaTeX compiler to create a pdf document from a Quarto file. If you use the maize server, you don’t need to install anything (the server already has a LaTeX compiler). If you are using a local RStudio, you should install a Latex compiler.
 
 
 ### Installing LaTeX (not needed if you are using the maize server)

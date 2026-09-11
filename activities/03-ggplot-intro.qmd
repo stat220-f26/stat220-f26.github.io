@@ -29,7 +29,7 @@ The data we're using today contains information about all seasons of *Survivor* 
 ```{r}
 #| eval: TRUE
 
-season_summary = readr::read_csv("https://raw.githubusercontent.com/stat220-f26/stat220-f26.github.io/refs/heads/main/data/survivor_season_summary.csv")
+#season_summary = readr::read_csv("https://raw.githubusercontent.com/stat220-f26/stat220-f26.github.io/refs/heads/main/data/survivor_season_summary.csv")
 ```
 
 - `season`: the number of each season
@@ -50,7 +50,7 @@ Loading the `{tidyverse}` loads 8 packages, one of which is `{ggplot2}`. You can
 **`r (q <- q+1)`.** To access a column in the dataset, we can use `$`. For example, the chunk below selects the `viewers_reunion` column. 
 
 ```{r}
-season_summary$viewers_reunion
+#season_summary$viewers_reunion
 ```
 
 Run `summary(season_summary$viewers_reunion)` and describe what you find. 

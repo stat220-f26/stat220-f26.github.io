@@ -101,7 +101,7 @@ Run the above commands on the `office_ratings` data set. Compare and contrast th
 
 :::{.callout-tip}
 ## Getting a spreadsheet
-In RStudio, you can run the command `View(data_set)` to pull up a spreadsheet representation of a data frame. You can also click on the name of the data frame in the Environment pane. This can be a great way help you think about the data, and even has some interactive functions (e.g., filtering and searching); however, **never include `View(data_set)` in an .Rmd file**!!
+In RStudio, you can run the command `View(data_set)` to pull up a spreadsheet representation of a data frame. You can also click on the name of the data frame in the Environment pane. This can be a great way help you think about the data, and even has some interactive functions (e.g., filtering and searching); however, **never include `View(data_set)` in a .qmd file**!!
 :::
 
 

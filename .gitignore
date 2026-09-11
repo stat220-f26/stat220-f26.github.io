@@ -10,6 +10,8 @@
 /*_files/
 /*_cache/
 
+_freeze/*
+
 # macOS / editor cruft
 .DS_Store
 **/.DS_Store

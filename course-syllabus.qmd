@@ -11,45 +11,51 @@ format:
 ---
 
 ::: boxed-text
-+--------------+-----------------------------------------------------------------+------------+
-| Meetings     | MWF 3a                                                          | CMC 306    |
-|              |                                                                 |            |
-|              | 11:10-12:20 MW \| 12-1 F                                        |            |
-+--------------+-----------------------------------------------------------------+------------+
-| Professor    | Amanda Luby                                                     | CMC 223    |
-+--------------+-----------------------------------------------------------------+------------+
-|              | aluby\@carleton.edu                                             |            |
-+--------------+-----------------------------------------------------------------+------------+
-| Office Hours | Mon 1:30-2:30 \| Tues 3-4 \| Wed 12:30-1:30 \| Fri 10-11 (appt) | CMC 307    |
-|              |                                                                 |            |
-|              | By appt through my Google Calendar                              |            |
-+--------------+-----------------------------------------------------------------+------------+
-| Website      | github.com/stat220-f26                                          |            |
-+--------------+-----------------------------------------------------------------+------------+
-| Texts        | *R for Data Science* (2nd Ed)                                   |            |
-|              |                                                                 |            |
-|              | <https://r4ds.hadley.nz/>                                       |            |
-|              |                                                                 |            |
-|              | Wickham, Çetinkaya-Rundel, Grolemund                            |            |
-+--------------+-----------------------------------------------------------------+------------+
-|              | *Modern Data Science with R* (3rd Ed)                           |            |
-|              |                                                                 |            |
-|              | <https://mdsr-book.github.io/mdsr3e/>                           |            |
-|              |                                                                 |            |
-|              | Baumer, Kaplan, Horton                                          |            |
-+--------------+-----------------------------------------------------------------+------------+
-|              | *Fundamentals of Data Visualization*                            |            |
-|              |                                                                 |            |
-|              | <https://clauswilke.com/dataviz/>                               |            |
-|              |                                                                 |            |
-|              | Wilke                                                           |            |
-+--------------+-----------------------------------------------------------------+------------+
-| Software     | Maize RStudio Server \<maize.mathcs.carleton.edu\>              |            |
-+--------------+-----------------------------------------------------------------+------------+
-|              | R (optional) free from \<r-project.org\>                        |            |
-+--------------+-----------------------------------------------------------------+------------+
-|              | RStudio (optional) free from \<rstudio.com/downloads\>          |            |
-+--------------+-----------------------------------------------------------------+------------+
++-----------+--------------------------------------------------------+-----------+
+| Meetings  | MWF 2a                                                 | CMC 306   |
+|           |                                                        |           |
+|           | 9:50-11am MW \| 9:40-10:40 F                           |           |
++-----------+--------------------------------------------------------+-----------+
+| Professor | Amanda Luby                                            | CMC 327   |
++-----------+--------------------------------------------------------+-----------+
+|           | aluby\@carleton.edu                                    |           |
++-----------+--------------------------------------------------------+-----------+
+| Drop-in   | Mon 3-4pm                                              | CMC 307   |
+|           |                                                        |           |
+|           | Tues 10:30-11:30am                                     |           |
+|           |                                                        |           |
+|           | Wed 2-3pm (220 priority)                               |           |
+|           |                                                        |           |
+|           | Fri 11:30-12:30 (230 priority)                         |           |
+|           |                                                        |           |
+|           | Or by appointment!                                     |           |
++-----------+--------------------------------------------------------+-----------+
+| Website   | github.com/stat220-f26                                 |           |
++-----------+--------------------------------------------------------+-----------+
+| Texts     | *R for Data Science* (2nd Ed)                          |           |
+|           |                                                        |           |
+|           | <https://r4ds.hadley.nz/>                              |           |
+|           |                                                        |           |
+|           | Wickham, Çetinkaya-Rundel, Grolemund                   |           |
++-----------+--------------------------------------------------------+-----------+
+|           | *Modern Data Science with R* (3rd Ed)                  |           |
+|           |                                                        |           |
+|           | <https://mdsr-book.github.io/mdsr3e/>                  |           |
+|           |                                                        |           |
+|           | Baumer, Kaplan, Horton                                 |           |
++-----------+--------------------------------------------------------+-----------+
+|           | *Fundamentals of Data Visualization*                   |           |
+|           |                                                        |           |
+|           | <https://clauswilke.com/dataviz/>                      |           |
+|           |                                                        |           |
+|           | Wilke                                                  |           |
++-----------+--------------------------------------------------------+-----------+
+| Software  | Maize RStudio Server \<maize.mathcs.carleton.edu\>     |           |
++-----------+--------------------------------------------------------+-----------+
+|           | R (optional) free from \<r-project.org\>               |           |
++-----------+--------------------------------------------------------+-----------+
+|           | RStudio (optional) free from \<rstudio.com/downloads\> |           |
++-----------+--------------------------------------------------------+-----------+
 
 : {tbl-colwidths="\[20,70,10\]"}
 :::
@@ -76,7 +82,7 @@ After completing this course, you should be able to demonstrate your competency 
 
 ## Meetings
 
-There will be three course meetings per week (Mondays, Wednesdays, and Fridays). Daily attendance and active participation is expected. Course meetings will combine demonstrations/lecture and in-class group exercises. On most days, I’ll ask you to complete a reading or watch a short video before class.
+There will be three course meetings per week (Mondays, Wednesdays, and Fridays). Daily attendance and active participation is expected. Course meetings will combine demonstrations/lecture and in-class group exercises. On most days, I’ll ask you to complete a reading or watch a short video before class. You'll also have a "data science journal" that we'll spend time completing at the beginning or end of each class.
 
 ## Assignments
 
@@ -84,7 +90,7 @@ Homework will be assigned once-ish per week, distributed via GitHub. You will su
 
 ## Portfolio Projects
 
-Portfolio project require you to integrate several smaller computational tasks and require clear communication of the proposed solution or findings to a broader audience. You will typically work alone or in pairs.
+Portfolio project require you to integrate several smaller computational tasks and require clear communication of the proposed solution or findings to a broader audience. You will typically work in pairs.
 
 ## Lab Quizzes
 
@@ -96,7 +102,7 @@ The final project is a capstone experience synthesizing everything you've learne
 
 ## Communication
 
-Assignments and slides will be shared publicly on our course website. Grades will be posted on gradescope or Moodle. Please use our slack workspace for any homework or course content questions; email me privately with any personal matters (grade discussions, illness, emergency, etc.). Any time-sensitive announcements will be sent via email. It is your responsibility to make sure that your notification settings allow time-sensitive announcements to reach you.
+Assignments and slides will be shared publicly on our course website. Grades will be posted on gradescope or Moodle. Please use our Ed discussion board for any homework or course content questions; email me privately with any personal matters (grade discussions, illness, emergency, etc.). Any time-sensitive announcements will be sent via Ed. It is your responsibility to make sure that your notification settings allow time-sensitive announcements to reach you.
 
 # Grading Policies
 
@@ -106,35 +112,35 @@ Grades are an imperfect measure of learning, especially when we are all coming t
 
 Each assignment will include a short rubric with the specifications of how I will evaluate your work. In general, these are the "marks" that you can receive on each course component:
 
-+--------------------+--------------------------------------------------------------+-----------------------------------------+
-|                    | How it's evaluated                                           | How it's recorded                       |
-+====================+==============================================================+=========================================+
-| Homework Problems  | Completeness, Correctness, and Effort                        | Successful or Not Successful            |
-+--------------------+--------------------------------------------------------------+-----------------------------------------+
-| Lab Quiz Problems  | Completeness and Correctness                                 | Successful or Not Successful            |
-+--------------------+--------------------------------------------------------------+-----------------------------------------+
-| Portfolio Projects | Completeness, effort, correctness, and communication quality | Excellent, Successful, or Revision      |
-+--------------------+--------------------------------------------------------------+-----------------------------------------+
-| Final Project      | Completeness, effort, correctness, and communication quality | Excellent, Succesful, or Not Successful |
-+--------------------+--------------------------------------------------------------+-----------------------------------------+
++-----------------------+--------------------------------------------------------------+-----------------------------------------+
+|                       | How it's evaluated                                           | How it's recorded                       |
++=======================+==============================================================+=========================================+
+| Homework Problems     | Completeness, Correctness, and Effort                        | Successful or Not Successful            |
++-----------------------+--------------------------------------------------------------+-----------------------------------------+
+| Lab Quiz Problems     | Completeness and Correctness                                 | Successful or Not Successful            |
++-----------------------+--------------------------------------------------------------+-----------------------------------------+
+| Portfolio Projects    | Completeness, effort, correctness, and communication quality | Excellent, Successful, or Revision      |
++-----------------------+--------------------------------------------------------------+-----------------------------------------+
+| Final Project         | Completeness, effort, correctness, and communication quality | Excellent, Succesful, or Not Successful |
++-----------------------+--------------------------------------------------------------+-----------------------------------------+
 
 ## Earning a course grade
 
 Your course grade is assigned using the table below. Each row indicates the minimum percentage of "Successful" results needed to satisfy the requirement of that grade. To earn a grade, complete *all* requirements listed in the row for that grade.
 
-+------------+-------------------+-------------------+------------------------------+---------------+
-|            | Homework Problems | Lab Quiz Problems | Portfolio Projects (4 total) | Final Project |
-+============+===================+===================+==============================+===============+
-| A          | 85%               | 90%               | 2 Excellent, 2 Successful    | Excellent     |
-+------------+-------------------+-------------------+------------------------------+---------------+
-| B          | 75%               | 80%               | 4 Successful                 | Successful    |
-+------------+-------------------+-------------------+------------------------------+---------------+
-| C          | 65%               | 70%               | 3 Successful                 | Successful    |
-+------------+-------------------+-------------------+------------------------------+---------------+
-| D          | 55%               | 50%               | 2 Successful                 | Successful    |
-+------------+-------------------+-------------------+------------------------------+---------------+
++-------------+-------------------+-------------------+------------------------------+---------------+
+|             | Homework Problems | Lab Quiz Problems | Portfolio Projects (3 total) | Final Project |
++=============+===================+===================+==============================+===============+
+| A           | 85%               | 88%               | 2 Excellent, 1 Successful    | Excellent     |
++-------------+-------------------+-------------------+------------------------------+---------------+
+| B           | 75%               | 78%               | 3 Successful                 | Successful    |
++-------------+-------------------+-------------------+------------------------------+---------------+
+| C           | 65%               | 68%               | 2 Successful                 | Successful    |
++-------------+-------------------+-------------------+------------------------------+---------------+
+| D           | 55%               | 50%               | 1 Successful                 | Successful    |
++-------------+-------------------+-------------------+------------------------------+---------------+
 
-*Example:* Ben finishes the course with 82% of homework problems successfully completed, 85% of lab quiz problems successfully completed, 2/4 portfolio projects marked "excellent", and a "Successful" final project. Ben satisfies everything in the "B" row and earns a "B" in the course.
+*Example:* Ben finishes the course with 82% of homework problems successfully completed, 85% of lab quiz problems successfully completed, 1/3 portfolio projects marked "excellent", and a "Successful" final project. Ben satisfies everything in the "B" row and earns a "B" in the course.
 
 ## Plus/minus grades
 
@@ -156,20 +162,20 @@ Your course grade is assigned using the table below. Each row indicates the mini
 
 ## Attendance and participation policy
 
-I expect daily attendance and participation. Missing \>5 class meetings or ongoing, consistent issues with being on-task will result in a 1/3 grade deduction.
+I expect daily attendance and active participation. Missing \>5 class meetings or ongoing, consistent issues with being on-task will result in a 1/3 grade deduction. I'll use your data science journal as one measure of engagement: consistent, good-faith entries count toward participation, and a pattern of low-effort or empty entries will factor into the 1/3 deduction in the same way absences do.
 
 ## Important points about this grading system
 
 -   Different categories of coursework do not "average together": you can't make up for less-than-great work on portfolio projects by doing very well on quizzes, for instance. Each course grade requires *consistent quality across all bins* to earn the grade
--   You do not have to do everything. If you want an "A" in the class, for example, you don't have to complete *every* quiz question correctly, only 90% of them.
+-   You do not have to do everything. If you want an "A" in the class, for example, you don't have to complete *every* homework problem correctly, only 85% of them.
 
-## What if I miss an in-person lab quiz?
+## What if I miss an in-person quiz?
 
-If you need to miss a lab quiz due to a planned conflict, please make arrangements with me at least two weeks in advance. If you must miss a lab quiz due to an illness or last-minute emergency, you must notify me in advance of the quiz to arrange an alternative time. If you do not notify me in advance, you will earn 0/10 points on the in-class portion, but can still submit the revision as usual.
+If you need to miss a quiz due to a planned conflict, please make arrangements with me at least a week in advance. If you must miss a lab quiz due to an illness or last-minute emergency, you must notify me in advance of the quiz to arrange an alternative time. If you do not notify me in advance, you will earn 0/10 points on the in-class portion, but can still use a token to complete a revision.
 
 ## Tokens
 
--   Turning in a token provides either (a) a 72-hour extension on a homework assignment, (b) a revision on a portfolio project, or (c) ~~a retake of a lab quiz~~ a 72-hour extension on the lab quiz revision
+-   Turning in a token provides either (a) a 72-hour extension on a homework assignment, (b) a revision on a portfolio project, or (c) a retake of a quiz
 -   Tokens may be used for *extensions* on the final project milestone check-ins, but not for the final due-date. Milestone check-ins cannot be revised
 -   You can revise the same portfolio project multiple times, if needed, but you must spend a token each time.
 -   A portfolio project must be completed with a good-faith effort to be eligible for revision. If I deem a submission to be "not assessable" due to a lack of effort, then it cannot be revised.
@@ -206,17 +212,17 @@ I also have a few rules in place to protect my intellectual property. You may no
 
 “AI” tools are new for all of us and it’s OK to have questions about what is and isn’t appropriate. Please ask if you are unsure of whether or not your actions are complying with the assignment/quiz/project instructions. Always default to acknowledging any help received. Cases of suspected academic dishonesty are handled by the Provost’s Office and I am obligated to report any suspected violations of this policy.
 
-+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                    | Collaboration Allowed                                                                                                                                                                                                                                                                                                                                                                                  |
-+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Homework Problems  | You are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding (i.e. it can't be copied). Any sources must be properly attributed. If you cannot explain each line of code to me with just your brain, you should not submit it as your own work.                                          |
-+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Lab Quiz Problems  | **No collaboration is allowed at all** (including online forums like StackExchange or Reddit). \|                                                                                                                                                                                                                                                                                                      |
-+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Portfolio Projects | You are expected to collaborate with your group members, but cannot rely on external sources other than to help motivate the questions or provide other background information (including online forums like StackExchange or Reddit). You may use any resources from class and package documentation, but getting answers on significant parts of solutions from outside resources is not allowed. \| |
-+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Final Project      | You are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited.                                                                                                                                                                                |
-+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                   | Collaboration Allowed                                                                                                                                                                                                                                                                                                                                                                               |
++-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Homework Problems                 | You are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding (i.e. it can't be copied). Any sources must be properly attributed. If you cannot explain each line of code to me with just your brain, you should not submit it as your own work.                                       |
++-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Lab Quiz Problems                 | **No collaboration is allowed at all** (including online forums like StackExchange or Reddit).                                                                                                                                                                                                                                                                                                      |
++-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Portfolio Projects                | You are expected to collaborate with your group members, but cannot rely on external sources other than to help motivate the questions or provide other background information (including online forums like StackExchange or Reddit). You may use any resources from class and package documentation, but getting answers on significant parts of solutions from outside resources is not allowed. |
++-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Final Project                     | You are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited.                                                                                                                                                                             |
++-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 : {tbl-colwidths="\[15,85\]"}
 
@@ -228,9 +234,9 @@ We all come to class with different backgrounds and experiences, and this divers
 
 **ACCOMMODATIONS:** Carleton College is committed to providing equitable access to learning opportunities for all students. The Office of Accessibility Resources (Henry House, 107 Union Street) is the campus office that collaborates with students who have disabilities to provide and/or arrange reasonable accommodations. If you have, or think you may have, a disability, please contact OAR\@carleton.edu to arrange a confidential discussion regarding equitable access and reasonable accommodations. You are also welcome to contact me privately to discuss your academic needs. However, all disability-related accommodations must be arranged, in advance, through OAR.
 
-**STATS LAB:** The Stats Lab (CMC 304) offers drop-in help R/RStudio help sessions run by friendly and knowledgeable lab assistants on most weekday evenings and some weekend times. Lab assistants may not be familiar with the 220 material, but you are still welcome to drop in and ask basic R questions.
+**MATH/STATS SKILLS CENTER:** The MSSC (CMC 331) offers drop-in help R/RStudio help sessions run by friendly and knowledgeable peer tutors Sunday-Thursday from 7-10pm.
 
-**TUTORS:** If you find you need more support than office hours and the stats lab can provide, the Academic Support Center offers peer tutoring on the basis of referrals, requests, and availability of tutors. You can request tutoring through a form on their website, or discuss your needs with me and I can submit a referral.
+**TUTORS:** If you find you need more support than office hours and the MSSC can provide, the Academic Support Center offers peer tutoring on the basis of referrals, requests, and availability of tutors. You can request tutoring through a form on their website, or discuss your needs with me and I can submit a referral.
 
 **TITLE IX:** Please be aware that all faculty are “responsible employees”, which means that if you tell me about a situation involving sexual harassment, sexual assault, dating violence, domestic violence, or stalking, I must share that information with the Title IX Coordinator. Although I have to make this notification, you will control how your case will be handled, including whether or not you wish to meet with the Title IX coordinator or pursue a formal complaint.
 

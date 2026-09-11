@@ -56,7 +56,7 @@ theme_set(slides_theme)
 :::
 
 ```{r}
-desserts <- read_csv("https://stat220-f26.github.io/data/desserts.csv")
+desserts <- read_csv("../../data/desserts.csv") # https://stat220-f26.github.io/data/desserts.csv
 desserts
 ```
 
@@ -101,7 +101,7 @@ read_tsv()   | Tab delimited values
 :::
 
 ```{r}
-desserts <- read_csv("https://stat220-f26.github.io/data/desserts.csv")
+desserts <- read_csv("../../data/desserts.csv") # https://stat220-f26.github.io/data/desserts.csv
 desserts
 ```
 
@@ -129,7 +129,7 @@ countdown::countdown(6)
 
 ```{r}
 desserts <- read_csv(
-  "https://stat220-f26.github.io/data/desserts.csv",
+  "../../data/desserts.csv", # https://stat220-f26.github.io/data/desserts.csv
   col_types = list(
     technical = col_number(), 
     uk_airdate = col_date(format = "%d %B %Y")
@@ -169,7 +169,7 @@ desserts |>
 #| echo: true
 
 
-desserts <- read_csv("https://stat220-f26.github.io/data/desserts.csv")
+desserts <- read_csv("../../data/desserts.csv") # https://stat220-f26.github.io/data/desserts.csv
 glimpse(desserts)
 ```
 
@@ -192,7 +192,7 @@ By default, `read_csv` looks at first 1000 rows to guess variable data types (`g
 #| echo: true
 #| code-line-numbers: "1|2-5"
 #| output-location: fragment
-desserts <- read_csv( "https://stat220-f26.github.io/data/desserts.csv",
+desserts <- read_csv( "../../data/desserts.csv", # https://stat220-f26.github.io/data/desserts.csv
   col_types = list( 
     technical = col_number(), 
     uk_airdate = col_date()   
@@ -241,7 +241,7 @@ What we have: `17 August 2010`
 #| echo: true
 #| code-line-numbers: "5"
 desserts <- read_csv(
-  "https://stat220-f26.github.io/data/desserts.csv",
+  "../../data/desserts.csv", # https://stat220-f26.github.io/data/desserts.csv
   col_types = list(
     technical = col_number(), 
     uk_airdate = col_date(format = "%d %B %Y")  
@@ -276,7 +276,7 @@ By default `na = c("", "NA")` are the recognized missing values
 #| echo: true
 #| code-line-numbers: "7"
 desserts <- read_csv(
-  "https://stat220-f26.github.io/data/desserts.csv",
+  "../../data/desserts.csv", # https://stat220-f26.github.io/data/desserts.csv
   col_types = list(
     technical = col_number(), 
     uk_airdate = col_date(format = "%d %B %Y")

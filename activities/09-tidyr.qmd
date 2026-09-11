@@ -13,7 +13,7 @@ library(ggthemes)
 Here is a data frame with the ratings for each episode of The Great British Bakeoff for series 1-8.
 
 ```{r}
-bakeoff_ratings <- read_csv("https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv")
+bakeoff_ratings <- read_csv("../data/bakeoff_messy_ratings.csv") # https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv
 bakeoff_ratings
 ```
 
@@ -30,7 +30,7 @@ bakeoff_ratings %>%
 # `messyratings2`
 
 ```{r}
-messy_ratings2 <- read_csv("https://stat220-f26.github.io/data/messy_ratings2.csv")
+messy_ratings2 <- read_csv("../data/messy_ratings2.csv") # https://stat220-f26.github.io/data/messy_ratings2.csv
 messy_ratings2
 ```
 
