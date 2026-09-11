@@ -14,8 +14,17 @@ Running list of changes needed to move this site from the Winter 2026 copy to Fa
 
 ## Deployment / repo
 
-- [ ] Move repo from `aluby/stat220-f26.github.io` to a `stat220-f26` GitHub org, served at `stat220-f26.github.io`. Until then, absolute links to `https://stat220-f26.github.io/...` (data reads, activity/file links) and `https://github.com/stat220-f26/...` will not resolve.
-- [ ] Update git remote after the move.
+- [x] Move repo from `aluby/stat220-f26.github.io` to a `stat220-f26` GitHub org, served at `stat220-f26.github.io`. Until then, absolute links to `https://stat220-f26.github.io/...` (data reads, activity/file links) and `https://github.com/stat220-f26/...` will not resolve.
+- [x] Update git remote after the move.
+
+## General software setup
+
+- [x] **Copy the Gradescope course from last term first.** Duplicate the Winter
+  2026 Gradescope course to carry over the assignment/rubric structure, then
+  update the course name/term and all assignment dates for Fall 2026.
+- [x] **Then link the new Gradescope course to Moodle**  —
+  do this *after* the copy, not before, since the Moodle link attaches to a
+  specific Gradescope course. Confirm the roster syncs correctly once linked.
 
 ## Content that still points at old terms
 
