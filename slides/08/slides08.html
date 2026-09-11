@@ -1413,7 +1413,7 @@ $ fedloan        &lt;dbl&gt; 0.5105, 0.8185, 0.6213, 0.4902, 0.5529, 0.5524, 0.6
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/stat220-f26\.github\.io\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

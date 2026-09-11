@@ -356,6 +356,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#environment-packages" id="toc-environment-packages" class="nav-link" data-scroll-target="#environment-packages">Environment / packages</a></li>
   <li><a href="#deployment-repo" id="toc-deployment-repo" class="nav-link" data-scroll-target="#deployment-repo">Deployment / repo</a></li>
+  <li><a href="#general-software-setup" id="toc-general-software-setup" class="nav-link" data-scroll-target="#general-software-setup">General software setup</a></li>
   <li><a href="#content-that-still-points-at-old-terms" id="toc-content-that-still-points-at-old-terms" class="nav-link" data-scroll-target="#content-that-still-points-at-old-terms">Content that still points at old terms</a></li>
   <li><a href="#older-term-leftovers-pre-w26-copies" id="toc-older-term-leftovers-pre-w26-copies" class="nav-link" data-scroll-target="#older-term-leftovers-pre-w26-copies">Older-term leftovers (pre-W26 copies)</a></li>
   <li><a href="#w26-named-files-rename-refresh-content" id="toc-w26-named-files-rename-refresh-content" class="nav-link" data-scroll-target="#w26-named-files-rename-refresh-content"><code>w26</code>-named files (rename + refresh content)</a></li>
@@ -393,8 +394,15 @@ ul.task-list li input[type="checkbox"] {
 <section id="deployment-repo" class="level2">
 <h2 class="anchored" data-anchor-id="deployment-repo">Deployment / repo</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">Move repo from <code>aluby/stat220-f26.github.io</code> to a <code>stat220-f26</code> GitHub org, served at <code>stat220-f26.github.io</code>. Until then, absolute links to <code>https://stat220-f26.github.io/...</code> (data reads, activity/file links) and <code>https://github.com/stat220-f26/...</code> will not resolve.</label></li>
-<li><label><input type="checkbox">Update git remote after the move.</label></li>
+<li><label><input type="checkbox" checked="">Move repo from <code>aluby/stat220-f26.github.io</code> to a <code>stat220-f26</code> GitHub org, served at <code>stat220-f26.github.io</code>. Until then, absolute links to <code>https://stat220-f26.github.io/...</code> (data reads, activity/file links) and <code>https://github.com/stat220-f26/...</code> will not resolve.</label></li>
+<li><label><input type="checkbox" checked="">Update git remote after the move.</label></li>
+</ul>
+</section>
+<section id="general-software-setup" class="level2">
+<h2 class="anchored" data-anchor-id="general-software-setup">General software setup</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" checked=""><strong>Copy the Gradescope course from last term first.</strong> Duplicate the Winter 2026 Gradescope course to carry over the assignment/rubric structure, then update the course name/term and all assignment dates for Fall 2026.</label></li>
+<li><label><input type="checkbox" checked=""><strong>Then link the new Gradescope course to Moodle</strong> — do this <em>after</em> the copy, not before, since the Moodle link attaches to a specific Gradescope course. Confirm the roster syncs correctly once linked.</label></li>
 </ul>
 </section>
 <section id="content-that-still-points-at-old-terms" class="level2">
@@ -607,7 +615,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/stat220-f26\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
