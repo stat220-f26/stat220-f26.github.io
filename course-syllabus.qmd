@@ -175,8 +175,9 @@ If you need to miss a quiz due to a planned conflict, please make arrangements w
 
 ## Tokens
 
+-   You have four tokens to use throughout the term
 -   Turning in a token provides either (a) a 72-hour extension on a homework assignment, (b) a revision on a portfolio project, or (c) a retake of a quiz
--   Tokens may be used for *extensions* on the final project milestone check-ins, but not for the final due-date. Milestone check-ins cannot be revised
+-   Tokens may not be used for final project-related assignments
 -   You can revise the same portfolio project multiple times, if needed, but you must spend a token each time.
 -   A portfolio project must be completed with a good-faith effort to be eligible for revision. If I deem a submission to be "not assessable" due to a lack of effort, then it cannot be revised.
 -   All revisions must be submitted by 11:59pm on the last day of class.
