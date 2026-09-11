@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>todo-before-term – Stat 220</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4a17e18fdf56099d4f6da1e105f33a53.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-259513009322ede1d75388ff598e6692.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/stat220-f26" title="GitHub organization" class="quarto-navigation-tool px-1" aria-label="GitHub organization"><i class="bi bi-github"></i></a>
+    <a href="https://maize.mathcs.carleton.edu/" title="RStudio Server" class="quarto-navigation-tool px-1" aria-label="RStudio Server"><i class="bi bi-code-square"></i></a>
+    <a href="https://moodle.carleton.edu/course/view.php?id=50418" title="Moodle" class="quarto-navigation-tool px-1" aria-label="Moodle"><i class="bi bi-person-fill"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Course information</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./course-syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./course-links.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Useful links</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Computing</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./computing/computing-access.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Access</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./computing/rstudio-stat220.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rstudio in Stat 220</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./computing/git-stat220.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Git/Github in Stat 220</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./computing/computing-cheatsheets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cheatsheets</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#to-do-before-fall-2026-term-starts" id="toc-to-do-before-fall-2026-term-starts" class="nav-link active" data-scroll-target="#to-do-before-fall-2026-term-starts">To do before Fall 2026 term starts</a>
+  <ul class="collapse">
+  <li><a href="#environment-packages" id="toc-environment-packages" class="nav-link" data-scroll-target="#environment-packages">Environment / packages</a></li>
+  <li><a href="#deployment-repo" id="toc-deployment-repo" class="nav-link" data-scroll-target="#deployment-repo">Deployment / repo</a></li>
+  <li><a href="#content-that-still-points-at-old-terms" id="toc-content-that-still-points-at-old-terms" class="nav-link" data-scroll-target="#content-that-still-points-at-old-terms">Content that still points at old terms</a></li>
+  <li><a href="#older-term-leftovers-pre-w26-copies" id="toc-older-term-leftovers-pre-w26-copies" class="nav-link" data-scroll-target="#older-term-leftovers-pre-w26-copies">Older-term leftovers (pre-W26 copies)</a></li>
+  <li><a href="#w26-named-files-rename-refresh-content" id="toc-w26-named-files-rename-refresh-content" class="nav-link" data-scroll-target="#w26-named-files-rename-refresh-content"><code>w26</code>-named files (rename + refresh content)</a></li>
+  <li><a href="#teaching-example-dates-years-no-render-impact-update-only-if-desired" id="toc-teaching-example-dates-years-no-render-impact-update-only-if-desired" class="nav-link" data-scroll-target="#teaching-example-dates-years-no-render-impact-update-only-if-desired">Teaching-example dates / years (no render impact — update only if desired)</a></li>
+  <li><a href="#syllabus-logistics-to-review" id="toc-syllabus-logistics-to-review" class="nav-link" data-scroll-target="#syllabus-logistics-to-review">Syllabus / logistics to review</a>
+  <ul class="collapse">
+  <li><a href="#portfolio-projects-4-3-grading-load" id="toc-portfolio-projects-4-3-grading-load" class="nav-link" data-scroll-target="#portfolio-projects-4-3-grading-load">Portfolio projects: 4 → 3 (grading load)</a></li>
+  <li><a href="#remove-compress-homework" id="toc-remove-compress-homework" class="nav-link" data-scroll-target="#remove-compress-homework">Remove / compress homework</a></li>
+  <li><a href="#downweight" id="toc-downweight" class="nav-link" data-scroll-target="#downweight">Downweight</a></li>
+  <li><a href="#upweight-add" id="toc-upweight-add" class="nav-link" data-scroll-target="#upweight-add">Upweight / add</a></li>
+  <li><a href="#same-topic-dated-function-low-effort" id="toc-same-topic-dated-function-low-effort" class="nav-link" data-scroll-target="#same-topic-dated-function-low-effort">Same topic, dated function (low effort)</a></li>
+  </ul></li>
+  <li><a href="#done-winter-2026---fall-2026-migration-initial-pass" id="toc-done-winter-2026---fall-2026-migration-initial-pass" class="nav-link" data-scroll-target="#done-winter-2026---fall-2026-migration-initial-pass">Done (Winter 2026 -&gt; Fall 2026 migration, initial pass)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="to-do-before-fall-2026-term-starts" class="level1">
+<h1>To do before Fall 2026 term starts</h1>
+<p>Running list of changes needed to move this site from the Winter 2026 copy to Fall 2026.</p>
+<section id="environment-packages" class="level2">
+<h2 class="anchored" data-anchor-id="environment-packages">Environment / packages</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">Render <code>playground/package-check.qmd</code> <strong>on the Maize RStudio server</strong> after the update and review the availability table + functional checks. Also render it to PDF (<code>quarto render playground/package-check.qmd --to pdf</code>) to confirm the LaTeX toolchain.</label></li>
+<li><label><input type="checkbox">Known to watch: <code>gghighlight</code> breaks with newer <code>ggplot2</code> (fails on my laptop’s ggplot2). Confirm the server’s <code>ggplot2</code> / <code>gghighlight</code> combination works, since it’s used in the plotting slides.</label></li>
+</ul>
+</section>
+<section id="deployment-repo" class="level2">
+<h2 class="anchored" data-anchor-id="deployment-repo">Deployment / repo</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Move repo from <code>aluby/stat220-f26.github.io</code> to a <code>stat220-f26</code> GitHub org, served at <code>stat220-f26.github.io</code>. Until then, absolute links to <code>https://stat220-f26.github.io/...</code> (data reads, activity/file links) and <code>https://github.com/stat220-f26/...</code> will not resolve.</label></li>
+<li><label><input type="checkbox">Update git remote after the move.</label></li>
+</ul>
+</section>
+<section id="content-that-still-points-at-old-terms" class="level2">
+<h2 class="anchored" data-anchor-id="content-that-still-points-at-old-terms">Content that still points at old terms</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" checked=""><code>course-syllabus.qmd</code> has <code>freeze: true</code> — the HTML and Typst/PDF syllabus will not rebuild on a normal <code>quarto render</code>. Force it: <code>quarto render course-syllabus.qmd</code>.</label></li>
+<li><label><input type="checkbox" checked="">“Spend a Token” Google Form in <code>course-links.qmd:12</code> (<code>https://forms.gle/aa59m9WVn7u2Bhwo8</code>) — confirm it’s the Fall 2026 form, not last term’s.</label></li>
+<li><label><input type="checkbox">Google Sheet IDs (left as-is for now, update when ready):</label>
+<ul class="task-list">
+<li><label><input type="checkbox" checked=""><code>index.qmd:17</code> — schedule sheet (currently the W26 sheet; homepage renders last term’s schedule until swapped). Note <code>index.qmd</code> has <code>freeze: false</code>, so it re-reads on every render.</label></li>
+<li><label><input type="checkbox"><code>portfolio/final.qmd:65</code> — final project ideas/schedule sheet.</label></li>
+<li><label><input type="checkbox"><code>portfolio/final.qmd:215</code> — group assignment spreadsheet.</label></li>
+</ul></li>
+</ul>
+</section>
+<section id="older-term-leftovers-pre-w26-copies" class="level2">
+<h2 class="anchored" data-anchor-id="older-term-leftovers-pre-w26-copies">Older-term leftovers (pre-W26 copies)</h2>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>slides/02/slides02.qmd:169</code> — <code>stat220-s25.github.io</code></label></li>
+<li><label><input type="checkbox"><code>slides/04/slides04.qmd:107</code> — <code>stat220-w25.github.io</code></label></li>
+<li><label><input type="checkbox"><code>slides/slides-cheat-sheet.qmd:152</code> — <code>github.com/stat220-w25</code></label></li>
+<li><label><input type="checkbox"><code>activities/10-combining.qmd:10</code> — <code>github.com/stat220-w25/activities</code></label></li>
+<li><label><input type="checkbox"><code>activities/25-shiny-design.qmd:97</code> — <code>sta199-f25.github.io</code> image</label></li>
+<li><label><input type="checkbox"><code>files/23-app1-starter.R:12</code> — <code>stat220-s25.github.io/data/manager-survey.csv</code></label></li>
+<li><label><input type="checkbox"><code>lab-quiz/lab-quiz-02.qmd:212</code> — <code>stat220-s25.github.io/data/lq2_plot_data.csv</code></label></li>
+</ul>
+</section>
+<section id="w26-named-files-rename-refresh-content" class="level2">
+<h2 class="anchored" data-anchor-id="w26-named-files-rename-refresh-content"><code>w26</code>-named files (rename + refresh content)</h2>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>slides/img/w26-schedule.png</code> and duplicate <code>img/w26-schedule.png</code> — last term’s schedule screenshot; used by <code>slides/01/slides01.qmd:309</code> (<code>../img/w26-schedule.png</code>). Rename to <code>f26-schedule.png</code>, replace the image, update the reference.</label></li>
+<li><label><input type="checkbox"><code>files/app-w26-sol.R</code></label></li>
+<li><label><input type="checkbox"><code>slides/23/manager-survey-app/app-w26.R</code></label></li>
+<li><label><input type="checkbox"><code>slides/23/manager-survey-app/app-w26-sol.R</code></label>
+<ul>
+<li>Referenced from <code>activities/23-shiny1.qmd</code>, <code>activities/24-shiny2.qmd</code>, <code>slides/23/slides23.qmd</code>. Renaming is optional (they work as-is); internal URLs were already repointed to <code>stat220-f26</code>.</li>
+</ul></li>
+<li><label><input type="checkbox"><code>slides/01/slides01.qmd</code> — bare <code>stat220-f26.github.io</code> / <code>github.com/stat220-f26</code> text at lines ~240-241, 284, 293, 433 (already updated by the term rename; sanity-check they read correctly).</label></li>
+</ul>
+</section>
+<section id="teaching-example-dates-years-no-render-impact-update-only-if-desired" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-example-dates-years-no-render-impact-update-only-if-desired">Teaching-example dates / years (no render impact — update only if desired)</h2>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>activities/21-scraping.qmd</code>, <code>slides/20/slides20.qmd</code>, <code>slides/21/slides21.qmd</code> — Carleton catalog term codes (<code>25WI</code>, <code>26SP</code>) and box-office <code>year/2026</code> examples.</label></li>
+<li><label><input type="checkbox">Date-parsing examples using <code>"2025-01-29"</code> etc. in <code>slides/11</code>, <code>slides/13</code>, <code>slides/22</code>.</label></li>
+<li><label><input type="checkbox"><code>activities/10-combining.qmd</code> — dataset described as “Fall 2024 and Winter 2025 terms”.</label></li>
+</ul>
+</section>
+<section id="syllabus-logistics-to-review" class="level2">
+<h2 class="anchored" data-anchor-id="syllabus-logistics-to-review">Syllabus / logistics to review</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" checked=""><code>course-syllabus.qmd</code> — meeting times, room (CMC 306), office hours, office (CMC 223 / CMC 307) for Fall 2026.</label></li>
+<li><label><input type="checkbox" checked=""><code>_quarto.yml:27</code> — Moodle course id set to <code>50418</code>; confirm.</label></li>
+<li><label><input type="checkbox" checked="">Term schedule dates (breaks, no-class days, finals) — these live in the Google schedule sheet, not the repo.</label></li>
+</ul>
+<section id="portfolio-projects-4-3-grading-load" class="level3">
+<h3 class="anchored" data-anchor-id="portfolio-projects-4-3-grading-load">Portfolio projects: 4 → 3 (grading load)</h3>
+<p>New lineup: <strong>P1 (rewritten) → P3 (unchanged) → P4 (unchanged)</strong>. <strong>Cut P2</strong> (“Wrangling weather forecasts”). P3 covers functions/iteration, P4 covers interactivity — both kept as-is.</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>P1 rewrite — “Real or fake?”</strong> Draft is in <code>_playground/portfolio-1-draft.qmd</code> (data-forensics argument about a Kaggle dataset; replaces the old “pose two research questions” P1). Review, then move to <code>portfolio/portfolio-1.qmd</code>.</label></li>
+<li><label><input type="checkbox"><strong>Decide numbering.</strong> Either renumber P3→P2 and P4→P3, or keep the labels 1 / 3 / 4. Renumbering touches <code>portfolio/portfolio-*.qmd</code> filenames + titles, the sidebar in <code>_quarto.yml</code> (portfolio section isn’t currently listed there — check), the schedule sheet, and any cross-references in slides/activities.</label></li>
+<li><label><input type="checkbox"><strong>Delete <code>portfolio/portfolio-2.qmd</code></strong> and its data (<code>data/weather_forecasts.csv</code>, <code>forecast_cities.csv</code>, <code>outlook_meanings.csv</code>) once the cut is final. Check the schedule sheet and slides for links to it.</label></li>
+<li><label><input type="checkbox" checked=""><strong>“2 of 4 must be excellent for an A” → “2 of 3.”</strong> Appears in the <code>portfolio-2.qmd</code> callout (being deleted) and the new P1 draft; check <code>course-syllabus.qmd</code> and the schedule sheet too. Confirm 3 projects still leaves enough revision / token slack.</label></li>
+<li><label><input type="checkbox"><strong>Joins lose portfolio-level assessment</strong> with P2 gone. Add “combines data from more than one table or source” as an explicit <em>wrangle</em> criterion on <code>portfolio/final.qmd</code>’s rubric. (HW4–5 already cover joins heavily.)</label></li>
+<li><label><input type="checkbox" checked=""><strong>Due date:</strong> move P1 a little later than the old P1 — aim week ~3–4 — so students have basic <code>dplyr</code> for summaries and cross-tabs. Keep ≥2 weeks between P1 and P3 so you’re not grading two portfolios back-to-back.</label></li>
+<li><label><input type="checkbox"><strong>Pairs?</strong> Old P1 was individual (good early diagnostic + low stakes). Allowing pairs on the new P1 would further cut submissions — decide.</label></li>
+<li><label><input type="checkbox"><strong>Class scaffolding needed.</strong> The new P1 assumes a “tells” toolkit that isn’t currently a lecture: distribution smell tests, impossible/contradictory records, duplicates, round-number clustering, decimal precision, correlation structure, categorical balance, temporal regularity, Benford (optional), external benchmarks. Add an EDA / data-quality session near the ggplot weeks.</label></li>
+<li><label><input type="checkbox"><strong>Vet the Kaggle shortlist</strong> before publishing (see below) — confirm the slugs still resolve, the synthetic ones aren’t self-labeled “synthetic” on the data card, and the real ones still carry the messiness that makes them arguable. Rebalance the mix if needed.</label></li>
+<li><label><input type="checkbox"><strong>Pre-existing P1 bug:</strong> the current <code>portfolio/portfolio-1.qmd</code> Submission section says “two visualizations (replication and improvement)” — leftover from another project, contradicts the rest of P1. Gone in the rewrite; just noting it’s a known issue.</label></li>
+<li><label><input type="checkbox"><strong>P4 revisit menu</strong> shrinks to P1(new) / P3. An interactive “data-forensics explorer” over the P1 dataset is a fine P4 base — no change needed, worth mentioning in P4.</label></li>
+</ul>
+</section>
+<section id="remove-compress-homework" class="level3">
+<h3 class="anchored" data-anchor-id="remove-compress-homework">Remove / compress homework</h3>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>HW7 P4 + P5</strong> — same “lm coefficients per season” problem done as a <code>for</code> loop <em>and</em> as <code>map</code>. Keep one (buys back room on the 9-pt assignment).</label></li>
+<li><label><input type="checkbox"><strong>HW6 P2–P4</strong> — three MAC-address string problems on one contrived example. Collapse to one or two; <code>separate_wider_regex()</code> now does most of it in one call.</label></li>
+<li><label><input type="checkbox"><strong>HW8 P2 + P3 + P4</strong> (currently the S25 version) — pulls the same ACS data via <code>tidycensus</code>, then again via raw <code>httr2</code>, then wraps the raw version in a function. Cut to <code>tidycensus</code> once + one raw-API problem on a <em>different</em> endpoint.</label></li>
+<li><label><input type="checkbox"><strong>HW5 P10</strong> — trim regex gauntlet from 7 parts to ~5. Drop “3+ vowels in a row” and “same first/last letter” (backreference) — puzzle, not practice.</label></li>
+<li><label><input type="checkbox"><strong>HW9 P7</strong> (WAI / <code>RMariaDB</code> to <code>scidb.smith.edu</code>) — replace with a DuckDB-backed problem (see Upweight). Depends on Smith keeping a MariaDB server reachable from Carleton; it will fail some semester.</label></li>
+</ul>
+</section>
+<section id="downweight" class="level3">
+<h3 class="anchored" data-anchor-id="downweight">Downweight</h3>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>For-loops + manual preallocation (Slides 17)</strong> — R4DS 2nd ed (2023) de-emphasizes this; iteration is now <code>across()</code> → <code>map()</code> → “read many files.” Keep one for-loop for the mental model, shift weight to <code>map</code>/<code>across</code>. (Keep more only if Python-loop transfer is an explicit goal.)</label></li>
+<li><label><input type="checkbox"><strong>Lexicon sentiment analysis (Slides 15)</strong> — only deck with zero homework, and AFINN/bing/nrc is a ~2014 treatment. Either leave it light/class-only, or repoint Slides 14/15 toward TF-IDF (<code>tidytext::bind_tf_idf</code>) + a short “how modern NLP differs” coda.</label></li>
+<li><label><input type="checkbox"><strong><code>ggmap</code> basemaps (Slides 05)</strong> — <code>get_stadiamap()</code> now needs a registered Stadia API key (same friction that killed Stamen). HW3 map problems already use <code>map_data()</code> + choropleths, which is fine. Drop the tile-basemap slide or switch to <code>maptiles</code> (no key for OSM/CARTO).</label></li>
+</ul>
+</section>
+<section id="upweight-add" class="level3">
+<h3 class="anchored" data-anchor-id="upweight-add">Upweight / add</h3>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>DuckDB for the databases unit</strong> — swap <code>mdsr::dbConnect_scidb()</code> for <code>dbConnect(duckdb::duckdb())</code> over local CSV/Parquet. Same <code>dbplyr</code> translation, zero infrastructure, no dependency on someone else’s server. <code>duckdb</code> is already a course dependency. Affects Slides 25–26, Activity 26, HW9 P6–P7. (SQL Murder Mystery is fine as-is.)</label></li>
+<li><label><input type="checkbox"><strong>Finish the Quarto-dashboard migration</strong> — Slides 22 still <code>library(flexdashboard)</code>s but also shows <code>format: dashboard</code>. <code>flexdashboard</code> is effectively superseded; standardize on native <code>format: dashboard</code>. Also Activity 22 and HW9 P2.</label></li>
+<li><label><input type="checkbox"><strong>AI-assisted coding as a skill, not just a policy</strong> — one focused treatment near the functions/debugging weeks: verifying LLM-generated R, spotting confident-but-wrong output, attribution.</label></li>
+<li><label><input type="checkbox"><strong><code>gt</code> tables</strong> — currently only in the portfolio. Worth one HW problem (pairs with the wrangling or text weeks).</label></li>
+<li><label><input type="checkbox"><strong>Parquet / <code>arrow</code></strong> — ~20 min on “bigger than memory” alongside DuckDB.</label></li>
+</ul>
+</section>
+<section id="same-topic-dated-function-low-effort" class="level3">
+<h3 class="anchored" data-anchor-id="same-topic-dated-function-low-effort">Same topic, dated function (low effort)</h3>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong><code>separate()</code> → <code>separate_wider_delim()</code> / <code>_position()</code> / <code>_regex()</code></strong> — superseded in tidyr 1.3.0 (Jan 2023). Slides 04 and heavily in Slides 08.</label></li>
+<li><label><input type="checkbox"><strong>Joins: <code>by = "id"</code> → <code>join_by(id)</code></strong> — dplyr 1.1.0 (Jan 2023). Also show the new multiple-match / unmatched warnings (students hit them anyway). Slides 10.</label></li>
+<li><label><input type="checkbox"><strong><code>group_by()</code> → <code>.by =</code></strong> for one-off grouped summaries — dplyr 1.1.0. Optional, but it’s what current tidyverse code looks like.</label></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="done-winter-2026---fall-2026-migration-initial-pass" class="level2">
+<h2 class="anchored" data-anchor-id="done-winter-2026---fall-2026-migration-initial-pass">Done (Winter 2026 -&gt; Fall 2026 migration, initial pass)</h2>
+<ul>
+<li>Replaced <code>stat220-w26</code> -&gt; <code>stat220-f26</code> across all source (domain, org/repo, org page) — 33 files.</li>
+<li><code>_quarto.yml</code>: description <code>Winter 2026</code> -&gt; <code>Fall 2026</code>; Moodle <code>id=48308</code> -&gt; <code>id=50418</code>; footer <code>Material 2025</code> -&gt; <code>Material 2026</code>.</li>
+<li><code>slides/_metadata.yml</code>, <code>activities/_metadata.yml</code>: institute -&gt; <code>Fall 2026</code>.</li>
+<li><code>course-syllabus.qmd</code>: subtitle -&gt; <code>Fall 2026</code>.</li>
+<li><code>course-links.qmd</code>: stale org <code>stat220-s25</code> -&gt; <code>stat220-f26</code>; stale Moodle <code>id=44937</code> -&gt; <code>id=50418</code>.</li>
+<li>Renamed <code>stat220-w26.github.io.Rproj</code> -&gt; <code>stat220-f26.github.io.Rproj</code>.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Material 2026, Amanda Luby <br> Design by Mine Çetinkaya-Rundel</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This page is built with ☕️ and <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
