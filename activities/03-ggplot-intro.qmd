@@ -10,9 +10,13 @@ q <- 0
 ```
 
 ::: callout-tip
-## Note: 
+## Note:
 
 The YAML header includes the line `eval: false`. Make sure to delete this when you are ready to render your file.
+:::
+
+::: callout-tip
+If you need a refresher for how to access the quarto file from this document, see [Activity01](01-college-tuition-pay.html)
 :::
 
 ```{r}

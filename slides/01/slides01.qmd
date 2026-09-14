@@ -36,7 +36,7 @@ theme_set(theme_minimal(base_size = 16))
 
 ::::: columns
 ::: {.column width="60%"}
--   Second year at Carleton!
+-   Third year at Carleton!
 -   Taught at Swarthmore for 5 years before moving here
 -   PhD in Statistics & Data Science from Carnegie Mellon University
 -   Grew up in Minnesota, went to St Ben's as an undergrad
@@ -60,7 +60,7 @@ theme_set(theme_minimal(base_size = 16))
 ```{r}
 #| echo: false
 
-countdown::countdown(8)
+countdown::countdown(5)
 ```
 
 ## What is this class about?
@@ -78,26 +78,32 @@ countdown::countdown(8)
 #| echo: false
 #| message: false
 survey <- read_csv(here(here(), "data/class_survey_sm.csv"))
-survey |> sample_n(10)
+survey |> sample_n(min(10, nrow(survey)))
 ```
 
 ## 
 
 :::::: columns
 ::: {.column width="33%"}
+::: {style="height: 3.2em; display: flex; align-items: center; justify-content: center; text-align: center;"}
 You took a survey
+:::
 
 ![](../img/01-google-forms-logo.png)
 :::
 
 ::: {.column width="33%"}
+::: {style="height: 3.2em; display: flex; align-items: center; justify-content: center; text-align: center;"}
 Google saved your responses in a sheet
+:::
 
 ![](../img/01-google-sheets.png)
 :::
 
 ::: {.column width="33%"}
+::: {style="height: 3.2em; display: flex; align-items: center; justify-content: center; text-align: center;"}
 I read your data into R, cleaned it, and saved it as a CSV
+:::
 
 ![](../img/01-rstudio-logo.png)
 :::
@@ -118,27 +124,39 @@ What class year are you?
 
 ```{r}
 #| code-fold: true
+#| message: false
 survey |>
   count(class_year) |>
   mutate(prop = n/sum(n)) |>
   ggplot(aes(y = class_year, x = prop, fill = class_year)) + 
   geom_col(show.legend = FALSE) + 
-  scale_x_continuous(labels = percent_format(accuracy = 1), breaks = c(0, .1, .2, .3, .4, .5)) + 
+  scale_x_continuous(labels = scales::percent_format(accuracy = 1), breaks = c(0, .1, .2, .3, .4, .5)) + 
   labs(
     title = "Class year among Stat220 Students",
     y = "",
     x = "Proportion",
-    caption = "Self-reported data collected from Stat220 students by 10am on Jan 5"
+    caption = "Self-reported data collected from Stat220 students"
   ) + 
   scale_fill_viridis_d(end = .75, option = "plasma")
 ```
 
 ## Question where you could enter a number
 
-How many hours of sleep per night do you typically get during the term?
+How many browser tabs do you currently have open?
 
 ```{r}
-summary(survey$sleep)
+summary(survey$tabs)
+```
+
+## Visualize 
+
+```{r}
+#| code-fold: true
+#| message: false
+
+survey |>
+  ggplot(aes(x = tabs)) +
+  geom_dotplot(col = "white", fill = "darkgreen")
 ```
 
 ## Open-ended question
@@ -164,26 +182,18 @@ survey |>
     title = "Where can you find the best food in Northfield?",
     y = "",
     x = "Proportion",
-    caption = "Self-reported data collected from Stat220 students by 10am on Jan 5"
+    caption = "Self-reported data collected from Stat220 student"
   ) + 
   scale_fill_viridis_d(end = .75, option = "plasma")
 ```
 
-##  {background-image="../img/data_scientist_infographic.png" background-position="right" background-size="50%"}
+## Open-ended question with even less structure
 
-:::: columns
-::: {.column width="50%"}
-### What skills do you need?
+What was the last thing you googled?
 
--   programming with data
-
--   statistical modeling
-
--   domain knowledge
-
--   communication
-:::
-::::
+```{r}
+survey$googled
+```
 
 ## What is this class all about?
 
@@ -193,13 +203,67 @@ survey |>
 Image by Adam Loy <br> adapted from work of Joe Blitzstein, Hanspeter Pfister,<br> and Hadley Wickham
 :::
 
+## Wait -- can't AI just do this? {.center}
+
+## AI is a tool. It still needs a skilled operator
+
+-   Generative AI can write code, summarize data, and produce a plot in seconds. It can make those plots polished and give you some really confident insights
+-   It cannot tell you whether that code, summary, or plot is actually right
+-   You have to know what to ask for, and be able to recognize when the answer is wrong. These skills are what we'll work on building in this course
+
+. . .
+
+**A recurring theme from hiring managers:**
+
+> *"We want people who know how to use AI but who understand what it's doing, and catch it when it's wrong."*
+
+
+## What AI can't do for you
+
+-   **Communicating results is a human skill**
+    -   *Formal:* writing up findings for an audience who will act on them, giving a prepared presentation
+    -   *Informal:* explaining your reasoning out loud, defending a choice, asking for clarification, catching a teammate's mistake in conversation
+-   AI can help you say something faster. It can't decide *what's worth saying*, or *who you're saying it to*
+
+## "School is a gym, not a job" {.center}
+
+
+## A cautionary tale {.smaller}
+
+**Prompt:**  I need to find the percent of my class that gets enough sleep (7+ hours a night). My data is in a data frame with a column for "student" which has a student ID, and a column for "sleep_hours" which has their response to this question. can you give me R code to do this?
+
+```{r}
+toy_survey <- tibble(
+  student = 1:6,
+  sleep_hours = c(6, 8, NA, 7, 5, NA)
+)
+```
+
+```{r}
+#| echo: true
+
+toy_survey |>
+  summarize(pct_enough_sleep = mean(sleep_hours >= 7, na.rm = TRUE) * 100)
+```
+
+::: aside
+Gemini 3.6 Thinking
+:::
+
+## So... what actually happened?
+
+```{r}
+#| echo: true
+toy_survey
+```
+
+
 ## Why R?
 
 > *And the second reason, which is both a huge strength of R and a bit of a weakness, is that R is **not just a programming language**. It was designed from day 1 to be an **environment that can do data analysis**. So, compared to the other options like Python, you can get up and running in R doing data science, learning much, much less about programming to get started. And that generally makes it like **easier to get up and running if you don’t have formal training in computer science or software engineering**.*
 
 > -Hadley Wickham, [Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham](https://www.r-bloggers.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/)
 
-##  {background-image="../img/wordcloud-nervous.png" background-size="contain"}
 
 ##  {.smaller}
 
@@ -229,16 +293,16 @@ Hadley Wickham, [Advice to Young (and Old) Programmers: A Conversation with Hadl
 
 -   Provides consistency in hardware and software environments
 
--   Local R installations are also great! If you already have one, you should use it. You may need to install packages as we go.
+-   Local R installations are also great! We will **all** download R by the end of the course. If you already have one, you should use it. You may need to install packages as we go.
 
-# A first example: UN Votes
+# A first example: College Costs & Career Pay
 
 ## On your own:
 
 ::: {.task .nonincremental}
 1.  Log into the maize server: \<maize.mathcs.carleton.edu\>
 2.  Follow the directions at <https://stat220-f26.github.io/computing/rstudio-stat220> to create an "activities" folder
-3.  Open `01-example-unvotes` from <https://stat220-f26.github.io>, and follow the directions to open the file in Rstudio
+3.  Open `01-college-tuition-pay` from <https://stat220-f26.github.io>, and follow the directions to open the file in Rstudio
 4.  Skim the file *without* running any code:
     -   Where is the *code*?
     -   Where is the *narrative*?
@@ -252,7 +316,7 @@ countdown(minutes = 10, seconds = 0)
 ## What steps went into this analysis?
 
 -   Recording the original data
--   Accessing data via an R package
+-   Reading data directly from the web
 -   Combining multiple datasets into one
 -   Data cleaning: filtering, creating new columns, grouping, summarizing
 -   Making a graph
@@ -263,7 +327,7 @@ countdown(minutes = 10, seconds = 0)
 ::: task
 With your neighbor(s):
 
-Choose two countries to compare to the U.S. voting record in the U.N. over the years.
+Choose two other states to compare to Minnesota's tuition and career pay.
 
 What did you learn?
 :::
@@ -299,14 +363,14 @@ Read the full syllabus by next class
 
 | Day       | Time       | Type    | Location |
 |:----------|:-----------|:--------|:---------|
-| Monday    | 1:30-2:30  | Drop-in | CMC 307  |
-| Tuesday   | 3-4        | Drop-in | CMC 307  |
-| Wednesday | 12:30-1:30 | Drop-in | CMC 307  |
-| Friday    | 10-11      | Appts   | CMC 223  |
+| Monday    | 3-4        | Drop-in | CMC 307  |
+| Tuesday   | 10:30-11:30| Drop-in | CMC 307  |
+| Wednesday | 2-3        | Drop-in | CMC 307  |
+| Friday    | 11:30-12:30| Drop-in | CMC 307  |
 
 ## Where is Amanda this term?
 
-![](../img/w26-schedule.png){.r-stretch}
+![](../img/amanda-schedule-f26.png){.r-stretch}
 
 ## What will you do in this course?
 
@@ -359,16 +423,16 @@ Read the full syllabus by next class
 
 ## Grading system {.smaller}
 
-Homework and lab quiz problems will be graded as *successful*, *half credit*, or *not successful*. Projects will be graded as *excellent*, *successful*, or *not successful*. You will have the opportunity to resubmit the lab quizzes outside of class.
+Homework and lab quiz problems will be graded as *successful*, *half credit*, or *not successful*. Projects will be graded as *excellent*, *successful*, or *not successful*. 
 
 To earn a course grade, you must meet **all** of the requirements in a given row:
 
-|   | Homework Problems | Lab Quiz Problems | Portfolio Projects (4 total) | Final Project |
+|   | Homework Problems | Lab Quiz Problems | Portfolio Projects (3 total) | Final Project |
 |------------|------------|------------|------------|------------|
-| A | 85% | 90% | 2 Excellent + 2 Successful | Excellent |
-| B | 75% | 80% | 4 Successful | Successful |
-| C | 65% | 70% | 3 Successful | Successful |
-| D | 55% | 50% | 2 Successful | Successful |
+| A | 85% | 88% | 2 Excellent + 1 Successful | Excellent |
+| B | 75% | 78% | 3 Successful | Successful |
+| C | 65% | 68% | 2 Successful | Successful |
+| D | 55% | 50% | 1 Successful | Successful |
 
 "+" and "-" grades are determined by partially meeting the requirements in a given row.
 
@@ -389,12 +453,15 @@ To earn a course grade, you must meet **all** of the requirements in a given row
 
 ## Tokens
 
-You can use a token to:
+-   You have **four tokens** to use throughout the term
 
--   Revise a portfolio project that did not earn a "successful" or "excellent"
--   72-hour extension on a homework assignment or portfolio project submission (the request must be submitted before the deadline)
--   Retake a lab quiz \[\*\]
--   By passing the syllabus quiz, you'll activate your 5 tokens for the term. I will track token balances in the moodle gradebook (updated weekly, typically Thursdays)
+You can turn in a token for:
+
+-   A 72-hour extension on a homework assignment
+-   A revision on a portfolio project (you can revise the same project multiple times, but it costs a token each time)
+-   A retake of a quiz
+
+Tokens may not be used for final project-related assignments
 
 ## Collaboration policy {.smaller}
 
@@ -407,24 +474,40 @@ You can use a token to:
 
 : {tbl-colwidths="\[15,85\]"}
 
-## Use of generative artificial intelligence (AI) {.smaller}
+## Use of generative AI 
 
--   Treat generative AI, such as ChatGPT or Gemini, the same as other online resources.
+Two guiding principles shaped this policy:
 
--   Guiding principles:
+-   \(1\) *Cognitive dimension:* working with AI should not reduce your ability to think clearly. AI should facilitate — rather than hinder — learning.
 
-    -   \(1\) *Cognitive dimension:* Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.
-
-    -   \(2\) *Ethical dimension***:** If you use AI, you should be transparent about it and make sure it aligns with academic integrity.
-
--   **❌ AI tools for writing code:** You may not use generative AI to take a "first pass" at a coding task. Do not type coursework prompts directly into AI tools.
-
--   **✅ AI tools for debugging code:** You may make use of the technology to get help with error messages or trying to fix issues. Rule of thumb: never type code into or out of an AI interface
-
--   **❌ AI tools for narrative:** Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.
+-   \(2\) *Ethical dimension:* if you use AI, you should be transparent about it and make sure it aligns with academic integrity.
 
 ::: aside
-Adapted from Mine Çetinkaya-Rundel
+Framing adapted from Mine Çetinkaya-Rundel
+:::
+
+## Use of generative AI, in practice
+
+-   **✅ Coding & debugging help** -- but only *after* you've attempted the problem yourself
+
+-   **❌ Homework, quiz, and project prompts** -- never type these directly into an AI tool
+
+-   **❌ Copy/paste in *or* out** -- never paste course materials into an LLM, and never paste LLM output into your work
+
+-   Copying, paraphrasing, summarizing, or submitting AI-generated work as your own without attribution is **academic dishonesty**
+
+## Protecting your work — and mine 
+
+-   No recording lectures (e.g. Otter.ai) or generating transcripts/study notes from audio or video (unless an official accomodation from the student disability office!)
+
+-   No uploading course materials (slides, prompts, notes) to AI tools or homework-help sites (e.g. Chegg)
+
+-   Not sure if something's OK? **Ask** (and always acknowledge any AI help you use)
+
+-   Suspected violations are handled by the Provost's Office
+
+::: aside
+See "Academic Integrity" in the [course syllabus](../../course-syllabus.qmd) for full details
 :::
 
 ## GitHub {.smaller}
@@ -476,7 +559,7 @@ Some brief advice about selecting your account names (particularly for GitHub),
 
 2.  Complete the welcome survey if you haven't already
 
-3.  Join the slack workspace and post an `#intro` message
+3.  Join the Ed discussion board and respond to the "in class" post from today
 
 4.  Read the syllabus and pass syllabus quiz
 

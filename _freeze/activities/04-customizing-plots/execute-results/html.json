@@ -1,11 +1,9 @@
 {
-  "hash": "6ecf593a646be0d49291a887e3c03f70",
+  "hash": "a36e7b43c02e806261eb7ae749c6f0a8",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"04: Customizing plots\"\n---\n\n::: callout-tip\nIf you need a refresher for how to access the quarto file from this document, see [Activity01](01-un-votes.html)\n:::\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(ggthemes)\n```\n:::\n\n\n## Load Data\n\n*Note:* This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph! \n\n\n::: {.cell}\n\n```{.r .cell-code}\n#season_summary = readr::read_csv(\"https://raw.githubusercontent.com/stat220-f26/stat220-f26.github.io/refs/heads/main/data/survivor_season_summary.csv\") |>\n#  separate(timeslot, into = c(\"day_of_week\", \"time\"))\n```\n:::\n\n\n## Replicate histogram\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Include your code here\n```\n:::\n\n\n",
-    "supporting": [
-      "04-customizing-plots_files"
-    ],
+    "markdown": "---\ntitle: \"04: Customizing plots\"\n---\n\n::: callout-tip\nIf you need a refresher for how to access the quarto file from this document, see [Activity01](01-college-tuition-pay.html)\n:::\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(ggthemes)\n```\n:::\n\n\n## Load Data\n\n*Note:* This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph! \n\n\n::: {.cell}\n\n```{.r .cell-code}\n#season_summary = readr::read_csv(\"https://raw.githubusercontent.com/stat220-f26/stat220-f26.github.io/refs/heads/main/data/survivor_season_summary.csv\") |>\n#  separate(timeslot, into = c(\"day_of_week\", \"time\"))\n```\n:::\n\n\n## Replicate histogram\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Include your code here\n```\n:::\n\n\n",
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
