@@ -19,3 +19,5 @@
 .Rhistory
 .RData
 .Ruserdata
+
+/.luarc.json
