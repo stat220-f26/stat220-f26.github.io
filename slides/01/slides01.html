@@ -246,7 +246,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_3aeeabed" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_e4b46390" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -268,18 +268,19 @@ Prof Amanda Luby
 <h2>Sneak peek: class survey data</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9 × 4
-  class_year  tabs northfield_food                                       googled
-  &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                                                 &lt;chr&gt;  
-1 Junior         6 Tin Tea!                                              "GitHu…
-2 Junior        13 Burton or the Blast                                   "Famil…
-3 Senior         5 Hogan Brothers                                        "can a…
-4 Senior         4 Not the dining halls                                   &lt;NA&gt;  
-5 Junior        12 Desi Diner                                            "GitHu…
-6 Senior         6 Desi Diner is always the best but Hideaway is lowkey… "Carle…
-7 Sophomore      6 Tinn's                                                "tv at…
-8 Junior         7 Hogan Bros!!!                                         "\"Wha…
-9 Junior         9 Tanzenwald                                            "usa w…</code></pre>
+<pre><code># A tibble: 10 × 4
+   class_year  tabs northfield_food     googled                                 
+   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;                                   
+ 1 Senior        10 Gran Plaza          "hateno village botw"                   
+ 2 Senior        48 Hogan Brothers      "What is rstudio"                       
+ 3 Senior         6 Home kitchen        "\"is there really visual learner resea…
+ 4 Junior         2 Tanzenwald          "Are refried beans vegetarian?"         
+ 5 Junior        58 Gran Plaza          "Stridor definition"                    
+ 6 Junior         9 Culver's            "Github"                                
+ 7 Sophomore     22 Desi Diner          "Monty Python and the Holy Grail"       
+ 8 Sophomore      6 Tinn's              "tv at target"                          
+ 9 Junior         8 At the coop!        "US open winner"                        
+10 Junior        13 Burton or the Blast "Family Fare Rewards 😂 (my rewards thin…</code></pre>
 </div>
 </div>
 </section>
@@ -348,7 +349,7 @@ Prof Amanda Luby
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">summary</span>(survey<span class="sc">$</span>tabs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  4.000   6.000   6.000   7.556   9.000  13.000 </code></pre>
+   2.00    6.00   10.00   15.15   18.50   58.00 </code></pre>
 </div>
 </div>
 </section>
@@ -376,15 +377,32 @@ Prof Amanda Luby
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>survey<span class="sc">$</span>northfield_food</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Hogan Brothers"                                                
-[2] "Hogan Bros!!!"                                                 
-[3] "Tin Tea!"                                                      
-[4] "Tinn's"                                                        
-[5] "Not the dining halls"                                          
-[6] "Desi Diner"                                                    
-[7] "Tanzenwald"                                                    
-[8] "Burton or the Blast"                                           
-[9] "Desi Diner is always the best but Hideaway is lowkey slept on."</code></pre>
+<pre><code> [1] "Hogan Brothers"                                                
+ [2] "Hogan Bros!!!"                                                 
+ [3] "Tin Tea!"                                                      
+ [4] "Tinn's"                                                        
+ [5] "Not the dining halls"                                          
+ [6] "Desi Diner"                                                    
+ [7] "Tanzenwald"                                                    
+ [8] "Burton or the Blast"                                           
+ [9] "Desi Diner is always the best but Hideaway is lowkey slept on."
+[10] "Desi Diner"                                                    
+[11] "Home kitchen"                                                  
+[12] "At the coop!"                                                  
+[13] "Gran Plaza"                                                    
+[14] "desi diner"                                                    
+[15] "I wouldn't know"                                               
+[16] "Toyko Grill, Culver's"                                         
+[17] "Desi Diner"                                                    
+[18] "Hogan Brothers"                                                
+[19] "Culver's"                                                      
+[20] "El Triunfo"                                                    
+[21] "Gran Plaza"                                                    
+[22] "Gran Plaza"                                                    
+[23] "Carbones"                                                      
+[24] "Downtown"                                                      
+[25] "Desi Diner"                                                    
+[26] "Tanzenwald"                                                    </code></pre>
 </div>
 </div>
 </section>
@@ -422,15 +440,32 @@ Prof Amanda Luby
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>survey<span class="sc">$</span>googled</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "can a nissan rogue use ethonal gas?"                    
-[2] "\"What does GI stand for?\" (In a military sense)"      
-[3] "GitHub"                                                 
-[4] "tv at target"                                           
-[5] NA                                                       
-[6] "GitHub!"                                                
-[7] "usa women's basketball"                                 
-[8] "Family Fare Rewards 😂 (my rewards thing was broken...)"
-[9] "Carleton Moodle"                                        </code></pre>
+<pre><code> [1] "can a nissan rogue use ethonal gas?"                                
+ [2] "\"What does GI stand for?\" (In a military sense)"                  
+ [3] "GitHub"                                                             
+ [4] "tv at target"                                                       
+ [5] NA                                                                   
+ [6] "GitHub!"                                                            
+ [7] "usa women's basketball"                                             
+ [8] "Family Fare Rewards 😂 (my rewards thing was broken...)"            
+ [9] "Carleton Moodle"                                                    
+[10] "github.com/dashboard"                                               
+[11] "\"is there really visual learner research\""                        
+[12] "US open winner"                                                     
+[13] "hateno village botw"                                                
+[14] "Googling how to spell minneapolis :("                               
+[15] "I went to google when the LDC cafeteria opened for dinner yesterday"
+[16] "Toyko"                                                              
+[17] "Monty Python and the Holy Grail"                                    
+[18] "What is rstudio"                                                    
+[19] "Github"                                                             
+[20] "minnesota frost season"                                             
+[21] "Carleton College stats courses"                                     
+[22] "Stridor definition"                                                 
+[23] "Howard Cross"                                                       
+[24] "Carleton special Monday convo schedule"                             
+[25] "carleton schedule"                                                  
+[26] "Are refried beans vegetarian?"                                      </code></pre>
 </div>
 </div>
 </section>
@@ -571,7 +606,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_4303e5ec" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_2bea8f8c" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -598,7 +633,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_69a82832" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_dc42c948" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">04</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
