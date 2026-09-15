@@ -65,7 +65,7 @@ What percentage of homework problems do you need to successfully complete to ear
 
 How many tokens do you have available to use throughout the term?
 
-**5**
+**4**
 
 ## Syllabus Quiz
 
@@ -73,7 +73,7 @@ What room of the CMC are Amanda's drop-in hours in?
 
 ::: nonincremental
 
-- [ ] CMC 223 - Amanda's office
+- [ ] CMC 327 - Amanda's office
 - [ ] CMC 306 - Our classroom
 - [X] CMC 307
 :::
@@ -97,7 +97,7 @@ What scenarios describe an **inappropriate** use of AI in Stat220?
 
 ::: nonincremental
 
-- Software packages for local installation
+- Why quarto?
 - Will the lab quizzes require memorizing R code?
 - Tokens
 :::
@@ -166,7 +166,7 @@ What scenarios describe an **inappropriate** use of AI in Stat220?
 :::: nonincremental
 ::: task 
 
--   Follow the "Individual Assignment" directions at <https://stat220-s25.github.io/computing/git-stat220.html> to access your `day02` repo and create an R project
+-   Follow the "Individual Assignment" directions at <https://stat220-f26.github.io/computing/git-stat220.html> to access your `day02` repo and create an R project
 -   Edit the .qmd file:
     -   Change "author" to your name
     -   Use `#` to add descriptive section headers for each code chunk
@@ -453,7 +453,7 @@ right values.
 
 3.  Change the code chunk where you load the data set to use the `data` parameter you just defined rather than the hard-coded URL. Make sure the report knits.
 
-4.  Now, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it `data_source`) and set it equal to “the [2022-09-09 repository](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-09-06) on [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday).” Make sure the report knits.
+4.  Now, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it `data_source`) and set it equal to “the [2022-09-06 repository](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-09-06) on [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday).” Make sure the report knits.
 
 5. At this point it looks like everything is working—awesome job! To put it to the test, let’s update the parameters of your report and knit it to see if everything changes as we would expect. Here are the new parameter values:
 
