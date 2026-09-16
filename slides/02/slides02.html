@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8f4e3aabaa80e3e650ae20f2c24f966b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8cab17c520dfb5fd83702a774e8ef3fe.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>Stat 220 – Github +   Reproducible   Reporting</title>
@@ -251,13 +251,13 @@ Prof Amanda Luby
 <section id="syllabus-quiz-2" class="slide level2">
 <h2>Syllabus Quiz</h2>
 <p>How many tokens do you have available to use throughout the term?</p>
-<p><strong>5</strong></p>
+<p><strong>4</strong></p>
 </section>
 <section id="syllabus-quiz-3" class="slide level2">
 <h2>Syllabus Quiz</h2>
 <p>What room of the CMC are Amanda’s drop-in hours in?</p>
 <ul class="task-list">
-<li><label><input type="checkbox">CMC 223 - Amanda’s office</label></li>
+<li><label><input type="checkbox">CMC 327 - Amanda’s office</label></li>
 <li><label><input type="checkbox">CMC 306 - Our classroom</label></li>
 <li><label><input type="checkbox" checked="">CMC 307</label></li>
 </ul>
@@ -277,7 +277,7 @@ Prof Amanda Luby
 <section id="questions-from-syllabus-quiz" class="slide level2">
 <h2>Questions from syllabus quiz</h2>
 <ul>
-<li>Software packages for local installation</li>
+<li>Why quarto?</li>
 <li>Will the lab quizzes require memorizing R code?</li>
 <li>Tokens</li>
 </ul>
@@ -351,7 +351,7 @@ Prof Amanda Luby
 <h2>Let’s try it!</h2>
 <div class="task">
 <ul>
-<li>Follow the “Individual Assignment” directions at <a href="https://stat220-s25.github.io/computing/git-stat220.html" class="uri">https://stat220-s25.github.io/computing/git-stat220.html</a> to access your <code>day02</code> repo and create an R project</li>
+<li>Follow the “Individual Assignment” directions at <a href="https://stat220-f26.github.io/computing/git-stat220.html" class="uri">https://stat220-f26.github.io/computing/git-stat220.html</a> to access your <code>day02</code> repo and create an R project</li>
 <li>Edit the .qmd file:
 <ul>
 <li>Change “author” to your name</li>
@@ -382,7 +382,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_6ba8635f" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_6df7f520" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -631,7 +631,7 @@ test_function(20)
 <ol start="2" type="1">
 <li><p>Next, add a parameter to your YAML header that stores the location of the data set. Make sure the report knits.</p></li>
 <li><p>Change the code chunk where you load the data set to use the <code>data</code> parameter you just defined rather than the hard-coded URL. Make sure the report knits.</p></li>
-<li><p>Now, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it <code>data_source</code>) and set it equal to “the <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-09-06">2022-09-09 repository</a> on <a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday</a>.” Make sure the report knits.</p></li>
+<li><p>Now, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it <code>data_source</code>) and set it equal to “the <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-09-06">2022-09-06 repository</a> on <a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday</a>.” Make sure the report knits.</p></li>
 <li><p>At this point it looks like everything is working—awesome job! To put it to the test, let’s update the parameters of your report and knit it to see if everything changes as we would expect. Here are the new parameter values:</p></li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a></a><span class="fu">data</span><span class="kw">:</span><span class="at"> </span><span class="st">"https://raw.githubusercontent.com/stat220-f26/stat220-f26.github.io/refs/heads/main/data/lego_subset.csv"</span></span>
