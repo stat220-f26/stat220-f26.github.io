@@ -3488,7 +3488,7 @@
     "href": "slides/02/slides02.html#homework-in-stat220",
     "title": "Github +  Reproducible  Reporting",
     "section": "Homework in Stat220",
-    "text": "Homework in Stat220\n\nTypically due on Wednesdays (Week 1: Friday)\nDue at 10pm (aligns with end of Stat Lab)\n12 hour grace period (no penalty if turned in by 10am on Thurs)\nBeyond that, must use a token. Token form must be submitted by end of grace period (see Useful Links)"
+    "text": "Homework in Stat220\n\nTypically due on Wednesdays (Week 1: Friday)\nDue at 10pm (aligns with Skills Center hours)\n12 hour grace period (no penalty if turned in by 10am on Thurs)\nBeyond that, must use a token. Token form must be submitted by end of grace period (see Useful Links)"
   },
   {
     "objectID": "slides/02/slides02.html#git-github",
@@ -3551,7 +3551,7 @@
     "href": "slides/02/slides02.html#lets-try-it",
     "title": "Github +  Reproducible  Reporting",
     "section": "Let’s try it!",
-    "text": "Let’s try it!\n\n\nFollow the “Individual Assignment” directions at https://stat220-f26.github.io/computing/git-stat220.html to access your day02 repo and create an R project\nEdit the .qmd file:\n\nChange “author” to your name\nUse # to add descriptive section headers for each code chunk\nAdd a sentence or two describing the summary statistics of the dataset\n\nrender ➡️ commit ✅ push ⤴️\nView on github.com and confirm you can see your changes\n\n\n\n\n\n\n\n\nHelp! I don’t have a day02 repo\n\n\n\nNever received github invite → Fill out the Welcome survey\nNever accepted GitHub invite → Look for it in your email and accept it\nOpening repo in Rstudio failes → Review/redo the steps in Git/Github for Stat220 for setting up PAT\nStill no luck? → Come to office hours or make an appointment with me!\n\n\n\n\n\n\n\n−+\n15:00"
+    "text": "Let’s try it!\n\n\nFollow the “Individual Assignment” directions at https://stat220-f26.github.io/computing/git-stat220.html to access your day02 repo and create an R project\nEdit the .qmd file:\n\nChange “author” to your name\nAdd a sentence or two describing the summary statistics of the dataset\n\nrender ➡️ commit ✅ push ⤴️\nView on github.com and confirm you can see your changes\n\n\n\n\n\n\n\n\nHelp! I don’t have a day02 repo\n\n\n\nNever received github invite → Fill out the Welcome survey\nNever accepted GitHub invite → Look for it in your email and accept it or try visiting &lt;github.com/stat220-f26&gt; while logged in\nOpening repo in Rstudio fails → Review/redo the steps in Git/Github for Stat220 for setting up PAT\nStill no luck? → Come to office hours or make an appointment with me!\n\n\n\n\n\n\n\n−+\n15:00"
   },
   {
     "objectID": "slides/02/slides02.html#why-do-we-need-it-1",
