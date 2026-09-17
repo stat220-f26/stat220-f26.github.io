@@ -33,7 +33,7 @@ The data we're using today contains information about all seasons of *Survivor* 
 ```{r}
 #| eval: TRUE
 
-survivor_episodes = readr::read_csv("../data/survivor_episodes.csv") # https://stat220-f26.github.io/data/survivor_episodes.csv
+survivor_episodes = readr::read_csv("../../data/survivor_episodes.csv") # https://stat220-f26.github.io/data/survivor_episodes.csv
 
 ```
 
@@ -53,25 +53,32 @@ survivor_episodes = readr::read_csv("../data/survivor_episodes.csv") # https://s
 
 **`r (q <- q+1)`.** To get started, load the `{tidyverse}` and and take a `glimpse` at the dataset. How many rows and columns are there? What does each row represent?
 
-::: callout-tip
-Loading the `{tidyverse}` loads 8 packages, one of which is `{ggplot2}`. You can certainly load each package individually, but it's often easier to just load the whole thing. 
-:::
+> Each row is an individual episode. There are 1,136 rows and 9 columns. 
+
+```{r}
+library(tidyverse)
+glimpse(survivor_episodes)
+```
+
 
 **`r (q <- q+1)`.** Skim through the data a bit. Do you notice any variables or rows that have lots of missing data? 
 
-::: callout-tip
-Missing data is normal — just something to be aware of, not something to fix today.
-:::
+> Yes, `viewers` has lots of missing data
 
 **`r (q <- q+1)`.** For example, the chunk below selects the `viewers` column. Run `summary(survivor_episodes$viewers)` and describe what you find. (What does the `NA's` line in the output mean?)
 
+> This gives the summary statistics for the variable - the NA's indicates that there were 358 entries with missing data
 
 ```{r}
-#survivor_episodes$viewers
+summary(survivor_episodes$viewers)
 ```
 
 
 **`r (q <- q+1)`.** Another handy function is `unique()`. Run `unique()` on the `version` variable to see which countries have their own version of *Survivor*.
+
+```{r}
+unique(survivor_episodes$version)
+```
 
 ::: callout-important
 ## Wait!
@@ -93,13 +100,14 @@ A note on wording: when we say `viewers` vs. `episode_number_overall`, this shou
 
 ```{r}
 # Fill in the blanks
-ggplot(data = ___, mapping = aes(x = ___, y = ___))
+ggplot(data = survivor_episodes, mapping = aes(y = viewers, x = episode_number_overall)) 
 ```
 
 **`r (q <- q+1)`.** Add the appropriate `geom`etric object to create the scatterplot. This is called adding a layer to a plot. Remember to always put the `+` at the end of a line, never at the start.
 
 ```{r}
-# Copy your code from the previous chunk and add a geom
+ggplot(data = survivor_episodes, mapping = aes(y = viewers, x = episode_number_overall)) + 
+  geom_point()
 ```
 
 What do you notice? Write a sentence or two describing your findings
@@ -108,20 +116,23 @@ What do you notice? Write a sentence or two describing your findings
 
 ```{r}
 # Add a layer and see what happens
-ggplot(data = ___, x = ___, y = ___)
+ggplot(data = survivor_episodes, x = viewers, y = episode_number_overall)
 ```
 
 **`r (q <- q+1)`.** The aesthetic mappings can be specified in the `geom` layer if you prefer, instead of the main `ggplot()` call. Give it a try:
 
 ```{r}
 # Rebuild the scatterplot with your aesthetic mapping in the geom layer
-ggplot(data = ___)
+ggplot(data = survivor_episodes) + 
+  geom_point(mapping = aes(y = viewers, x = episode_number_overall))
 ```
 
 **Bonus, if you have time:** add a `geom_smooth()` layer to your scatterplot from question `r q-2` (`aes` in the ggplot call). Does the trend line back up your guess from the start of this round, or complicate it?
 
 ```{r}
-# Add geom_smooth() to your scatterplot
+ggplot(data = survivor_episodes, mapping = aes(y = viewers, x = episode_number_overall)) + 
+  geom_point() + 
+  geom_smooth()
 ```
 
 ::: callout-important
@@ -137,24 +148,53 @@ Stop here and wait for the next round of groups before moving on
 **`r (q <- q+1)`.** Create a scatterplot of `viewers` vs. `imdb_rating`. Add the `color` aesthetic to map `version` to the point color. Does the plot support your guess?
 
 ```{r}
-ggplot(data = ___) +
-  geom_point(aes(x = ___, y = ___, color = ___))
+ggplot(data = survivor_episodes) +
+  geom_point(aes(x = imdb_rating, y = viewers, color = version))
 ```
 
 **`r (q <- q+1)`.** Create a scatterplot of `viewers` vs. `imdb_rating`. Use `shape` to represent `version`. Is this plot easier or harder to interpret than the previous plot?
 
+```{r}
+ggplot(data = survivor_episodes) +
+  geom_point(aes(x = imdb_rating, y = viewers, shape = version))
+```
+
 **`r (q <- q+1)`.** Create a scatterplot of `viewers` vs. `imdb_rating`. Use both `shape` and `color` to represent `version`. Is this plot easier or harder to interpret than the previous two plots?
+
+```{r}
+ggplot(data = survivor_episodes) +
+  geom_point(aes(x = imdb_rating, y = viewers, shape = version, color = version))
+```
 
 **`r (q <- q+1)`.** Create a scatterplot of `viewers` vs. `imdb_rating`. Use `color` to represent the `season`. What did you learn from the plot?
 
+```{r}
+ggplot(data = survivor_episodes) +
+  geom_point(aes(x = imdb_rating, y = viewers, color = season))
+```
+
 **`r (q <- q+1)`.** Create a scatterplot of `viewers` vs. `imdb_rating`. Use `size` to represent the `season`.
+
+```{r}
+ggplot(data = survivor_episodes) +
+  geom_point(aes(x = imdb_rating, y = viewers, size = season))
+```
 
 **`r (q <- q+1)`.** Look back at your scatterplots from the last few questions. Explain the differences when you map aesthetics to discrete and continuous variables.
 
 **`r (q <- q+1)`.** Create a scatterplot of `viewers` vs. `imdb_rating`. Use `alpha` to represent the `season`.
 
+```{r}
+ggplot(data = survivor_episodes) +
+  geom_point(aes(x = imdb_rating, y = viewers, alpha = season))
+```
+
 **Bonus, if you have time:** a lot of episodes share the same rounded IMDB rating, so points are stacking on top of each other. Try `geom_jitter()` instead of `geom_point()` (same syntax!) on the `viewers` vs. `imdb_rating` scatterplot. What do you notice?
 
+```{r}
+ggplot(data = survivor_episodes) +
+  geom_jitter(aes(x = imdb_rating, y = viewers))
+```
 
 ::: callout-important
 ## Wait!
@@ -169,7 +209,7 @@ For the rest of today we'll switch to a different dataset from the same package:
 ```{r}
 #| eval: TRUE
 
-survivor_confessionals = readr::read_csv("../data/survivor_confessionals.csv") # https://stat220-f26.github.io/data/survivor_confessionals.csv
+survivor_confessionals = readr::read_csv("../../data/survivor_confessionals.csv") # https://stat220-f26.github.io/data/survivor_confessionals.csv
 ```
 
 - `season`, `version`: same as before
@@ -182,8 +222,8 @@ survivor_confessionals = readr::read_csv("../data/survivor_confessionals.csv") #
 
 ```{r}
 # Fill in the blanks
-ggplot(___) +
-  geom_histogram(aes(x = ___))
+ggplot(survivor_confessionals) +
+  geom_histogram(aes(x = confessional_count))
 ```
 
 What have you learned about the distribution of confessional counts?
@@ -192,24 +232,31 @@ What have you learned about the distribution of confessional counts?
 
 ```{r}
 # Fill in the blanks
-ggplot(___) +
-  geom_histogram(aes(x = ___), bins = ___)
+ggplot(survivor_confessionals) +
+  geom_histogram(aes(x = confessional_count), bins = 15)
 ```
 
 **`r (q <- q+1)`.** Instead of a histogram, let's create a kernel density plot. To do this, substitute geom_density() into your code for question `r q-2`.
+
+```{r}
+# Fill in the blanks
+ggplot(survivor_confessionals) +
+  geom_density(aes(x = confessional_count))
+```
 
 **`r (q <- q+1)`.** Prediction: as *Survivor* has racked up more seasons, do you think the typical number of confessionals per person has gone up, gone down, or stayed about the same? Make your guess, then make side-by-side boxplots of `confessional_count` for each `era`.
 
 ```{r}
 # Fill in the blanks
-ggplot(___) +
-  geom_boxplot(aes(x = ___, y = ___))
+ggplot(survivor_confessionals) +
+  geom_boxplot(aes(x = era, y = confessional_count))
 ```
 
 **`r (q <- q+1)`.** A violin plot is a kernel density on its side, made symmetric. Change your code from question `r q-1` to use `geom_violin()`. Which plot do you prefer, boxplots or violin plots? Why?
 
 ```{r}
-# Put your violin plot code here
+ggplot(survivor_confessionals) +
+  geom_violin(aes(x = era, y = confessional_count))
 ```
 
 **Bonus, if you have time:** try `geom_jitter()` on top of (or instead of) your boxplot/violin from the last two questions. A lot of castaways get 0 or 1 confessionals in a given episode — what does jitter show you about that pile-up that the boxplot and violin plot hide?

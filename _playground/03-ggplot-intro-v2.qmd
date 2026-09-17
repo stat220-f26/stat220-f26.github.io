@@ -1,8 +1,14 @@
 ---
 title: Intro to `ggplot2`
+subtitle: "DRAFT — episodes (Rounds 1-3) + confessionals (Rounds 4-5)"
 execute:
   eval: false
 ---
+
+<!-- DRAFT in _playground/. If you like this direction: move to
+activities/03-ggplot-intro.qmd, swap the ../data/ paths for the
+https://stat220-f26.github.io/data/... pattern used elsewhere on the site
+(see setup chunk), and delete this subtitle + this comment. -->
 
 ```{r setup, include=FALSE}
 #| eval: true
@@ -34,7 +40,6 @@ The data we're using today contains information about all seasons of *Survivor* 
 #| eval: TRUE
 
 survivor_episodes = readr::read_csv("../data/survivor_episodes.csv") # https://stat220-f26.github.io/data/survivor_episodes.csv
-
 ```
 
 - `season`: the number of each season
@@ -46,32 +51,28 @@ survivor_episodes = readr::read_csv("../data/survivor_episodes.csv") # https://s
 - `imdb_rating`: the episode's average IMDB rating
 - `n_ratings`: how many IMDB users rated the episode
 
+Two things to know about this data before you start: `viewers` is missing for
+about a third of episodes (older or international episodes that were never
+reported to Nielsen), and `imdb_rating`/`n_ratings` are missing for about 10%.
+Missing data is normal — just something to notice, not something to fix today.
 
 # Speed Groupwork
 
 ## Round 1: View the data and summary statistics
 
-**`r (q <- q+1)`.** To get started, load the `{tidyverse}` and and take a `glimpse` at the dataset. How many rows and columns are there? What does each row represent?
+**`r (q <- q+1)`.** To get started, load the `{tidyverse}` and take a `glimpse` at the dataset. How many rows and columns are there? What does each row represent?
 
-::: callout-tip
-Loading the `{tidyverse}` loads 8 packages, one of which is `{ggplot2}`. You can certainly load each package individually, but it's often easier to just load the whole thing. 
-:::
+Loading the `{tidyverse}` loads 8 packages, one of which is `{ggplot2}`. You can certainly load each package individually, but it's often easier to just load the whole thing.
 
-**`r (q <- q+1)`.** Skim through the data a bit. Do you notice any variables or rows that have lots of missing data? 
-
-::: callout-tip
-Missing data is normal — just something to be aware of, not something to fix today.
-:::
-
-**`r (q <- q+1)`.** For example, the chunk below selects the `viewers` column. Run `summary(survivor_episodes$viewers)` and describe what you find. (What does the `NA's` line in the output mean?)
-
+**`r (q <- q+1)`.** To access a column in the dataset, we can use `$`. For example, the chunk below selects the `viewers` column.
 
 ```{r}
 #survivor_episodes$viewers
 ```
 
+Run `summary(survivor_episodes$viewers)` and describe what you find. (What does the `NA's` line in the output mean?)
 
-**`r (q <- q+1)`.** Another handy function is `unique()`. Run `unique()` on the `version` variable to see which countries have their own version of *Survivor*.
+**`r (q <- q+1)`.** Another handy function is `unique()`. Run `unique()` on the `version` variable to see which countries have made their own version of *Survivor*.
 
 ::: callout-important
 ## Wait!
@@ -82,8 +83,6 @@ Stop here and wait for the next round of groups before moving on
 ## Round 2: Scatterplots
 
 Guess: over *Survivor*'s 25-year, 47-season run, has episode viewership gone up or down?
-
-First, let’s create a scatterplot of `viewers_finale` (the number of viewers for the last episode of the season) vs. `viewers_premiere` (the number of viewers for the first episode of the season).
 
 First, let's create a scatterplot of `viewers` (the number of people watching) vs. `episode_number_overall` (how far into the show's history that episode is).
 
@@ -102,7 +101,7 @@ ggplot(data = ___, mapping = aes(x = ___, y = ___))
 # Copy your code from the previous chunk and add a geom
 ```
 
-What do you notice? Write a sentence or two describing your findings
+What do you notice? Was your guess right? Write a sentence or two describing your findings.
 
 **`r (q <- q+1)`.** You must remember to put the aesthetic mappings in the `aes()` function! What happens if you forget?
 
@@ -118,7 +117,7 @@ ggplot(data = ___, x = ___, y = ___)
 ggplot(data = ___)
 ```
 
-**Bonus, if you have time:** add a `geom_smooth()` layer to your scatterplot from question `r q-2` (`aes` in the ggplot call). Does the trend line back up your guess from the start of this round, or complicate it?
+**Bonus, if you have time:** add a `geom_smooth()` layer to your scatterplot from question `r q-2`. Does the trend line back up your guess from the start of this round, or complicate it?
 
 ```{r}
 # Add geom_smooth() to your scatterplot
@@ -132,14 +131,16 @@ Stop here and wait for the next round of groups before moving on
 
 ## Round 3: Additional Aesthetics
 
-`x` and `y` are not the only aesthetic mappings possible. In this section you’ll explore the `color`, `size`, `shape`, and `alpha` (i.e. transparency) aesthetics. This time you'll focus on a different question: **does a better-reviewed episode draw more viewers, or are ratings and popularity unrelated?** Make a guess before you start plotting.
+`x` and `y` are not the only aesthetic mappings possible. In this section you'll explore the `color`, `size`, `shape`, and `alpha` (i.e. transparency) aesthetics — this time on a different question: **does a better-reviewed episode draw more viewers, or are ratings and popularity unrelated?** Make a guess before you start plotting.
 
-**`r (q <- q+1)`.** Create a scatterplot of `viewers` vs. `imdb_rating`. Add the `color` aesthetic to map `version` to the point color. Does the plot support your guess?
+**`r (q <- q+1)`.** Create a scatterplot of `viewers` vs. `imdb_rating`. Add the `color` aesthetic to map `version` to the point color.
 
 ```{r}
 ggplot(data = ___) +
   geom_point(aes(x = ___, y = ___, color = ___))
 ```
+
+Does the plot support your guess?
 
 **`r (q <- q+1)`.** Create a scatterplot of `viewers` vs. `imdb_rating`. Use `shape` to represent `version`. Is this plot easier or harder to interpret than the previous plot?
 
@@ -153,8 +154,11 @@ ggplot(data = ___) +
 
 **`r (q <- q+1)`.** Create a scatterplot of `viewers` vs. `imdb_rating`. Use `alpha` to represent the `season`.
 
-**Bonus, if you have time:** a lot of episodes share the same rounded IMDB rating, so points are stacking on top of each other. Try `geom_jitter()` instead of `geom_point()` (same syntax!) on the `viewers` vs. `imdb_rating` scatterplot. What do you notice?
+**Bonus, if you have time:** a lot of episodes share the same rounded IMDB rating, so points are stacking on top of each other. Try `geom_count()` instead of `geom_point()` (same syntax!) on the `viewers` vs. `imdb_rating` scatterplot. What does the size of each point represent now?
 
+```{r}
+# Same aes() as before, but with geom_count()
+```
 
 ::: callout-important
 ## Wait!
@@ -164,7 +168,7 @@ Stop here and wait for the next round of groups before moving on
 
 ## Round 4: Visualizing Distributions
 
-For the rest of today we'll switch to a different dataset from the same package: `confessionals`, which has one row per castaway per episode, recording how many on-camera "confessional" interviews they gave.
+For the rest of today we'll switch to a different table from the same package: `confessionals`, which has one row per castaway per episode, recording how many on-camera "confessional" interviews they gave.
 
 ```{r}
 #| eval: TRUE
@@ -198,7 +202,7 @@ ggplot(___) +
 
 **`r (q <- q+1)`.** Instead of a histogram, let's create a kernel density plot. To do this, substitute geom_density() into your code for question `r q-2`.
 
-**`r (q <- q+1)`.** Prediction: as *Survivor* has racked up more seasons, do you think the typical number of confessionals per person has gone up, gone down, or stayed about the same? Make your guess, then make side-by-side boxplots of `confessional_count` for each `era`.
+**`r (q <- q+1)`.** Prediction: as *Survivor* has racked up more seasons and (usually) more castaways per season, do you think the typical number of confessionals per person has gone up, gone down, or stayed about the same? Make your guess, then make side-by-side boxplots of `confessional_count` for each `era`.
 
 ```{r}
 # Fill in the blanks
@@ -217,7 +221,6 @@ ggplot(___) +
 ```{r}
 # Add or swap in geom_jitter()
 ```
-
 
 ::: callout-important
 ## Wait!
@@ -282,10 +285,8 @@ ggplot(data = mpg) +
 ::: callout-important
 ## When you're done
 
-Make a post on the "Week 1 - Friday" discussion thread on Ed. 
+Make a post on the "Week 1 - Friday" discussion thread on Ed.
 
 - Option 1: If you have any lingering questions about ggplot, feel free to post them
-- Option 2: You can also post your final graph for the last question! 
+- Option 2: You can also post your final graph for the last question!
 :::
-
-

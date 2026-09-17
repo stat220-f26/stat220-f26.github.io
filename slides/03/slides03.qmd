@@ -33,15 +33,14 @@ theme_set(slides_theme)
 
 ## Communication in Stat220
 
-Until HW2 is due on Wednesday, trying out both Slack and Ed
 
 ::: nonincremental
-- For help with R or homework &rarr; slack/Ed
-- For quick communication  &rarr; slack/Ed
+- For help with R or homework &rarr; Ed
+- For quick communication  &rarr; Ed
 - For personal situations &rarr; email
 :::
 
-I check Slack/Ed 2x daily and respond to everything, so you can expect a response within 24 hours during the work week. I try to respond to emails daily but Stat220 gets "lumped" with everything else. I'll try to respond within 48 hours during the week.
+I check Ed 2x daily and respond to everything, so you can expect a response within 24 hours during the work week. I try to respond to emails daily but Stat220 gets "lumped" with everything else. I'll try to respond within 48 hours during the week.
 
 ## Plan for today:
 
