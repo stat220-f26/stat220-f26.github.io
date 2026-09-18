@@ -449,7 +449,7 @@ Tip
 </div>
 <p>The data we’re using today contains information about all seasons of <em>Survivor</em> and comes from the <a href="https://github.com/doehm/survivoR">survivoR</a> R package. In the show, a group of people (called castaways) are placed in an isolated location, where they must provide food, fire, and shelter for themselves. The castaways compete in challenges testing the contestants’ physical abilities like running and swimming or their mental abilities like puzzles and endurance challenges for rewards and immunity from elimination. The castaways are progressively eliminated from the game as they are voted out by their fellow contestants until only two or three remain. At that point, the players who were eliminated (the “jury”) vote for the winner. The winner is given the title of “Sole Survivor” and is awarded the grand prize of $1,000,000</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">survivor_episodes</span> <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../data/survivor_episodes.csv"</span><span class="op">)</span> <span class="co"># https://stat220-f26.github.io/data/survivor_episodes.csv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">survivor_episodes</span> <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://stat220-f26.github.io/data/survivor_episodes.csv"</span><span class="op">)</span> <span class="co">#</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>
@@ -519,7 +519,6 @@ Tip
 </div>
 </section><section id="round-2-scatterplots" class="level2"><h2 class="anchored" data-anchor-id="round-2-scatterplots">Round 2: Scatterplots</h2>
 <p>Guess: over <em>Survivor</em>’s 25-year, 47-season run, has episode viewership gone up or down?</p>
-<p>First, let’s create a scatterplot of <code>viewers_finale</code> (the number of viewers for the last episode of the season) vs.&nbsp;<code>viewers_premiere</code> (the number of viewers for the first episode of the season).</p>
 <p>First, let’s create a scatterplot of <code>viewers</code> (the number of people watching) vs.&nbsp;<code>episode_number_overall</code> (how far into the show’s history that episode is).</p>
 <p>A note on wording: when we say <code>viewers</code> vs.&nbsp;<code>episode_number_overall</code>, this should be interpreted as “variable on the y-axis” vs.&nbsp;“variable on the x-axis”.</p>
 <p><strong>5.</strong> Fill in the data and aesthetic mapping in the below code chunk. What is returned? What’s missing?</p>
@@ -589,7 +588,7 @@ Tip
 </section><section id="round-4-visualizing-distributions" class="level2"><h2 class="anchored" data-anchor-id="round-4-visualizing-distributions">Round 4: Visualizing Distributions</h2>
 <p>For the rest of today we’ll switch to a different dataset from the same package: <code>confessionals</code>, which has one row per castaway per episode, recording how many on-camera “confessional” interviews they gave.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">survivor_confessionals</span> <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../data/survivor_confessionals.csv"</span><span class="op">)</span> <span class="co"># https://stat220-f26.github.io/data/survivor_confessionals.csv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">survivor_confessionals</span> <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://stat220-f26.github.io/data/survivor_confessionals.csv"</span><span class="op">)</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>
@@ -663,14 +662,14 @@ Tip
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">finale_confessionals</span> <span class="op">=</span> <span class="va">survivor_confessionals</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="fl">40</span>, <span class="va">episode</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">episode</span><span class="op">[</span><span class="va">season</span> <span class="op">==</span> <span class="fl">40</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Put <code>confessional_count</code> on the x-axis, and <code>castaway</code> on the y-axis. Use <code>geom_col</code> (column) as the geom, using the <code>finale_confessionals</code> data. How is this different than a bar plot?</p>
+<p>Run the code chunk above, then put <code>confessional_count</code> on the x-axis, and <code>castaway</code> on the y-axis. Use <code>geom_col</code> (column) as the geom, using the <code>finale_confessionals</code> data. How is this different than a bar plot?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(finale_confessionals) <span class="sc">+</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Who got the most confessional time in that episode? Does it match who you’d guess actually won the season? (No spoilers if you don’t want them — but the answer’s right there in your plot’s y-axis order, or lack thereof… notice the bars aren’t sorted by value. We’ll fix that with <code>forcats</code> in a few weeks.)</p>
-<p><strong>24.</strong> In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it’s use. Choose one graph from today and add all labels.</p>
+<p>Who got the most confessional time in that episode? Do you think that’s who won the season?</p>
+<p><strong>24.</strong> In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it’s use. Choose one graph from today (or make a new one) and add all labels.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -697,6 +696,7 @@ Tip
 <li>Option 1: If you have any lingering questions about ggplot, feel free to post them</li>
 <li>Option 2: You can also post your final graph for the last question!</li>
 </ul>
+<p><em>Note:</em> this is how I’ll record attendance for today!</p>
 </div>
 </div>
 
@@ -1202,7 +1202,7 @@ Tip
 <span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
 <span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>survivor_episodes <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../data/survivor_episodes.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/survivor_episodes.csv</span></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>survivor_episodes <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://stat220-f26.github.io/data/survivor_episodes.csv"</span>) <span class="co">#</span></span>
 <span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a></span>
@@ -1252,211 +1252,207 @@ Tip
 <span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a>Guess: over *Survivor*'s 25-year, 47-season run, has episode viewership gone up or down?</span>
 <span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a>First, let’s create a scatterplot of <span class="in">`viewers_finale`</span> (the number of viewers for the last episode of the season) vs. <span class="in">`viewers_premiere`</span> (the number of viewers for the first episode of the season).</span>
+<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a>First, let's create a scatterplot of <span class="in">`viewers`</span> (the number of people watching) vs. <span class="in">`episode_number_overall`</span> (how far into the show's history that episode is). </span>
 <span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a>First, let's create a scatterplot of <span class="in">`viewers`</span> (the number of people watching) vs. <span class="in">`episode_number_overall`</span> (how far into the show's history that episode is).</span>
+<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a>A note on wording: when we say <span class="in">`viewers`</span> vs. <span class="in">`episode_number_overall`</span>, this should be interpreted as "variable on the y-axis" vs. "variable on the x-axis".</span>
 <span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a>A note on wording: when we say <span class="in">`viewers`</span> vs. <span class="in">`episode_number_overall`</span>, this should be interpreted as "variable on the y-axis" vs. "variable on the x-axis".</span>
+<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Fill in the data and aesthetic mapping in the below code chunk. What is returned? What's missing?</span>
 <span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Fill in the data and aesthetic mapping in the below code chunk. What is returned? What's missing?</span>
-<span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span>
-<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span>
+<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Add the appropriate <span class="in">`geom`</span>etric object to create the scatterplot. This is called adding a layer to a plot. Remember to always put the <span class="in">`+`</span> at the end of a line, never at the start.</span>
 <span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Add the appropriate <span class="in">`geom`</span>etric object to create the scatterplot. This is called adding a layer to a plot. Remember to always put the <span class="in">`+`</span> at the end of a line, never at the start.</span>
-<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy your code from the previous chunk and add a geom</span></span>
-<span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-109"><a href="#cb20-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-110"><a href="#cb20-110" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy your code from the previous chunk and add a geom</span></span>
+<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a>What do you notice? Write a sentence or two describing your findings</span>
 <span id="cb20-114"><a href="#cb20-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a>What do you notice? Write a sentence or two describing your findings</span>
+<span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** You must remember to put the aesthetic mappings in the <span class="in">`aes()`</span> function! What happens if you forget?</span>
 <span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** You must remember to put the aesthetic mappings in the <span class="in">`aes()`</span> function! What happens if you forget?</span>
-<span id="cb20-118"><a href="#cb20-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a layer and see what happens</span></span>
-<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___, <span class="at">x =</span> ___, <span class="at">y =</span> ___)</span>
-<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-119"><a href="#cb20-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a layer and see what happens</span></span>
+<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___, <span class="at">x =</span> ___, <span class="at">y =</span> ___)</span>
+<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** The aesthetic mappings can be specified in the <span class="in">`geom`</span> layer if you prefer, instead of the main <span class="in">`ggplot()`</span> call. Give it a try:</span>
 <span id="cb20-125"><a href="#cb20-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-126"><a href="#cb20-126" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** The aesthetic mappings can be specified in the <span class="in">`geom`</span> layer if you prefer, instead of the main <span class="in">`ggplot()`</span> call. Give it a try:</span>
-<span id="cb20-127"><a href="#cb20-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebuild the scatterplot with your aesthetic mapping in the geom layer</span></span>
-<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___)</span>
-<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-128"><a href="#cb20-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-129"><a href="#cb20-129" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebuild the scatterplot with your aesthetic mapping in the geom layer</span></span>
+<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___)</span>
+<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** add a <span class="in">`geom_smooth()`</span> layer to your scatterplot from question <span class="in">`r q-2`</span> (<span class="in">`aes`</span> in the ggplot call). Does the trend line back up your guess from the start of this round, or complicate it?</span>
 <span id="cb20-134"><a href="#cb20-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** add a <span class="in">`geom_smooth()`</span> layer to your scatterplot from question <span class="in">`r q-2`</span> (<span class="in">`aes`</span> in the ggplot call). Does the trend line back up your guess from the start of this round, or complicate it?</span>
-<span id="cb20-136"><a href="#cb20-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Add geom_smooth() to your scatterplot</span></span>
-<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
-<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
-<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-138"><a href="#cb20-138" aria-hidden="true" tabindex="-1"></a><span class="co"># Add geom_smooth() to your scatterplot</span></span>
+<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
+<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
+<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 3: Additional Aesthetics</span></span>
 <span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 3: Additional Aesthetics</span></span>
+<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a><span class="in">`x`</span> and <span class="in">`y`</span> are not the only aesthetic mappings possible. In this section you’ll explore the <span class="in">`color`</span>, <span class="in">`size`</span>, <span class="in">`shape`</span>, and <span class="in">`alpha`</span> (i.e. transparency) aesthetics. This time you'll focus on a different question: **does a better-reviewed episode draw more viewers, or are ratings and popularity unrelated?** Make a guess before you start plotting.</span>
 <span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a><span class="in">`x`</span> and <span class="in">`y`</span> are not the only aesthetic mappings possible. In this section you’ll explore the <span class="in">`color`</span>, <span class="in">`size`</span>, <span class="in">`shape`</span>, and <span class="in">`alpha`</span> (i.e. transparency) aesthetics. This time you'll focus on a different question: **does a better-reviewed episode draw more viewers, or are ratings and popularity unrelated?** Make a guess before you start plotting.</span>
+<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Add the <span class="in">`color`</span> aesthetic to map <span class="in">`version`</span> to the point color. Does the plot support your guess?</span>
 <span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Add the <span class="in">`color`</span> aesthetic to map <span class="in">`version`</span> to the point color. Does the plot support your guess?</span>
-<span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___) <span class="sc">+</span></span>
-<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___, <span class="at">color =</span> ___))</span>
-<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-156"><a href="#cb20-156" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___) <span class="sc">+</span></span>
+<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___, <span class="at">color =</span> ___))</span>
+<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`shape`</span> to represent <span class="in">`version`</span>. Is this plot easier or harder to interpret than the previous plot?</span>
 <span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`shape`</span> to represent <span class="in">`version`</span>. Is this plot easier or harder to interpret than the previous plot?</span>
+<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use both <span class="in">`shape`</span> and <span class="in">`color`</span> to represent <span class="in">`version`</span>. Is this plot easier or harder to interpret than the previous two plots?</span>
 <span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use both <span class="in">`shape`</span> and <span class="in">`color`</span> to represent <span class="in">`version`</span>. Is this plot easier or harder to interpret than the previous two plots?</span>
+<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`color`</span> to represent the <span class="in">`season`</span>. What did you learn from the plot?</span>
 <span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`color`</span> to represent the <span class="in">`season`</span>. What did you learn from the plot?</span>
+<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`size`</span> to represent the <span class="in">`season`</span>.</span>
 <span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`size`</span> to represent the <span class="in">`season`</span>.</span>
+<span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Look back at your scatterplots from the last few questions. Explain the differences when you map aesthetics to discrete and continuous variables.</span>
 <span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-170"><a href="#cb20-170" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Look back at your scatterplots from the last few questions. Explain the differences when you map aesthetics to discrete and continuous variables.</span>
+<span id="cb20-170"><a href="#cb20-170" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`alpha`</span> to represent the <span class="in">`season`</span>.</span>
 <span id="cb20-171"><a href="#cb20-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`alpha`</span> to represent the <span class="in">`season`</span>.</span>
+<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** a lot of episodes share the same rounded IMDB rating, so points are stacking on top of each other. Try <span class="in">`geom_jitter()`</span> instead of <span class="in">`geom_point()`</span> (same syntax!) on the <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span> scatterplot. What do you notice?</span>
 <span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-174"><a href="#cb20-174" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** a lot of episodes share the same rounded IMDB rating, so points are stacking on top of each other. Try <span class="in">`geom_jitter()`</span> instead of <span class="in">`geom_point()`</span> (same syntax!) on the <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span> scatterplot. What do you notice?</span>
-<span id="cb20-175"><a href="#cb20-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-177"><a href="#cb20-177" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
-<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-180"><a href="#cb20-180" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
-<span id="cb20-181"><a href="#cb20-181" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-174"><a href="#cb20-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-175"><a href="#cb20-175" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
+<span id="cb20-177"><a href="#cb20-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
+<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-180"><a href="#cb20-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-181"><a href="#cb20-181" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 4: Visualizing Distributions</span></span>
 <span id="cb20-182"><a href="#cb20-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 4: Visualizing Distributions</span></span>
+<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a>For the rest of today we'll switch to a different dataset from the same package: <span class="in">`confessionals`</span>, which has one row per castaway per episode, recording how many on-camera "confessional" interviews they gave.</span>
 <span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-185"><a href="#cb20-185" aria-hidden="true" tabindex="-1"></a>For the rest of today we'll switch to a different dataset from the same package: <span class="in">`confessionals`</span>, which has one row per castaway per episode, recording how many on-camera "confessional" interviews they gave.</span>
-<span id="cb20-186"><a href="#cb20-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-189"><a href="#cb20-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-190"><a href="#cb20-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
-<span id="cb20-191"><a href="#cb20-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-192"><a href="#cb20-192" aria-hidden="true" tabindex="-1"></a>survivor_confessionals <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../data/survivor_confessionals.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/survivor_confessionals.csv</span></span>
-<span id="cb20-193"><a href="#cb20-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-194"><a href="#cb20-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-195"><a href="#cb20-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`season`</span>, <span class="in">`version`</span>: same as before</span>
-<span id="cb20-196"><a href="#cb20-196" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`era`</span>: which stretch of the show's history the season falls in (<span class="in">`"Seasons 1-15"`</span>, <span class="in">`"Seasons 16-30"`</span>, <span class="in">`"Seasons 31+"`</span>)</span>
-<span id="cb20-197"><a href="#cb20-197" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`episode`</span>: episode number within the season</span>
-<span id="cb20-198"><a href="#cb20-198" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`castaway`</span>: the castaway's name</span>
-<span id="cb20-199"><a href="#cb20-199" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`confessional_count`</span>: how many confessionals that castaway gave in that episode</span>
-<span id="cb20-200"><a href="#cb20-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-201"><a href="#cb20-201" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Build a histogram of <span class="in">`confessional_count`</span> using <span class="in">`geom_histogram()`</span>. Don't hesitate to look at the ggplot2 cheat sheet for help!</span>
-<span id="cb20-202"><a href="#cb20-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-205"><a href="#cb20-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-206"><a href="#cb20-206" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb20-207"><a href="#cb20-207" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
-<span id="cb20-208"><a href="#cb20-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___))</span>
-<span id="cb20-209"><a href="#cb20-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-187"><a href="#cb20-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-188"><a href="#cb20-188" aria-hidden="true" tabindex="-1"></a>survivor_confessionals <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://stat220-f26.github.io/data/survivor_confessionals.csv"</span>) </span>
+<span id="cb20-189"><a href="#cb20-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-190"><a href="#cb20-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-191"><a href="#cb20-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`season`</span>, <span class="in">`version`</span>: same as before</span>
+<span id="cb20-192"><a href="#cb20-192" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`era`</span>: which stretch of the show's history the season falls in (<span class="in">`"Seasons 1-15"`</span>, <span class="in">`"Seasons 16-30"`</span>, <span class="in">`"Seasons 31+"`</span>)</span>
+<span id="cb20-193"><a href="#cb20-193" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`episode`</span>: episode number within the season</span>
+<span id="cb20-194"><a href="#cb20-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`castaway`</span>: the castaway's name</span>
+<span id="cb20-195"><a href="#cb20-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`confessional_count`</span>: how many confessionals that castaway gave in that episode</span>
+<span id="cb20-196"><a href="#cb20-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-197"><a href="#cb20-197" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Build a histogram of <span class="in">`confessional_count`</span> using <span class="in">`geom_histogram()`</span>. Don't hesitate to look at the ggplot2 cheat sheet for help!</span>
+<span id="cb20-198"><a href="#cb20-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-201"><a href="#cb20-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-202"><a href="#cb20-202" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb20-203"><a href="#cb20-203" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
+<span id="cb20-204"><a href="#cb20-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___))</span>
+<span id="cb20-205"><a href="#cb20-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-206"><a href="#cb20-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-207"><a href="#cb20-207" aria-hidden="true" tabindex="-1"></a>What have you learned about the distribution of confessional counts?</span>
+<span id="cb20-208"><a href="#cb20-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-209"><a href="#cb20-209" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** By default, <span class="in">`ggplot2`</span> uses 30 bins. To change the number of bins, to say 15, add the argument <span class="in">`bins = 15`</span> to <span class="in">`geom_histogram()`</span>. Note: this is not an aesthetic mapping.</span>
 <span id="cb20-210"><a href="#cb20-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-211"><a href="#cb20-211" aria-hidden="true" tabindex="-1"></a>What have you learned about the distribution of confessional counts?</span>
-<span id="cb20-212"><a href="#cb20-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-213"><a href="#cb20-213" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** By default, <span class="in">`ggplot2`</span> uses 30 bins. To change the number of bins, to say 15, add the argument <span class="in">`bins = 15`</span> to <span class="in">`geom_histogram()`</span>. Note: this is not an aesthetic mapping.</span>
-<span id="cb20-214"><a href="#cb20-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-217"><a href="#cb20-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-218"><a href="#cb20-218" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb20-219"><a href="#cb20-219" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
-<span id="cb20-220"><a href="#cb20-220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___), <span class="at">bins =</span> ___)</span>
-<span id="cb20-221"><a href="#cb20-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-213"><a href="#cb20-213" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-214"><a href="#cb20-214" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb20-215"><a href="#cb20-215" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
+<span id="cb20-216"><a href="#cb20-216" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___), <span class="at">bins =</span> ___)</span>
+<span id="cb20-217"><a href="#cb20-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-218"><a href="#cb20-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-219"><a href="#cb20-219" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Instead of a histogram, let's create a kernel density plot. To do this, substitute geom_density() into your code for question <span class="in">`r q-2`</span>.</span>
+<span id="cb20-220"><a href="#cb20-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-221"><a href="#cb20-221" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Prediction: as *Survivor* has racked up more seasons, do you think the typical number of confessionals per person has gone up, gone down, or stayed about the same? Make your guess, then make side-by-side boxplots of <span class="in">`confessional_count`</span> for each <span class="in">`era`</span>.</span>
 <span id="cb20-222"><a href="#cb20-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-223"><a href="#cb20-223" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Instead of a histogram, let's create a kernel density plot. To do this, substitute geom_density() into your code for question <span class="in">`r q-2`</span>.</span>
-<span id="cb20-224"><a href="#cb20-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-225"><a href="#cb20-225" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Prediction: as *Survivor* has racked up more seasons, do you think the typical number of confessionals per person has gone up, gone down, or stayed about the same? Make your guess, then make side-by-side boxplots of <span class="in">`confessional_count`</span> for each <span class="in">`era`</span>.</span>
-<span id="cb20-226"><a href="#cb20-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-229"><a href="#cb20-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-230"><a href="#cb20-230" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb20-231"><a href="#cb20-231" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
-<span id="cb20-232"><a href="#cb20-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span>
-<span id="cb20-233"><a href="#cb20-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-234"><a href="#cb20-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-235"><a href="#cb20-235" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** A violin plot is a kernel density on its side, made symmetric. Change your code from question <span class="in">`r q-1`</span> to use <span class="in">`geom_violin()`</span>. Which plot do you prefer, boxplots or violin plots? Why?</span>
-<span id="cb20-236"><a href="#cb20-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-239"><a href="#cb20-239" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-240"><a href="#cb20-240" aria-hidden="true" tabindex="-1"></a><span class="co"># Put your violin plot code here</span></span>
-<span id="cb20-241"><a href="#cb20-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-242"><a href="#cb20-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-243"><a href="#cb20-243" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** try <span class="in">`geom_jitter()`</span> on top of (or instead of) your boxplot/violin from the last two questions. A lot of castaways get 0 or 1 confessionals in a given episode — what does jitter show you about that pile-up that the boxplot and violin plot hide?</span>
-<span id="cb20-244"><a href="#cb20-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-247"><a href="#cb20-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-248"><a href="#cb20-248" aria-hidden="true" tabindex="-1"></a><span class="co"># Add or swap in geom_jitter()</span></span>
-<span id="cb20-249"><a href="#cb20-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-225"><a href="#cb20-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-226"><a href="#cb20-226" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb20-227"><a href="#cb20-227" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
+<span id="cb20-228"><a href="#cb20-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span>
+<span id="cb20-229"><a href="#cb20-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-230"><a href="#cb20-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-231"><a href="#cb20-231" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** A violin plot is a kernel density on its side, made symmetric. Change your code from question <span class="in">`r q-1`</span> to use <span class="in">`geom_violin()`</span>. Which plot do you prefer, boxplots or violin plots? Why?</span>
+<span id="cb20-232"><a href="#cb20-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-235"><a href="#cb20-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-236"><a href="#cb20-236" aria-hidden="true" tabindex="-1"></a><span class="co"># Put your violin plot code here</span></span>
+<span id="cb20-237"><a href="#cb20-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-238"><a href="#cb20-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-239"><a href="#cb20-239" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** try <span class="in">`geom_jitter()`</span> on top of (or instead of) your boxplot/violin from the last two questions. A lot of castaways get 0 or 1 confessionals in a given episode — what does jitter show you about that pile-up that the boxplot and violin plot hide?</span>
+<span id="cb20-240"><a href="#cb20-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-243"><a href="#cb20-243" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-244"><a href="#cb20-244" aria-hidden="true" tabindex="-1"></a><span class="co"># Add or swap in geom_jitter()</span></span>
+<span id="cb20-245"><a href="#cb20-245" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-246"><a href="#cb20-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-247"><a href="#cb20-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-248"><a href="#cb20-248" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb20-249"><a href="#cb20-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
 <span id="cb20-250"><a href="#cb20-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-251"><a href="#cb20-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-252"><a href="#cb20-252" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb20-253"><a href="#cb20-253" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
-<span id="cb20-254"><a href="#cb20-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-255"><a href="#cb20-255" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
-<span id="cb20-256"><a href="#cb20-256" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-251"><a href="#cb20-251" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
+<span id="cb20-252"><a href="#cb20-252" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-253"><a href="#cb20-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-254"><a href="#cb20-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 5: Bar and column charts + Labeling</span></span>
+<span id="cb20-255"><a href="#cb20-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-256"><a href="#cb20-256" aria-hidden="true" tabindex="-1"></a>How many confessional records do we have for each version of the show? Let's find out!</span>
 <span id="cb20-257"><a href="#cb20-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-258"><a href="#cb20-258" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 5: Bar and column charts + Labeling</span></span>
+<span id="cb20-258"><a href="#cb20-258" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Make a bar chart of the number of rows for each <span class="in">`version`</span> using <span class="in">`geom_bar()`</span></span>
 <span id="cb20-259"><a href="#cb20-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-260"><a href="#cb20-260" aria-hidden="true" tabindex="-1"></a>How many confessional records do we have for each version of the show? Let's find out!</span>
-<span id="cb20-261"><a href="#cb20-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-262"><a href="#cb20-262" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Make a bar chart of the number of rows for each <span class="in">`version`</span> using <span class="in">`geom_bar()`</span></span>
-<span id="cb20-263"><a href="#cb20-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-266"><a href="#cb20-266" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-267"><a href="#cb20-267" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb20-268"><a href="#cb20-268" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
-<span id="cb20-269"><a href="#cb20-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___))</span>
-<span id="cb20-270"><a href="#cb20-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-271"><a href="#cb20-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-272"><a href="#cb20-272" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** When you have lots of categories, it's sometimes hard to read the labels on the x-axis. One trick is to flip the axes. Rebuild your bar chart using the <span class="in">`y`</span> aesthetic instead of <span class="in">`x`</span>.</span>
-<span id="cb20-273"><a href="#cb20-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-276"><a href="#cb20-276" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-277"><a href="#cb20-277" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb20-278"><a href="#cb20-278" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
-<span id="cb20-279"><a href="#cb20-279" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> ___))</span>
-<span id="cb20-280"><a href="#cb20-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-281"><a href="#cb20-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-282"><a href="#cb20-282" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)` .** Sometimes the variable we want to show up in the bar chart shows up explicitly in our data, so we don't need <span class="in">`geom_bar()`</span> to count it for us. The chunk below creates <span class="in">`finale_confessionals`</span>, which contains just the castaways from the Season 40 ("Winners at War") finale and how many confessionals each one gave *in that episode*.</span>
-<span id="cb20-283"><a href="#cb20-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-286"><a href="#cb20-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-287"><a href="#cb20-287" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
+<span id="cb20-262"><a href="#cb20-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-263"><a href="#cb20-263" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb20-264"><a href="#cb20-264" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
+<span id="cb20-265"><a href="#cb20-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___))</span>
+<span id="cb20-266"><a href="#cb20-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-267"><a href="#cb20-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-268"><a href="#cb20-268" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** When you have lots of categories, it's sometimes hard to read the labels on the x-axis. One trick is to flip the axes. Rebuild your bar chart using the <span class="in">`y`</span> aesthetic instead of <span class="in">`x`</span>.</span>
+<span id="cb20-269"><a href="#cb20-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-272"><a href="#cb20-272" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-273"><a href="#cb20-273" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb20-274"><a href="#cb20-274" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
+<span id="cb20-275"><a href="#cb20-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> ___))</span>
+<span id="cb20-276"><a href="#cb20-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-277"><a href="#cb20-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-278"><a href="#cb20-278" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)` .** Sometimes the variable we want to show up in the bar chart shows up explicitly in our data, so we don't need <span class="in">`geom_bar()`</span> to count it for us. The chunk below creates <span class="in">`finale_confessionals`</span>, which contains just the castaways from the Season 40 ("Winners at War") finale and how many confessionals each one gave *in that episode*.</span>
+<span id="cb20-279"><a href="#cb20-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-282"><a href="#cb20-282" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-283"><a href="#cb20-283" aria-hidden="true" tabindex="-1"></a>finale_confessionals <span class="ot">=</span> survivor_confessionals <span class="sc">|&gt;</span></span>
+<span id="cb20-284"><a href="#cb20-284" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(season <span class="sc">==</span> <span class="dv">40</span>, episode <span class="sc">==</span> <span class="fu">max</span>(episode[season <span class="sc">==</span> <span class="dv">40</span>]))</span>
+<span id="cb20-285"><a href="#cb20-285" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-286"><a href="#cb20-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-287"><a href="#cb20-287" aria-hidden="true" tabindex="-1"></a>Run the code chunk above, then put <span class="in">`confessional_count`</span> on the x-axis, and <span class="in">`castaway`</span> on the y-axis. Use <span class="in">`geom_col`</span> (column) as the geom, using the <span class="in">`finale_confessionals`</span> data. How is this different than a bar plot?</span>
 <span id="cb20-288"><a href="#cb20-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-289"><a href="#cb20-289" aria-hidden="true" tabindex="-1"></a>finale_confessionals <span class="ot">=</span> survivor_confessionals <span class="sc">|&gt;</span></span>
-<span id="cb20-290"><a href="#cb20-290" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(season <span class="sc">==</span> <span class="dv">40</span>, episode <span class="sc">==</span> <span class="fu">max</span>(episode[season <span class="sc">==</span> <span class="dv">40</span>]))</span>
-<span id="cb20-291"><a href="#cb20-291" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-292"><a href="#cb20-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-293"><a href="#cb20-293" aria-hidden="true" tabindex="-1"></a>Put <span class="in">`confessional_count`</span> on the x-axis, and <span class="in">`castaway`</span> on the y-axis. Use <span class="in">`geom_col`</span> (column) as the geom, using the <span class="in">`finale_confessionals`</span> data. How is this different than a bar plot?</span>
-<span id="cb20-294"><a href="#cb20-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-297"><a href="#cb20-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-298"><a href="#cb20-298" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb20-299"><a href="#cb20-299" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(finale_confessionals) <span class="sc">+</span></span>
-<span id="cb20-300"><a href="#cb20-300" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span>
-<span id="cb20-301"><a href="#cb20-301" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-302"><a href="#cb20-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-303"><a href="#cb20-303" aria-hidden="true" tabindex="-1"></a>Who got the most confessional time in that episode? Does it match who you'd guess actually won the season? (No spoilers if you don't want them — but the answer's right there in your plot's y-axis order, or lack thereof... notice the bars aren't sorted by value. We'll fix that with <span class="in">`forcats`</span> in a few weeks.)</span>
-<span id="cb20-304"><a href="#cb20-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-305"><a href="#cb20-305" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it's use. Choose one graph from today and add all labels.</span>
-<span id="cb20-306"><a href="#cb20-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-309"><a href="#cb20-309" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-310"><a href="#cb20-310" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span></span>
-<span id="cb20-311"><a href="#cb20-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
-<span id="cb20-312"><a href="#cb20-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb20-313"><a href="#cb20-313" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Put your informative title here"</span>,</span>
-<span id="cb20-314"><a href="#cb20-314" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"and your subtitle here"</span>,</span>
-<span id="cb20-315"><a href="#cb20-315" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"New x label"</span>,</span>
-<span id="cb20-316"><a href="#cb20-316" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"New y label"</span>,</span>
-<span id="cb20-317"><a href="#cb20-317" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Put a caption here"</span></span>
-<span id="cb20-318"><a href="#cb20-318" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb20-319"><a href="#cb20-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-291"><a href="#cb20-291" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-292"><a href="#cb20-292" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb20-293"><a href="#cb20-293" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(finale_confessionals) <span class="sc">+</span></span>
+<span id="cb20-294"><a href="#cb20-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span>
+<span id="cb20-295"><a href="#cb20-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-296"><a href="#cb20-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-297"><a href="#cb20-297" aria-hidden="true" tabindex="-1"></a>Who got the most confessional time in that episode? Do you think that's who won the season?</span>
+<span id="cb20-298"><a href="#cb20-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-299"><a href="#cb20-299" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it's use. Choose one graph from today (or make a new one) and add all labels.</span>
+<span id="cb20-300"><a href="#cb20-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-303"><a href="#cb20-303" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-304"><a href="#cb20-304" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span></span>
+<span id="cb20-305"><a href="#cb20-305" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb20-306"><a href="#cb20-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb20-307"><a href="#cb20-307" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Put your informative title here"</span>,</span>
+<span id="cb20-308"><a href="#cb20-308" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"and your subtitle here"</span>,</span>
+<span id="cb20-309"><a href="#cb20-309" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"New x label"</span>,</span>
+<span id="cb20-310"><a href="#cb20-310" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"New y label"</span>,</span>
+<span id="cb20-311"><a href="#cb20-311" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Put a caption here"</span></span>
+<span id="cb20-312"><a href="#cb20-312" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-313"><a href="#cb20-313" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-314"><a href="#cb20-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-315"><a href="#cb20-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-316"><a href="#cb20-316" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb20-317"><a href="#cb20-317" aria-hidden="true" tabindex="-1"></a><span class="fu">## When you're done</span></span>
+<span id="cb20-318"><a href="#cb20-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-319"><a href="#cb20-319" aria-hidden="true" tabindex="-1"></a>Make a post on the "Week 1 - Friday" discussion thread on Ed. </span>
 <span id="cb20-320"><a href="#cb20-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-321"><a href="#cb20-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-322"><a href="#cb20-322" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb20-323"><a href="#cb20-323" aria-hidden="true" tabindex="-1"></a><span class="fu">## When you're done</span></span>
-<span id="cb20-324"><a href="#cb20-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-325"><a href="#cb20-325" aria-hidden="true" tabindex="-1"></a>Make a post on the "Week 1 - Friday" discussion thread on Ed. </span>
+<span id="cb20-321"><a href="#cb20-321" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Option 1: If you have any lingering questions about ggplot, feel free to post them</span>
+<span id="cb20-322"><a href="#cb20-322" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Option 2: You can also post your final graph for the last question! </span>
+<span id="cb20-323"><a href="#cb20-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-324"><a href="#cb20-324" aria-hidden="true" tabindex="-1"></a>*Note:* this is how I'll record attendance for today! </span>
+<span id="cb20-325"><a href="#cb20-325" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb20-326"><a href="#cb20-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-327"><a href="#cb20-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Option 1: If you have any lingering questions about ggplot, feel free to post them</span>
-<span id="cb20-328"><a href="#cb20-328" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Option 2: You can also post your final graph for the last question! </span>
-<span id="cb20-329"><a href="#cb20-329" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-330"><a href="#cb20-330" aria-hidden="true" tabindex="-1"></a></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

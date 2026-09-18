@@ -478,6 +478,19 @@ Tip
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">survivor_episodes</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,136
+Columns: 9
+$ season                 &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+$ version                &lt;chr&gt; "US", "AU", "SA", "UK", "NZ", "US", "AU", "SA",…
+$ episode_number_overall &lt;dbl&gt; 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4,…
+$ episode                &lt;dbl&gt; 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4,…
+$ episode_label          &lt;chr&gt; "Ep 1", "Ep 1", "Ep 1", "Ep 1", "Ep 1", "Ep 2",…
+$ episode_date           &lt;date&gt; 2000-05-31, 2016-08-21, 2006-09-03, NA, 2017-0…
+$ viewers                &lt;dbl&gt; 15510000, 783000, NA, NA, NA, 18100000, 734000,…
+$ imdb_rating            &lt;dbl&gt; 8.0, 7.9, NA, NA, 6.7, 7.4, 7.7, NA, NA, 6.5, 7…
+$ n_ratings              &lt;dbl&gt; 330, 42, NA, NA, 9, 238, 31, NA, NA, 8, 229, 30…</code></pre>
+</div>
 </div>
 <p><strong>2.</strong> Skim through the data a bit. Do you notice any variables or rows that have lots of missing data?</p>
 <blockquote class="blockquote">
@@ -488,11 +501,18 @@ Tip
 <p>This gives the summary statistics for the variable - the NA’s indicates that there were 358 entries with missing data</p>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">survivor_episodes</span><span class="op">$</span><span class="va">viewers</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">survivor_episodes</span><span class="op">$</span><span class="va">viewers</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+  508000  5855000  9700000 10889454 14427500 51690000      358 </code></pre>
+</div>
 </div>
 <p><strong>4.</strong> Another handy function is <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code>. Run <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code> on the <code>version</code> variable to see which countries have their own version of <em>Survivor</em>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">survivor_episodes</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">survivor_episodes</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "US" "AU" "SA" "UK" "NZ"</code></pre>
+</div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -514,31 +534,61 @@ Tip
 <p>A note on wording: when we say <code>viewers</code> vs.&nbsp;<code>episode_number_overall</code>, this should be interpreted as “variable on the y-axis” vs.&nbsp;“variable on the x-axis”.</p>
 <p><strong>5.</strong> Fill in the data and aesthetic mapping in the below code chunk. What is returned? What’s missing?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">viewers</span>, x <span class="op">=</span> <span class="va">episode_number_overall</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>6.</strong> Add the appropriate <code>geom</code>etric object to create the scatterplot. This is called adding a layer to a plot. Remember to always put the <code>+</code> at the end of a line, never at the start.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">viewers</span>, x <span class="op">=</span> <span class="va">episode_number_overall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">viewers</span>, x <span class="op">=</span> <span class="va">episode_number_overall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>What do you notice? Write a sentence or two describing your findings</p>
 <p><strong>7.</strong> You must remember to put the aesthetic mappings in the <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> function! What happens if you forget?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Add a layer and see what happens</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Add a layer and see what happens</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span>, x <span class="op">=</span> <span class="va">viewers</span>, y <span class="op">=</span> <span class="va">episode_number_overall</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>8.</strong> The aesthetic mappings can be specified in the <code>geom</code> layer if you prefer, instead of the main <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> call. Give it a try:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Rebuild the scatterplot with your aesthetic mapping in the geom layer</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Rebuild the scatterplot with your aesthetic mapping in the geom layer</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">viewers</span>, x <span class="op">=</span> <span class="va">episode_number_overall</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>Bonus, if you have time:</strong> add a <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> layer to your scatterplot from question 6 (<code>aes</code> in the ggplot call). Does the trend line back up your guess from the start of this round, or complicate it?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">viewers</span>, x <span class="op">=</span> <span class="va">episode_number_overall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">viewers</span>, x <span class="op">=</span> <span class="va">episode_number_overall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -557,39 +607,81 @@ Tip
 <p><code>x</code> and <code>y</code> are not the only aesthetic mappings possible. In this section you’ll explore the <code>color</code>, <code>size</code>, <code>shape</code>, and <code>alpha</code> (i.e.&nbsp;transparency) aesthetics. This time you’ll focus on a different question: <strong>does a better-reviewed episode draw more viewers, or are ratings and popularity unrelated?</strong> Make a guess before you start plotting.</p>
 <p><strong>9.</strong> Create a scatterplot of <code>viewers</code> vs.&nbsp;<code>imdb_rating</code>. Add the <code>color</code> aesthetic to map <code>version</code> to the point color. Does the plot support your guess?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imdb_rating</span>, y <span class="op">=</span> <span class="va">viewers</span>, color <span class="op">=</span> <span class="va">version</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>10.</strong> Create a scatterplot of <code>viewers</code> vs.&nbsp;<code>imdb_rating</code>. Use <code>shape</code> to represent <code>version</code>. Is this plot easier or harder to interpret than the previous plot?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imdb_rating</span>, y <span class="op">=</span> <span class="va">viewers</span>, shape <span class="op">=</span> <span class="va">version</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>11.</strong> Create a scatterplot of <code>viewers</code> vs.&nbsp;<code>imdb_rating</code>. Use both <code>shape</code> and <code>color</code> to represent <code>version</code>. Is this plot easier or harder to interpret than the previous two plots?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imdb_rating</span>, y <span class="op">=</span> <span class="va">viewers</span>, shape <span class="op">=</span> <span class="va">version</span>, color <span class="op">=</span> <span class="va">version</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>12.</strong> Create a scatterplot of <code>viewers</code> vs.&nbsp;<code>imdb_rating</code>. Use <code>color</code> to represent the <code>season</code>. What did you learn from the plot?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imdb_rating</span>, y <span class="op">=</span> <span class="va">viewers</span>, color <span class="op">=</span> <span class="va">season</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>13.</strong> Create a scatterplot of <code>viewers</code> vs.&nbsp;<code>imdb_rating</code>. Use <code>size</code> to represent the <code>season</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imdb_rating</span>, y <span class="op">=</span> <span class="va">viewers</span>, size <span class="op">=</span> <span class="va">season</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>14.</strong> Look back at your scatterplots from the last few questions. Explain the differences when you map aesthetics to discrete and continuous variables.</p>
 <p><strong>15.</strong> Create a scatterplot of <code>viewers</code> vs.&nbsp;<code>imdb_rating</code>. Use <code>alpha</code> to represent the <code>season</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imdb_rating</span>, y <span class="op">=</span> <span class="va">viewers</span>, alpha <span class="op">=</span> <span class="va">season</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>Bonus, if you have time:</strong> a lot of episodes share the same rounded IMDB rating, so points are stacking on top of each other. Try <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> instead of <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> (same syntax!) on the <code>viewers</code> vs.&nbsp;<code>imdb_rating</code> scatterplot. What do you notice?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">survivor_episodes</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imdb_rating</span>, y <span class="op">=</span> <span class="va">viewers</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -607,7 +699,7 @@ Tip
 </section><section id="round-4-visualizing-distributions" class="level2"><h2 class="anchored" data-anchor-id="round-4-visualizing-distributions">Round 4: Visualizing Distributions</h2>
 <p>For the rest of today we’ll switch to a different dataset from the same package: <code>confessionals</code>, which has one row per castaway per episode, recording how many on-camera “confessional” interviews they gave.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">survivor_confessionals</span> <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../../data/survivor_confessionals.csv"</span><span class="op">)</span> <span class="co"># https://stat220-f26.github.io/data/survivor_confessionals.csv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">survivor_confessionals</span> <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../../data/survivor_confessionals.csv"</span><span class="op">)</span> <span class="co"># https://stat220-f26.github.io/data/survivor_confessionals.csv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>
@@ -623,37 +715,75 @@ Tip
 </ul>
 <p><strong>16.</strong> Build a histogram of <code>confessional_count</code> using <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>. Don’t hesitate to look at the ggplot2 cheat sheet for help!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">survivor_confessionals</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">confessional_count</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>What have you learned about the distribution of confessional counts?</p>
 <p><strong>17.</strong> By default, <code>ggplot2</code> uses 30 bins. To change the number of bins, to say 15, add the argument <code>bins = 15</code> to <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>. Note: this is not an aesthetic mapping.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">survivor_confessionals</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">confessional_count</span><span class="op">)</span>, bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>18.</strong> Instead of a histogram, let’s create a kernel density plot. To do this, substitute geom_density() into your code for question 16.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">survivor_confessionals</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">confessional_count</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>19.</strong> Prediction: as <em>Survivor</em> has racked up more seasons, do you think the typical number of confessionals per person has gone up, gone down, or stayed about the same? Make your guess, then make side-by-side boxplots of <code>confessional_count</code> for each <code>era</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">survivor_confessionals</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">era</span>, y <span class="op">=</span> <span class="va">confessional_count</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>20.</strong> A violin plot is a kernel density on its side, made symmetric. Change your code from question 19 to use <code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code>. Which plot do you prefer, boxplots or violin plots? Why?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">survivor_confessionals</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">survivor_confessionals</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">era</span>, y <span class="op">=</span> <span class="va">confessional_count</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>Bonus, if you have time:</strong> try <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> on top of (or instead of) your boxplot/violin from the last two questions. A lot of castaways get 0 or 1 confessionals in a given episode — what does jitter show you about that pile-up that the boxplot and violin plot hide?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Add or swap in geom_jitter()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">survivor_confessionals</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">era</span>, y <span class="op">=</span> <span class="va">confessional_count</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -672,31 +802,48 @@ Tip
 <p>How many confessional records do we have for each version of the show? Let’s find out!</p>
 <p><strong>21.</strong> Make a bar chart of the number of rows for each <code>version</code> using <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">survivor_confessionals</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">version</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>22.</strong> When you have lots of categories, it’s sometimes hard to read the labels on the x-axis. One trick is to flip the axes. Rebuild your bar chart using the <code>y</code> aesthetic instead of <code>x</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> ___))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">survivor_confessionals</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">version</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><strong>23 .</strong> Sometimes the variable we want to show up in the bar chart shows up explicitly in our data, so we don’t need <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> to count it for us. The chunk below creates <code>finale_confessionals</code>, which contains just the castaways from the Season 40 (“Winners at War”) finale and how many confessionals each one gave <em>in that episode</em>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">finale_confessionals</span> <span class="op">=</span> <span class="va">survivor_confessionals</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">finale_confessionals</span> <span class="op">=</span> <span class="va">survivor_confessionals</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="fl">40</span>, <span class="va">episode</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">episode</span><span class="op">[</span><span class="va">season</span> <span class="op">==</span> <span class="fl">40</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Put <code>confessional_count</code> on the x-axis, and <code>castaway</code> on the y-axis. Use <code>geom_col</code> (column) as the geom, using the <code>finale_confessionals</code> data. How is this different than a bar plot?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(finale_confessionals) <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fill in the blanks</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">finale_confessionals</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">confessional_count</span>, y <span class="op">=</span> <span class="va">castaway</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<p>Who got the most confessional time in that episode? Does it match who you’d guess actually won the season? (No spoilers if you don’t want them — but the answer’s right there in your plot’s y-axis order, or lack thereof… notice the bars aren’t sorted by value. We’ll fix that with <code>forcats</code> in a few weeks.)</p>
+</div>
+</div>
+<p>Who got the most confessional time in that episode?</p>
 <p><strong>24.</strong> In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it’s use. Choose one graph from today and add all labels.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Put your informative title here"</span>,</span>
@@ -705,6 +852,12 @@ Tip
 <span>    y <span class="op">=</span> <span class="st">"New y label"</span>,</span>
 <span>    caption <span class="op">=</span> <span class="st">"Put a caption here"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-ggplot-intro-f_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1191,343 +1344,342 @@ Tip
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Intro to `ggplot2`</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">  eval: false</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Note:</span></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>The YAML header includes the line <span class="in">`eval: false`</span>. Make sure to delete this when you are ready to render your file.</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>If you need a refresher for how to access the quarto file from this document, see <span class="co">[</span><span class="ot">Activity01</span><span class="co">](01-college-tuition-pay.html)</span></span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a><span class="co">#| out.width: 50%</span></span>
-<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.align: center</span></span>
-<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
-<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE</span></span>
-<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"https://cdn.freebiesupply.com/logos/large/2x/survivor-logo-png-transparent.png"</span>)</span>
-<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>The data we're using today contains information about all seasons of *Survivor* and comes from the <span class="co">[</span><span class="ot">survivoR</span><span class="co">](https://github.com/doehm/survivoR)</span> R package. In the show, a group of people (called castaways) are placed in an isolated location, where they must provide food, fire, and shelter for themselves. The castaways compete in challenges testing the contestants' physical abilities like running and swimming or their mental abilities like puzzles and endurance challenges for rewards and immunity from elimination. The castaways are progressively eliminated from the game as they are voted out by their fellow contestants until only two or three remain. At that point, the players who were eliminated (the "jury") vote for the winner. The winner is given the title of "Sole Survivor" and is awarded the grand prize of \$1,000,000</span>
-<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
-<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>survivor_episodes <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/survivor_episodes.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/survivor_episodes.csv</span></span>
-<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`season`</span>: the number of each season</span>
-<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`version`</span>: which country's version of the show (<span class="in">`US`</span>, <span class="in">`AU`</span>, <span class="in">`SA`</span>, <span class="in">`UK`</span>, <span class="in">`NZ`</span>)</span>
-<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`episode_number_overall`</span>: the episode's position across the *entire* run of that version (episode 1 of season 1 is <span class="in">`1`</span>, episode 1 of season 2 continues counting up, etc.)</span>
-<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`episode`</span>: the episode's position *within* its own season</span>
-<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`episode_label`</span>: <span class="in">`"Ep 1"`</span>, <span class="in">`"Finale"`</span>, <span class="in">`"Reunion"`</span>, etc.</span>
-<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`viewers`</span>: number of people who watched the episode live</span>
-<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`imdb_rating`</span>: the episode's average IMDB rating</span>
-<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`n_ratings`</span>: how many IMDB users rated the episode</span>
-<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a><span class="fu"># Speed Groupwork</span></span>
-<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 1: View the data and summary statistics</span></span>
-<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** To get started, load the <span class="in">`{tidyverse}`</span> and and take a <span class="in">`glimpse`</span> at the dataset. How many rows and columns are there? What does each row represent?</span>
-<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Each row is an individual episode. There are 1,136 rows and 9 columns. </span></span>
-<span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-64"><a href="#cb29-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-65"><a href="#cb29-65" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb29-66"><a href="#cb29-66" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(survivor_episodes)</span>
-<span id="cb29-67"><a href="#cb29-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-68"><a href="#cb29-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-69"><a href="#cb29-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-70"><a href="#cb29-70" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Skim through the data a bit. Do you notice any variables or rows that have lots of missing data? </span>
-<span id="cb29-71"><a href="#cb29-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-72"><a href="#cb29-72" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Yes, </span><span class="in">`viewers`</span><span class="at"> has lots of missing data</span></span>
-<span id="cb29-73"><a href="#cb29-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-74"><a href="#cb29-74" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** For example, the chunk below selects the <span class="in">`viewers`</span> column. Run <span class="in">`summary(survivor_episodes$viewers)`</span> and describe what you find. (What does the <span class="in">`NA's`</span> line in the output mean?)</span>
-<span id="cb29-75"><a href="#cb29-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-76"><a href="#cb29-76" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; This gives the summary statistics for the variable - the NA's indicates that there were 358 entries with missing data</span></span>
-<span id="cb29-77"><a href="#cb29-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-80"><a href="#cb29-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-81"><a href="#cb29-81" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(survivor_episodes<span class="sc">$</span>viewers)</span>
-<span id="cb29-82"><a href="#cb29-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-83"><a href="#cb29-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-84"><a href="#cb29-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-85"><a href="#cb29-85" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Another handy function is <span class="in">`unique()`</span>. Run <span class="in">`unique()`</span> on the <span class="in">`version`</span> variable to see which countries have their own version of *Survivor*.</span>
-<span id="cb29-86"><a href="#cb29-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-89"><a href="#cb29-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-90"><a href="#cb29-90" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(survivor_episodes<span class="sc">$</span>version)</span>
-<span id="cb29-91"><a href="#cb29-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-92"><a href="#cb29-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-93"><a href="#cb29-93" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb29-94"><a href="#cb29-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
-<span id="cb29-95"><a href="#cb29-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-96"><a href="#cb29-96" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
-<span id="cb29-97"><a href="#cb29-97" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb29-98"><a href="#cb29-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-99"><a href="#cb29-99" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 2: Scatterplots</span></span>
-<span id="cb29-100"><a href="#cb29-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-101"><a href="#cb29-101" aria-hidden="true" tabindex="-1"></a>Guess: over *Survivor*'s 25-year, 47-season run, has episode viewership gone up or down?</span>
-<span id="cb29-102"><a href="#cb29-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-103"><a href="#cb29-103" aria-hidden="true" tabindex="-1"></a>First, let’s create a scatterplot of <span class="in">`viewers_finale`</span> (the number of viewers for the last episode of the season) vs. <span class="in">`viewers_premiere`</span> (the number of viewers for the first episode of the season).</span>
-<span id="cb29-104"><a href="#cb29-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-105"><a href="#cb29-105" aria-hidden="true" tabindex="-1"></a>First, let's create a scatterplot of <span class="in">`viewers`</span> (the number of people watching) vs. <span class="in">`episode_number_overall`</span> (how far into the show's history that episode is).</span>
-<span id="cb29-106"><a href="#cb29-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-107"><a href="#cb29-107" aria-hidden="true" tabindex="-1"></a>A note on wording: when we say <span class="in">`viewers`</span> vs. <span class="in">`episode_number_overall`</span>, this should be interpreted as "variable on the y-axis" vs. "variable on the x-axis".</span>
-<span id="cb29-108"><a href="#cb29-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-109"><a href="#cb29-109" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Fill in the data and aesthetic mapping in the below code chunk. What is returned? What's missing?</span>
-<span id="cb29-110"><a href="#cb29-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-113"><a href="#cb29-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-114"><a href="#cb29-114" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb29-115"><a href="#cb29-115" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> viewers, <span class="at">x =</span> episode_number_overall)) </span>
-<span id="cb29-116"><a href="#cb29-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-117"><a href="#cb29-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-118"><a href="#cb29-118" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Add the appropriate <span class="in">`geom`</span>etric object to create the scatterplot. This is called adding a layer to a plot. Remember to always put the <span class="in">`+`</span> at the end of a line, never at the start.</span>
-<span id="cb29-119"><a href="#cb29-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-122"><a href="#cb29-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-123"><a href="#cb29-123" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> viewers, <span class="at">x =</span> episode_number_overall)) <span class="sc">+</span> </span>
-<span id="cb29-124"><a href="#cb29-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
-<span id="cb29-125"><a href="#cb29-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-126"><a href="#cb29-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-127"><a href="#cb29-127" aria-hidden="true" tabindex="-1"></a>What do you notice? Write a sentence or two describing your findings</span>
-<span id="cb29-128"><a href="#cb29-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-129"><a href="#cb29-129" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** You must remember to put the aesthetic mappings in the <span class="in">`aes()`</span> function! What happens if you forget?</span>
-<span id="cb29-130"><a href="#cb29-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-133"><a href="#cb29-133" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-134"><a href="#cb29-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a layer and see what happens</span></span>
-<span id="cb29-135"><a href="#cb29-135" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes, <span class="at">x =</span> viewers, <span class="at">y =</span> episode_number_overall)</span>
-<span id="cb29-136"><a href="#cb29-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-137"><a href="#cb29-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-138"><a href="#cb29-138" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** The aesthetic mappings can be specified in the <span class="in">`geom`</span> layer if you prefer, instead of the main <span class="in">`ggplot()`</span> call. Give it a try:</span>
-<span id="cb29-139"><a href="#cb29-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-142"><a href="#cb29-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-143"><a href="#cb29-143" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebuild the scatterplot with your aesthetic mapping in the geom layer</span></span>
-<span id="cb29-144"><a href="#cb29-144" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span> </span>
-<span id="cb29-145"><a href="#cb29-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> viewers, <span class="at">x =</span> episode_number_overall))</span>
-<span id="cb29-146"><a href="#cb29-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-147"><a href="#cb29-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-148"><a href="#cb29-148" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** add a <span class="in">`geom_smooth()`</span> layer to your scatterplot from question <span class="in">`r q-2`</span> (<span class="in">`aes`</span> in the ggplot call). Does the trend line back up your guess from the start of this round, or complicate it?</span>
-<span id="cb29-149"><a href="#cb29-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-152"><a href="#cb29-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-153"><a href="#cb29-153" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> viewers, <span class="at">x =</span> episode_number_overall)) <span class="sc">+</span> </span>
-<span id="cb29-154"><a href="#cb29-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb29-155"><a href="#cb29-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span>
-<span id="cb29-156"><a href="#cb29-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-157"><a href="#cb29-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-158"><a href="#cb29-158" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb29-159"><a href="#cb29-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
-<span id="cb29-160"><a href="#cb29-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-161"><a href="#cb29-161" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
-<span id="cb29-162"><a href="#cb29-162" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb29-163"><a href="#cb29-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-164"><a href="#cb29-164" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 3: Additional Aesthetics</span></span>
-<span id="cb29-165"><a href="#cb29-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-166"><a href="#cb29-166" aria-hidden="true" tabindex="-1"></a><span class="in">`x`</span> and <span class="in">`y`</span> are not the only aesthetic mappings possible. In this section you’ll explore the <span class="in">`color`</span>, <span class="in">`size`</span>, <span class="in">`shape`</span>, and <span class="in">`alpha`</span> (i.e. transparency) aesthetics. This time you'll focus on a different question: **does a better-reviewed episode draw more viewers, or are ratings and popularity unrelated?** Make a guess before you start plotting.</span>
-<span id="cb29-167"><a href="#cb29-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-168"><a href="#cb29-168" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Add the <span class="in">`color`</span> aesthetic to map <span class="in">`version`</span> to the point color. Does the plot support your guess?</span>
-<span id="cb29-169"><a href="#cb29-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-172"><a href="#cb29-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-173"><a href="#cb29-173" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
-<span id="cb29-174"><a href="#cb29-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">color =</span> version))</span>
-<span id="cb29-175"><a href="#cb29-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-176"><a href="#cb29-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-177"><a href="#cb29-177" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`shape`</span> to represent <span class="in">`version`</span>. Is this plot easier or harder to interpret than the previous plot?</span>
-<span id="cb29-178"><a href="#cb29-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-181"><a href="#cb29-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-182"><a href="#cb29-182" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
-<span id="cb29-183"><a href="#cb29-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">shape =</span> version))</span>
-<span id="cb29-184"><a href="#cb29-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-185"><a href="#cb29-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-186"><a href="#cb29-186" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use both <span class="in">`shape`</span> and <span class="in">`color`</span> to represent <span class="in">`version`</span>. Is this plot easier or harder to interpret than the previous two plots?</span>
-<span id="cb29-187"><a href="#cb29-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-190"><a href="#cb29-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-191"><a href="#cb29-191" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
-<span id="cb29-192"><a href="#cb29-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">shape =</span> version, <span class="at">color =</span> version))</span>
-<span id="cb29-193"><a href="#cb29-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-194"><a href="#cb29-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-195"><a href="#cb29-195" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`color`</span> to represent the <span class="in">`season`</span>. What did you learn from the plot?</span>
-<span id="cb29-196"><a href="#cb29-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-199"><a href="#cb29-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-200"><a href="#cb29-200" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
-<span id="cb29-201"><a href="#cb29-201" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">color =</span> season))</span>
-<span id="cb29-202"><a href="#cb29-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-203"><a href="#cb29-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-204"><a href="#cb29-204" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`size`</span> to represent the <span class="in">`season`</span>.</span>
-<span id="cb29-205"><a href="#cb29-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-208"><a href="#cb29-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-209"><a href="#cb29-209" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
-<span id="cb29-210"><a href="#cb29-210" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">size =</span> season))</span>
-<span id="cb29-211"><a href="#cb29-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-212"><a href="#cb29-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-213"><a href="#cb29-213" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Look back at your scatterplots from the last few questions. Explain the differences when you map aesthetics to discrete and continuous variables.</span>
-<span id="cb29-214"><a href="#cb29-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-215"><a href="#cb29-215" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`alpha`</span> to represent the <span class="in">`season`</span>.</span>
-<span id="cb29-216"><a href="#cb29-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-219"><a href="#cb29-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-220"><a href="#cb29-220" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
-<span id="cb29-221"><a href="#cb29-221" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">alpha =</span> season))</span>
-<span id="cb29-222"><a href="#cb29-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-223"><a href="#cb29-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-224"><a href="#cb29-224" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** a lot of episodes share the same rounded IMDB rating, so points are stacking on top of each other. Try <span class="in">`geom_jitter()`</span> instead of <span class="in">`geom_point()`</span> (same syntax!) on the <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span> scatterplot. What do you notice?</span>
-<span id="cb29-225"><a href="#cb29-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-228"><a href="#cb29-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-229"><a href="#cb29-229" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
-<span id="cb29-230"><a href="#cb29-230" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers))</span>
-<span id="cb29-231"><a href="#cb29-231" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-232"><a href="#cb29-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-233"><a href="#cb29-233" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb29-234"><a href="#cb29-234" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
-<span id="cb29-235"><a href="#cb29-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-236"><a href="#cb29-236" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
-<span id="cb29-237"><a href="#cb29-237" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb29-238"><a href="#cb29-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-239"><a href="#cb29-239" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 4: Visualizing Distributions</span></span>
-<span id="cb29-240"><a href="#cb29-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-241"><a href="#cb29-241" aria-hidden="true" tabindex="-1"></a>For the rest of today we'll switch to a different dataset from the same package: <span class="in">`confessionals`</span>, which has one row per castaway per episode, recording how many on-camera "confessional" interviews they gave.</span>
-<span id="cb29-242"><a href="#cb29-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-245"><a href="#cb29-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-246"><a href="#cb29-246" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
-<span id="cb29-247"><a href="#cb29-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-248"><a href="#cb29-248" aria-hidden="true" tabindex="-1"></a>survivor_confessionals <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/survivor_confessionals.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/survivor_confessionals.csv</span></span>
-<span id="cb29-249"><a href="#cb29-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-250"><a href="#cb29-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-251"><a href="#cb29-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`season`</span>, <span class="in">`version`</span>: same as before</span>
-<span id="cb29-252"><a href="#cb29-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`era`</span>: which stretch of the show's history the season falls in (<span class="in">`"Seasons 1-15"`</span>, <span class="in">`"Seasons 16-30"`</span>, <span class="in">`"Seasons 31+"`</span>)</span>
-<span id="cb29-253"><a href="#cb29-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`episode`</span>: episode number within the season</span>
-<span id="cb29-254"><a href="#cb29-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`castaway`</span>: the castaway's name</span>
-<span id="cb29-255"><a href="#cb29-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`confessional_count`</span>: how many confessionals that castaway gave in that episode</span>
-<span id="cb29-256"><a href="#cb29-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-257"><a href="#cb29-257" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Build a histogram of <span class="in">`confessional_count`</span> using <span class="in">`geom_histogram()`</span>. Don't hesitate to look at the ggplot2 cheat sheet for help!</span>
-<span id="cb29-258"><a href="#cb29-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-261"><a href="#cb29-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-262"><a href="#cb29-262" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb29-263"><a href="#cb29-263" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
-<span id="cb29-264"><a href="#cb29-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> confessional_count))</span>
-<span id="cb29-265"><a href="#cb29-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-266"><a href="#cb29-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-267"><a href="#cb29-267" aria-hidden="true" tabindex="-1"></a>What have you learned about the distribution of confessional counts?</span>
-<span id="cb29-268"><a href="#cb29-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-269"><a href="#cb29-269" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** By default, <span class="in">`ggplot2`</span> uses 30 bins. To change the number of bins, to say 15, add the argument <span class="in">`bins = 15`</span> to <span class="in">`geom_histogram()`</span>. Note: this is not an aesthetic mapping.</span>
-<span id="cb29-270"><a href="#cb29-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-273"><a href="#cb29-273" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-274"><a href="#cb29-274" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb29-275"><a href="#cb29-275" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
-<span id="cb29-276"><a href="#cb29-276" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> confessional_count), <span class="at">bins =</span> <span class="dv">15</span>)</span>
-<span id="cb29-277"><a href="#cb29-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-278"><a href="#cb29-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-279"><a href="#cb29-279" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Instead of a histogram, let's create a kernel density plot. To do this, substitute geom_density() into your code for question <span class="in">`r q-2`</span>.</span>
-<span id="cb29-280"><a href="#cb29-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-283"><a href="#cb29-283" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-284"><a href="#cb29-284" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb29-285"><a href="#cb29-285" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
-<span id="cb29-286"><a href="#cb29-286" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> confessional_count))</span>
-<span id="cb29-287"><a href="#cb29-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-288"><a href="#cb29-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-289"><a href="#cb29-289" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Prediction: as *Survivor* has racked up more seasons, do you think the typical number of confessionals per person has gone up, gone down, or stayed about the same? Make your guess, then make side-by-side boxplots of <span class="in">`confessional_count`</span> for each <span class="in">`era`</span>.</span>
-<span id="cb29-290"><a href="#cb29-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-293"><a href="#cb29-293" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-294"><a href="#cb29-294" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb29-295"><a href="#cb29-295" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
-<span id="cb29-296"><a href="#cb29-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> era, <span class="at">y =</span> confessional_count))</span>
-<span id="cb29-297"><a href="#cb29-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-298"><a href="#cb29-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-299"><a href="#cb29-299" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** A violin plot is a kernel density on its side, made symmetric. Change your code from question <span class="in">`r q-1`</span> to use <span class="in">`geom_violin()`</span>. Which plot do you prefer, boxplots or violin plots? Why?</span>
-<span id="cb29-300"><a href="#cb29-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-303"><a href="#cb29-303" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-304"><a href="#cb29-304" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
-<span id="cb29-305"><a href="#cb29-305" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">x =</span> era, <span class="at">y =</span> confessional_count))</span>
-<span id="cb29-306"><a href="#cb29-306" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-307"><a href="#cb29-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-308"><a href="#cb29-308" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** try <span class="in">`geom_jitter()`</span> on top of (or instead of) your boxplot/violin from the last two questions. A lot of castaways get 0 or 1 confessionals in a given episode — what does jitter show you about that pile-up that the boxplot and violin plot hide?</span>
-<span id="cb29-309"><a href="#cb29-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-312"><a href="#cb29-312" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-313"><a href="#cb29-313" aria-hidden="true" tabindex="-1"></a><span class="co"># Add or swap in geom_jitter()</span></span>
-<span id="cb29-314"><a href="#cb29-314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-315"><a href="#cb29-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-316"><a href="#cb29-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-317"><a href="#cb29-317" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb29-318"><a href="#cb29-318" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
-<span id="cb29-319"><a href="#cb29-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-320"><a href="#cb29-320" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
-<span id="cb29-321"><a href="#cb29-321" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb29-322"><a href="#cb29-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-323"><a href="#cb29-323" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 5: Bar and column charts + Labeling</span></span>
-<span id="cb29-324"><a href="#cb29-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-325"><a href="#cb29-325" aria-hidden="true" tabindex="-1"></a>How many confessional records do we have for each version of the show? Let's find out!</span>
-<span id="cb29-326"><a href="#cb29-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-327"><a href="#cb29-327" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Make a bar chart of the number of rows for each <span class="in">`version`</span> using <span class="in">`geom_bar()`</span></span>
-<span id="cb29-328"><a href="#cb29-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-331"><a href="#cb29-331" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-332"><a href="#cb29-332" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb29-333"><a href="#cb29-333" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
-<span id="cb29-334"><a href="#cb29-334" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___))</span>
-<span id="cb29-335"><a href="#cb29-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-336"><a href="#cb29-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-337"><a href="#cb29-337" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** When you have lots of categories, it's sometimes hard to read the labels on the x-axis. One trick is to flip the axes. Rebuild your bar chart using the <span class="in">`y`</span> aesthetic instead of <span class="in">`x`</span>.</span>
-<span id="cb29-338"><a href="#cb29-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-341"><a href="#cb29-341" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-342"><a href="#cb29-342" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb29-343"><a href="#cb29-343" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
-<span id="cb29-344"><a href="#cb29-344" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> ___))</span>
-<span id="cb29-345"><a href="#cb29-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-346"><a href="#cb29-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-347"><a href="#cb29-347" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)` .** Sometimes the variable we want to show up in the bar chart shows up explicitly in our data, so we don't need <span class="in">`geom_bar()`</span> to count it for us. The chunk below creates <span class="in">`finale_confessionals`</span>, which contains just the castaways from the Season 40 ("Winners at War") finale and how many confessionals each one gave *in that episode*.</span>
-<span id="cb29-348"><a href="#cb29-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-351"><a href="#cb29-351" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-352"><a href="#cb29-352" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
-<span id="cb29-353"><a href="#cb29-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-354"><a href="#cb29-354" aria-hidden="true" tabindex="-1"></a>finale_confessionals <span class="ot">=</span> survivor_confessionals <span class="sc">|&gt;</span></span>
-<span id="cb29-355"><a href="#cb29-355" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(season <span class="sc">==</span> <span class="dv">40</span>, episode <span class="sc">==</span> <span class="fu">max</span>(episode[season <span class="sc">==</span> <span class="dv">40</span>]))</span>
-<span id="cb29-356"><a href="#cb29-356" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-357"><a href="#cb29-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-358"><a href="#cb29-358" aria-hidden="true" tabindex="-1"></a>Put <span class="in">`confessional_count`</span> on the x-axis, and <span class="in">`castaway`</span> on the y-axis. Use <span class="in">`geom_col`</span> (column) as the geom, using the <span class="in">`finale_confessionals`</span> data. How is this different than a bar plot?</span>
-<span id="cb29-359"><a href="#cb29-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-362"><a href="#cb29-362" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-363"><a href="#cb29-363" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
-<span id="cb29-364"><a href="#cb29-364" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(finale_confessionals) <span class="sc">+</span></span>
-<span id="cb29-365"><a href="#cb29-365" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span>
-<span id="cb29-366"><a href="#cb29-366" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-367"><a href="#cb29-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-368"><a href="#cb29-368" aria-hidden="true" tabindex="-1"></a>Who got the most confessional time in that episode? Does it match who you'd guess actually won the season? (No spoilers if you don't want them — but the answer's right there in your plot's y-axis order, or lack thereof... notice the bars aren't sorted by value. We'll fix that with <span class="in">`forcats`</span> in a few weeks.)</span>
-<span id="cb29-369"><a href="#cb29-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-370"><a href="#cb29-370" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it's use. Choose one graph from today and add all labels.</span>
-<span id="cb29-371"><a href="#cb29-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-374"><a href="#cb29-374" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-375"><a href="#cb29-375" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span></span>
-<span id="cb29-376"><a href="#cb29-376" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
-<span id="cb29-377"><a href="#cb29-377" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb29-378"><a href="#cb29-378" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Put your informative title here"</span>,</span>
-<span id="cb29-379"><a href="#cb29-379" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"and your subtitle here"</span>,</span>
-<span id="cb29-380"><a href="#cb29-380" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"New x label"</span>,</span>
-<span id="cb29-381"><a href="#cb29-381" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"New y label"</span>,</span>
-<span id="cb29-382"><a href="#cb29-382" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Put a caption here"</span></span>
-<span id="cb29-383"><a href="#cb29-383" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb29-384"><a href="#cb29-384" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-385"><a href="#cb29-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-386"><a href="#cb29-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-387"><a href="#cb29-387" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb29-388"><a href="#cb29-388" aria-hidden="true" tabindex="-1"></a><span class="fu">## When you're done</span></span>
-<span id="cb29-389"><a href="#cb29-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-390"><a href="#cb29-390" aria-hidden="true" tabindex="-1"></a>Make a post on the "Week 1 - Friday" discussion thread on Ed. </span>
-<span id="cb29-391"><a href="#cb29-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-392"><a href="#cb29-392" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Option 1: If you have any lingering questions about ggplot, feel free to post them</span>
-<span id="cb29-393"><a href="#cb29-393" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Option 2: You can also post your final graph for the last question! </span>
-<span id="cb29-394"><a href="#cb29-394" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb29-395"><a href="#cb29-395" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Intro to `ggplot2`</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Note:</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>The YAML header includes the line <span class="in">`eval: false`</span>. Make sure to delete this when you are ready to render your file.</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>If you need a refresher for how to access the quarto file from this document, see <span class="co">[</span><span class="ot">Activity01</span><span class="co">](01-college-tuition-pay.html)</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="co">#| out.width: 50%</span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.align: center</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE</span></span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"https://cdn.freebiesupply.com/logos/large/2x/survivor-logo-png-transparent.png"</span>)</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>The data we're using today contains information about all seasons of *Survivor* and comes from the <span class="co">[</span><span class="ot">survivoR</span><span class="co">](https://github.com/doehm/survivoR)</span> R package. In the show, a group of people (called castaways) are placed in an isolated location, where they must provide food, fire, and shelter for themselves. The castaways compete in challenges testing the contestants' physical abilities like running and swimming or their mental abilities like puzzles and endurance challenges for rewards and immunity from elimination. The castaways are progressively eliminated from the game as they are voted out by their fellow contestants until only two or three remain. At that point, the players who were eliminated (the "jury") vote for the winner. The winner is given the title of "Sole Survivor" and is awarded the grand prize of \$1,000,000</span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>survivor_episodes <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/survivor_episodes.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/survivor_episodes.csv</span></span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`season`</span>: the number of each season</span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`version`</span>: which country's version of the show (<span class="in">`US`</span>, <span class="in">`AU`</span>, <span class="in">`SA`</span>, <span class="in">`UK`</span>, <span class="in">`NZ`</span>)</span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`episode_number_overall`</span>: the episode's position across the *entire* run of that version (episode 1 of season 1 is <span class="in">`1`</span>, episode 1 of season 2 continues counting up, etc.)</span>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`episode`</span>: the episode's position *within* its own season</span>
+<span id="cb32-46"><a href="#cb32-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`episode_label`</span>: <span class="in">`"Ep 1"`</span>, <span class="in">`"Finale"`</span>, <span class="in">`"Reunion"`</span>, etc.</span>
+<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`viewers`</span>: number of people who watched the episode live</span>
+<span id="cb32-48"><a href="#cb32-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`imdb_rating`</span>: the episode's average IMDB rating</span>
+<span id="cb32-49"><a href="#cb32-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`n_ratings`</span>: how many IMDB users rated the episode</span>
+<span id="cb32-50"><a href="#cb32-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-51"><a href="#cb32-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-52"><a href="#cb32-52" aria-hidden="true" tabindex="-1"></a><span class="fu"># Speed Groupwork</span></span>
+<span id="cb32-53"><a href="#cb32-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-54"><a href="#cb32-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 1: View the data and summary statistics</span></span>
+<span id="cb32-55"><a href="#cb32-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-56"><a href="#cb32-56" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** To get started, load the <span class="in">`{tidyverse}`</span> and and take a <span class="in">`glimpse`</span> at the dataset. How many rows and columns are there? What does each row represent?</span>
+<span id="cb32-57"><a href="#cb32-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-58"><a href="#cb32-58" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Each row is an individual episode. There are 1,136 rows and 9 columns. </span></span>
+<span id="cb32-59"><a href="#cb32-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-62"><a href="#cb32-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-63"><a href="#cb32-63" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb32-64"><a href="#cb32-64" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(survivor_episodes)</span>
+<span id="cb32-65"><a href="#cb32-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-66"><a href="#cb32-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-67"><a href="#cb32-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-68"><a href="#cb32-68" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Skim through the data a bit. Do you notice any variables or rows that have lots of missing data? </span>
+<span id="cb32-69"><a href="#cb32-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-70"><a href="#cb32-70" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Yes, </span><span class="in">`viewers`</span><span class="at"> has lots of missing data</span></span>
+<span id="cb32-71"><a href="#cb32-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-72"><a href="#cb32-72" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** For example, the chunk below selects the <span class="in">`viewers`</span> column. Run <span class="in">`summary(survivor_episodes$viewers)`</span> and describe what you find. (What does the <span class="in">`NA's`</span> line in the output mean?)</span>
+<span id="cb32-73"><a href="#cb32-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-74"><a href="#cb32-74" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; This gives the summary statistics for the variable - the NA's indicates that there were 358 entries with missing data</span></span>
+<span id="cb32-75"><a href="#cb32-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-78"><a href="#cb32-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-79"><a href="#cb32-79" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(survivor_episodes<span class="sc">$</span>viewers)</span>
+<span id="cb32-80"><a href="#cb32-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-81"><a href="#cb32-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-82"><a href="#cb32-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-83"><a href="#cb32-83" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Another handy function is <span class="in">`unique()`</span>. Run <span class="in">`unique()`</span> on the <span class="in">`version`</span> variable to see which countries have their own version of *Survivor*.</span>
+<span id="cb32-84"><a href="#cb32-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-87"><a href="#cb32-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-88"><a href="#cb32-88" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(survivor_episodes<span class="sc">$</span>version)</span>
+<span id="cb32-89"><a href="#cb32-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-90"><a href="#cb32-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-91"><a href="#cb32-91" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb32-92"><a href="#cb32-92" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
+<span id="cb32-93"><a href="#cb32-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-94"><a href="#cb32-94" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
+<span id="cb32-95"><a href="#cb32-95" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-96"><a href="#cb32-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-97"><a href="#cb32-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 2: Scatterplots</span></span>
+<span id="cb32-98"><a href="#cb32-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-99"><a href="#cb32-99" aria-hidden="true" tabindex="-1"></a>Guess: over *Survivor*'s 25-year, 47-season run, has episode viewership gone up or down?</span>
+<span id="cb32-100"><a href="#cb32-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-101"><a href="#cb32-101" aria-hidden="true" tabindex="-1"></a>First, let’s create a scatterplot of <span class="in">`viewers_finale`</span> (the number of viewers for the last episode of the season) vs. <span class="in">`viewers_premiere`</span> (the number of viewers for the first episode of the season).</span>
+<span id="cb32-102"><a href="#cb32-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-103"><a href="#cb32-103" aria-hidden="true" tabindex="-1"></a>First, let's create a scatterplot of <span class="in">`viewers`</span> (the number of people watching) vs. <span class="in">`episode_number_overall`</span> (how far into the show's history that episode is).</span>
+<span id="cb32-104"><a href="#cb32-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-105"><a href="#cb32-105" aria-hidden="true" tabindex="-1"></a>A note on wording: when we say <span class="in">`viewers`</span> vs. <span class="in">`episode_number_overall`</span>, this should be interpreted as "variable on the y-axis" vs. "variable on the x-axis".</span>
+<span id="cb32-106"><a href="#cb32-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-107"><a href="#cb32-107" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Fill in the data and aesthetic mapping in the below code chunk. What is returned? What's missing?</span>
+<span id="cb32-108"><a href="#cb32-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-111"><a href="#cb32-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-112"><a href="#cb32-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb32-113"><a href="#cb32-113" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> viewers, <span class="at">x =</span> episode_number_overall)) </span>
+<span id="cb32-114"><a href="#cb32-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-115"><a href="#cb32-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-116"><a href="#cb32-116" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Add the appropriate <span class="in">`geom`</span>etric object to create the scatterplot. This is called adding a layer to a plot. Remember to always put the <span class="in">`+`</span> at the end of a line, never at the start.</span>
+<span id="cb32-117"><a href="#cb32-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-120"><a href="#cb32-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-121"><a href="#cb32-121" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> viewers, <span class="at">x =</span> episode_number_overall)) <span class="sc">+</span> </span>
+<span id="cb32-122"><a href="#cb32-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb32-123"><a href="#cb32-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-124"><a href="#cb32-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-125"><a href="#cb32-125" aria-hidden="true" tabindex="-1"></a>What do you notice? Write a sentence or two describing your findings</span>
+<span id="cb32-126"><a href="#cb32-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-127"><a href="#cb32-127" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** You must remember to put the aesthetic mappings in the <span class="in">`aes()`</span> function! What happens if you forget?</span>
+<span id="cb32-128"><a href="#cb32-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-131"><a href="#cb32-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-132"><a href="#cb32-132" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a layer and see what happens</span></span>
+<span id="cb32-133"><a href="#cb32-133" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes, <span class="at">x =</span> viewers, <span class="at">y =</span> episode_number_overall)</span>
+<span id="cb32-134"><a href="#cb32-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-135"><a href="#cb32-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-136"><a href="#cb32-136" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** The aesthetic mappings can be specified in the <span class="in">`geom`</span> layer if you prefer, instead of the main <span class="in">`ggplot()`</span> call. Give it a try:</span>
+<span id="cb32-137"><a href="#cb32-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-140"><a href="#cb32-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-141"><a href="#cb32-141" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebuild the scatterplot with your aesthetic mapping in the geom layer</span></span>
+<span id="cb32-142"><a href="#cb32-142" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span> </span>
+<span id="cb32-143"><a href="#cb32-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> viewers, <span class="at">x =</span> episode_number_overall))</span>
+<span id="cb32-144"><a href="#cb32-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-145"><a href="#cb32-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-146"><a href="#cb32-146" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** add a <span class="in">`geom_smooth()`</span> layer to your scatterplot from question <span class="in">`r q-2`</span> (<span class="in">`aes`</span> in the ggplot call). Does the trend line back up your guess from the start of this round, or complicate it?</span>
+<span id="cb32-147"><a href="#cb32-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-150"><a href="#cb32-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-151"><a href="#cb32-151" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> viewers, <span class="at">x =</span> episode_number_overall)) <span class="sc">+</span> </span>
+<span id="cb32-152"><a href="#cb32-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb32-153"><a href="#cb32-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span>
+<span id="cb32-154"><a href="#cb32-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-155"><a href="#cb32-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-156"><a href="#cb32-156" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb32-157"><a href="#cb32-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
+<span id="cb32-158"><a href="#cb32-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-159"><a href="#cb32-159" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
+<span id="cb32-160"><a href="#cb32-160" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-161"><a href="#cb32-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-162"><a href="#cb32-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 3: Additional Aesthetics</span></span>
+<span id="cb32-163"><a href="#cb32-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-164"><a href="#cb32-164" aria-hidden="true" tabindex="-1"></a><span class="in">`x`</span> and <span class="in">`y`</span> are not the only aesthetic mappings possible. In this section you’ll explore the <span class="in">`color`</span>, <span class="in">`size`</span>, <span class="in">`shape`</span>, and <span class="in">`alpha`</span> (i.e. transparency) aesthetics. This time you'll focus on a different question: **does a better-reviewed episode draw more viewers, or are ratings and popularity unrelated?** Make a guess before you start plotting.</span>
+<span id="cb32-165"><a href="#cb32-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-166"><a href="#cb32-166" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Add the <span class="in">`color`</span> aesthetic to map <span class="in">`version`</span> to the point color. Does the plot support your guess?</span>
+<span id="cb32-167"><a href="#cb32-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-170"><a href="#cb32-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-171"><a href="#cb32-171" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
+<span id="cb32-172"><a href="#cb32-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">color =</span> version))</span>
+<span id="cb32-173"><a href="#cb32-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-174"><a href="#cb32-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-175"><a href="#cb32-175" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`shape`</span> to represent <span class="in">`version`</span>. Is this plot easier or harder to interpret than the previous plot?</span>
+<span id="cb32-176"><a href="#cb32-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-179"><a href="#cb32-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-180"><a href="#cb32-180" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
+<span id="cb32-181"><a href="#cb32-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">shape =</span> version))</span>
+<span id="cb32-182"><a href="#cb32-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-183"><a href="#cb32-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-184"><a href="#cb32-184" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use both <span class="in">`shape`</span> and <span class="in">`color`</span> to represent <span class="in">`version`</span>. Is this plot easier or harder to interpret than the previous two plots?</span>
+<span id="cb32-185"><a href="#cb32-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-188"><a href="#cb32-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-189"><a href="#cb32-189" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
+<span id="cb32-190"><a href="#cb32-190" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">shape =</span> version, <span class="at">color =</span> version))</span>
+<span id="cb32-191"><a href="#cb32-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-192"><a href="#cb32-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-193"><a href="#cb32-193" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`color`</span> to represent the <span class="in">`season`</span>. What did you learn from the plot?</span>
+<span id="cb32-194"><a href="#cb32-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-197"><a href="#cb32-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-198"><a href="#cb32-198" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
+<span id="cb32-199"><a href="#cb32-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">color =</span> season))</span>
+<span id="cb32-200"><a href="#cb32-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-201"><a href="#cb32-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-202"><a href="#cb32-202" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`size`</span> to represent the <span class="in">`season`</span>.</span>
+<span id="cb32-203"><a href="#cb32-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-206"><a href="#cb32-206" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-207"><a href="#cb32-207" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
+<span id="cb32-208"><a href="#cb32-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">size =</span> season))</span>
+<span id="cb32-209"><a href="#cb32-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-210"><a href="#cb32-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-211"><a href="#cb32-211" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Look back at your scatterplots from the last few questions. Explain the differences when you map aesthetics to discrete and continuous variables.</span>
+<span id="cb32-212"><a href="#cb32-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-213"><a href="#cb32-213" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span>. Use <span class="in">`alpha`</span> to represent the <span class="in">`season`</span>.</span>
+<span id="cb32-214"><a href="#cb32-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-217"><a href="#cb32-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-218"><a href="#cb32-218" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
+<span id="cb32-219"><a href="#cb32-219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers, <span class="at">alpha =</span> season))</span>
+<span id="cb32-220"><a href="#cb32-220" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-221"><a href="#cb32-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-222"><a href="#cb32-222" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** a lot of episodes share the same rounded IMDB rating, so points are stacking on top of each other. Try <span class="in">`geom_jitter()`</span> instead of <span class="in">`geom_point()`</span> (same syntax!) on the <span class="in">`viewers`</span> vs. <span class="in">`imdb_rating`</span> scatterplot. What do you notice?</span>
+<span id="cb32-223"><a href="#cb32-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-226"><a href="#cb32-226" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-227"><a href="#cb32-227" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> survivor_episodes) <span class="sc">+</span></span>
+<span id="cb32-228"><a href="#cb32-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> viewers))</span>
+<span id="cb32-229"><a href="#cb32-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-230"><a href="#cb32-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-231"><a href="#cb32-231" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb32-232"><a href="#cb32-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
+<span id="cb32-233"><a href="#cb32-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-234"><a href="#cb32-234" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
+<span id="cb32-235"><a href="#cb32-235" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-236"><a href="#cb32-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-237"><a href="#cb32-237" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 4: Visualizing Distributions</span></span>
+<span id="cb32-238"><a href="#cb32-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-239"><a href="#cb32-239" aria-hidden="true" tabindex="-1"></a>For the rest of today we'll switch to a different dataset from the same package: <span class="in">`confessionals`</span>, which has one row per castaway per episode, recording how many on-camera "confessional" interviews they gave.</span>
+<span id="cb32-240"><a href="#cb32-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-243"><a href="#cb32-243" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-244"><a href="#cb32-244" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
+<span id="cb32-245"><a href="#cb32-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-246"><a href="#cb32-246" aria-hidden="true" tabindex="-1"></a>survivor_confessionals <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/survivor_confessionals.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/survivor_confessionals.csv</span></span>
+<span id="cb32-247"><a href="#cb32-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-248"><a href="#cb32-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-249"><a href="#cb32-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`season`</span>, <span class="in">`version`</span>: same as before</span>
+<span id="cb32-250"><a href="#cb32-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`era`</span>: which stretch of the show's history the season falls in (<span class="in">`"Seasons 1-15"`</span>, <span class="in">`"Seasons 16-30"`</span>, <span class="in">`"Seasons 31+"`</span>)</span>
+<span id="cb32-251"><a href="#cb32-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`episode`</span>: episode number within the season</span>
+<span id="cb32-252"><a href="#cb32-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`castaway`</span>: the castaway's name</span>
+<span id="cb32-253"><a href="#cb32-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`confessional_count`</span>: how many confessionals that castaway gave in that episode</span>
+<span id="cb32-254"><a href="#cb32-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-255"><a href="#cb32-255" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Build a histogram of <span class="in">`confessional_count`</span> using <span class="in">`geom_histogram()`</span>. Don't hesitate to look at the ggplot2 cheat sheet for help!</span>
+<span id="cb32-256"><a href="#cb32-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-259"><a href="#cb32-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-260"><a href="#cb32-260" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb32-261"><a href="#cb32-261" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
+<span id="cb32-262"><a href="#cb32-262" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> confessional_count))</span>
+<span id="cb32-263"><a href="#cb32-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-264"><a href="#cb32-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-265"><a href="#cb32-265" aria-hidden="true" tabindex="-1"></a>What have you learned about the distribution of confessional counts?</span>
+<span id="cb32-266"><a href="#cb32-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-267"><a href="#cb32-267" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** By default, <span class="in">`ggplot2`</span> uses 30 bins. To change the number of bins, to say 15, add the argument <span class="in">`bins = 15`</span> to <span class="in">`geom_histogram()`</span>. Note: this is not an aesthetic mapping.</span>
+<span id="cb32-268"><a href="#cb32-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-271"><a href="#cb32-271" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-272"><a href="#cb32-272" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb32-273"><a href="#cb32-273" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
+<span id="cb32-274"><a href="#cb32-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> confessional_count), <span class="at">bins =</span> <span class="dv">15</span>)</span>
+<span id="cb32-275"><a href="#cb32-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-276"><a href="#cb32-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-277"><a href="#cb32-277" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Instead of a histogram, let's create a kernel density plot. To do this, substitute geom_density() into your code for question <span class="in">`r q-2`</span>.</span>
+<span id="cb32-278"><a href="#cb32-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-281"><a href="#cb32-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-282"><a href="#cb32-282" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb32-283"><a href="#cb32-283" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
+<span id="cb32-284"><a href="#cb32-284" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> confessional_count))</span>
+<span id="cb32-285"><a href="#cb32-285" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-286"><a href="#cb32-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-287"><a href="#cb32-287" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Prediction: as *Survivor* has racked up more seasons, do you think the typical number of confessionals per person has gone up, gone down, or stayed about the same? Make your guess, then make side-by-side boxplots of <span class="in">`confessional_count`</span> for each <span class="in">`era`</span>.</span>
+<span id="cb32-288"><a href="#cb32-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-291"><a href="#cb32-291" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-292"><a href="#cb32-292" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb32-293"><a href="#cb32-293" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
+<span id="cb32-294"><a href="#cb32-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> era, <span class="at">y =</span> confessional_count))</span>
+<span id="cb32-295"><a href="#cb32-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-296"><a href="#cb32-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-297"><a href="#cb32-297" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** A violin plot is a kernel density on its side, made symmetric. Change your code from question <span class="in">`r q-1`</span> to use <span class="in">`geom_violin()`</span>. Which plot do you prefer, boxplots or violin plots? Why?</span>
+<span id="cb32-298"><a href="#cb32-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-301"><a href="#cb32-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-302"><a href="#cb32-302" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
+<span id="cb32-303"><a href="#cb32-303" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">x =</span> era, <span class="at">y =</span> confessional_count))</span>
+<span id="cb32-304"><a href="#cb32-304" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-305"><a href="#cb32-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-306"><a href="#cb32-306" aria-hidden="true" tabindex="-1"></a>**Bonus, if you have time:** try <span class="in">`geom_jitter()`</span> on top of (or instead of) your boxplot/violin from the last two questions. A lot of castaways get 0 or 1 confessionals in a given episode — what does jitter show you about that pile-up that the boxplot and violin plot hide?</span>
+<span id="cb32-307"><a href="#cb32-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-310"><a href="#cb32-310" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-311"><a href="#cb32-311" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals, <span class="fu">aes</span>(<span class="at">x =</span> era, <span class="at">y =</span> confessional_count)) <span class="sc">+</span></span>
+<span id="cb32-312"><a href="#cb32-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
+<span id="cb32-313"><a href="#cb32-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">size =</span> .<span class="dv">5</span>)</span>
+<span id="cb32-314"><a href="#cb32-314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-315"><a href="#cb32-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-316"><a href="#cb32-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-317"><a href="#cb32-317" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb32-318"><a href="#cb32-318" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wait!</span></span>
+<span id="cb32-319"><a href="#cb32-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-320"><a href="#cb32-320" aria-hidden="true" tabindex="-1"></a>Stop here and wait for the next round of groups before moving on</span>
+<span id="cb32-321"><a href="#cb32-321" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-322"><a href="#cb32-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-323"><a href="#cb32-323" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 5: Bar and column charts + Labeling</span></span>
+<span id="cb32-324"><a href="#cb32-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-325"><a href="#cb32-325" aria-hidden="true" tabindex="-1"></a>How many confessional records do we have for each version of the show? Let's find out!</span>
+<span id="cb32-326"><a href="#cb32-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-327"><a href="#cb32-327" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Make a bar chart of the number of rows for each <span class="in">`version`</span> using <span class="in">`geom_bar()`</span></span>
+<span id="cb32-328"><a href="#cb32-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-331"><a href="#cb32-331" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-332"><a href="#cb32-332" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb32-333"><a href="#cb32-333" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
+<span id="cb32-334"><a href="#cb32-334" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> version))</span>
+<span id="cb32-335"><a href="#cb32-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-336"><a href="#cb32-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-337"><a href="#cb32-337" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** When you have lots of categories, it's sometimes hard to read the labels on the x-axis. One trick is to flip the axes. Rebuild your bar chart using the <span class="in">`y`</span> aesthetic instead of <span class="in">`x`</span>.</span>
+<span id="cb32-338"><a href="#cb32-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-341"><a href="#cb32-341" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-342"><a href="#cb32-342" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(survivor_confessionals) <span class="sc">+</span></span>
+<span id="cb32-343"><a href="#cb32-343" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> version))</span>
+<span id="cb32-344"><a href="#cb32-344" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-345"><a href="#cb32-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-346"><a href="#cb32-346" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)` .** Sometimes the variable we want to show up in the bar chart shows up explicitly in our data, so we don't need <span class="in">`geom_bar()`</span> to count it for us. The chunk below creates <span class="in">`finale_confessionals`</span>, which contains just the castaways from the Season 40 ("Winners at War") finale and how many confessionals each one gave *in that episode*.</span>
+<span id="cb32-347"><a href="#cb32-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-350"><a href="#cb32-350" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-351"><a href="#cb32-351" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
+<span id="cb32-352"><a href="#cb32-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-353"><a href="#cb32-353" aria-hidden="true" tabindex="-1"></a>finale_confessionals <span class="ot">=</span> survivor_confessionals <span class="sc">|&gt;</span></span>
+<span id="cb32-354"><a href="#cb32-354" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(season <span class="sc">==</span> <span class="dv">40</span>, episode <span class="sc">==</span> <span class="fu">max</span>(episode[season <span class="sc">==</span> <span class="dv">40</span>]))</span>
+<span id="cb32-355"><a href="#cb32-355" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-356"><a href="#cb32-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-357"><a href="#cb32-357" aria-hidden="true" tabindex="-1"></a>Put <span class="in">`confessional_count`</span> on the x-axis, and <span class="in">`castaway`</span> on the y-axis. Use <span class="in">`geom_col`</span> (column) as the geom, using the <span class="in">`finale_confessionals`</span> data. How is this different than a bar plot?</span>
+<span id="cb32-358"><a href="#cb32-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-361"><a href="#cb32-361" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-362"><a href="#cb32-362" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb32-363"><a href="#cb32-363" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(finale_confessionals) <span class="sc">+</span></span>
+<span id="cb32-364"><a href="#cb32-364" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> confessional_count, <span class="at">y =</span> castaway))</span>
+<span id="cb32-365"><a href="#cb32-365" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-366"><a href="#cb32-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-367"><a href="#cb32-367" aria-hidden="true" tabindex="-1"></a>Who got the most confessional time in that episode? </span>
+<span id="cb32-368"><a href="#cb32-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-369"><a href="#cb32-369" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it's use. Choose one graph from today and add all labels.</span>
+<span id="cb32-370"><a href="#cb32-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-373"><a href="#cb32-373" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-374"><a href="#cb32-374" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span></span>
+<span id="cb32-375"><a href="#cb32-375" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb32-376"><a href="#cb32-376" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb32-377"><a href="#cb32-377" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Put your informative title here"</span>,</span>
+<span id="cb32-378"><a href="#cb32-378" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"and your subtitle here"</span>,</span>
+<span id="cb32-379"><a href="#cb32-379" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"New x label"</span>,</span>
+<span id="cb32-380"><a href="#cb32-380" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"New y label"</span>,</span>
+<span id="cb32-381"><a href="#cb32-381" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Put a caption here"</span></span>
+<span id="cb32-382"><a href="#cb32-382" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-383"><a href="#cb32-383" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-384"><a href="#cb32-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-385"><a href="#cb32-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-386"><a href="#cb32-386" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb32-387"><a href="#cb32-387" aria-hidden="true" tabindex="-1"></a><span class="fu">## When you're done</span></span>
+<span id="cb32-388"><a href="#cb32-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-389"><a href="#cb32-389" aria-hidden="true" tabindex="-1"></a>Make a post on the "Week 1 - Friday" discussion thread on Ed. </span>
+<span id="cb32-390"><a href="#cb32-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-391"><a href="#cb32-391" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Option 1: If you have any lingering questions about ggplot, feel free to post them</span>
+<span id="cb32-392"><a href="#cb32-392" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Option 2: You can also post your final graph for the last question! </span>
+<span id="cb32-393"><a href="#cb32-393" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb32-394"><a href="#cb32-394" aria-hidden="true" tabindex="-1"></a></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
