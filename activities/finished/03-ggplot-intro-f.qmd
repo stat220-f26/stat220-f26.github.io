@@ -1,7 +1,5 @@
 ---
 title: Intro to `ggplot2`
-execute:
-  eval: false
 ---
 
 ```{r setup, include=FALSE}
