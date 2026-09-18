@@ -262,7 +262,9 @@ ggplot(survivor_confessionals) +
 **Bonus, if you have time:** try `geom_jitter()` on top of (or instead of) your boxplot/violin from the last two questions. A lot of castaways get 0 or 1 confessionals in a given episode — what does jitter show you about that pile-up that the boxplot and violin plot hide?
 
 ```{r}
-# Add or swap in geom_jitter()
+ggplot(survivor_confessionals, aes(x = era, y = confessional_count)) +
+  geom_violin() + 
+  geom_jitter(size = .5)
 ```
 
 
@@ -280,16 +282,15 @@ How many confessional records do we have for each version of the show? Let's fin
 
 ```{r}
 # Fill in the blanks
-ggplot(___) +
-  geom_bar(aes(x = ___))
+ggplot(survivor_confessionals) +
+  geom_bar(aes(x = version))
 ```
 
 **`r (q <- q+1)`.** When you have lots of categories, it's sometimes hard to read the labels on the x-axis. One trick is to flip the axes. Rebuild your bar chart using the `y` aesthetic instead of `x`.
 
 ```{r}
-# Fill in the blanks
-ggplot(___) +
-  geom_bar(aes(y = ___))
+ggplot(survivor_confessionals) +
+  geom_bar(aes(y = version))
 ```
 
 **`r (q <- q+1)` .** Sometimes the variable we want to show up in the bar chart shows up explicitly in our data, so we don't need `geom_bar()` to count it for us. The chunk below creates `finale_confessionals`, which contains just the castaways from the Season 40 ("Winners at War") finale and how many confessionals each one gave *in that episode*.
@@ -306,10 +307,10 @@ Put `confessional_count` on the x-axis, and `castaway` on the y-axis. Use `geom_
 ```{r}
 # Fill in the blanks
 ggplot(finale_confessionals) +
-  geom_col(aes(x = ___, y = ___))
+  geom_col(aes(x = confessional_count, y = castaway))
 ```
 
-Who got the most confessional time in that episode? Does it match who you'd guess actually won the season? (No spoilers if you don't want them — but the answer's right there in your plot's y-axis order, or lack thereof... notice the bars aren't sorted by value. We'll fix that with `forcats` in a few weeks.)
+Who got the most confessional time in that episode? 
 
 **`r (q <- q+1)`.** In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it's use. Choose one graph from today and add all labels.
 

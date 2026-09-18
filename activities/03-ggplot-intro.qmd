@@ -33,7 +33,7 @@ The data we're using today contains information about all seasons of *Survivor* 
 ```{r}
 #| eval: TRUE
 
-survivor_episodes = readr::read_csv("../data/survivor_episodes.csv") # https://stat220-f26.github.io/data/survivor_episodes.csv
+survivor_episodes = readr::read_csv("https://stat220-f26.github.io/data/survivor_episodes.csv") #
 
 ```
 
@@ -83,9 +83,7 @@ Stop here and wait for the next round of groups before moving on
 
 Guess: over *Survivor*'s 25-year, 47-season run, has episode viewership gone up or down?
 
-First, let’s create a scatterplot of `viewers_finale` (the number of viewers for the last episode of the season) vs. `viewers_premiere` (the number of viewers for the first episode of the season).
-
-First, let's create a scatterplot of `viewers` (the number of people watching) vs. `episode_number_overall` (how far into the show's history that episode is).
+First, let's create a scatterplot of `viewers` (the number of people watching) vs. `episode_number_overall` (how far into the show's history that episode is). 
 
 A note on wording: when we say `viewers` vs. `episode_number_overall`, this should be interpreted as "variable on the y-axis" vs. "variable on the x-axis".
 
@@ -167,9 +165,7 @@ Stop here and wait for the next round of groups before moving on
 For the rest of today we'll switch to a different dataset from the same package: `confessionals`, which has one row per castaway per episode, recording how many on-camera "confessional" interviews they gave.
 
 ```{r}
-#| eval: TRUE
-
-survivor_confessionals = readr::read_csv("../data/survivor_confessionals.csv") # https://stat220-f26.github.io/data/survivor_confessionals.csv
+survivor_confessionals = readr::read_csv("https://stat220-f26.github.io/data/survivor_confessionals.csv") 
 ```
 
 - `season`, `version`: same as before
@@ -248,13 +244,11 @@ ggplot(___) +
 **`r (q <- q+1)` .** Sometimes the variable we want to show up in the bar chart shows up explicitly in our data, so we don't need `geom_bar()` to count it for us. The chunk below creates `finale_confessionals`, which contains just the castaways from the Season 40 ("Winners at War") finale and how many confessionals each one gave *in that episode*.
 
 ```{r}
-#| eval: TRUE
-
 finale_confessionals = survivor_confessionals |>
   dplyr::filter(season == 40, episode == max(episode[season == 40]))
 ```
 
-Put `confessional_count` on the x-axis, and `castaway` on the y-axis. Use `geom_col` (column) as the geom, using the `finale_confessionals` data. How is this different than a bar plot?
+Run the code chunk above, then put `confessional_count` on the x-axis, and `castaway` on the y-axis. Use `geom_col` (column) as the geom, using the `finale_confessionals` data. How is this different than a bar plot?
 
 ```{r}
 # Fill in the blanks
@@ -262,9 +256,9 @@ ggplot(finale_confessionals) +
   geom_col(aes(x = ___, y = ___))
 ```
 
-Who got the most confessional time in that episode? Does it match who you'd guess actually won the season? (No spoilers if you don't want them — but the answer's right there in your plot's y-axis order, or lack thereof... notice the bars aren't sorted by value. We'll fix that with `forcats` in a few weeks.)
+Who got the most confessional time in that episode? Do you think that's who won the season?
 
-**`r (q <- q+1)`.** In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it's use. Choose one graph from today and add all labels.
+**`r (q <- q+1)`.** In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it's use. Choose one graph from today (or make a new one) and add all labels.
 
 ```{r}
 ggplot(data = mpg) +
@@ -286,6 +280,8 @@ Make a post on the "Week 1 - Friday" discussion thread on Ed.
 
 - Option 1: If you have any lingering questions about ggplot, feel free to post them
 - Option 2: You can also post your final graph for the last question! 
+
+*Note:* this is how I'll record attendance for today! 
 :::
 
 

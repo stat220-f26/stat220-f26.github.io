@@ -1,0 +1,232 @@
+---
+title: "Activity 03 — more Survivor variables to draw from"
+subtitle: "Scouting doc, not a student-facing file"
+execute:
+  warning: false
+  message: false
+---
+
+Activity 03 currently uses only `season_summary` (~47 rows, one per season). The
+[{survivoR}](https://github.com/doehm/survivoR) package has 20+ other tables.
+This explores a few that stay **single-table** (no joins — those come in
+Week 4) and hit the exact same skill sequence as the current activity
+(view/glimpse → scatterplot → more aesthetics → distributions → bar/column +
+labs), just with richer or more interesting data underneath. Everything below
+is real, executed code against the actual package — the numbers and plots are
+what you'd actually get.
+
+```{r}
+library(tidyverse)
+library(survivoR)
+```
+
+## The short list
+
+| dataset | grain | rows | why it's interesting |
+|---|---|---|---|
+| `episodes` | one row per aired episode | 1136 | same `viewers`/`imdb_rating` variables as now, but ~25x more rows than `season_summary` — scatterplots actually look like scatterplots |
+| `castaways` | one row per castaway-per-season | 1351 | pivots from "seasons" to "people" — age, home state/province, how far they got, a quirky acknowledgment score |
+| `confessionals` | one row per castaway-per-episode | 12853 | screen-time data ("confessional count") — a real Survivor-fan hook (edgic theory) |
+| `castaway_details` | one row per unique person | 1118 | gender, personality type, occupation — good for bar charts, but has no numeric/season variable of its own, so it's join-only for scatterplots (skip for now) |
+
+Three worth building out below: `episodes`, `castaways`, `confessionals`.
+
+## Option 1: `episodes` — same questions, way more data
+
+`season_summary` already has `viewers_premiere`/`viewers_finale`/`imdb_mean`.
+`episodes` has `viewers` and `imdb_rating` at the *episode* level — 1136 points
+instead of ~47. Same variables, same skills, noticeably richer plots.
+
+```{r}
+glimpse(episodes)
+```
+
+**Round 2 (scatterplot):** does a better-rated episode draw more viewers?
+
+```{r}
+episodes |>
+  filter(!is.na(viewers), !is.na(imdb_rating)) |>
+  ggplot(aes(x = imdb_rating, y = viewers)) +
+  geom_point(alpha = 0.4)
+```
+
+Worth knowing before you build a question around this: the correlation is
+`r round(cor(episodes$imdb_rating, episodes$viewers, use = "complete.obs"), 2)`
+— basically none. That's not a dead end, though — "I expected a strong
+relationship and there isn't one" is a perfectly good discussion prompt, and
+it's a more honest data-science moment than every example having a clean
+story.
+
+**Round 3 (more aesthetics):** viewership across the show's run, colored by
+season — and this one *does* show a real pattern:
+
+```{r}
+episodes |>
+  filter(!is.na(viewers)) |>
+  ggplot(aes(x = episode_number_overall, y = viewers, color = season)) +
+  geom_point(alpha = 0.6) +
+  scale_color_viridis_c()
+```
+
+Viewership rose through the early seasons and has been declining since —
+visible in the color gradient sloping down left-to-right after an initial
+climb. Good real-world hook ("why do you think that is?") without needing any
+outside knowledge.
+
+**Round 4 (distributions):** IMDB rating distribution — one histogram, one
+violin split a different way:
+
+```{r}
+episodes |>
+  filter(!is.na(imdb_rating)) |>
+  ggplot(aes(x = imdb_rating)) +
+  geom_histogram(bins = 20)
+```
+
+**Note on NAs:** `viewers` is missing for about a third of episodes (early
+international versions, or just never reported) and `imdb_rating` for about
+10%. Not a defect — a real "why would ratings data be missing for older
+episodes" aside, and a reason to always start with `filter(!is.na(...))`
+before plotting, which the current activity doesn't have to deal with at all
+since `season_summary` is pre-cleaned.
+
+## Option 2: `castaways` — pivot from seasons to people
+
+```{r}
+glimpse(castaways)
+```
+
+**Round 2/3 (scatterplot + aesthetics):** does age predict how long someone
+lasts, and does that differ for eventual winners?
+
+```{r}
+castaways |>
+  ggplot(aes(x = age, y = day, color = winner)) +
+  geom_point(alpha = 0.6)
+```
+
+**Round 4 (distributions):** boxplot/violin of days survived, winners vs.
+everyone else — clean, non-trivial split:
+
+```{r}
+castaways |>
+  group_by(winner) |>
+  summarise(mean_day = mean(day), n = n())
+```
+
+Winners survive to day 38 on average vs. day 23 for everyone else — a real
+difference, not just "winners survive to the end by definition" (day 38 is
+short of most seasons' full length, since finales sometimes crown a winner
+before the calendar-day count catches up to earlier eras' game length).
+
+```{r}
+castaways |>
+  ggplot(aes(x = winner, y = day)) +
+  geom_violin() +
+  geom_boxplot(width = 0.15)
+```
+
+(Layering a boxplot on top of a violin is new — a two-line preview of "you can
+stack more than one geom on the same data," which the current activity's
+Round 4 only does one geom at a time.)
+
+**Round 5 (bar chart + labs):** which state/province has sent the most
+castaways — the domestic analog of the current activity's "seasons per
+country" bar chart, using `country2`:
+
+```{r}
+castaways |>
+  count(state, sort = TRUE) |>
+  head(10)
+```
+
+Heads up before building this into a question: `state` has
+`r n_distinct(castaways$state, na.rm = TRUE)` distinct values (US states, plus
+"state" fields from Survivor South Africa and Survivor AU, like Gauteng and
+NSW) and 65 missing. A straight `geom_bar()` on all of it will be an unreadable
+wall of one-off bars — which is honestly a decent motivating moment for "we'll
+fix this exact problem with `forcats` in a few weeks," but not something to
+solve in Round 5 itself. Cleanest fix for right now: `filter()` to the top ~10
+states first (same move Round 5 already makes going from `country2` to
+`country`), or just pick a handful of states to compare by name.
+
+There's also a quirky, low-stakes variable here for the Round 1
+`summary()`/`unique()` warm-up: `ack_score`, a score for how host Jeff Probst
+acknowledges an eliminated player on the way out. It's sparse (about half
+missing — looks like it's only tracked for more recent seasons) so it's not
+plot-ready, but `unique(castaways$ack_score)` or a `summary()` makes for a fun
+"wait, what is this column" moment before students even get to graphing.
+
+## Option 3 (bonus): `confessionals` — screen time as data
+
+```{r}
+glimpse(confessionals)
+```
+
+`confessional_count` (how many confessionals a castaway gave in an episode) is
+fully populated across `r n_distinct(confessionals$season)` seasons and ranges
+0–22. Survivor superfans track this obsessively as a predictor of who's going
+far ("edgic" theory) — genuinely fun hook if you have fans in the room.
+`confessional_time` exists too but is missing for most rows (only recorded for
+a subset of seasons), so lead with `confessional_count`.
+
+```{r}
+confessionals |>
+  ggplot(aes(x = confessional_count)) +
+  geom_histogram(binwidth = 1)
+```
+
+Right-skewed with a long tail — a nicer distribution-shape example than
+anything in the current `season_summary`-based activity, since most of those
+are close to symmetric.
+
+## Making the plots more interesting, same skill level
+
+A few `geom_*` additions that don't require anything beyond "you can add
+another layer" — no new concepts, just slightly different visual payoff:
+
+**`geom_smooth()`** — one extra line turns the "viewers over time" scatter
+into an actual trend:
+
+```{r}
+episodes |>
+  filter(!is.na(viewers)) |>
+  ggplot(aes(x = episode_number_overall, y = viewers)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(se = FALSE)
+```
+
+**`geom_jitter()`** — already used in HW2, but worth pairing with a mostly-
+discrete x-axis like `winner` or `jury_status` instead of a continuous one:
+
+```{r}
+castaways |>
+  ggplot(aes(x = winner, y = day)) +
+  geom_jitter(width = 0.15, alpha = 0.4)
+```
+
+**`geom_count()`** — same syntax as `geom_point()`, but sizes each point by
+how many overlapping observations it represents. Nice for a scatter where both
+variables are somewhat discrete (episode ratings, rounded to the nearest 0.1,
+plotted against something else) — makes overplotting *informative* instead of
+just messy, for zero extra conceptual cost.
+
+None of these need facets, themes, or scales customization (still "next
+week"), so they fit without pulling forward content from Slides 04.
+
+## Bottom line
+
+- **Best like-for-like upgrade:** `episodes` — same variables students already
+  expect (`viewers`, `imdb_rating`), just far more of them, plus a real
+  "expected a relationship, didn't find one" moment and a genuine trend to
+  discover in Round 3.
+- **Best change-of-pace:** `castaways` — moves from "seasons" to "people,"
+  clean winner-vs-not comparison for the boxplot/violin round, and a bar-chart
+  variable (`state`) that naturally previews the "too many categories" problem
+  `forcats` solves later.
+- **Best low-stakes bonus:** `confessionals` — one variable, well-populated,
+  a nicer distribution shape, and a hook for anyone who's actually watched the
+  show.
+
+All three stay single-table, so nothing here requires pulling in Week 4's
+joins content early.
