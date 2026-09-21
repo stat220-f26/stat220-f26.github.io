@@ -3751,7 +3751,7 @@
     "href": "index.html",
     "title": "Stat 220: Intro to Data Science",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nREFERENCE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Sep 14\n📝complete welcome survey\n\n\nWelcome + data, R review\n\nslides01 01-example-tuition\n\n\n\n\n1\nW\nWed, Sep 16\n📚 R basics  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\n📚 R4DS 28.1-28.5 \n\nGithub + reproducible reports\n\nslides02 02-example-lego Lego report to replicate\n\n\n\n\n1\nF\nFri, Sep 18\n📝 10 minute activity on markdown  📺 intro to ggplot\n\n📚 R4DS Ch1 \n\nggplot\n\nslides03 03-ggplot-intro\n\nHW 1\n\n\n2\nM\nMon, Sep 21\n📚 Skim the entire reference reading for today, pick one “rule” and summarize it\n\n📚 DataViz 17-21 \n\nTheming + Design\ntbd\n\n\n\n2\nW\nWed, Sep 23\n\n📚 DataViz 15 \n\nMaps/spatial data\ntbd\nHW 2\n\n\n2\nF\nFri, Sep 25\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\n\nAccesibility for data viz\ntbd\n\n\n\n3\nM\nMon, Sep 28\n🌎 Skim ?nycflights23::flights` in the console and jot down 2 questions you could answer with this data\n📚 R4DS 3.1-3.4 \n\nVerbs\ntbd\n\n\n\n3\nW\nWed, Sep 30\n🌎 Watch the pivot_longer/pivot_wider animations at gadenbuie.com/projects/tidyexplain to get a feel for reshaping before we do it live\n📚 R4DS 3.5  📚 R4DS 5.1-5.4 \n\nGroups and summarizing Tidy data\ntbd\nHW 3\n\n\n3\nF\nFri, Oct 2\n\n📚 R4DS 4 \n\nCode style\ntbd\n\nLab Quiz 1 \n\n\n\n4\nM\nMon, Oct 5\n\n📚 R4DS 19.1-19.3\n\nCombining datasets\ntbd\n\n\n\n4\nW\nWed, Oct 7\n📝 Open [ADD CSV] in a plain text editor (not Excel) and note anything that looks “off”\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\ntbd\n\nHW 4  [Portfolio 1]\n\n\n4\nF\nFri, Oct 9\n\n📚 R4DS 16 \n\nWorking with factors\ntbd\n\n\n\n5\nM\nMon, Oct 12\n\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\ntbd\n\n\n\n5\nW\nWed, Oct 14\n🌎 Google ngram viewer\n\n📚 MDSR 19.2 \n\nIntro to Text Analysis\ntbd\nHW 5\n\n\n5\nF\nFri, Oct 16\n📚 The Trouble with Sentiment Analysis\n\n\nText Analysis\ntbd\nLab Quiz 2\n\n\n6\nM\nMon, Oct 19\n\n\n🏝️ Midterm Break; no class\ntbd\n\n\n\n6\nW\nWed, Oct 21\n\n📚 R4DS 25\n\nFunctions\ntbd\n\n\n\n6\nF\nFri, Oct 23\n\n📚 MDSR 7.1-7.3\n\nIteration\ntbd\nHW6\n\n\n7\nM\nMon, Oct 26\n\n\nIteration II\ntbd\n\n\n\n7\nW\nWed, Oct 28\n📚What is an API?  📝 sign up for a census API key\n\n📚R4DS 23 (skip case studies) \n\nAPIs\ntbd\n\nHW7 \n\n\n\n7\nF\nFri, Oct 30\n\n\nScraping I\ntbd\n\nLab Quiz 3 , [Final Project Idea Form]\n\n\n8\nM\nMon, Nov 2\n📝 install and test selectorGadget\n\n📚 R4DS 24.2;24.5 \n\nScraping II\ntbd\n[Final Project Ranking Form]  [Portfolio 2]\n\n\n8\nW\nWed, Nov 4\n🌎 Explore htmlWidgets gallery + source code  🌎 Explore NZ Earthquakes and source code\n\n\nIntro to Interactivity\ntbd\nHW8\n\n\n8\nF\nFri, Nov 6\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\n\nShiny 1\ntbd\n\n\n\n9\nM\nMon, Nov 9\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\n\nShiny 2\ntbd\n\n\n\n9\nW\nWed, Nov 11\n\n\nShiny 3\ntbd\nFinal Project sketch\n\n\n9\nF\nFri, Nov 13\n\n📚MDSR 15.1-15.4\n\nSQL\ntbd\n[Portfolio 3]\n\n\n10\nM\nMon, Nov 16\n\n\nProject Demos\ntbd\n\n\n\n10\nW\nWed, Nov 18\n\n\nProject Demos\ntbd\nHW9\n\n\n\n\nFri, Nov 20\n\n\n🏝️ Reading days\ntbd\n\n\n\n\n\nMon, Nov 23\n\n\nFinal Project Due @ noon\ntbd\n[Final Project]",
+    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nREFERENCE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Sep 14\n📝complete welcome survey\n\n\nWelcome + data, R review\n\nslides01 01-example-tuition\n\n\n\n\n1\nW\nWed, Sep 16\n📚 R basics  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\n📚 R4DS 28.1-28.5 \n\nGithub + reproducible reports\n\nslides02 02-example-lego Lego report to replicate\n\n\n\n\n1\nF\nFri, Sep 18\n📝 10 minute activity on markdown  📺 intro to ggplot\n\n📚 R4DS Ch1 \n\nggplot\n\nslides03 03-ggplot-intro\n\nHW 1\n\n\n2\nM\nMon, Sep 21\n📚 Skim the entire reference reading for today, pick one “rule” and summarize it\n\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04 04-customizing-plots\n\n\n\n\n2\nW\nWed, Sep 23\n\n📚 DataViz 15 \n\nMaps/spatial data\ntbd\nHW 2\n\n\n2\nF\nFri, Sep 25\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\n\nAccesibility for data viz\ntbd\n\n\n\n3\nM\nMon, Sep 28\n🌎 Skim ?nycflights23::flights` in the console and jot down 2 questions you could answer with this data\n📚 R4DS 3.1-3.4 \n\nVerbs\ntbd\n\n\n\n3\nW\nWed, Sep 30\n🌎 Watch the pivot_longer/pivot_wider animations at gadenbuie.com/projects/tidyexplain to get a feel for reshaping before we do it live\n📚 R4DS 3.5  📚 R4DS 5.1-5.4 \n\nGroups and summarizing Tidy data\ntbd\nHW 3\n\n\n3\nF\nFri, Oct 2\n\n📚 R4DS 4 \n\nCode style\ntbd\n\nLab Quiz 1 \n\n\n\n4\nM\nMon, Oct 5\n\n📚 R4DS 19.1-19.3\n\nCombining datasets\ntbd\n\n\n\n4\nW\nWed, Oct 7\n📝 Open [ADD CSV] in a plain text editor (not Excel) and note anything that looks “off”\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\ntbd\n\nHW 4  [Portfolio 1]\n\n\n4\nF\nFri, Oct 9\n\n📚 R4DS 16 \n\nWorking with factors\ntbd\n\n\n\n5\nM\nMon, Oct 12\n\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\ntbd\n\n\n\n5\nW\nWed, Oct 14\n🌎 Google ngram viewer\n\n📚 MDSR 19.2 \n\nIntro to Text Analysis\ntbd\nHW 5\n\n\n5\nF\nFri, Oct 16\n📚 The Trouble with Sentiment Analysis\n\n\nText Analysis\ntbd\nLab Quiz 2\n\n\n6\nM\nMon, Oct 19\n\n\n🏝️ Midterm Break; no class\ntbd\n\n\n\n6\nW\nWed, Oct 21\n\n📚 R4DS 25\n\nFunctions\ntbd\n\n\n\n6\nF\nFri, Oct 23\n\n📚 MDSR 7.1-7.3\n\nIteration\ntbd\nHW6\n\n\n7\nM\nMon, Oct 26\n\n\nIteration II\ntbd\n\n\n\n7\nW\nWed, Oct 28\n📚What is an API?  📝 sign up for a census API key\n\n📚R4DS 23 (skip case studies) \n\nAPIs\ntbd\n\nHW7 \n\n\n\n7\nF\nFri, Oct 30\n\n\nScraping I\ntbd\n\nLab Quiz 3 , [Final Project Idea Form]\n\n\n8\nM\nMon, Nov 2\n📝 install and test selectorGadget\n\n📚 R4DS 24.2;24.5 \n\nScraping II\ntbd\n[Final Project Ranking Form]  [Portfolio 2]\n\n\n8\nW\nWed, Nov 4\n🌎 Explore htmlWidgets gallery + source code  🌎 Explore NZ Earthquakes and source code\n\n\nIntro to Interactivity\ntbd\nHW8\n\n\n8\nF\nFri, Nov 6\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\n\nShiny 1\ntbd\n\n\n\n9\nM\nMon, Nov 9\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\n\nShiny 2\ntbd\n\n\n\n9\nW\nWed, Nov 11\n\n\nShiny 3\ntbd\nFinal Project sketch\n\n\n9\nF\nFri, Nov 13\n\n📚MDSR 15.1-15.4\n\nSQL\ntbd\n[Portfolio 3]\n\n\n10\nM\nMon, Nov 16\n\n\nProject Demos\ntbd\n\n\n\n10\nW\nWed, Nov 18\n\n\nProject Demos\ntbd\nHW9\n\n\n\n\nFri, Nov 20\n\n\n🏝️ Reading days\ntbd\n\n\n\n\n\nMon, Nov 23\n\n\nFinal Project Due @ noon\ntbd\n[Final Project]",
     "crumbs": [
       "Course information",
       "Schedule"
@@ -3779,53 +3779,60 @@
     "text": "What next?\n\nSetting aesthetics\nUsing facets\nChanging scales\nChanging coordinates\nChanging themes\nAdding annotations"
   },
   {
-    "objectID": "slides/04/slides04.html#survivor",
-    "href": "slides/04/slides04.html#survivor",
+    "objectID": "slides/04/slides04.html#where-does-carleton-land",
+    "href": "slides/04/slides04.html#where-does-carleton-land",
     "title": "Plot design",
-    "section": "Survivor",
-    "text": "Survivor\nFrom Season02 to Season 20, Survivor aired on Thursdays. After Season 20, it switched to airing on Wednesdays. Thursday is better for my schedule, so I’d like to make an argument for switching back to Thursdays."
+    "section": "Where does Carleton land?",
+    "text": "Where does Carleton land?\nIn 2018, Carleton’s in-state tuition was about $55,000 a year. Was that a lot? And what did Carleton graduates earn? I’d like to make an argument about how Carleton compares to other colleges, using the tuition and pay data from Day 1."
   },
   {
     "objectID": "slides/04/slides04.html#warm-up",
     "href": "slides/04/slides04.html#warm-up",
     "title": "Plot design",
     "section": "Warm Up",
-    "text": "Warm Up\n\n\n\n\nLog into maize\n\nIf you have to type your PAT in everytime you push to GitHub, follow the directions at Getting Set up with Git and GitHub #4 to tell RStudio to save your credentials\n\nFind the .qmd template for today at the course website\nOpen it up in maize/Rstudio\nWork with a neighbor to recreate this graph → (use 15 bins)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n−+\n08:00"
+    "text": "Warm Up\n\n\n\n\nLog into maize\n\nIf you have to type your PAT in everytime you push to GitHub, follow the directions at Getting Set up with Git and GitHub #4 to tell RStudio to save your credentials (may or may not work on maize 🤷‍♀️ but definitely works on local installations)\n\nFind the .qmd template for today at the course website\nOpen it up in maize/Rstudio\nWork with a neighbor to recreate this graph →\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n−+\n08:00"
   },
   {
     "objectID": "slides/04/slides04.html#polishing-plots",
     "href": "slides/04/slides04.html#polishing-plots",
     "title": "Plot design",
     "section": "Polishing plots",
-    "text": "Polishing plots\n\n\n\n\n\n\n\n\n\n\n\n\nWe’re not quite satisfied….\n\nI want the bars to have a border that stands out\nI find stacked histograms hard to read\nI don’t like the default color scheme\nI don’t like the gray background"
+    "text": "Polishing plots\n\n\n\n\n\n\n\n\n\n\n\n\nWe’re not quite satisfied….\n\nI can’t tell 50 states apart (and I can’t find Carleton!)\nThe points pile on top of each other\nPublic and private schools are all mixed together\nI don’t like the default color scheme\nI don’t like the gray background"
   },
   {
     "objectID": "slides/04/slides04.html#setting-aesthetics",
     "href": "slides/04/slides04.html#setting-aesthetics",
     "title": "Plot design",
     "section": "Setting aesthetics",
-    "text": "Setting aesthetics\nSetting = choosing a certain value for an aesthetic\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    )"
+    "text": "Setting aesthetics\nSetting = choosing a certain value for an aesthetic\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = state), \n    alpha = 0.6,\n    size = .5\n    )"
   },
   {
     "objectID": "slides/04/slides04.html#facets",
     "href": "slides/04/slides04.html#facets",
     "title": "Plot design",
     "section": "Facets",
-    "text": "Facets\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) +\n  facet_wrap(vars(day_of_week))"
+    "text": "Facets\nMake “small multiples”, where each facet shows a subset of the data\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = state), \n    alpha = 0.6,\n    size = .5\n    ) +\n  facet_wrap(vars(type))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nYou may have seen this before using the syntax facet_wrap(~type). Both work, but vars() is the more modern/flexible syntax, so that’s what I’ve used here"
+  },
+  {
+    "objectID": "slides/04/slides04.html#choose-what-to-color-by",
+    "href": "slides/04/slides04.html#choose-what-to-color-by",
+    "title": "Plot design",
+    "section": "Choose what to color by",
+    "text": "Choose what to color by\n50 colors are too many to tell apart. Instead, I made a group variable that splits schools into Carleton, other Minnesota colleges, and everywhere else. (We’ll learn to make variables like this next week!)\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = .5\n    )"
   },
   {
     "objectID": "slides/04/slides04.html#changing-scales",
     "href": "slides/04/slides04.html#changing-scales",
     "title": "Plot design",
     "section": "Changing scales",
-    "text": "Changing scales\n\nscale_&lt;aes&gt;_&lt;method&gt;()\n\n\n\nExamples:\n\nscale_fill_manual()\nscale_fill_brewer()\nscale_color_viridis()\nscale_shape_manual()\n\n\nRecommended reading:\n\nUsing colors in R\nTaking control of qualitative colors in ggplot2"
+    "text": "Changing scales\n\nscale_&lt;aes&gt;_&lt;method&gt;()\n\n\n\nExamples:\n\nscale_color_manual()\nscale_color_brewer()\nscale_color_viridis_c()\nscale_shape_manual()\n\n\nRecommended reading:\n\nUsing colors in R\nTaking control of qualitative colors in ggplot2"
   },
   {
     "objectID": "slides/04/slides04.html#example-built-in-scale",
     "href": "slides/04/slides04.html#example-built-in-scale",
     "title": "Plot design",
     "section": "Example (built-in scale)",
-    "text": "Example (built-in scale)\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_brewer(palette = \"Greens\")"
+    "text": "Example (built-in scale)\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_brewer(palette = \"Dark2\")"
   },
   {
     "objectID": "slides/04/slides04.html#example-built-in-scale-1",
@@ -3842,32 +3849,39 @@
     "text": "Aside: types of color scales\n\n\n\nSource: Datawrapper Blog"
   },
   {
+    "objectID": "slides/04/slides04.html#example-continuous-color-scale",
+    "href": "slides/04/slides04.html#example-continuous-color-scale",
+    "title": "Plot design",
+    "section": "Example (continuous color scale)",
+    "text": "Example (continuous color scale)\nSometimes the variable we color by is numeric, like the percent of graduates with STEM degrees. Then we need a continuous color scale.\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = stem_percent), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_viridis_c()"
+  },
+  {
     "objectID": "slides/04/slides04.html#example-manual-color-palette",
     "href": "slides/04/slides04.html#example-manual-color-palette",
     "title": "Plot design",
     "section": "Example (manual color palette)",
-    "text": "Example (manual color palette)\nLet’s make Wednesdays navyblue and Thursdays gold2\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\"))"
+    "text": "Example (manual color palette)\nLet’s make Carleton gold2, other Minnesota colleges navyblue, and everyone else gray70\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_manual(values = c(\"gold2\", \"navyblue\", \"gray70\"))\n\n\n\n\n\n\n\n\n\n\nYou may have to try a few things to get the colors in the right order"
   },
   {
     "objectID": "slides/04/slides04.html#can-also-change-non-color-scales",
     "href": "slides/04/slides04.html#can-also-change-non-color-scales",
     "title": "Plot design",
     "section": "Can also change non-color scales",
-    "text": "Can also change non-color scales\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_continuous(limits = c(1,10))"
+    "text": "Can also change non-color scales\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_manual(values = c(\"gold2\", \"navyblue\", \"gray70\")) + \n  scale_x_continuous(labels = scales::dollar)"
   },
   {
     "objectID": "slides/04/slides04.html#can-also-change-non-color-scales-1",
     "href": "slides/04/slides04.html#can-also-change-non-color-scales-1",
     "title": "Plot design",
     "section": "Can also change non-color scales",
-    "text": "Can also change non-color scales\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_log10(limits = c(1,10))"
+    "text": "Can also change non-color scales\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_manual(values = c(\"gold2\", \"navyblue\", \"gray70\")) + \n  scale_x_log10()"
   },
   {
     "objectID": "slides/04/slides04.html#can-also-change-non-color-scales-2",
     "href": "slides/04/slides04.html#can-also-change-non-color-scales-2",
     "title": "Plot design",
     "section": "Can also change non-color scales",
-    "text": "Can also change non-color scales\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_reverse()"
+    "text": "Can also change non-color scales\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_manual(values = c(\"gold2\", \"navyblue\", \"gray70\")) + \n  scale_x_reverse()"
   },
   {
     "objectID": "slides/04/slides04.html#changing-themes",
@@ -3895,14 +3909,14 @@
     "href": "slides/04/slides04.html#try-it",
     "title": "Plot design",
     "section": "Try it",
-    "text": "Try it\nApply theme_light() to the histogram\n\n\n\n\n\n\n\n\n\n\n\n\n−+\n00:30"
+    "text": "Try it\nApply theme_light() to the scatterplot\n\n\n\n\n\n\n\n\n\n\n\n\n−+\n00:30"
   },
   {
     "objectID": "slides/04/slides04.html#even-more-customizations",
     "href": "slides/04/slides04.html#even-more-customizations",
     "title": "Plot design",
     "section": "Even more customizations",
-    "text": "Even more customizations\n\nMove legend\nClean up labels and title\nGet rid of .5’s in x-axis\nAnnotations"
+    "text": "Even more customizations\n\nMove legend\nClean up labels and title\nFormat the axis labels\nAnnotations"
   },
   {
     "objectID": "slides/04/slides04.html#section",
@@ -3919,46 +3933,53 @@
     "text": "?theme\n\ntheme(line, rect, text, title, aspect.ratio, axis.title, axis.title.x,\n  axis.title.x.top, axis.title.x.bottom, axis.title.y, axis.title.y.left,\n  axis.title.y.right, axis.text, axis.text.x, axis.text.x.top,\n  axis.text.x.bottom, axis.text.y, axis.text.y.left, axis.text.y.right,\n  axis.ticks, axis.ticks.x, axis.ticks.x.top, axis.ticks.x.bottom,\n  axis.ticks.y, axis.ticks.y.left, axis.ticks.y.right, axis.ticks.length,\n  axis.line, axis.line.x, axis.line.x.top, axis.line.x.bottom, axis.line.y,\n  axis.line.y.left, axis.line.y.right, legend.background, legend.margin,\n  legend.spacing, legend.spacing.x, legend.spacing.y, legend.key,\n  legend.key.size, legend.key.height, legend.key.width, legend.text,\n  legend.text.align, legend.title, legend.title.align, legend.position,\n  legend.direction, legend.justification, legend.box, legend.box.just,\n  legend.box.margin, legend.box.background, legend.box.spacing,\n  panel.background, panel.border, panel.spacing, panel.spacing.x,\n  panel.spacing.y, panel.grid, panel.grid.major, panel.grid.minor,\n  panel.grid.major.x, panel.grid.major.y, panel.grid.minor.x,\n  panel.grid.minor.y, panel.ontop, plot.background, plot.title,\n  plot.subtitle, plot.caption, plot.tag, plot.tag.position, plot.margin,\n  strip.background, strip.background.x, strip.background.y,\n  strip.placement, strip.text, strip.text.x, strip.text.y,\n  strip.switch.pad.grid, strip.switch.pad.wrap, ..., complete = FALSE,\n  validate = TRUE)\n\n\n\nTo see examples in action, see “Theme Elements” of the ggplot2 book"
   },
   {
-    "objectID": "slides/04/slides04.html#move-legend-and-make-the-background-transparent",
-    "href": "slides/04/slides04.html#move-legend-and-make-the-background-transparent",
+    "objectID": "slides/04/slides04.html#move-the-legend",
+    "href": "slides/04/slides04.html#move-the-legend",
     "title": "Plot design",
-    "section": "Move legend and make the background transparent",
-    "text": "Move legend and make the background transparent\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  theme_minimal() + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank()\n  )"
+    "section": "Move the legend",
+    "text": "Move the legend\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_manual(values = c(\"gold2\", \"navyblue\", \"gray70\")) + \n  theme_minimal() + \n  theme(\n    legend.position = \"top\"\n  )"
   },
   {
     "objectID": "slides/04/slides04.html#clean-up-labels-and-title",
     "href": "slides/04/slides04.html#clean-up-labels-and-title",
     "title": "Plot design",
     "section": "Clean up labels and title",
-    "text": "Clean up labels and title\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  theme_minimal() + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank()\n  ) + \n  labs(\n    x = \"Season Average IMDB Rating\",\n    y = \"\",\n    fill = \"\",\n    title = \"Survivor is better on Thursdays\"\n  )"
+    "text": "Clean up labels and title\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_manual(values = c(\"gold2\", \"navyblue\", \"gray70\")) + \n  theme_minimal() + \n  theme(\n    legend.position = \"top\"\n  ) + \n  labs(\n    x = \"In-state tuition\",\n    y = \"Median mid-career pay\",\n    color = \"\",\n    title = \"Carleton: top 4% in tuition, top 13% in pay\"\n  )"
   },
   {
     "objectID": "slides/04/slides04.html#remove-minor-gridlines",
     "href": "slides/04/slides04.html#remove-minor-gridlines",
     "title": "Plot design",
     "section": "Remove minor gridlines",
-    "text": "Remove minor gridlines\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  theme_minimal() + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank(),\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"Season Average IMDB Rating\",\n    y = \"\",\n    fill = \"\",\n    title = \"Survivor is better on Thursdays\"\n  )"
+    "text": "Remove minor gridlines\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_manual(values = c(\"gold2\", \"navyblue\", \"gray70\")) + \n  theme_minimal() + \n  theme(\n    legend.position = \"top\",\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"In-state tuition\",\n    y = \"Median mid-career pay\",\n    color = \"\",\n    title = \"Carleton: top 4% in tuition, top 13% in pay\"\n  )"
   },
   {
-    "objectID": "slides/04/slides04.html#get-rid-of-.5s",
-    "href": "slides/04/slides04.html#get-rid-of-.5s",
+    "objectID": "slides/04/slides04.html#format-the-axes",
+    "href": "slides/04/slides04.html#format-the-axes",
     "title": "Plot design",
-    "section": "Get rid of .5’s",
-    "text": "Get rid of .5’s\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_continuous(breaks = c(6, 7, 8, 9)) +\n  theme_minimal() + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank(),\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"Season Average IMDB Rating\",\n    y = \"\",\n    fill = \"\",\n    title = \"Survivor is better on Thursdays\"\n  )"
+    "section": "Format the axes",
+    "text": "Format the axes\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_manual(values = c(\"gold2\", \"navyblue\", \"gray70\")) + \n  scale_x_continuous(labels = scales::dollar) + \n  scale_y_continuous(labels = scales::dollar) + \n  theme_minimal() + \n  theme(\n    legend.position = \"top\",\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"In-state tuition\",\n    y = \"Median mid-career pay\",\n    color = \"\",\n    title = \"Carleton: top 4% in tuition, top 13% in pay\"\n  )"
   },
   {
     "objectID": "slides/04/slides04.html#add-an-annotation",
     "href": "slides/04/slides04.html#add-an-annotation",
     "title": "Plot design",
     "section": "Add an annotation",
-    "text": "Add an annotation\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_continuous(breaks = c(6, 7, 8, 9)) +\n  theme_minimal() + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank(),\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"Season Average IMDB Rating\",\n    y = \"\",\n    fill = \"\",\n    title = \"Survivor is better on Thursdays\"\n  ) +\n  annotate(\"text\", \n           x = 6, \n           y = 3, \n           label = \"Lowest ratings \\n occur on \\n Wednesdays\",\n           col = \"navyblue\")"
+    "text": "Add an annotation\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_manual(values = c(\"gold2\", \"navyblue\", \"gray70\")) + \n  scale_x_continuous(labels = scales::dollar) + \n  scale_y_continuous(labels = scales::dollar) + \n  theme_minimal() + \n  theme(\n    legend.position = \"top\",\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"In-state tuition\",\n    y = \"Median mid-career pay\",\n    color = \"\",\n    title = \"Carleton: top 4% in tuition, top 13% in pay\"\n  ) +\n  annotate(\"point\", \n           x = 54759, \n           y = 109900, \n           shape = 1, \n           size = 7, \n           stroke = 1.2, \n           col = \"gold4\") +\n  annotate(\"text\", \n           x = 52500, \n           y = 109900, \n           label = \"Carleton\", \n           hjust = 1, \n           fontface = \"bold\", \n           col = \"gold4\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nI had to look these values up in the data, and try a few different combinations to get it to look OK"
   },
   {
     "objectID": "slides/04/slides04.html#increase-text-size",
     "href": "slides/04/slides04.html#increase-text-size",
     "title": "Plot design",
     "section": "Increase text size",
-    "text": "Increase text size\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_continuous(breaks = c(6, 7, 8, 9)) +\n  theme_minimal(base_size = 20) + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank(),\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"Season Average IMDB Rating\",\n    y = \"\",\n    fill = \"\",\n    title = \"Survivor is better on Thursdays\"\n  ) +\n  annotate(\"text\", \n           x = 6, \n           y = 3, \n           label = \"Lowest ratings \\n occur on \\n Wednesdays\",\n           col = \"navyblue\")"
+    "text": "Increase text size\n\n\nggplot(college_pay) + \n  geom_point(\n    aes(x = in_state_tuition, \n        y = mid_career_pay, \n        color = group), \n    alpha = 0.6,\n    size = 2\n    ) + \n  scale_color_manual(values = c(\"gold2\", \"navyblue\", \"gray70\")) + \n  scale_x_continuous(labels = scales::dollar) + \n  scale_y_continuous(labels = scales::dollar) + \n  theme_minimal(base_size = 20) + \n  theme(\n    legend.position = \"top\",\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"In-state tuition\",\n    y = \"Median mid-career pay\",\n    color = \"\",\n    title = \"Carleton: top 4% in tuition, top 13% in pay\"\n  ) +\n  annotate(\"point\", \n           x = 54759, \n           y = 109900, \n           shape = 1, \n           size = 7, \n           stroke = 1.2, \n           col = \"gold4\") +\n  annotate(\"text\", \n           x = 52500, \n           y = 109900, \n           label = \"Carleton\", \n           hjust = 1, \n           fontface = \"bold\", \n           size = 6, \n           col = \"gold4\")"
+  },
+  {
+    "objectID": "slides/04/slides04.html#final-version",
+    "href": "slides/04/slides04.html#final-version",
+    "title": "Plot design",
+    "section": "“Final” version",
+    "text": "“Final” version"
   },
   {
     "objectID": "slides/04/slides04.html#which-do-you-prefer",
@@ -4052,6 +4073,13 @@
     "text": "Data visualizations have an aura of objectivity\n\n\n\n“We focus on four conventions which imbue visualisations with a sense of objectivity, transparency and facticity. These include: a) two-dimensional viewpoints; b) clean layouts; c) geometric shapes and lines; d) the inclusion of data sources.”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFrom Kennedy, Hill, Aiello & Allen. (2016) The work that visualisation conventions do. Information, Communication and Society, 19 (6). pp. 715-735. ISSN 1369-118X"
   },
   {
+    "objectID": "slides/04/slides04.html#same-data-two-stories",
+    "href": "slides/04/slides04.html#same-data-two-stories",
+    "title": "Plot design",
+    "section": "Same data, two stories",
+    "text": "Same data, two stories\n\n\n\n\n\n\n\n\n\n\nBoth are true. Which would go in an admissions brochure? Which would go in a critique of college costs?\n\n\nWhy does the graph on the right have such a strong negative trend?"
+  },
+  {
     "objectID": "slides/04/slides04.html#good-graphs-can-also-break-these-guidelines",
     "href": "slides/04/slides04.html#good-graphs-can-also-break-these-guidelines",
     "title": "Plot design",
@@ -4070,7 +4098,7 @@
     "href": "slides/04/slides04.html#your-turn",
     "title": "Plot design",
     "section": "Your turn",
-    "text": "Your turn\nNow that we have the toolkit to make customizations to our plots, and some “rules” for good graphs, let’s break them!\n\n\nChoose a graph (the one from class today, one from last class, one from homework, etc.)\nMake it ugly\n\n\nChange the color scale\nChoose a complete theme\nMake at least 3 custom tweaks to the theme options\n\n\nExplain why it’s ugly (what “rules” are you breaking? what makes it an ineffective graph?)\nPost to our slack #social channel when you’re done (you don’t have to post your explanation)"
+    "text": "Your turn\nNow that we have the toolkit to make customizations to our plots, and some “rules” for good graphs, let’s break them!\n\n\nChoose a graph (the one from class today, one from last class, one from homework, etc.)\nMake it ugly\n\n\nChange the color scale\nChoose a complete theme\nMake at least 3 custom tweaks to the theme options\n\n\nExplain why it’s ugly (what “rules” are you breaking? what makes it an ineffective graph?)\nPost to the “Day04” post on our Ed board when you’re done (you don’t have to post your explanation)\nLook through the posts and ♥ any that are especially good (bad)!"
   },
   {
     "objectID": "slides/02/slides02.html#plan-for-today",
@@ -7374,14 +7402,14 @@
     "href": "activities/04-customizing-plots.html#load-data",
     "title": "04: Customizing plots",
     "section": "Load Data",
-    "text": "Load Data\nNote: This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph!\n\n#season_summary = readr::read_csv(\"https://raw.githubusercontent.com/stat220-f26/stat220-f26.github.io/refs/heads/main/data/survivor_season_summary.csv\") |&gt;\n#  separate(timeslot, into = c(\"day_of_week\", \"time\"))"
+    "text": "Load Data\nNote: This code reads the two datasets, joins them, and then makes a new group variable. Make sure to run this chunk before trying to make your graph!\n\ntuition = readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv\")\n\nsalary = readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv\")\n\ncollege_pay = tuition |&gt;\n  inner_join(salary, by = \"name\") |&gt;\n  filter(type != \"For Profit\") |&gt;\n  mutate(\n    group = case_when(\n      name == \"Carleton College\" ~ \"Carleton\",\n      state == \"Minnesota\" ~ \"Other MN colleges\",\n      TRUE ~ \"Everywhere else\"\n    ),\n    group = factor(group, levels = c(\"Carleton\", \"Other MN colleges\", \"Everywhere else\"))\n  ) |&gt;\n  arrange(desc(group))"
   },
   {
-    "objectID": "activities/04-customizing-plots.html#replicate-histogram",
-    "href": "activities/04-customizing-plots.html#replicate-histogram",
+    "objectID": "activities/04-customizing-plots.html#warm-up-recreate-graph-from-slides",
+    "href": "activities/04-customizing-plots.html#warm-up-recreate-graph-from-slides",
     "title": "04: Customizing plots",
-    "section": "Replicate histogram",
-    "text": "Replicate histogram\n\n# Include your code here"
+    "section": "Warm up: recreate graph from slides",
+    "text": "Warm up: recreate graph from slides\n\n# Include your code here"
   },
   {
     "objectID": "activities/14-text-case-study.html",
