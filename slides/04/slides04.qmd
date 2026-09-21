@@ -34,6 +34,29 @@ theme_set(theme_gray(
 ))
 ```
 
+```{r prep-data, include=FALSE}
+tuition = readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv")
+
+salary = readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv")
+
+college_pay = tuition |>
+  inner_join(salary, by = "name") |>
+  filter(type != "For Profit") |>
+  mutate(
+    group = case_when(
+      name == "Carleton College" ~ "Carleton",
+      state == "Minnesota" ~ "Other MN colleges",
+      TRUE ~ "Everywhere else"
+    ),
+    group = factor(group, levels = c("Carleton", "Other MN colleges", "Everywhere else"))
+  ) |>
+  arrange(desc(group))
+
+plot1 = ggplot(college_pay) + 
+  geom_point(aes(x = in_state_tuition, y = mid_career_pay, color = state)) + 
+  theme_gray(base_size = 14)
+```
+
 ## Today
 
 - `ggplot2` review
@@ -79,52 +102,38 @@ theme_set(theme_gray(
 -   Changing themes
 -   Adding annotations
 
-## Survivor 
+## Where does Carleton land?
 
-From Season02 to Season 20, Survivor aired on Thursdays. After Season 20, it switched to airing on Wednesdays. Thursday is better for my schedule, so I'd like to make an argument for switching back to Thursdays.
+In 2018, Carleton's in-state tuition was about \$55,000 a year. Was that a lot? And what did Carleton graduates earn? I'd like to make an argument about how Carleton compares to other colleges, using the tuition and pay data from Day 1.
 
 ```{r}
 #| echo: false
-#| fig-width: 8
+#| fig-width: 9
+#| fig-height: 4.4
 
-season_summary = readr::read_csv(here::here(here::here(), "data/survivor_season_summary.csv")) |>
-  separate(timeslot, into = c("day_of_week", "time"))
-
-
-
-hist1 = ggplot(season_summary) + 
-  geom_histogram(aes(x = imdb_mean, fill = day_of_week), bins = 15) 
-
-hist1
+plot1
 ```
 
 ## Warm Up {.smaller}
 
 :::::: columns
-:::: {.column width="50%"}
+:::: {.column width="40%"}
 ::: {.task .nonincremental}
 1.  Log into maize
-    -   If you have to type your PAT in everytime you push to GitHub, follow the directions at [Getting Set up with Git and GitHub](https://stat220-w25.github.io/computing/git-stat220.html#getting-setup-with-git-and-github) #4 to tell RStudio to save your credentials
+    -   If you have to type your PAT in everytime you push to GitHub, follow the directions at [Getting Set up with Git and GitHub](https://stat220-f26.github.io/computing/git-stat220.html#getting-setup-with-git-and-github) #4 to tell RStudio to save your credentials (may or may not work on maize 🤷‍♀️ but definitely works on local installations)
 2.  Find the `.qmd` template for today at the course website
 3.  Open it up in maize/Rstudio
-4.  Work with a neighbor to recreate this graph &rarr; (use 15 bins)
+4.  Work with a neighbor to recreate this graph &rarr;
 :::
 ::::
 
-::: {.column width="50%"}
+::: {.column width="60%"}
 ```{r}
 #| echo: false
-#| fig-width: 6
+#| fig-width: 7
+#| fig-height: 4.6
 
-season_summary = readr::read_csv(here::here(here::here(), "data/survivor_season_summary.csv")) |>
-  separate(timeslot, into = c("day_of_week", "time"))
-
-
-
-hist1 = ggplot(season_summary) + 
-  geom_histogram(aes(x = imdb_mean, fill = day_of_week), bins = 15) 
-
-hist1
+plot1
 ```
 :::
 ::::::
@@ -139,16 +148,18 @@ countdown(8)
 ::: {.column width="50%"}
 ```{r}
 #| echo: false
-#| fig-width: 6
-hist1
+#| fig-width: 7
+#| fig-height: 4.6
+plot1
 ```
 :::
 
 ::: {.column width="50%"}
 We're not quite satisfied....
 
--   I want the bars to have a border that stands out
--   I find stacked histograms hard to read
+-   I can't tell 50 states apart (and I can't find Carleton!)
+-   The points pile on top of each other
+-   Public and private schools are all mixed together
 -   I don't like the default color scheme
 -   I don't like the gray background
 :::
@@ -160,31 +171,59 @@ Setting = choosing a certain value for an aesthetic
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "5"
+#| code-line-numbers: "6-7"
 #| output-location: column-fragment
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = state), 
+    alpha = 0.6,
+    size = .5
     ) 
 ```
 
 ## Facets
 
+Make "small multiples", where each facet shows a subset of the data
+
 ```{r}
 #| echo: true
-#| code-line-numbers: "7"
+#| code-line-numbers: "9"
 #| output-location: column-fragment
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = state), 
+    alpha = 0.6,
+    size = .5
     ) +
-  facet_wrap(vars(day_of_week))
+  facet_wrap(vars(type))
+```
+
+::: callout-tip
+You may have seen this before using the syntax `facet_wrap(~type)`. Both work, but `vars()` is the more modern/flexible syntax, so that's what I've used here
+:::
+## Choose what to color by
+
+50 colors are too many to tell apart. Instead, I made a `group` variable that splits schools into Carleton, other Minnesota colleges, and everywhere else. (We'll learn to make variables like this next week!)
+
+```{r}
+#| echo: true
+#| code-line-numbers: "5"
+#| output-location: column-fragment
+
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = .5
+    ) 
 ```
 
 ## Changing scales
@@ -201,11 +240,11 @@ scale_<aes>_<method>()
 ::: {.column .fragment width="50%"}
 Examples:
 
--   `scale_fill_manual()`
+-   `scale_color_manual()`
 
--   `scale_fill_brewer()`
+-   `scale_color_brewer()`
 
--   `scale_color_viridis()`
+-   `scale_color_viridis_c()`
 
 -   `scale_shape_manual()`
 :::
@@ -224,16 +263,18 @@ Recommended reading:
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "7"
+#| code-line-numbers: "9"
 #| output-location: column
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_brewer(palette = "Greens")
+  scale_color_brewer(palette = "Dark2")
 ```
 
 ## Example (built-in scale)
@@ -252,72 +293,104 @@ RColorBrewer::display.brewer.all()
 Source: [Datawrapper Blog](https://www.datawrapper.de/blog/which-color-scale-to-use-in-data-vis)
 :::
 
+## Example (continuous color scale)
+
+Sometimes the variable we color by is numeric, like the percent of graduates with STEM degrees. Then we need a *continuous* color scale.
+
+```{r}
+#| echo: true
+#| code-line-numbers: "5,9"
+#| output-location: column
+
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = stem_percent), 
+    alpha = 0.6,
+    size = 2
+    ) + 
+  scale_color_viridis_c()
+```
+
 ## Example (manual color palette)
 
-Let's make Wednesdays `navyblue` and Thursdays `gold2`
+Let's make Carleton `gold2`, other Minnesota colleges `navyblue`, and everyone else `gray70`
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "7"
+#| code-line-numbers: "9"
 #| output-location: column
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_manual(values = c("gold2", "navyblue"))
+  scale_color_manual(values = c("gold2", "navyblue", "gray70"))
+```
+
+::: callout-tiip
+You may have to try a few things to get the colors in the right order 
+:::
+
+## Can also change non-color scales
+
+```{r}
+#| echo: true
+#| code-line-numbers: "10"
+#| output-location: column
+
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
+    ) + 
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) + 
+  scale_x_continuous(labels = scales::dollar)
 ```
 
 ## Can also change non-color scales
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "8"
+#| code-line-numbers: "10"
 #| output-location: column
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_manual(values = c("gold2", "navyblue")) + 
-  scale_x_continuous(limits = c(1,10))
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) + 
+  scale_x_log10()
 ```
 
 ## Can also change non-color scales
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "8"
+#| code-line-numbers: "10"
 #| output-location: column
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_manual(values = c("gold2", "navyblue")) + 
-  scale_x_log10(limits = c(1,10))
-```
-
-## Can also change non-color scales
-
-```{r}
-#| echo: true
-#| code-line-numbers: "8"
-#| output-location: column
-
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
-    ) + 
-  scale_fill_manual(values = c("gold2", "navyblue")) + 
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) + 
   scale_x_reverse()
 ```
 
@@ -341,29 +414,29 @@ ggplot(season_summary) +
 #| fig-width: 4
 #| fig-height: 3
 
-p_hist = ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+p_pay = ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, y = mid_career_pay, color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_manual(values = c("gold2", "navyblue"))
+  scale_color_manual(values = c("gold2", "navyblue", "gray70"))
 
-p_hist + 
+p_pay + 
   theme_gray()
 
-p_hist + 
+p_pay + 
   labs(
-    fill = ""
+    color = ""
   ) + 
   theme_minimal() + 
   theme(legend.position = "bottom")
 
 
-p_hist + 
+p_pay + 
   ggthemes::theme_economist()
 
-p_hist + 
+p_pay + 
   hrbrthemes::theme_ft_rc()
 ```
 
@@ -419,7 +492,7 @@ ggplot(data = <DATA>) +
 
 ## Try it
 
-Apply `theme_light()` to the histogram
+Apply `theme_light()` to the scatterplot
 
 ```{r}
 last_plot() + 
@@ -434,7 +507,7 @@ countdown(0, 30)
 
 -   Move legend
 -   Clean up labels and title
--   Get rid of .5's in x-axis
+-   Format the axis labels
 -   Annotations
 
 ## 
@@ -478,24 +551,25 @@ theme(line, rect, text, title, aspect.ratio, axis.title, axis.title.x,
 To see examples in action, see ["Theme Elements"](https://ggplot2-book.org/themes#sec-theme-elements) of the ggplot2 book
 :::
 
-## Move legend and make the background transparent
+## Move the legend
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "9-13"
+#| code-line-numbers: "11-13"
 #| output-location: column
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_manual(values = c("gold2", "navyblue")) + 
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) + 
   theme_minimal() + 
   theme(
-    legend.position = c(.15, .85),
-    legend.background = element_blank()
+    legend.position = "top"
   )
 ```
 
@@ -503,26 +577,27 @@ ggplot(season_summary) +
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "13-18"
+#| code-line-numbers: "14-19"
 #| output-location: column
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_manual(values = c("gold2", "navyblue")) + 
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) + 
   theme_minimal() + 
   theme(
-    legend.position = c(.15, .85),
-    legend.background = element_blank()
+    legend.position = "top"
   ) + 
   labs(
-    x = "Season Average IMDB Rating",
-    y = "",
-    fill = "",
-    title = "Survivor is better on Thursdays"
+    x = "In-state tuition",
+    y = "Median mid-career pay",
+    color = "",
+    title = "Carleton: top 4% in tuition, top 13% in pay"
   )
 ```
 
@@ -530,56 +605,59 @@ ggplot(season_summary) +
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "12"
+#| code-line-numbers: "13"
 #| output-location: column
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_manual(values = c("gold2", "navyblue")) + 
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) + 
   theme_minimal() + 
   theme(
-    legend.position = c(.15, .85),
-    legend.background = element_blank(),
+    legend.position = "top",
     panel.grid.minor = element_blank()
   ) + 
   labs(
-    x = "Season Average IMDB Rating",
-    y = "",
-    fill = "",
-    title = "Survivor is better on Thursdays"
+    x = "In-state tuition",
+    y = "Median mid-career pay",
+    color = "",
+    title = "Carleton: top 4% in tuition, top 13% in pay"
   )
 ```
 
-## Get rid of .5's 
+## Format the axes
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "8"
+#| code-line-numbers: "10-11"
 #| output-location: column
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_manual(values = c("gold2", "navyblue")) + 
-  scale_x_continuous(breaks = c(6, 7, 8, 9)) +
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) + 
+  scale_x_continuous(labels = scales::dollar) + 
+  scale_y_continuous(labels = scales::dollar) + 
   theme_minimal() + 
   theme(
-    legend.position = c(.15, .85),
-    legend.background = element_blank(),
+    legend.position = "top",
     panel.grid.minor = element_blank()
   ) + 
   labs(
-    x = "Season Average IMDB Rating",
-    y = "",
-    fill = "",
-    title = "Survivor is better on Thursdays"
+    x = "In-state tuition",
+    y = "Median mid-career pay",
+    color = "",
+    title = "Carleton: top 4% in tuition, top 13% in pay"
   )
 ```
 
@@ -587,68 +665,139 @@ ggplot(season_summary) +
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "21-25"
+#| code-line-numbers: "23-36"
 #| output-location: column
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_manual(values = c("gold2", "navyblue")) + 
-  scale_x_continuous(breaks = c(6, 7, 8, 9)) +
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) + 
+  scale_x_continuous(labels = scales::dollar) + 
+  scale_y_continuous(labels = scales::dollar) + 
   theme_minimal() + 
   theme(
-    legend.position = c(.15, .85),
-    legend.background = element_blank(),
+    legend.position = "top",
     panel.grid.minor = element_blank()
   ) + 
   labs(
-    x = "Season Average IMDB Rating",
-    y = "",
-    fill = "",
-    title = "Survivor is better on Thursdays"
+    x = "In-state tuition",
+    y = "Median mid-career pay",
+    color = "",
+    title = "Carleton: top 4% in tuition, top 13% in pay"
   ) +
+  annotate("point", 
+           x = 54759, 
+           y = 109900, 
+           shape = 1, 
+           size = 7, 
+           stroke = 1.2, 
+           col = "gold4") +
   annotate("text", 
-           x = 6, 
-           y = 3, 
-           label = "Lowest ratings \n occur on \n Wednesdays",
-           col = "navyblue")
+           x = 52500, 
+           y = 109900, 
+           label = "Carleton", 
+           hjust = 1, 
+           fontface = "bold", 
+           col = "gold4")
 ```
+
+::: callout-tip
+I had to look these values up in the data, and try a few different combinations to get it to look OK
+:::
 
 ## Increase text size
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "9"
+#| code-line-numbers: "12,36"
 #| output-location: column
 
-ggplot(season_summary) + 
-  geom_histogram(
-    aes(x = imdb_mean, fill = day_of_week), 
-    bins = 15,
-    color = "white"
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
     ) + 
-  scale_fill_manual(values = c("gold2", "navyblue")) + 
-  scale_x_continuous(breaks = c(6, 7, 8, 9)) +
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) + 
+  scale_x_continuous(labels = scales::dollar) + 
+  scale_y_continuous(labels = scales::dollar) + 
   theme_minimal(base_size = 20) + 
   theme(
-    legend.position = c(.15, .85),
-    legend.background = element_blank(),
+    legend.position = "top",
     panel.grid.minor = element_blank()
   ) + 
   labs(
-    x = "Season Average IMDB Rating",
-    y = "",
-    fill = "",
-    title = "Survivor is better on Thursdays"
+    x = "In-state tuition",
+    y = "Median mid-career pay",
+    color = "",
+    title = "Carleton: top 4% in tuition, top 13% in pay"
   ) +
+  annotate("point", 
+           x = 54759, 
+           y = 109900, 
+           shape = 1, 
+           size = 7, 
+           stroke = 1.2, 
+           col = "gold4") +
   annotate("text", 
-           x = 6, 
-           y = 3, 
-           label = "Lowest ratings \n occur on \n Wednesdays",
-           col = "navyblue")
+           x = 52500, 
+           y = 109900, 
+           label = "Carleton", 
+           hjust = 1, 
+           fontface = "bold", 
+           size = 6, 
+           col = "gold4")
+```
+
+## "Final" version
+
+```{r}
+#| echo: false
+
+ggplot(college_pay) + 
+  geom_point(
+    aes(x = in_state_tuition, 
+        y = mid_career_pay, 
+        color = group), 
+    alpha = 0.6,
+    size = 2
+    ) + 
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) + 
+  scale_x_continuous(labels = scales::dollar) + 
+  scale_y_continuous(labels = scales::dollar) + 
+  theme_minimal(base_size = 20) + 
+  theme(
+    legend.position = "top",
+    panel.grid.minor = element_blank()
+  ) + 
+  labs(
+    x = "In-state tuition",
+    y = "Median mid-career pay",
+    color = "",
+    title = "Carleton: top 4% in tuition, top 13% in pay"
+  ) +
+  annotate("point", 
+           x = 54759, 
+           y = 109900, 
+           shape = 1, 
+           size = 7, 
+           stroke = 1.2, 
+           col = "gold4") +
+  annotate("text", 
+           x = 52500, 
+           y = 109900, 
+           label = "Carleton", 
+           hjust = 1, 
+           fontface = "bold", 
+           size = 6, 
+           col = "gold4")
 ```
 
 # Plot Design {.maize}
@@ -734,8 +883,7 @@ countdown(0, 30)
 ## 3. Use color meaningfully and with restraint
 
 ```{r}
-ggplot(season_summary, aes(x = viewers_mean, y = imdb_mean, col = season_name)) + 
-  geom_point() +
+plot1 +
   theme_minimal()
 ```
 
@@ -815,8 +963,48 @@ knitr::include_graphics("../img/ga-barchart-bungle.jpeg")
 :::
 ::::::
 
+## Same data, two stories
 
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.5
 
+pay_ratio = college_pay |>
+  mutate(pay_per_tuition = mid_career_pay / in_state_tuition)
+carleton = filter(pay_ratio, name == "Carleton College")
+
+story_base = ggplot(pay_ratio, aes(x = in_state_tuition, color = group)) +
+  scale_color_manual(values = c("gold2", "navyblue", "gray70")) +
+  scale_x_continuous(labels = scales::dollar) +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none", panel.grid.minor = element_blank())
+
+story1 = story_base +
+  geom_point(aes(y = mid_career_pay), alpha = 0.6, size = 2) +
+  scale_y_continuous(labels = scales::dollar) +
+  annotate("point", x = carleton$in_state_tuition, y = carleton$mid_career_pay,
+           shape = 1, size = 7, stroke = 1.2, col = "gold4") +
+  labs(x = "In-state tuition", y = "Median mid-career pay",
+       title = "Carleton: top 13% in pay")
+
+story2 = story_base +
+  geom_point(aes(y = pay_per_tuition), alpha = 0.6, size = 2) +
+  annotate("point", x = carleton$in_state_tuition, y = carleton$pay_per_tuition,
+           shape = 1, size = 7, stroke = 1.2, col = "gold4") +
+  labs(x = "In-state tuition", y = "Mid-career pay per tuition dollar",
+       title = "Carleton: bottom 6% in pay per tuition dollar")
+
+story1 + story2
+```
+
+. . .
+
+Both are true. Which would go in an admissions brochure? Which would go in a critique of college costs?
+
+. . . 
+
+Why does the graph on the right have such a strong negative trend?
 
 ## Good graphs can also break these guidelines
 
@@ -861,5 +1049,7 @@ Now that we have the toolkit to make customizations to our plots, and some "rule
 
 3. Explain *why* it's ugly (what "rules" are you breaking? what makes it an ineffective graph?)
 
-4. Post to our slack #social channel when you're done (you don't have to post your explanation)
+4. Post to the "Day04" post on our Ed board when you're done (you don't have to post your explanation)
+
+5. Look through the posts and &hearts; any that are especially good (bad)!
 :::

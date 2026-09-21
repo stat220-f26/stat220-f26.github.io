@@ -13,14 +13,28 @@ library(ggthemes)
 
 ## Load Data
 
-*Note:* This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph! 
+*Note:* This code reads the two datasets, joins them, and then makes a new `group` variable. Make sure to run this chunk before trying to make your graph! 
 
 ```{r}
-#season_summary = readr::read_csv("https://raw.githubusercontent.com/stat220-f26/stat220-f26.github.io/refs/heads/main/data/survivor_season_summary.csv") |>
-#  separate(timeslot, into = c("day_of_week", "time"))
+tuition = readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv")
+
+salary = readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv")
+
+college_pay = tuition |>
+  inner_join(salary, by = "name") |>
+  filter(type != "For Profit") |>
+  mutate(
+    group = case_when(
+      name == "Carleton College" ~ "Carleton",
+      state == "Minnesota" ~ "Other MN colleges",
+      TRUE ~ "Everywhere else"
+    ),
+    group = factor(group, levels = c("Carleton", "Other MN colleges", "Everywhere else"))
+  ) |>
+  arrange(desc(group))
 ```
 
-## Replicate histogram
+## Warm up: recreate graph from slides
 
 ```{r}
 # Include your code here
