@@ -283,25 +283,42 @@ states <- map_data("state")
 head(states)
 ```
 
-## Using `geom_polygon()`
+## Using `geom_map()` 
 
-Using `geom_polygon()` will treat states as solid shapes, making it easier to add color
+::: small
+
+`geom_map()` matches each row's `map_id` to a region in a separate `map` data set, so you don't have to track `long`/`lat`/`group` yourself. You *do* need `expand_limits()`, or ggplot won't know the x/y range to show
+
+:::
 
 ```{r}
 #| echo: true
-ggplot(states, aes(x=long, y=lat, group=group)) + 
-    geom_polygon(color="gold2", fill="navyblue")
+#| output-location: column
+ggplot(states) +
+  geom_map(aes(map_id = region), 
+               map = states, 
+               color="gold2", 
+               fill="navyblue") +
+  expand_limits(x = states$long, 
+                y = states$lat)
 ```
 
-## Using `coord_fixed()`
+## Cleaning it up
 
-Using `coord_fixed()` forces x and y units to be equal
+`coord_map()` gives a nicer projection than the default, and `theme_map()` removes the axes
 
 ```{r}
 #| echo: true
-ggplot(states, aes(x=long, y=lat, group=group)) + 
-    geom_polygon(color="gold2", fill="navyblue") +
-  coord_fixed()
+#| output-location: column
+ggplot(states) +
+  geom_map(aes(map_id = region), 
+               map = states, 
+               color="gold2", 
+               fill="navyblue") +
+  expand_limits(x = states$long, 
+                y = states$lat) +
+  coord_map() +
+  theme_map()
 ```
 
 ## Your turn
@@ -310,14 +327,16 @@ ggplot(states, aes(x=long, y=lat, group=group)) +
 #| eval: FALSE
 #| echo: TRUE
 
-ggplot(states, aes(x=long, y=lat, group=group)) + 
-    geom_polygon(color="gold2", fill="navyblue") +
-    coord_fixed()
+ggplot(states) +
+  geom_map(aes(map_id = region), map = states, color="gold2", fill="navyblue") +
+  expand_limits(x = states$long, y = states$lat) +
+  coord_map() +
+  theme_map()
 ```
 
 ::: {.task .nonincremental}
--   Edit this code so that each shape is colored in with a different color.
--   You only need the 3 variables used: `long`, `lat`, and `group`
+-   Edit this code so that each state is colored in with a different color.
+-   Hint: `states` already has a `region` column — you can map it to `fill` the same way it's mapped to `map_id`
 -   `05-maps.qmd` is available on the website
 :::
 
@@ -337,7 +356,7 @@ acs_state_data$state = tolower(acs_state_data$NAME)
 knitr::kable(acs_state_data)
 ```
 
-## `geom_map` is a "shortcut"
+## Same `geom_map()`, real data
 
 ::::: columns
 ::: {.column .nonincremental width="60%"}
@@ -349,10 +368,12 @@ knitr::kable(acs_state_data)
 
 ggplot(acs_state_data) + 
   geom_map(
-    aes(map_id = state, fill = NAME),
+    aes(map_id = state, 
+        fill = NAME),
     map = states
   ) +
-  expand_limits(x = states$long, y = states$lat) +
+  expand_limits(x = states$long, 
+                y = states$lat) +
   coord_map() +
   theme_map()
 ```
@@ -509,4 +530,5 @@ ggplot(world, aes(x=long, y=lat, group=group)) +
   theme_map()
 ```
 
+# Try it: Proportional symbol maps
 

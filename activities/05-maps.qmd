@@ -11,20 +11,32 @@ library(ggthemes)
 
 # Create Original Map
 
+`geom_map()` matches each row's `map_id` to a region in a separate `map` data set. `expand_limits()` is required, or ggplot won't know the x/y range to show. `coord_map()` gives a nicer projection than the default, and `theme_map()` removes the axes.
+
 ```{r}
 states <- map_data("state")
-ggplot(states, aes(x=long, y=lat, group=group)) + 
-    geom_polygon(color="gold2", fill="navyblue")
+ggplot(states) +
+  geom_map(aes(map_id = region), map = states, color="gold2", fill="navyblue") +
+  expand_limits(x = states$long, y = states$lat) +
+  coord_map() +
+  theme_map()
 ```
 
 ## Your turn
 
 Edit the code so that each state is a different color
 
+::: callout-tip
+`states` already has a `region` column — you can map it to `fill` the same way it's mapped to `map_id`
+:::
+
 ```{r}
 states <- map_data("state")
-ggplot(states, aes(x=long, y=lat, group=group)) + 
-    geom_polygon(color="gold2", fill="navyblue")
+ggplot(states) +
+  geom_map(aes(map_id = region), map = states, color="gold2", fill="navyblue") +
+  expand_limits(x = states$long, y = states$lat) +
+  coord_map() +
+  theme_map()
 ```
 
 # Your turn: ACS data
@@ -48,7 +60,7 @@ Variable information:
 
 ## ACS Data Starter Map
 
-**Important note:** we're using `geom_map` as a shortcut here to make a chloropleth map. This saves us the step of encoding the lat/long borders of states, and lets us directly fill the state colors using `acs_state_data` *only*. If you're asked to make a chloropleth map with data that only includes, e.g., state name, use this starter code.
+**Important note:** this is the same `geom_map()` you just used, now with real data. `acs_state_data` only needs a column with the state name (`state`). `geom_map()` looks up the matching shape in `map = states` for you.
 
 ```{r}
 ggplot(acs_state_data) + 
@@ -67,8 +79,62 @@ Comment out the `expand_limits` line using `#`. What happened?
 
 ### Your turn 2
 
-Edit your chloropleth map by: 
+Edit your chloropleth map by:
 
 - Choosing a different variable in `acs_state_data` to map to `fill`
 - Choosing a different color scale
 - Updating the title, axis labels, and legend title
+
+::: callout-tip
+
+:::
+
+# Try it: Proportional symbol maps
+
+So far we've used `geom_map()` to fill in regions. But sometimes you want to show *where specific things are located*, with size showing how big they are. To do this, we add a second layer with `geom_point()`, using  latitude/longitude coordinates.
+
+## Load Data
+
+The `{maps}` package (already loaded) includes `us.cities`, a data set of US cities and their populations (as of 2006). We'll filter to cities with a population over 100,000, and exclude Alaska and Hawaii so the map isn't stretched out.
+
+```{r}
+data(us.cities)
+
+big_cities <- us.cities |>
+  filter(!country.etc %in% c("AK", "HI"), pop > 100000)
+```
+
+- `name`: city and state
+- `pop`: population
+- `lat`, `long`: the city's location
+
+## Starter map: base + points
+
+::: callout-tip
+Notice that `geom_map()` and `geom_point()` each have their *own* `data`. The base map uses `states`; the points use `big_cities`. This is the same pattern you'll need on your homework.
+:::
+
+```{r}
+ggplot(states) +
+  geom_map(aes(map_id = region), 
+               map = states, 
+               color = "white", 
+               fill = "gray90") +
+  geom_point(data = big_cities, 
+              aes(x = long, y = lat, size = pop), 
+              color = "navyblue", 
+              alpha = 0.6) +
+  scale_size(range = c(1, 10), labels = scales::comma) +
+  expand_limits(x = states$long, y = states$lat) +
+  coord_map() +
+  theme_map()
+```
+
+### Your turn
+
+- Adjust the point `size` range, `alpha`, and color until you're happy with how the map looks
+
+```{r}
+# your turn
+
+```
