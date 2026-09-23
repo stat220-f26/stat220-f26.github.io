@@ -1,0 +1,59 @@
+---
+title: "Draft: Proportional symbol maps (for 05-maps.qmd)"
+---
+
+```{r}
+library(tidyverse)
+library(maps)
+library(mapproj)
+library(ggthemes)
+```
+
+```{r}
+#| echo: false
+states <- map_data("state")
+```
+
+# Proportional symbol maps
+
+So far we've used `geom_map()` to fill in *regions* — states colored by a variable. But sometimes you want to show *where specific things are located*, with size showing how big they are, like the wind turbines you'll map on your homework. For that, we add a second layer: `geom_point()`, using real latitude/longitude coordinates, layered right on top of a `geom_map()` base.
+
+## Load Data
+
+The `{maps}` package (already loaded) includes `us.cities`, a data set of US cities and their populations. We'll filter to cities with a population over 500,000, and exclude Alaska and Hawaii so the map isn't stretched out.
+
+```{r}
+data(us.cities)
+
+big_cities <- us.cities |>
+  filter(!country.etc %in% c("AK", "HI"), pop > 500000)
+```
+
+- `name`: city and state
+- `pop`: population
+- `lat`, `long`: the city's location
+
+## Starter map: base + points
+
+::: callout-tip
+Notice that `geom_map()` and `geom_point()` each have their *own* `data`. The base map uses `states`; the points use `big_cities`. This is the same pattern you'll need on your homework.
+:::
+
+```{r}
+ggplot(states) +
+  geom_map(aes(map_id = region), map = states, color = "white", fill = "gray90") +
+  geom_point(data = big_cities, aes(x = long, y = lat, size = pop), color = "navyblue", alpha = 0.6) +
+  scale_size(range = c(1, 10), labels = scales::comma) +
+  expand_limits(x = states$long, y = states$lat) +
+  coord_map() +
+  theme_map()
+```
+
+### Your turn
+
+- Adjust the point `size` range, `alpha`, and color until you're happy with how the map looks
+
+```{r}
+# your turn
+
+```

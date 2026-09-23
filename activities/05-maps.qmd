@@ -115,13 +115,14 @@ Notice that `geom_map()` and `geom_point()` each have their *own* `data`. The ba
 :::
 
 ```{r}
+#| error: true
 ggplot(states) +
   geom_map(aes(map_id = region), 
                map = states, 
                color = "white", 
                fill = "gray90") +
   geom_point(data = big_cities, 
-              aes(x = long, y = lat, size = pop), 
+              aes(x = ___, y = ___, size = ___), 
               color = "navyblue", 
               alpha = 0.6) +
   scale_size(range = c(1, 10), labels = scales::comma) +
@@ -132,6 +133,7 @@ ggplot(states) +
 
 ### Your turn
 
+- Fill in the `___` to overlay the points on the map
 - Adjust the point `size` range, `alpha`, and color until you're happy with how the map looks
 
 ```{r}
