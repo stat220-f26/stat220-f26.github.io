@@ -480,12 +480,21 @@ Prof Amanda Luby
 </div>
 </div>
 </section>
-<section id="using-geom_polygon" class="slide level2">
-<h2>Using <code>geom_polygon()</code></h2>
-<p>Using <code>geom_polygon()</code> will treat states as solid shapes, making it easier to add color</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb3-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="using-geom_map" class="slide level2">
+<h2>Using <code>geom_map()</code></h2>
+<div class="small">
+<p><code>geom_map()</code> matches each row’s <code>map_id</code> to a region in a separate <code>map</code> data set, so you don’t have to track <code>long</code>/<code>lat</code>/<code>group</code> yourself. You <em>do</em> need <code>expand_limits()</code>, or ggplot won’t know the x/y range to show</p>
+</div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">ggplot</span>(states) <span class="sc">+</span></span>
+<span id="cb3-2"><a></a>  <span class="fu">geom_map</span>(<span class="fu">aes</span>(<span class="at">map_id =</span> region), </span>
+<span id="cb3-3"><a></a>               <span class="at">map =</span> states, </span>
+<span id="cb3-4"><a></a>               <span class="at">color=</span><span class="st">"gold2"</span>, </span>
+<span id="cb3-5"><a></a>               <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
+<span id="cb3-6"><a></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> states<span class="sc">$</span>long, </span>
+<span id="cb3-7"><a></a>                <span class="at">y =</span> states<span class="sc">$</span>lat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
 <div class="cell-output-display">
 <div>
 <figure>
@@ -493,15 +502,23 @@ Prof Amanda Luby
 </figure>
 </div>
 </div>
-</div>
+</div></div>
 </section>
-<section id="using-coord_fixed" class="slide level2">
-<h2>Using <code>coord_fixed()</code></h2>
-<p>Using <code>coord_fixed()</code> forces x and y units to be equal</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb4-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
-<span id="cb4-3"><a></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="cleaning-it-up" class="slide level2">
+<h2>Cleaning it up</h2>
+<p><code>coord_map()</code> gives a nicer projection than the default, and <code>theme_map()</code> removes the axes</p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">ggplot</span>(states) <span class="sc">+</span></span>
+<span id="cb4-2"><a></a>  <span class="fu">geom_map</span>(<span class="fu">aes</span>(<span class="at">map_id =</span> region), </span>
+<span id="cb4-3"><a></a>               <span class="at">map =</span> states, </span>
+<span id="cb4-4"><a></a>               <span class="at">color=</span><span class="st">"gold2"</span>, </span>
+<span id="cb4-5"><a></a>               <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> states<span class="sc">$</span>long, </span>
+<span id="cb4-7"><a></a>                <span class="at">y =</span> states<span class="sc">$</span>lat) <span class="sc">+</span></span>
+<span id="cb4-8"><a></a>  <span class="fu">coord_map</span>() <span class="sc">+</span></span>
+<span id="cb4-9"><a></a>  <span class="fu">theme_map</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
 <div class="cell-output-display">
 <div>
 <figure>
@@ -509,25 +526,27 @@ Prof Amanda Luby
 </figure>
 </div>
 </div>
-</div>
+</div></div>
 </section>
 <section id="your-turn" class="slide level2">
 <h2>Your turn</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb5-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
-<span id="cb5-3"><a></a>    <span class="fu">coord_fixed</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">ggplot</span>(states) <span class="sc">+</span></span>
+<span id="cb5-2"><a></a>  <span class="fu">geom_map</span>(<span class="fu">aes</span>(<span class="at">map_id =</span> region), <span class="at">map =</span> states, <span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> states<span class="sc">$</span>long, <span class="at">y =</span> states<span class="sc">$</span>lat) <span class="sc">+</span></span>
+<span id="cb5-4"><a></a>  <span class="fu">coord_map</span>() <span class="sc">+</span></span>
+<span id="cb5-5"><a></a>  <span class="fu">theme_map</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="task">
 <ul>
-<li>Edit this code so that each shape is colored in with a different color.</li>
-<li>You only need the 3 variables used: <code>long</code>, <code>lat</code>, and <code>group</code></li>
+<li>Edit this code so that each state is colored in with a different color.</li>
+<li>Hint: <code>states</code> already has a <code>region</code> column — you can map it to <code>fill</code> the same way it’s mapped to <code>map_id</code></li>
 <li><code>05-maps.qmd</code> is available on the website</li>
 </ul>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_f6849690" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_aae3bde8" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -1955,19 +1974,21 @@ Prof Amanda Luby
 </div>
 </div>
 </section>
-<section id="geom_map-is-a-shortcut" class="slide level2">
-<h2><code>geom_map</code> is a “shortcut”</h2>
+<section id="same-geom_map-real-data" class="slide level2">
+<h2>Same <code>geom_map()</code>, real data</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">ggplot</span>(acs_state_data) <span class="sc">+</span> </span>
 <span id="cb7-2"><a></a>  <span class="fu">geom_map</span>(</span>
-<span id="cb7-3"><a></a>    <span class="fu">aes</span>(<span class="at">map_id =</span> state, <span class="at">fill =</span> NAME),</span>
-<span id="cb7-4"><a></a>    <span class="at">map =</span> states</span>
-<span id="cb7-5"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb7-6"><a></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> states<span class="sc">$</span>long, <span class="at">y =</span> states<span class="sc">$</span>lat) <span class="sc">+</span></span>
-<span id="cb7-7"><a></a>  <span class="fu">coord_map</span>() <span class="sc">+</span></span>
-<span id="cb7-8"><a></a>  <span class="fu">theme_map</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-3"><a></a>    <span class="fu">aes</span>(<span class="at">map_id =</span> state, </span>
+<span id="cb7-4"><a></a>        <span class="at">fill =</span> NAME),</span>
+<span id="cb7-5"><a></a>    <span class="at">map =</span> states</span>
+<span id="cb7-6"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb7-7"><a></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> states<span class="sc">$</span>long, </span>
+<span id="cb7-8"><a></a>                <span class="at">y =</span> states<span class="sc">$</span>lat) <span class="sc">+</span></span>
+<span id="cb7-9"><a></a>  <span class="fu">coord_map</span>() <span class="sc">+</span></span>
+<span id="cb7-10"><a></a>  <span class="fu">theme_map</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </div><div class="column" style="width:40%;">
@@ -1978,7 +1999,7 @@ Prof Amanda Luby
 </ul>
 </div></div>
 </section>
-<section id="geom_map-is-a-shortcut-output" class="slide level2 output-location-slide"><h2><code>geom_map</code> is a “shortcut”</h2><div class="cell output-location-slide">
+<section id="same-geom_map-real-data-output" class="slide level2 output-location-slide"><h2>Same <code>geom_map()</code>, real data</h2><div class="cell output-location-slide">
 <div class="cell-output-display">
 <div>
 <figure>
@@ -1993,7 +2014,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_0ab5d268" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_e1b233dd" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -2038,7 +2059,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_6b72b2a7" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_6a1222e6" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -2124,9 +2145,12 @@ Prof Amanda Luby
 </div>
 </div>
 </div>
-
-
 </section></section>
+<section id="try-it-proportional-symbol-maps" class="title-slide slide level1 center">
+<h1>Try it: Proportional symbol maps</h1>
+
+
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
