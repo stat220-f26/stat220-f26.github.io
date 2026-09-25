@@ -1,0 +1,15 @@
+{
+  "hash": "e7b8ac6ad75da32541a195b9c6685658",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Data Science Journals\"\n---\n\n\n\nPage 1: Leave blank for name/table of contents\n\nAfter page 1, each course day will get two pages in \"booklet style\" \n    - Left, top: Prep/pre-work for the day (answer my question or jot down your own question, can be left blank)\n    - Left, bottom: reflections from in-class prompt\n    - Right: your space to summarize the main points for the day\n\n![](../images/open-journal.png)\n\n# Table of Contents\n\n- p2-3: Fill in at some point with `ggplot` and data visualization notes\n- p4-5: In-class: what is an example of data that would work well for a choropleth map? What about a proportional symbol map?\n- p5-6: In class: what aspects of a graph made writing alt-text hard/easy? what aspects of an alt-text description made recreating the graph harder or easier?\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

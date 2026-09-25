@@ -12,11 +12,11 @@ library(tidyverse)
 unscaled_cancer <- read_csv("https://raw.githubusercontent.com/UBC-DSCI/introduction-to-datascience/refs/heads/main/data/wdbc_unscaled.csv")
 
 
-bakeoff = read_csv("../data/bakeoff-episodes.csv") |> # https://stat220-f26.github.io/data/bakeoff-episodes.csv
+bakeoff = read_csv("https://stat220-f26.github.io/data/bakeoff-episodes.csv") |>
   filter(series == 14)
 
 # us_castaway_results
-load("../data/combining-data-examples.Rda") # https://stat220-f26.github.io/data/combining-data-examples.Rda
+load(url("https://stat220-f26.github.io/data/combining-data-examples.Rda"))
 
 # penguins
 library(palmerpenguins)

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-260 20 780 400" font-family="'Atkinson Hyperlegible', sans-serif">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@1,700&amp;display=swap');
+    .label {
+      font-family: 'Atkinson Hyperlegible', sans-serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 30px;
+      text-anchor: end;
+    }
+  </style>
+
+  <!-- Data -->
+  <g>
+    <polygon points="-60,376 260,376 250,388 -70,388" fill="#002851"/>
+    <polygon points="0,336 320,336 260,376 -60,376" fill="#1B365D"/>
+    <text class="label" x="-76" y="366" fill="#1B365D">Data</text>
+  </g>
+
+  <!-- Aesthetics -->
+  <g>
+    <polygon points="-34,330 286,330 276,342 -44,342" fill="#004E5E"/>
+    <polygon points="26,290 346,290 286,330 -34,330" fill="#276A7C"/>
+    <text class="label" x="-50" y="320" fill="#276A7C">Aesthetics</text>
+  </g>
+
+  <!-- Geometries -->
+  <g>
+    <polygon points="-8,284 312,284 302,296 -18,296" fill="#2D6538"/>
+    <polygon points="52,244 372,244 312,284 -8,284" fill="#3E8E4F"/>
+    <text class="label" x="-24" y="274" fill="#3E8E4F">Geometries</text>
+  </g>
+
+  <!-- Facets -->
+  <g>
+    <polygon points="18,238 338,238 328,250 8,250" fill="#795600"/>
+    <polygon points="78,198 398,198 338,238 18,238" fill="#A87A12"/>
+    <text class="label" x="2" y="228" fill="#A87A12">Facets</text>
+  </g>
+
+  <!-- Statistics -->
+  <g>
+    <polygon points="44,192 364,192 354,204 34,204" fill="#813631"/>
+    <polygon points="104,152 424,152 364,192 44,192" fill="#BF4136"/>
+    <text class="label" x="28" y="182" fill="#BF4136">Statistics</text>
+  </g>
+
+  <!-- Coordinates -->
+  <g>
+    <polygon points="70,146 390,146 380,158 60,158" fill="#804457"/>
+    <polygon points="130,106 450,106 390,146 70,146" fill="#B85C7A"/>
+    <text class="label" x="54" y="136" fill="#B85C7A">Coordinates</text>
+  </g>
+
+  <!-- Theme -->
+  <g>
+    <polygon points="96,100 416,100 406,112 86,112" fill="#5F5072"/>
+    <polygon points="156,60 476,60 416,100 96,100" fill="#866fa3"/>
+    <text class="label" x="80" y="90" fill="#866fa3">Theme</text>
+  </g>
+</svg>

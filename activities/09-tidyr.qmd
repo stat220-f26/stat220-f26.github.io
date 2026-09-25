@@ -13,7 +13,7 @@ library(ggthemes)
 Here is a data frame with the ratings for each episode of The Great British Bakeoff for series 1-8.
 
 ```{r}
-bakeoff_ratings <- read_csv("../data/bakeoff_messy_ratings.csv") # https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv
+bakeoff_ratings <- read_csv("https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv")
 bakeoff_ratings
 ```
 
@@ -30,7 +30,7 @@ bakeoff_ratings %>%
 # `messyratings2`
 
 ```{r}
-messy_ratings2 <- read_csv("../data/messy_ratings2.csv") # https://stat220-f26.github.io/data/messy_ratings2.csv
+messy_ratings2 <- read_csv("https://stat220-f26.github.io/data/messy_ratings2.csv")
 messy_ratings2
 ```
 
@@ -77,7 +77,7 @@ This dataset contains four pairs of variables (`x1` and `y1`, `x2` and `y2`, etc
 ```         
 # A tibble: 44 × 3
    set       x     y
-   <chr> <dbl> <dbl>
+   <chr> <dbl> <dbl) |>
  1 1        10  8.04
  2 2        10  9.14
  3 3        10  7.46
@@ -99,7 +99,7 @@ anscombe <- anscombe %>%
 ```         
 # A tibble: 88 × 3
    index name  value
-   <int> <chr> <dbl>
+   <int> <chr> <dbl) |>
  1     1 x1    10   
  2     1 x2    10   
  3     1 x3    10  
@@ -110,7 +110,7 @@ anscombe <- anscombe %>%
 ```         
 # A tibble: 88 × 4
    index variable set   value
-   <int> <chr>    <chr> <dbl>
+   <int> <chr>    <chr> <dbl) |>
  1     1 x        1     10   
  2     1 x        2     10   
  3     1 x        3     10   

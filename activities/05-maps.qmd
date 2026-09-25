@@ -44,7 +44,7 @@ ggplot(states) +
 ## Load Data
 
 ```{r}
-acs_state_data = read_csv("acs_state_data_2022_5y.csv") 
+acs_state_data = read_csv("https://stat220-f26.github.io/data/acs_state_data_2022_5y.csv") 
 acs_state_data$state = tolower(acs_state_data$NAME)
 ```
 
