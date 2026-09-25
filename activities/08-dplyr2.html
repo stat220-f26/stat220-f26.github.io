@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Prof Amanda Luby">
 <title>dplyr 2: Pipes and Groups – Stat 220</title>
@@ -68,9 +68,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6e03bc272f1cdef1d8296ac38e217ebd.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4a17e18fdf56099d4f6da1e105f33a53.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -441,7 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 435,352 x 19
+<pre><code># A tibble: 435,352 × 19
     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
  1  2023     1     1        1           2038       203      328              3
@@ -454,8 +454,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  8  2023     1     1      524            530        -6      645            710
  9  2023     1     1      537            520        17      926            818
 10  2023     1     1      547            545         2      845            852
-# i 435,342 more rows
-# i 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+# ℹ 435,342 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
 #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
 #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 </div>
@@ -471,7 +471,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 435,352 x 19
+<pre><code># A tibble: 435,352 × 19
     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
  1  2023     1     1        1           2038       203      328              3
@@ -484,8 +484,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  8  2023     1     1      524            530        -6      645            710
  9  2023     1     1      537            520        17      926            818
 10  2023     1     1      547            545         2      845            852
-# i 435,342 more rows
-# i 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+# ℹ 435,342 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
 #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
 #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 </div>
@@ -495,7 +495,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 435,352 x 19
+<pre><code># A tibble: 435,352 × 19
     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
  1  2023     1     1        1           2038       203      328              3
@@ -508,18 +508,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  8  2023     1     1      524            530        -6      645            710
  9  2023     1     1      537            520        17      926            818
 10  2023     1     1      547            545         2      845            852
-# i 435,342 more rows
-# i 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+# ℹ 435,342 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
 #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
 #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 </div>
 </div>
 </section></section><section id="intro-to-tidy-data" class="level1"><h1>Intro to Tidy Data</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bakeoff_ratings</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../data/bakeoff_messy_ratings.csv"</span><span class="op">)</span> <span class="co"># https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bakeoff_ratings</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv"</span><span class="op">)</span></span>
 <span><span class="va">bakeoff_ratings</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 x 11
+<pre><code># A tibble: 8 × 11
   series    e1    e2    e3    e4    e5    e6    e7    e8    e9   e10
    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 1      1  2.24  3     3     2.6   3.03  2.75 NA    NA    NA    NA   
@@ -540,10 +540,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Follow along with the slides to tidy the <code>bakeoff_ratings</code> dataset</p>
 </section></section><section id="messyratings2" class="level1"><h1><code>messyratings2</code></h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">messy_ratings2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../data/messy_ratings2.csv"</span><span class="op">)</span> <span class="co"># https://stat220-f26.github.io/data/messy_ratings2.csv</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">messy_ratings2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://stat220-f26.github.io/data/messy_ratings2.csv"</span><span class="op">)</span></span>
 <span><span class="va">messy_ratings2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 x 21
+<pre><code># A tibble: 8 × 21
   series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day
    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
 1      1    2.24    NA       3       NA       3       NA       2.6     NA   
@@ -554,7 +554,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 6      6   11.6     11.7    11.6     11.8    12.0     NA      12.4     12.7 
 7      7   13.6     13.9    13.4     13.7    13.0     13.4    13.3     13.9 
 8      8    9.46     9.72    9.23     9.53    8.68     9.06    8.55     8.87
-# i 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,
+# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,
 #   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,
 #   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,
 #   e10_28day &lt;dbl&gt;</code></pre>
@@ -1094,7 +1094,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a><span class="fu"># Intro to Tidy Data</span></span>
 <span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>bakeoff_ratings <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/bakeoff_messy_ratings.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv</span></span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>bakeoff_ratings <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv"</span>)</span>
 <span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>bakeoff_ratings</span>
 <span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a></span>
@@ -1111,7 +1111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a><span class="fu"># `messyratings2`</span></span>
 <span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a>messy_ratings2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/messy_ratings2.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/messy_ratings2.csv</span></span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a>messy_ratings2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://stat220-f26.github.io/data/messy_ratings2.csv"</span>)</span>
 <span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a>messy_ratings2</span>
 <span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a></span>

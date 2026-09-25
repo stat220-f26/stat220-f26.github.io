@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Prof Amanda Luby">
 <title>15-sentiment – Stat 220</title>
@@ -68,9 +68,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6e03bc272f1cdef1d8296ac38e217ebd.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4a17e18fdf56099d4f6da1e105f33a53.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -417,23 +417,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="load-the-data" class="level1"><h1>Load the Data</h1>
 <p>Random (?) sample of 26,882 reviews of coursera courses (Source: <a href="https://www.kaggle.com/datasets/septa97/100k-courseras-course-reviews-dataset/data">Kaggle</a>)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">en_coursera_reviews</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../data/en_coursera_sample.csv"</span><span class="op">)</span> <span class="co"># https://stat220-f26.github.io/data/en_coursera_sample.csv</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">en_coursera_reviews</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://stat220-f26.github.io/data/en_coursera_sample.csv"</span><span class="op">)</span></span>
 <span><span class="va">en_coursera_reviews</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 26,882 x 5
+<pre><code># A tibble: 26,882 × 5
    CourseId                    Review                      Label cld2  review_id
    &lt;chr&gt;                       &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
- 1 nurture-market-strategies   It would be better if the ~     1 en            1
- 2 nand2tetris2                Superb course. Great prese~     5 en            2
+ 1 nurture-market-strategies   It would be better if the …     1 en            1
+ 2 nand2tetris2                Superb course. Great prese…     5 en            2
  3 schedule-projects           Excellent course!               5 en            3
- 4 teaching-english-capstone-2 I'd recommend this course ~     5 en            4
- 5 machine-learning            This course was so effecti~     5 en            5
- 6 python-network-data         Words cannot describe how ~     5 en            6
+ 4 teaching-english-capstone-2 I'd recommend this course …     5 en            4
+ 5 machine-learning            This course was so effecti…     5 en            5
+ 6 python-network-data         Words cannot describe how …     5 en            6
  7 clinical-trials             Great course!                   5 en            7
- 8 python-genomics             I didn't know anything abo~     3 en            8
- 9 strategic-management        Loved everything about thi~     5 en            9
-10 script-writing              No significant instruction~     1 en           10
-# i 26,872 more rows</code></pre>
+ 8 python-genomics             I didn't know anything abo…     3 en            8
+ 9 strategic-management        Loved everything about thi…     5 en            9
+10 script-writing              No significant instruction…     1 en           10
+# ℹ 26,872 more rows</code></pre>
 </div>
 </div>
 </section><section id="load-sentiment-data" class="level1"><h1>Load Sentiment data</h1>
@@ -448,29 +448,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="fu"><a href="https://juliasilge.github.io/tidytext/reference/get_sentiments.html">get_sentiments</a></span><span class="op">(</span><span class="st">"afinn"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 x 2
-   word         value
-   &lt;chr&gt;        &lt;dbl&gt;
- 1 rescues          2
- 2 jerk            -3
- 3 care             2
- 4 demoralized     -2
- 5 secures          2
- 6 dickhead        -4
- 7 hopelessness    -2
- 8 bullied         -2
- 9 thwarting       -2
-10 adore            3
-11 incensed        -2
-12 infuriating     -2
-13 admire           3
-14 deny            -2
-15 undermined      -2
-16 fulfills         2
-17 lack            -2
-18 hopes            2
-19 want             1
-20 burdens         -2</code></pre>
+<pre><code># A tibble: 20 × 2
+   word          value
+   &lt;chr&gt;         &lt;dbl&gt;
+ 1 insignificant    -2
+ 2 neglecting       -2
+ 3 heaven            2
+ 4 timid            -2
+ 5 outcry           -2
+ 6 prosecution      -1
+ 7 overreaction     -2
+ 8 demands          -1
+ 9 evil             -3
+10 traumatic        -3
+11 overreacts       -2
+12 confidence        2
+13 feeling           1
+14 lurk             -1
+15 overreact        -2
+16 enrapture         3
+17 undeserving      -2
+18 fatigues         -2
+19 fail             -2
+20 catastrophic     -4</code></pre>
 </div>
 </div>
 </section></section><section id="sentiment-of-each-review" class="level1"><h1>Sentiment of each review</h1>
@@ -485,27 +485,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span></span>
 <span><span class="va">bing_review_scores</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 18 x 2
-   review_id   sum
-       &lt;dbl&gt; &lt;int&gt;
- 1      1357    -1
- 2      1665    -1
- 3      2341    -1
- 4      2752    -1
- 5      3232    -1
- 6      3668    -1
- 7      4270    -1
- 8      5316     1
- 9      8578    -1
-10     14459    -1
-11     14590    -1
-12     16041    -1
-13     17225    -1
-14     18966     1
-15     21321    -1
-16     21489    -1
-17     22782     1
-18     25243    -1</code></pre>
+<pre><code># A tibble: 6 × 2
+  review_id   sum
+      &lt;dbl&gt; &lt;int&gt;
+1      6009     1
+2      8316    -1
+3     12241    -1
+4     12449     1
+5     23046    -1
+6     23062     1</code></pre>
 </div>
 </div>
 
@@ -990,7 +978,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>Random (?) sample of 26,882 reviews of coursera courses (Source: <span class="co">[</span><span class="ot">Kaggle</span><span class="co">](https://www.kaggle.com/datasets/septa97/100k-courseras-course-reviews-dataset/data)</span>)</span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>en_coursera_reviews <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/en_coursera_sample.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/en_coursera_sample.csv</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>en_coursera_reviews <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://stat220-f26.github.io/data/en_coursera_sample.csv"</span>)</span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>en_coursera_reviews</span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>

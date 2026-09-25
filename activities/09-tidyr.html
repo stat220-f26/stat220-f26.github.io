@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Prof Amanda Luby">
 <title>tidyr 2: Reshaping Data – Stat 220</title>
@@ -68,9 +68,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6e03bc272f1cdef1d8296ac38e217ebd.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4a17e18fdf56099d4f6da1e105f33a53.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -425,10 +425,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="last-time" class="level1"><h1>Last time</h1>
 <p>Here is a data frame with the ratings for each episode of The Great British Bakeoff for series 1-8.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bakeoff_ratings</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../data/bakeoff_messy_ratings.csv"</span><span class="op">)</span> <span class="co"># https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bakeoff_ratings</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv"</span><span class="op">)</span></span>
 <span><span class="va">bakeoff_ratings</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 x 11
+<pre><code># A tibble: 8 × 11
   series    e1    e2    e3    e4    e5    e6    e7    e8    e9   e10
    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 1      1  2.24  3     3     2.6   3.03  2.75 NA    NA    NA    NA   
@@ -449,7 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    episode <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="va">episode</span><span class="op">)</span> </span>
 <span>  <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 80 x 3
+<pre><code># A tibble: 80 × 3
    series episode rating
     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
  1      1       1   2.24
@@ -462,15 +462,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  8      1       8  NA   
  9      1       9  NA   
 10      1      10  NA   
-# i 70 more rows</code></pre>
+# ℹ 70 more rows</code></pre>
 </div>
 </div>
 </section><section id="messyratings2" class="level1"><h1><code>messyratings2</code></h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">messy_ratings2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../data/messy_ratings2.csv"</span><span class="op">)</span> <span class="co"># https://stat220-f26.github.io/data/messy_ratings2.csv</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">messy_ratings2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://stat220-f26.github.io/data/messy_ratings2.csv"</span><span class="op">)</span></span>
 <span><span class="va">messy_ratings2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 x 21
+<pre><code># A tibble: 8 × 21
   series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day
    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
 1      1    2.24    NA       3       NA       3       NA       2.6     NA   
@@ -481,7 +481,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 6      6   11.6     11.7    11.6     11.8    12.0     NA      12.4     12.7 
 7      7   13.6     13.9    13.4     13.7    13.0     13.4    13.3     13.9 
 8      8    9.46     9.72    9.23     9.53    8.68     9.06    8.55     8.87
-# i 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,
+# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,
 #   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,
 #   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,
 #   e10_28day &lt;dbl&gt;</code></pre>
@@ -509,28 +509,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">relig_income</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 18 x 11
+<pre><code># A tibble: 18 × 11
    religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k`
    &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
- 1 "Agnost~      27        34        60        81        76       137        122
- 2 "Atheis~      12        27        37        52        35        70         73
- 3 "Buddhi~      27        21        30        34        33        58         62
- 4 "Cathol~     418       617       732       670       638      1116        949
- 5 "Don\u2~      15        14        15        11        10        35         21
- 6 "Evange~     575       869      1064       982       881      1486        949
- 7 "Hindu"        1         9         7         9        11        34         47
- 8 "Histor~     228       244       236       238       197       223        131
- 9 "Jehova~      20        27        24        24        21        30         15
-10 "Jewish"      19        19        25        25        30        95         69
-11 "Mainli~     289       495       619       655       651      1107        939
-12 "Mormon"      29        40        48        51        56       112         85
-13 "Muslim"       6         7         9        10         9        23         16
-14 "Orthod~      13        17        23        32        32        47         38
-15 "Other ~       9         7        11        13        13        14         18
-16 "Other ~      20        33        40        46        49        63         46
-17 "Other ~       5         2         3         4         2         7          3
-18 "Unaffi~     217       299       374       365       341       528        407
-# i 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;,
+ 1 Agnostic      27        34        60        81        76       137        122
+ 2 Atheist       12        27        37        52        35        70         73
+ 3 Buddhist      27        21        30        34        33        58         62
+ 4 Catholic     418       617       732       670       638      1116        949
+ 5 Don’t k…      15        14        15        11        10        35         21
+ 6 Evangel…     575       869      1064       982       881      1486        949
+ 7 Hindu          1         9         7         9        11        34         47
+ 8 Histori…     228       244       236       238       197       223        131
+ 9 Jehovah…      20        27        24        24        21        30         15
+10 Jewish        19        19        25        25        30        95         69
+11 Mainlin…     289       495       619       655       651      1107        939
+12 Mormon        29        40        48        51        56       112         85
+13 Muslim         6         7         9        10         9        23         16
+14 Orthodox      13        17        23        32        32        47         38
+15 Other C…       9         7        11        13        13        14         18
+16 Other F…      20        33        40        46        49        63         46
+17 Other W…       5         2         3         4         2         7          3
+18 Unaffil…     217       299       374       365       341       528        407
+# ℹ 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;,
 #   `Don't know/refused` &lt;dbl&gt;</code></pre>
 </div>
 </div>
@@ -557,7 +557,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This dataset contains four pairs of variables (<code>x1</code> and <code>y1</code>, <code>x2</code> and <code>y2</code>, etc) that underlie Anscombe’s quartet, a collection of four datasets that have the same summary statistics (<code>mean</code>, <code>sd</code>, <code>correlation</code> etc), but have quite different data. We want to produce a dataset with columns <code>set</code>, <code>x</code> and <code>y</code>:</p>
 <pre><code># A tibble: 44 × 3
    set       x     y
-   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+   &lt;chr&gt; &lt;dbl&gt; &lt;dbl) |&gt;
  1 1        10  8.04
  2 2        10  9.14
  3 3        10  7.46</code></pre>
@@ -576,7 +576,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <pre><code># A tibble: 88 × 3
    index name  value
-   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+   &lt;int&gt; &lt;chr&gt; &lt;dbl) |&gt;
  1     1 x1    10   
  2     1 x2    10   
  3     1 x3    10  </code></pre>
@@ -585,7 +585,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <pre><code># A tibble: 88 × 4
    index variable set   value
-   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;
+   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl) |&gt;
  1     1 x        1     10   
  2     1 x        2     10   
  3     1 x        3     10   </code></pre>
@@ -619,7 +619,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    names_pattern <span class="op">=</span> <span class="st">"(.)(.)"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 44 x 4
+<pre><code># A tibble: 44 × 4
    index set       x     y
    &lt;int&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
  1     1 1        10  8.04
@@ -632,7 +632,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  8     2 4         8  5.76
  9     3 1        13  7.58
 10     3 2        13  8.74
-# i 34 more rows</code></pre>
+# ℹ 34 more rows</code></pre>
 </div>
 </div>
 <p>pull up the help page for <code>pivot_longer</code> and try to explain the new arguments.</p>
@@ -1119,7 +1119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>Here is a data frame with the ratings for each episode of The Great British Bakeoff for series 1-8.</span>
 <span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>bakeoff_ratings <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/bakeoff_messy_ratings.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>bakeoff_ratings <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://stat220-f26.github.io/data/bakeoff_messy_ratings.csv"</span>)</span>
 <span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>bakeoff_ratings</span>
 <span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a></span>
@@ -1136,7 +1136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="fu"># `messyratings2`</span></span>
 <span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>messy_ratings2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/messy_ratings2.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/messy_ratings2.csv</span></span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>messy_ratings2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://stat220-f26.github.io/data/messy_ratings2.csv"</span>)</span>
 <span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>messy_ratings2</span>
 <span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a></span>
@@ -1183,7 +1183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-91"><a href="#cb21-91" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
 <span id="cb21-92"><a href="#cb21-92" aria-hidden="true" tabindex="-1"></a><span class="in"># A tibble: 44 × 3</span></span>
 <span id="cb21-93"><a href="#cb21-93" aria-hidden="true" tabindex="-1"></a><span class="in">   set       x     y</span></span>
-<span id="cb21-94"><a href="#cb21-94" aria-hidden="true" tabindex="-1"></a><span class="in">   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb21-94"><a href="#cb21-94" aria-hidden="true" tabindex="-1"></a><span class="in">   &lt;chr&gt; &lt;dbl&gt; &lt;dbl) |&gt;</span></span>
 <span id="cb21-95"><a href="#cb21-95" aria-hidden="true" tabindex="-1"></a><span class="in"> 1 1        10  8.04</span></span>
 <span id="cb21-96"><a href="#cb21-96" aria-hidden="true" tabindex="-1"></a><span class="in"> 2 2        10  9.14</span></span>
 <span id="cb21-97"><a href="#cb21-97" aria-hidden="true" tabindex="-1"></a><span class="in"> 3 3        10  7.46</span></span>
@@ -1205,7 +1205,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-115"><a href="#cb21-115" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
 <span id="cb21-116"><a href="#cb21-116" aria-hidden="true" tabindex="-1"></a><span class="in"># A tibble: 88 × 3</span></span>
 <span id="cb21-117"><a href="#cb21-117" aria-hidden="true" tabindex="-1"></a><span class="in">   index name  value</span></span>
-<span id="cb21-118"><a href="#cb21-118" aria-hidden="true" tabindex="-1"></a><span class="in">   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;</span></span>
+<span id="cb21-118"><a href="#cb21-118" aria-hidden="true" tabindex="-1"></a><span class="in">   &lt;int&gt; &lt;chr&gt; &lt;dbl) |&gt;</span></span>
 <span id="cb21-119"><a href="#cb21-119" aria-hidden="true" tabindex="-1"></a><span class="in"> 1     1 x1    10   </span></span>
 <span id="cb21-120"><a href="#cb21-120" aria-hidden="true" tabindex="-1"></a><span class="in"> 2     1 x2    10   </span></span>
 <span id="cb21-121"><a href="#cb21-121" aria-hidden="true" tabindex="-1"></a><span class="in"> 3     1 x3    10  </span></span>
@@ -1216,7 +1216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-126"><a href="#cb21-126" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
 <span id="cb21-127"><a href="#cb21-127" aria-hidden="true" tabindex="-1"></a><span class="in"># A tibble: 88 × 4</span></span>
 <span id="cb21-128"><a href="#cb21-128" aria-hidden="true" tabindex="-1"></a><span class="in">   index variable set   value</span></span>
-<span id="cb21-129"><a href="#cb21-129" aria-hidden="true" tabindex="-1"></a><span class="in">   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;</span></span>
+<span id="cb21-129"><a href="#cb21-129" aria-hidden="true" tabindex="-1"></a><span class="in">   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl) |&gt;</span></span>
 <span id="cb21-130"><a href="#cb21-130" aria-hidden="true" tabindex="-1"></a><span class="in"> 1     1 x        1     10   </span></span>
 <span id="cb21-131"><a href="#cb21-131" aria-hidden="true" tabindex="-1"></a><span class="in"> 2     1 x        2     10   </span></span>
 <span id="cb21-132"><a href="#cb21-132" aria-hidden="true" tabindex="-1"></a><span class="in"> 3     1 x        3     10   </span></span>
