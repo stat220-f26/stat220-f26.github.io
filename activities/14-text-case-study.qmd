@@ -19,17 +19,17 @@ glimpse(en_coursera_reviews)
 
 ```{r}
 library(tidytext)
-en_coursera_reviews |) |>
-  unnest_tokens(output = word, input = Review) |) |>
+en_coursera_reviews |>
+  unnest_tokens(output = word, input = Review) |>
   select(CourseId, word)
 ```
 
 # Count the tokens
 
 ```{r}
-en_coursera_reviews |) |>
-  unnest_tokens(output = word, input = Review) |) |>
-  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |) |>
+en_coursera_reviews |>
+  unnest_tokens(output = word, input = Review) |>
+  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |>
   filter(str_detect(CourseId, "data-science")) |> 
   group_by(CourseId) %>%
   count(word) %>%
@@ -45,10 +45,10 @@ en_coursera_reviews |) |>
 # Create "clean" reviews
 
 ```{r}
-coursera_reviews <- en_coursera_reviews |) |>
-  unnest_tokens(word, Review) |) |>
-  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |) |>
-  group_by(CourseId, review_id) |) |>
+coursera_reviews <- en_coursera_reviews |>
+  unnest_tokens(word, Review) |>
+  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |>
+  group_by(CourseId, review_id) |>
   summarize(review_clean = paste(word, collapse = " "))
 ```
 
