@@ -41,6 +41,7 @@ theme_set(slides_theme)
 
 -   {patchwork}
 -   Colorblind-friendly color palettes
+-   Legible text, plain-language labels, and data tables
 -   Writing alt-text
 
 ## Small Multiples
@@ -58,6 +59,10 @@ The plots might share data, but don't share **aesthetics**
 ##  {background-image="../img/horst-patchwork.png" background-position="right" background-size="90%"}
 
 ## Compound Plot Example {.scrollable}
+
+::: {.task .nonincremental}
+Imagine reading these three plots one after another in a report. What's hard about it? How would you fix it?
+:::
 
 ```{r}
 #| echo: true
@@ -103,6 +108,7 @@ p3 <- ggplot(penguins) +
 #| fig-width: 8
 #| fig-height: 4
 #| fig-align: 'center'
+#| output-location: fragment
 
 
 p3 + (p1/p2)
@@ -113,6 +119,10 @@ For more complex layouts, see the ["Controlling Layouts"](https://patchwork.data
 :::
 
 ## Patchwork  (layout 2) {.smaller}
+
+::: {.task .nonincremental}
+What's redundant in this figure?
+:::
 
 ```{r}
 #| echo: true
@@ -134,6 +144,7 @@ p3 + (p1/p2)
 ```
 
 ## Patchwork (with a shared legend) {.smaller}
+
 
 ```{r}
 #| echo: true
@@ -218,55 +229,7 @@ p3 + (p1/p2) +
 
 # Colorblind-friendly palettes {.maize}
 
-## Color scales
-
-::::: columns
-::: {.column .fragment width="33%"}
-**Categorical variables**
-
-Order doesn't matter
-
-```{r}
-#| echo: false
-#| fig-height: 16
-
-
-library(scales)
-show_col(hue_pal()(6), ncol = 1, labels=FALSE)
-```
-:::
-
-::: {.column .fragment width="33%"}
-**Numeric variables**
-
-Order matters
-
-```{r}
-#| echo: false
-#| fig-height: 16
-
-library(scales)
-show_col(seq_gradient_pal(low = "#132B43", high = "#56B1F7")(seq(0,1,by=.15)), ncol = 1, labels=FALSE)
-```
-:::
-
-::: {.column .fragment width="33%"}
-**Diverging variables**
-
-Midpoint matters
-
-```{r}
-#| fig-height: 16
-#| echo: false
-library(scales)
-show_col(RColorBrewer::brewer.pal(7, "RdBu"), ncol = 1, labels=FALSE)
-```
-:::
-:::::
-
-## Color scales
-
-Use colorblind friendly color scales (e.g., Okabe Ito, viridis)
+## Can you tell the states apart?
 
 ```{r message = FALSE}
 #| echo: false
@@ -281,11 +244,9 @@ nurses_subset <- nurses |>
 
 ```{r}
 #| echo: false
-
-nurses_subset |>
+p_default <- nurses_subset |>
   ggplot(aes(x = year, y = hourly_wage_median, color = state)) +
   geom_point(size = 2) +
-  ggthemes::scale_color_colorblind() +
   scale_y_continuous(labels = scales::label_dollar()) +
   labs(
     x = "Year", y = "Median hourly wage", color = "State",
@@ -293,8 +254,65 @@ nurses_subset |>
   ) +
   theme(
     legend.position = c(0.15, 0.75),
-    legend.background = element_rect(fill = "white", color = "white")
+    legend.background = element_rect(fill = "white", color = "white"),
+    axis.title.y = element_text(margin = margin(r = 14))
   )
+
+p_okabe <- p_default + ggthemes::scale_color_colorblind()
+```
+
+::: {.task .nonincremental}
+**Graph A**, as seen by someone with deuteranopia (a common form of colorblindness): which state is which? How sure are you?
+:::
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4
+cowplot::plot_grid(colorblindr::edit_colors(p_default, colorspace::deutan))
+```
+
+## Now try graph B
+
+::: {.task .nonincremental}
+**Graph B**: same data, same viewer. What changed? Why is it easier?
+:::
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4
+cowplot::plot_grid(colorblindr::edit_colors(p_okabe, colorspace::deutan))
+```
+
+## Which palette would you trust?
+
+```{r}
+#| echo: false
+#| fig-width: 9
+#| fig-height: 3.4
+okabe <- colorblindr::palette_OkabeIto
+pal_df <- bind_rows(
+  tibble(palette = "ggplot2 default", i = 1:10, color = scales::hue_pal()(10)),
+  tibble(palette = "rainbow", i = 1:10, color = rainbow(10)),
+  tibble(palette = "Okabe-Ito", i = seq_along(okabe), color = okabe),
+  tibble(palette = "viridis", i = 1:10, color = viridisLite::viridis(10))
+) |>
+  mutate(palette = factor(palette, levels = rev(c("ggplot2 default", "rainbow", "Okabe-Ito", "viridis"))))
+
+ggplot(pal_df, aes(x = i, y = palette, fill = color)) +
+  geom_tile(color = "white", linewidth = 1.5) +
+  scale_fill_identity() +
+  theme_void(base_size = 18) +
+  theme(axis.text.y = element_text(hjust = 1, margin = margin(r = 8)))
+```
+
+::: {.task .nonincremental}
+Rank these four palettes from best to worst for someone with colorblindness. Then we'll check.
+:::
+
+```{r}
+countdown::countdown(.5)
 ```
 
 ## 
@@ -324,6 +342,43 @@ colorBlindness::displayAllColors(colorblindr::palette_OkabeIto)
 #| echo: true
 colorBlindness::displayAllColors(viridisLite::viridis(10))
 ```
+
+## Color scales
+
+Use colorblind friendly color scales (e.g., Okabe Ito, viridis)
+
+```{r}
+#| echo: false
+
+nurses_subset |>
+  ggplot(aes(x = year, y = hourly_wage_median, color = state)) +
+  geom_point(size = 2) +
+  ggthemes::scale_color_colorblind() +
+  scale_y_continuous(labels = scales::label_dollar()) +
+  labs(
+    x = "Year", y = "Median hourly wage", color = "State",
+    title = "Median hourly wage of Registered Nurses"
+  ) +
+  theme(
+    legend.position = c(0.15, 0.75),
+    legend.background = element_rect(fill = "white", color = "white")
+  )
+```
+
+## Back to graph A
+
+What if we *can't* change the colors (brand guidelines, grayscale printing, ...)?
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 3.6
+cowplot::plot_grid(colorblindr::edit_colors(p_default, colorspace::deutan))
+```
+
+::: {.task .nonincremental}
+What else could we map to `state` so readers can tell the states apart without relying on color?
+:::
 
 ## Double encoding
 
@@ -365,17 +420,11 @@ cowplot::plot_grid(colorblindr::edit_colors(last_plot(), colorspace::deutan))
 Source: Mine Çetinkaya-Rundel, [Sta313](https://vizdata.org/). Generated with [{colorblindr}](https://github.com/clauswilke/colorblindr/tree/master).
 :::
 
-## Use direct labeling
-
--   Prefer direct labeling where color is used to display information over a legend
-
--   Quicker to read
-
--   Ensures graph can be understood without reliance on color
-
-
-
 ## Without direct labeling
+
+::: {.task .nonincremental}
+**Graph A:** Which line is California? Minnesota? New York? Try it with the right panel (deuteranopia).
+:::
 
 ::::: columns
 ::: {.column width="40%"}
@@ -411,6 +460,10 @@ Source: Mine Çetinkaya-Rundel, [Sta313](https://vizdata.org/). Generated with [
 :::
 
 ## With direct labeling
+
+::: {.task .nonincremental}
+**Graph B:** Try again. What changed, and why is it easier?
+:::
 
 ::::: columns
 ::: {.column width="40%"}
@@ -451,15 +504,20 @@ cowplot::plot_grid(colorblindr::edit_colors(last_plot(), colorspace::deutan))
 Source: Mine Çetinkaya-Rundel, [Sta313](https://vizdata.org/). Generated with [{colorblindr}](https://github.com/clauswilke/colorblindr/tree/master).
 :::
 
-## Use whitespace or pattern to separate elements
+## Use direct labeling
 
--   Separate elements with whitespace or pattern
+-   Prefer direct labeling where color is used to display information over a legend
 
--   Allows for distinguishing between data without entirely relying on contrast between colors
+-   Quicker to read
 
+-   Ensures graph can be understood without reliance on color
 
 
 ## Without whitespace
+
+::: {.task .nonincremental}
+**Graph A:** In the right panel (tritanopia), where does one state's bar end and the next begin?
+:::
 
 ::::: columns
 ::: {.column width="40%"}
@@ -493,6 +551,10 @@ Source: Mine Çetinkaya-Rundel, [Sta313](https://vizdata.org/). Generated with [
 
 ## With whitespace
 
+::: {.task .nonincremental}
+**Graph B:** Try again. What did the white lines add?
+:::
+
 ::::: columns
 ::: {.column width="40%"}
 **Default ggplot2 scale**
@@ -524,7 +586,144 @@ cowplot::plot_grid(colorblindr::edit_colors(last_plot(), colorspace::tritan))
 Source: Mine Çetinkaya-Rundel, [Sta313](https://vizdata.org/). Generated with [{colorblindr}](https://github.com/clauswilke/colorblindr/tree/master).
 :::
 
+## Use whitespace or pattern to separate elements
+
+-   Separate elements with whitespace or pattern
+
+-   Allows for distinguishing between data without entirely relying on contrast between colors
+
+
+# Legible and clear {.maize}
+
+## Graph A: can you read it?
+
+::: {.task .nonincremental}
+What can you read from this graph? What can't you?
+:::
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4
+ratio_a <- round(colorspace::contrast_ratio("gray70", "white"), 1)
+ratio_b <- round(colorspace::contrast_ratio("black", "white"), 1)
+
+p_small <- p_okabe +
+  theme(
+    text = element_text(size = 7, color = "gray70"),
+    axis.text = element_text(size = 6, color = "gray70")
+  )
+p_small
+```
+
+## Graph B: same graph
+
+::: {.task .nonincremental}
+What changed?
+:::
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4
+p_okabe
+```
+
+. . .
+
+Contrast of the text against the white background: Graph A **`r ratio_a`:1**, Graph B **`r ratio_b`:1**
+
+## Text size and contrast
+
+-   Make text big enough to read from the back of the room, and when zoomed in
+-   Contrast between text and background: at least **4.5:1** (WCAG AA). Large text and graphical elements: at least **3:1**
+-   Light gray on white is the usual culprit
+-   Check yours: [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) or `colorspace::contrast_ratio()`
+
+## Graph A: what's this graph about?
+
+::: {.task .nonincremental}
+Explain this graph to someone who can't see it. What are the variables and units? What's the point?
+:::
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4
+p_vague <- nurses_subset |>
+  ggplot(aes(x = year, y = hourly_wage_median, color = state)) +
+  geom_point(size = 2) +
+  ggthemes::scale_color_colorblind() +
+  labs(title = "hourly_wage_median by year and state")
+p_vague
+```
+
+## Graph B: same data
+
+::: {.task .nonincremental}
+What changed? Which graph tells you what to look for?
+:::
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4
+p_plain <- p_okabe +
+  labs(
+    title = "California nurses' wages rose the fastest",
+    subtitle = "Median hourly wage of registered nurses, 1998-2020",
+    y = "Median hourly wage (US dollars)"
+  )
+p_plain
+```
+
+## Plain-language titles and labels
+
+-   Say what the graph shows
+-   Write axis and legend labels for people: "Median hourly wage (US dollars)", not `hourly_wage_median`
+-   Include units
+
+## Can you get the exact numbers?
+
+::: {.task .nonincremental}
+Using only this graph (or its alt text): what was New York's median hourly wage in 2010?
+:::
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4
+p_plain
+```
+
+## Offer the data
+
+```{r}
+#| echo: false
+nurses_subset |>
+  filter(year %in% c(1998, 2010, 2020)) |>
+  arrange(year) |>
+  select(State = state, year, hourly_wage_median) |>
+  pivot_wider(names_from = year, values_from = hourly_wage_median) |>
+  mutate(across(-State, scales::label_dollar(accuracy = 0.01))) |>
+  knitr::kable(align = "lrrr")
+```
+
+-   Give readers a table (or a link to the data) alongside the graph or in an appendix
+-   Screen reader users can move through a table cell by cell, and everyone can look up exact values
+-   Put the data source in the surrounding text, not in the alt text
+
 # Alt-text {.maize}
+
+## Who needs alt text?
+
+::: {.task .nonincremental}
+With a neighbor: who might need a text description of a graph? Think of as many situations as you can.
+:::
+
+```{r}
+countdown::countdown(1)
+```
 
 ## Alternative text
 
@@ -537,6 +736,39 @@ Source: Mine Çetinkaya-Rundel, [Sta313](https://vizdata.org/). Generated with [
 ::: aside
 Source: [WebAIM](https://webaim.org/techniques/alttext/)
 :::
+
+## Try it: describe this graph
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+#| echo: false
+nurses_subset |>
+  ggplot(aes(x = year, y = hourly_wage_median, color = state)) +
+  geom_point(size = 2) +
+  ggthemes::scale_color_colorblind() +
+  scale_y_continuous(labels = scales::label_dollar()) +
+  labs(
+    x = "Year", y = "Median hourly wage", color = "State",
+    title = "Median hourly wage of Registered Nurses"
+  ) +
+  theme(
+    legend.position = c(0.15, 0.75),
+    legend.background = element_rect(fill = "white", color = "white")
+  )
+```
+:::
+
+::: {.column width="50%"}
+::: {.task .nonincremental}
+Imagine someone who can't see this graph. Write 2-3 sentences that tell them what they need to know.
+:::
+:::
+:::::
+
+```{r}
+countdown::countdown(1,30)
+```
 
 ## Alt and surrounding text {.smaller}
 
@@ -577,15 +809,98 @@ nurses_subset |>
 ```
 :::
 
-::: {.column width="50%"}
+::: {.column .nonincremental width="50%"}
 -   A scatterplot
--   of median hourly wage of RN's by year in California, Minnesota, and New York. The x-axis starts at the year 1996 and ends at the year 2020.
+-   of median hourly wage of RN's by year in California, Minnesota, and New York. The data span the years 1998 to 2020.
 -   The three states follow the same linear increasing trend until about 2007, when New York and Minnesota begin to flatten.
 :::
 :::::
 
+::: {.task .nonincremental}
+With a neighbor: which part of the formula is each bullet? What would you add or change? How does it compare to yours?
+:::
+
 ```{r}
-countdown::countdown(1,30)
+countdown::countdown(2)
+```
+
+## What's wrong with these alt texts? {.smaller}
+
+```{r}
+#| echo: false
+ca <- nurses_subset |> filter(state == "California") |> arrange(year) |> head(6)
+dump_txt <- paste0(
+  "California: ",
+  paste0(scales::dollar(ca$hourly_wage_median, accuracy = 0.01), " in ", ca$year, collapse = ", "),
+  ", and so on for every year and every state..."
+)
+```
+
+::: {.nonincremental}
+**A.** "Image of a graph."
+
+**B.** "A scatterplot of nurse wages."
+
+**C.** "`r dump_txt`"
+:::
+
+::: {.task .nonincremental}
+For each one: what's missing, or what's too much? Use the formula (chart type, type of data, reason for including the chart) to help.
+:::
+
+## Screen reader demo: no alt text
+
+::: {.task .nonincremental}
+Listen: what do you learn about this graph?
+:::
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 3.8
+nurses_subset |>
+  ggplot(aes(x = year, y = hourly_wage_median, color = state)) +
+  geom_point(size = 2) +
+  ggthemes::scale_color_colorblind() +
+  scale_y_continuous(labels = scales::label_dollar()) +
+  labs(
+    x = "Year", y = "Median hourly wage", color = "State",
+    title = "Median hourly wage of Registered Nurses"
+  ) +
+  theme(
+    legend.position = c(0.15, 0.75),
+    legend.background = element_rect(fill = "white", color = "white")
+  )
+```
+
+::: notes
+Screen reader demo (dry run first!). Turn VoiceOver on/off with Cmd+F5. Move to the image with Control+Option+Right Arrow (VO+Right Arrow). Safari tends to work best with VoiceOver.
+:::
+
+## Screen reader demo: with alt text
+
+::: {.task .nonincremental}
+Listen again: what changed? What could you do now that you couldn't before?
+:::
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 3.8
+#| fig-alt: A scatterplot of median hourly wage of RN's by year in California, Minnesota, and New York. The data span the years 1998 to 2020. The three states follow the same linear increasing trend until about 2007, when New York and Minnesota begin to flatten.
+nurses_subset |>
+  ggplot(aes(x = year, y = hourly_wage_median, color = state)) +
+  geom_point(size = 2) +
+  ggthemes::scale_color_colorblind() +
+  scale_y_continuous(labels = scales::label_dollar()) +
+  labs(
+    x = "Year", y = "Median hourly wage", color = "State",
+    title = "Median hourly wage of Registered Nurses"
+  ) +
+  theme(
+    legend.position = c(0.15, 0.75),
+    legend.background = element_rect(fill = "white", color = "white")
+  )
 ```
 
 ##  {.smaller}
@@ -598,7 +913,6 @@ Arvind Satyanarayan, MIT CSAIL
 IEEE Transactions on Visualization & Computer Graphics (Proceedings of IEEE VIS), 2021
 
 > To demonstrate how our model can be applied to evaluate the effectiveness of visualization descriptions, we conduct a mixed-methods evaluation with 30 blind and 90 sighted readers, and find that these reader groups differ significantly on which semantic content they rank as most useful. Together, our model and findings suggest that access to meaningful information is strongly reader-specific, and that research in automatic visualization captioning should orient toward descriptions that more richly communicate overall trends and statistics, sensitive to reader preferences.
-
 
 
 ## Let's try it! {.smaller}

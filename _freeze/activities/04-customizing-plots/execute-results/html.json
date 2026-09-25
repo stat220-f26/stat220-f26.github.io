@@ -1,9 +1,11 @@
 {
-  "hash": "a36e7b43c02e806261eb7ae749c6f0a8",
+  "hash": "117ccffaf837a53b72458629c0662399",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"04: Customizing plots\"\n---\n\n::: callout-tip\nIf you need a refresher for how to access the quarto file from this document, see [Activity01](01-college-tuition-pay.html)\n:::\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(ggthemes)\n```\n:::\n\n\n## Load Data\n\n*Note:* This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph! \n\n\n::: {.cell}\n\n```{.r .cell-code}\n#season_summary = readr::read_csv(\"https://raw.githubusercontent.com/stat220-f26/stat220-f26.github.io/refs/heads/main/data/survivor_season_summary.csv\") |>\n#  separate(timeslot, into = c(\"day_of_week\", \"time\"))\n```\n:::\n\n\n## Replicate histogram\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Include your code here\n```\n:::\n\n\n",
-    "supporting": [],
+    "markdown": "---\ntitle: \"04: Customizing plots\"\n---\n\n::: callout-tip\nIf you need a refresher for how to access the quarto file from this document, see [Activity01](01-college-tuition-pay.html)\n:::\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(ggthemes)\n```\n:::\n\n\n## Load Data\n\n*Note:* This code reads the two datasets, joins them, and then makes a new `group` variable. Make sure to run this chunk before trying to make your graph! \n\n\n::: {.cell}\n\n```{.r .cell-code}\ntuition = readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv\")\n\nsalary = readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv\")\n\ncollege_pay = tuition |>\n  inner_join(salary, by = \"name\") |>\n  filter(type != \"For Profit\") |>\n  mutate(\n    group = case_when(\n      name == \"Carleton College\" ~ \"Carleton\",\n      state == \"Minnesota\" ~ \"Other MN colleges\",\n      TRUE ~ \"Everywhere else\"\n    ),\n    group = factor(group, levels = c(\"Carleton\", \"Other MN colleges\", \"Everywhere else\"))\n  ) |>\n  arrange(desc(group))\n```\n:::\n\n\n## Warm up: recreate graph from slides\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Include your code here\n```\n:::\n\n\n",
+    "supporting": [
+      "04-customizing-plots_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
