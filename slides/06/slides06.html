@@ -218,6 +218,7 @@ Prof Amanda Luby
 <ul>
 <li class="fragment">{patchwork}</li>
 <li class="fragment">Colorblind-friendly color palettes</li>
+<li class="fragment">Legible text, plain-language labels, and data tables</li>
 <li class="fragment">Writing alt-text</li>
 </ul>
 </section>
@@ -236,6 +237,9 @@ Prof Amanda Luby
 </section>
 <section id="compound-plot-example" class="slide level2 scrollable">
 <h2>Compound Plot Example</h2>
+<div class="task">
+<p>Imagine reading these three plots one after another in a report. What’s hard about it? How would you fix it?</p>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(palmerpenguins)</span>
 <span id="cb1-2"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span> </span>
@@ -296,6 +300,8 @@ Prof Amanda Luby
 <h2>Patchwork (layout 2)</h2>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>p3 <span class="sc">+</span> (p1<span class="sc">/</span>p2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -310,6 +316,9 @@ Prof Amanda Luby
 </div></aside></section>
 <section id="patchwork-layout-2-1" class="slide level2 smaller">
 <h2>Patchwork (layout 2)</h2>
+<div class="task">
+<p>What’s redundant in this figure?</p>
+</div>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-code-line-numbers="11,12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins) <span class="sc">+</span> </span>
 <span id="cb6-2"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">fill =</span> species))</span>
@@ -424,56 +433,55 @@ Prof Amanda Luby
 <h1>Colorblind-friendly palettes</h1>
 
 </section>
-<section id="color-scales" class="slide level2">
-<h2>Color scales</h2>
-<div class="columns">
-<div class="column fragment" style="width:33%;">
-<p><strong>Categorical variables</strong></p>
-<p>Order doesn’t matter</p>
+<section id="can-you-tell-the-states-apart" class="slide level2">
+<h2>Can you tell the states apart?</h2>
+<div class="task">
+<p><strong>Graph A</strong>, as seen by someone with deuteranopia (a common form of colorblindness): which state is which? How sure are you?</p>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-12-1.png" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column fragment" style="width:33%;">
-<p><strong>Numeric variables</strong></p>
-<p>Order matters</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column fragment" style="width:33%;">
-<p><strong>Diverging variables</strong></p>
-<p>Midpoint matters</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 </section>
-<section id="color-scales-1" class="slide level2">
-<h2>Color scales</h2>
-<p>Use colorblind friendly color scales (e.g., Okabe Ito, viridis)</p>
+<section id="now-try-graph-b" class="slide level2">
+<h2>Now try graph B</h2>
+<div class="task">
+<p><strong>Graph B</strong>: same data, same viewer. What changed? Why is it easier?</p>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-13-1.png" width="768"></p>
 </figure>
+</div>
+</div>
+</div>
+</section>
+<section id="which-palette-would-you-trust" class="slide level2">
+<h2>Which palette would you trust?</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-14-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="task">
+<p>Rank these four palettes from best to worst for someone with colorblindness. Then we’ll check.</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_c8fababe" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
 </div>
 </div>
 </div>
@@ -485,7 +493,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -498,7 +506,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -511,7 +519,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -524,10 +532,39 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
 </figure>
 </div>
 </div>
+</div>
+</section>
+<section id="color-scales" class="slide level2">
+<h2>Color scales</h2>
+<p>Use colorblind friendly color scales (e.g., Okabe Ito, viridis)</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="back-to-graph-a" class="slide level2">
+<h2>Back to graph A</h2>
+<p>What if we <em>can’t</em> change the colors (brand guidelines, grayscale printing, …)?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-21-1.png" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="task">
+<p>What else could we map to <code>state</code> so readers can tell the states apart without relying on color?</p>
 </div>
 </section>
 <section id="double-encoding" class="slide level2">
@@ -541,7 +578,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-19-1.png" style="width:100.0%"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-22-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -552,7 +589,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -563,16 +600,11 @@ Prof Amanda Luby
 <aside><div>
 <p>Source: Mine Çetinkaya-Rundel, <a href="https://vizdata.org/">Sta313</a>. Generated with <a href="https://github.com/clauswilke/colorblindr/tree/master">{colorblindr}</a>.</p>
 </div></aside></section>
-<section id="use-direct-labeling" class="slide level2">
-<h2>Use direct labeling</h2>
-<ul>
-<li class="fragment"><p>Prefer direct labeling where color is used to display information over a legend</p></li>
-<li class="fragment"><p>Quicker to read</p></li>
-<li class="fragment"><p>Ensures graph can be understood without reliance on color</p></li>
-</ul>
-</section>
 <section id="without-direct-labeling" class="slide level2">
 <h2>Without direct labeling</h2>
+<div class="task">
+<p><strong>Graph A:</strong> Which line is California? Minnesota? New York? Try it with the right panel (deuteranopia).</p>
+</div>
 <div class="columns">
 <div class="column" style="width:40%;">
 <p><strong>Default ggplot2 scale</strong></p>
@@ -580,7 +612,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-21-1.png" style="width:100.0%"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-24-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -591,7 +623,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -603,6 +635,9 @@ Prof Amanda Luby
 </div></aside></section>
 <section id="with-direct-labeling" class="slide level2">
 <h2>With direct labeling</h2>
+<div class="task">
+<p><strong>Graph B:</strong> Try again. What changed, and why is it easier?</p>
+</div>
 <div class="columns">
 <div class="column" style="width:40%;">
 <p><strong>Default ggplot2 scale</strong></p>
@@ -610,7 +645,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-23-1.png" style="width:100.0%"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-26-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -621,7 +656,81 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-24-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+
+<aside><div>
+<p>Source: Mine Çetinkaya-Rundel, <a href="https://vizdata.org/">Sta313</a>. Generated with <a href="https://github.com/clauswilke/colorblindr/tree/master">{colorblindr}</a>.</p>
+</div></aside></section>
+<section id="use-direct-labeling" class="slide level2">
+<h2>Use direct labeling</h2>
+<ul>
+<li class="fragment"><p>Prefer direct labeling where color is used to display information over a legend</p></li>
+<li class="fragment"><p>Quicker to read</p></li>
+<li class="fragment"><p>Ensures graph can be understood without reliance on color</p></li>
+</ul>
+</section>
+<section id="without-whitespace" class="slide level2">
+<h2>Without whitespace</h2>
+<div class="task">
+<p><strong>Graph A:</strong> In the right panel (tritanopia), where does one state’s bar end and the next begin?</p>
+</div>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><strong>Default ggplot2 scale</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-28-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<p><strong>Default ggplot2 scale with tritanopia</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+
+<aside><div>
+<p>Source: Mine Çetinkaya-Rundel, <a href="https://vizdata.org/">Sta313</a>. Generated with <a href="https://github.com/clauswilke/colorblindr/tree/master">{colorblindr}</a>.</p>
+</div></aside></section>
+<section id="with-whitespace" class="slide level2">
+<h2>With whitespace</h2>
+<div class="task">
+<p><strong>Graph B:</strong> Try again. What did the white lines add?</p>
+</div>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><strong>Default ggplot2 scale</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-30-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<p><strong>Default ggplot2 scale with tritanopia</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-31-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -637,71 +746,167 @@ Prof Amanda Luby
 <li class="fragment"><p>Separate elements with whitespace or pattern</p></li>
 <li class="fragment"><p>Allows for distinguishing between data without entirely relying on contrast between colors</p></li>
 </ul>
+</section></section>
+<section>
+<section id="legible-and-clear" class="title-slide slide level1 maize center">
+<h1>Legible and clear</h1>
+
 </section>
-<section id="without-whitespace" class="slide level2">
-<h2>Without whitespace</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p><strong>Default ggplot2 scale</strong></p>
+<section id="graph-a-can-you-read-it" class="slide level2">
+<h2>Graph A: can you read it?</h2>
+<div class="task">
+<p>What can you read from this graph? What can’t you?</p>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-25-1.png" style="width:100.0%"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-32-1.png" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<p><strong>Default ggplot2 scale with tritanopia</strong></p>
+</section>
+<section id="graph-b-same-graph" class="slide level2">
+<h2>Graph B: same graph</h2>
+<div class="task">
+<p>What changed?</p>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-26-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-33-1.png" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
-</div></div>
-
-<aside><div>
-<p>Source: Mine Çetinkaya-Rundel, <a href="https://vizdata.org/">Sta313</a>. Generated with <a href="https://github.com/clauswilke/colorblindr/tree/master">{colorblindr}</a>.</p>
-</div></aside></section>
-<section id="with-whitespace" class="slide level2">
-<h2>With whitespace</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p><strong>Default ggplot2 scale</strong></p>
+<div class="fragment">
+<p>Contrast of the text against the white background: Graph A <strong>2.1:1</strong>, Graph B <strong>21:1</strong></p>
+</div>
+</section>
+<section id="text-size-and-contrast" class="slide level2">
+<h2>Text size and contrast</h2>
+<ul>
+<li class="fragment">Make text big enough to read from the back of the room, and when zoomed in</li>
+<li class="fragment">Contrast between text and background: at least <strong>4.5:1</strong> (WCAG AA). Large text and graphical elements: at least <strong>3:1</strong></li>
+<li class="fragment">Light gray on white is the usual culprit</li>
+<li class="fragment">Check yours: <a href="https://webaim.org/resources/contrastchecker/">WebAIM Contrast Checker</a> or <code>colorspace::contrast_ratio()</code></li>
+</ul>
+</section>
+<section id="graph-a-whats-this-graph-about" class="slide level2">
+<h2>Graph A: what’s this graph about?</h2>
+<div class="task">
+<p>Explain this graph to someone who can’t see it. What are the variables and units? What’s the point?</p>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-27-1.png" style="width:100.0%"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-34-1.png" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<p><strong>Default ggplot2 scale with tritanopia</strong></p>
+</section>
+<section id="graph-b-same-data" class="slide level2">
+<h2>Graph B: same data</h2>
+<div class="task">
+<p>What changed? Which graph tells you what to look for?</p>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-35-1.png" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
-</div></div>
-
-<aside><div>
-<p>Source: Mine Çetinkaya-Rundel, <a href="https://vizdata.org/">Sta313</a>. Generated with <a href="https://github.com/clauswilke/colorblindr/tree/master">{colorblindr}</a>.</p>
-</div></aside></section></section>
+</section>
+<section id="plain-language-titles-and-labels" class="slide level2">
+<h2>Plain-language titles and labels</h2>
+<ul>
+<li class="fragment">Say what the graph shows</li>
+<li class="fragment">Write axis and legend labels for people: “Median hourly wage (US dollars)”, not <code>hourly_wage_median</code></li>
+<li class="fragment">Include units</li>
+</ul>
+</section>
+<section id="can-you-get-the-exact-numbers" class="slide level2">
+<h2>Can you get the exact numbers?</h2>
+<div class="task">
+<p>Using only this graph (or its alt text): what was New York’s median hourly wage in 2010?</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-36-1.png" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="offer-the-data" class="slide level2">
+<h2>Offer the data</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">State</th>
+<th style="text-align: right;">1998</th>
+<th style="text-align: right;">2010</th>
+<th style="text-align: right;">2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">$23.95</td>
+<td style="text-align: right;">$41.03</td>
+<td style="text-align: right;">$56.93</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Minnesota</td>
+<td style="text-align: right;">$21.32</td>
+<td style="text-align: right;">$34.67</td>
+<td style="text-align: right;">$38.24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">New York</td>
+<td style="text-align: right;">$22.67</td>
+<td style="text-align: right;">$35.15</td>
+<td style="text-align: right;">$43.19</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li class="fragment">Give readers a table (or a link to the data) alongside the graph or in an appendix</li>
+<li class="fragment">Screen reader users can move through a table cell by cell, and everyone can look up exact values</li>
+<li class="fragment">Put the data source in the surrounding text, not in the alt text</li>
+</ul>
+</section></section>
 <section>
 <section id="alt-text" class="title-slide slide level1 maize center">
 <h1>Alt-text</h1>
 
+</section>
+<section id="who-needs-alt-text" class="slide level2">
+<h2>Who needs alt text?</h2>
+<div class="task">
+<p>With a neighbor: who might need a text description of a graph? Think of as many situations as you can.</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_c0f33350" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
 </section>
 <section id="alternative-text" class="slide level2">
 <h2>Alternative text</h2>
@@ -714,6 +919,33 @@ Prof Amanda Luby
 <aside><div>
 <p>Source: <a href="https://webaim.org/techniques/alttext/">WebAIM</a></p>
 </div></aside></section>
+<section id="try-it-describe-this-graph" class="slide level2">
+<h2>Try it: describe this graph</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-39-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="task">
+<p>Imagine someone who can’t see this graph. Write 2-3 sentences that tell them what they need to know.</p>
+</div>
+</div></div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_377d6db8" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
+</div>
+</div>
+</div>
+</section>
 <section id="alt-and-surrounding-text" class="slide level2 smaller">
 <h2>Alt and surrounding text</h2>
 <p><strong>CHART TYPE</strong> of <strong>TYPE OF DATA</strong> where <strong>REASON FOR INCLUDING CHART</strong></p>
@@ -737,23 +969,78 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-41-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment">A scatterplot</li>
-<li class="fragment">of median hourly wage of RN’s by year in California, Minnesota, and New York. The x-axis starts at the year 1996 and ends at the year 2020.</li>
-<li class="fragment">The three states follow the same linear increasing trend until about 2007, when New York and Minnesota begin to flatten.</li>
+<li>A scatterplot</li>
+<li>of median hourly wage of RN’s by year in California, Minnesota, and New York. The data span the years 1998 to 2020.</li>
+<li>The three states follow the same linear increasing trend until about 2007, when New York and Minnesota begin to flatten.</li>
 </ul>
 </div></div>
+<div class="task">
+<p>With a neighbor: which part of the formula is each bullet? What would you add or change? How does it compare to yours?</p>
+</div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_a51c5208" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_2a7c93b4" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="whats-wrong-with-these-alt-texts" class="slide level2 smaller">
+<h2>What’s wrong with these alt texts?</h2>
+<p><strong>A.</strong> “Image of a graph.”</p>
+<p><strong>B.</strong> “A scatterplot of nurse wages.”</p>
+<p><strong>C.</strong> “California: $23.95 in 1998, $25.12 in 1999, $26.50 in 2000, $27.36 in 2001, $28.38 in 2002, $29.47 in 2003, and so on for every year and every state…”</p>
+<div class="task">
+<p>For each one: what’s missing, or what’s too much? Use the formula (chart type, type of data, reason for including the chart) to help.</p>
+</div>
+</section>
+<section id="screen-reader-demo-no-alt-text" class="slide level2">
+<h2>Screen reader demo: no alt text</h2>
+<div class="task">
+<p>Listen: what do you learn about this graph?</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-44-1.png" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Screen reader demo (dry run first!). Turn VoiceOver on/off with Cmd+F5. Move to the image with Control+Option+Right Arrow (VO+Right Arrow). Safari tends to work best with VoiceOver.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="screen-reader-demo-with-alt-text" class="slide level2">
+<h2>Screen reader demo: with alt text</h2>
+<div class="task">
+<p>Listen again: what changed? What could you do now that you couldn’t before?</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-45-1.png" alt="A scatterplot of median hourly wage of RN's by year in California, Minnesota, and New York. The data span the years 1998 to 2020. The three states follow the same linear increasing trend until about 2007, when New York and Minnesota begin to flatten." width="768"></p>
+</figure>
 </div>
 </div>
 </div>
@@ -785,7 +1072,7 @@ Arvind Satyanarayan, MIT CSAIL</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_f6c93f6f" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_f8b8b5a9" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">04</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -849,7 +1136,7 @@ Arvind Satyanarayan, MIT CSAIL</p>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-34-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-49-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -876,7 +1163,7 @@ Arvind Satyanarayan, MIT CSAIL</p>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-35-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-50-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -908,7 +1195,7 @@ Arvind Satyanarayan, MIT CSAIL</p>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-36-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-51-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -939,7 +1226,7 @@ Arvind Satyanarayan, MIT CSAIL</p>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-37-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-52-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -969,7 +1256,7 @@ Arvind Satyanarayan, MIT CSAIL</p>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-38-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-53-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1002,7 +1289,7 @@ Arvind Satyanarayan, MIT CSAIL</p>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-39-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-54-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1037,7 +1324,7 @@ Arvind Satyanarayan, MIT CSAIL</p>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-40-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-55-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1072,7 +1359,7 @@ Arvind Satyanarayan, MIT CSAIL</p>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-41-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-56-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1095,7 +1382,7 @@ Arvind Satyanarayan, MIT CSAIL</p>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-42-1.png" width="960"></p>
+<p><img data-src="slides06_files/figure-revealjs/unnamed-chunk-57-1.png" width="960"></p>
 </figure>
 </div>
 </div>

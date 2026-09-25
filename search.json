@@ -1626,7 +1626,7 @@
     "href": "slides/06/slides06.html#today",
     "title": "(Closer to) Accessible Data Viz",
     "section": "Today",
-    "text": "Today\n\n{patchwork}\nColorblind-friendly color palettes\nWriting alt-text"
+    "text": "Today\n\n{patchwork}\nColorblind-friendly color palettes\nLegible text, plain-language labels, and data tables\nWriting alt-text"
   },
   {
     "objectID": "slides/06/slides06.html#small-multiples",
@@ -1647,7 +1647,7 @@
     "href": "slides/06/slides06.html#compound-plot-example",
     "title": "(Closer to) Accessible Data Viz",
     "section": "Compound Plot Example",
-    "text": "Compound Plot Example\n\nlibrary(palmerpenguins)\nggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = body_mass_g))\n\n\n\n\n\n\n\nggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = flipper_length_mm))\n\n\n\n\n\n\n\nggplot(penguins) + \n  geom_point(aes(x = body_mass_g, y = flipper_length_mm))"
+    "text": "Compound Plot Example\n\nImagine reading these three plots one after another in a report. What’s hard about it? How would you fix it?\n\n\nlibrary(palmerpenguins)\nggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = body_mass_g))\n\n\n\n\n\n\n\nggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = flipper_length_mm))\n\n\n\n\n\n\n\nggplot(penguins) + \n  geom_point(aes(x = body_mass_g, y = flipper_length_mm))"
   },
   {
     "objectID": "slides/06/slides06.html#patchwork",
@@ -1661,14 +1661,14 @@
     "href": "slides/06/slides06.html#patchwork-layout-2",
     "title": "(Closer to) Accessible Data Viz",
     "section": "Patchwork (layout 2)",
-    "text": "Patchwork (layout 2)\n\np3 + (p1/p2)\n\n\n\n\n\n\n\n\n\n\nFor more complex layouts, see the “Controlling Layouts” vignette"
+    "text": "Patchwork (layout 2)\n\np3 + (p1/p2)\n\n\n\n\n\n\n\n\n\n\n\n\nFor more complex layouts, see the “Controlling Layouts” vignette"
   },
   {
     "objectID": "slides/06/slides06.html#patchwork-layout-2-1",
     "href": "slides/06/slides06.html#patchwork-layout-2-1",
     "title": "(Closer to) Accessible Data Viz",
     "section": "Patchwork (layout 2)",
-    "text": "Patchwork (layout 2)\n\np1 &lt;- ggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = body_mass_g, fill = species))\n\np2 &lt;- ggplot(penguins) + \n  geom_histogram(bins = 20,  col = \"white\", aes(x = flipper_length_mm, fill = species))\n\np3 &lt;- ggplot(penguins) + \n  geom_point(shape = 21, alpha = .9, col = \"white\", aes(x = body_mass_g, y = flipper_length_mm, fill = species)) \n\np3 + (p1/p2)"
+    "text": "Patchwork (layout 2)\n\nWhat’s redundant in this figure?\n\n\np1 &lt;- ggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = body_mass_g, fill = species))\n\np2 &lt;- ggplot(penguins) + \n  geom_histogram(bins = 20,  col = \"white\", aes(x = flipper_length_mm, fill = species))\n\np3 &lt;- ggplot(penguins) + \n  geom_point(shape = 21, alpha = .9, col = \"white\", aes(x = body_mass_g, y = flipper_length_mm, fill = species)) \n\np3 + (p1/p2)"
   },
   {
     "objectID": "slides/06/slides06.html#patchwork-with-a-shared-legend",
@@ -1706,18 +1706,25 @@
     "text": "But what does this have to do with accessibility?\n\nOutput (knitted files, slides, websites, etc.) should be designed to make it as easy as possible for the user to understand your content\nThere’s a cognitive load involved with scrolling or turning a physical page and trying to remember a visual from the previous page\nWhen plots belong together, we should put them together"
   },
   {
-    "objectID": "slides/06/slides06.html#color-scales",
-    "href": "slides/06/slides06.html#color-scales",
+    "objectID": "slides/06/slides06.html#can-you-tell-the-states-apart",
+    "href": "slides/06/slides06.html#can-you-tell-the-states-apart",
     "title": "(Closer to) Accessible Data Viz",
-    "section": "Color scales",
-    "text": "Color scales\n\n\nCategorical variables\nOrder doesn’t matter\n\n\n\n\n\n\n\n\n\n\nNumeric variables\nOrder matters\n\n\n\n\n\n\n\n\n\n\nDiverging variables\nMidpoint matters"
+    "section": "Can you tell the states apart?",
+    "text": "Can you tell the states apart?\n\nGraph A, as seen by someone with deuteranopia (a common form of colorblindness): which state is which? How sure are you?"
   },
   {
-    "objectID": "slides/06/slides06.html#color-scales-1",
-    "href": "slides/06/slides06.html#color-scales-1",
+    "objectID": "slides/06/slides06.html#now-try-graph-b",
+    "href": "slides/06/slides06.html#now-try-graph-b",
     "title": "(Closer to) Accessible Data Viz",
-    "section": "Color scales",
-    "text": "Color scales\nUse colorblind friendly color scales (e.g., Okabe Ito, viridis)"
+    "section": "Now try graph B",
+    "text": "Now try graph B\n\nGraph B: same data, same viewer. What changed? Why is it easier?"
+  },
+  {
+    "objectID": "slides/06/slides06.html#which-palette-would-you-trust",
+    "href": "slides/06/slides06.html#which-palette-would-you-trust",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Which palette would you trust?",
+    "text": "Which palette would you trust?\n\n\n\n\n\n\n\n\n\n\nRank these four palettes from best to worst for someone with colorblindness. Then we’ll check.\n\n\n\n\n−+\n00:30"
   },
   {
     "objectID": "slides/06/slides06.html#section-1",
@@ -1748,11 +1755,39 @@
     "text": "colorBlindness::displayAllColors(viridisLite::viridis(10))"
   },
   {
+    "objectID": "slides/06/slides06.html#color-scales",
+    "href": "slides/06/slides06.html#color-scales",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Color scales",
+    "text": "Color scales\nUse colorblind friendly color scales (e.g., Okabe Ito, viridis)"
+  },
+  {
+    "objectID": "slides/06/slides06.html#back-to-graph-a",
+    "href": "slides/06/slides06.html#back-to-graph-a",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Back to graph A",
+    "text": "Back to graph A\nWhat if we can’t change the colors (brand guidelines, grayscale printing, …)?\n\n\n\n\n\n\n\n\n\n\nWhat else could we map to state so readers can tell the states apart without relying on color?"
+  },
+  {
     "objectID": "slides/06/slides06.html#double-encoding",
     "href": "slides/06/slides06.html#double-encoding",
     "title": "(Closer to) Accessible Data Viz",
     "section": "Double encoding",
     "text": "Double encoding\nUse shape and color where possible\n\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with deuteranopia\n\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
+  },
+  {
+    "objectID": "slides/06/slides06.html#without-direct-labeling",
+    "href": "slides/06/slides06.html#without-direct-labeling",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Without direct labeling",
+    "text": "Without direct labeling\n\nGraph A: Which line is California? Minnesota? New York? Try it with the right panel (deuteranopia).\n\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with deuteranopia\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
+  },
+  {
+    "objectID": "slides/06/slides06.html#with-direct-labeling",
+    "href": "slides/06/slides06.html#with-direct-labeling",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "With direct labeling",
+    "text": "With direct labeling\n\nGraph B: Try again. What changed, and why is it easier?\n\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with deuteranopia\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
   },
   {
     "objectID": "slides/06/slides06.html#use-direct-labeling",
@@ -1762,18 +1797,18 @@
     "text": "Use direct labeling\n\nPrefer direct labeling where color is used to display information over a legend\nQuicker to read\nEnsures graph can be understood without reliance on color"
   },
   {
-    "objectID": "slides/06/slides06.html#without-direct-labeling",
-    "href": "slides/06/slides06.html#without-direct-labeling",
+    "objectID": "slides/06/slides06.html#without-whitespace",
+    "href": "slides/06/slides06.html#without-whitespace",
     "title": "(Closer to) Accessible Data Viz",
-    "section": "Without direct labeling",
-    "text": "Without direct labeling\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with deuteranopia\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
+    "section": "Without whitespace",
+    "text": "Without whitespace\n\nGraph A: In the right panel (tritanopia), where does one state’s bar end and the next begin?\n\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with tritanopia\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
   },
   {
-    "objectID": "slides/06/slides06.html#with-direct-labeling",
-    "href": "slides/06/slides06.html#with-direct-labeling",
+    "objectID": "slides/06/slides06.html#with-whitespace",
+    "href": "slides/06/slides06.html#with-whitespace",
     "title": "(Closer to) Accessible Data Viz",
-    "section": "With direct labeling",
-    "text": "With direct labeling\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with deuteranopia\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
+    "section": "With whitespace",
+    "text": "With whitespace\n\nGraph B: Try again. What did the white lines add?\n\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with tritanopia\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
   },
   {
     "objectID": "slides/06/slides06.html#use-whitespace-or-pattern-to-separate-elements",
@@ -1783,18 +1818,67 @@
     "text": "Use whitespace or pattern to separate elements\n\nSeparate elements with whitespace or pattern\nAllows for distinguishing between data without entirely relying on contrast between colors"
   },
   {
-    "objectID": "slides/06/slides06.html#without-whitespace",
-    "href": "slides/06/slides06.html#without-whitespace",
+    "objectID": "slides/06/slides06.html#graph-a-can-you-read-it",
+    "href": "slides/06/slides06.html#graph-a-can-you-read-it",
     "title": "(Closer to) Accessible Data Viz",
-    "section": "Without whitespace",
-    "text": "Without whitespace\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with tritanopia\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
+    "section": "Graph A: can you read it?",
+    "text": "Graph A: can you read it?\n\nWhat can you read from this graph? What can’t you?"
   },
   {
-    "objectID": "slides/06/slides06.html#with-whitespace",
-    "href": "slides/06/slides06.html#with-whitespace",
+    "objectID": "slides/06/slides06.html#graph-b-same-graph",
+    "href": "slides/06/slides06.html#graph-b-same-graph",
     "title": "(Closer to) Accessible Data Viz",
-    "section": "With whitespace",
-    "text": "With whitespace\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with tritanopia\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
+    "section": "Graph B: same graph",
+    "text": "Graph B: same graph\n\nWhat changed?\n\n\n\n\n\n\n\n\n\n\n\nContrast of the text against the white background: Graph A 2.1:1, Graph B 21:1"
+  },
+  {
+    "objectID": "slides/06/slides06.html#text-size-and-contrast",
+    "href": "slides/06/slides06.html#text-size-and-contrast",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Text size and contrast",
+    "text": "Text size and contrast\n\nMake text big enough to read from the back of the room, and when zoomed in\nContrast between text and background: at least 4.5:1 (WCAG AA). Large text and graphical elements: at least 3:1\nLight gray on white is the usual culprit\nCheck yours: WebAIM Contrast Checker or colorspace::contrast_ratio()"
+  },
+  {
+    "objectID": "slides/06/slides06.html#graph-a-whats-this-graph-about",
+    "href": "slides/06/slides06.html#graph-a-whats-this-graph-about",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Graph A: what’s this graph about?",
+    "text": "Graph A: what’s this graph about?\n\nExplain this graph to someone who can’t see it. What are the variables and units? What’s the point?"
+  },
+  {
+    "objectID": "slides/06/slides06.html#graph-b-same-data",
+    "href": "slides/06/slides06.html#graph-b-same-data",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Graph B: same data",
+    "text": "Graph B: same data\n\nWhat changed? Which graph tells you what to look for?"
+  },
+  {
+    "objectID": "slides/06/slides06.html#plain-language-titles-and-labels",
+    "href": "slides/06/slides06.html#plain-language-titles-and-labels",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Plain-language titles and labels",
+    "text": "Plain-language titles and labels\n\nSay what the graph shows\nWrite axis and legend labels for people: “Median hourly wage (US dollars)”, not hourly_wage_median\nInclude units"
+  },
+  {
+    "objectID": "slides/06/slides06.html#can-you-get-the-exact-numbers",
+    "href": "slides/06/slides06.html#can-you-get-the-exact-numbers",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Can you get the exact numbers?",
+    "text": "Can you get the exact numbers?\n\nUsing only this graph (or its alt text): what was New York’s median hourly wage in 2010?"
+  },
+  {
+    "objectID": "slides/06/slides06.html#offer-the-data",
+    "href": "slides/06/slides06.html#offer-the-data",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Offer the data",
+    "text": "Offer the data\n\n\n\n\n\nState\n1998\n2010\n2020\n\n\n\n\nCalifornia\n$23.95\n$41.03\n$56.93\n\n\nMinnesota\n$21.32\n$34.67\n$38.24\n\n\nNew York\n$22.67\n$35.15\n$43.19\n\n\n\n\n\n\nGive readers a table (or a link to the data) alongside the graph or in an appendix\nScreen reader users can move through a table cell by cell, and everyone can look up exact values\nPut the data source in the surrounding text, not in the alt text"
+  },
+  {
+    "objectID": "slides/06/slides06.html#who-needs-alt-text",
+    "href": "slides/06/slides06.html#who-needs-alt-text",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Who needs alt text?",
+    "text": "Who needs alt text?\n\nWith a neighbor: who might need a text description of a graph? Think of as many situations as you can.\n\n\n\n\n−+\n01:00"
   },
   {
     "objectID": "slides/06/slides06.html#alternative-text",
@@ -1802,6 +1886,13 @@
     "title": "(Closer to) Accessible Data Viz",
     "section": "Alternative text",
     "text": "Alternative text\n\nIt is read by screen readers in place of images allowing the content and function of the image to be accessible to those with visual or certain cognitive disabilities.\nIt is displayed in place of the image in browsers if the image file is not loaded or when the user has chosen not to view images.\nIt provides a semantic meaning and description to images which can be read by search engines or be used to later determine the content of the image from page context alone.\n\n\n\nSource: WebAIM"
+  },
+  {
+    "objectID": "slides/06/slides06.html#try-it-describe-this-graph",
+    "href": "slides/06/slides06.html#try-it-describe-this-graph",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Try it: describe this graph",
+    "text": "Try it: describe this graph\n\n\n\n\n\n\n\n\n\n\n\n\n\nImagine someone who can’t see this graph. Write 2-3 sentences that tell them what they need to know.\n\n\n\n\n\n−+\n01:30"
   },
   {
     "objectID": "slides/06/slides06.html#alt-and-surrounding-text",
@@ -1815,7 +1906,28 @@
     "href": "slides/06/slides06.html#alt-text-practice",
     "title": "(Closer to) Accessible Data Viz",
     "section": "Alt Text Practice",
-    "text": "Alt Text Practice\nCHART TYPE of TYPE OF DATA where REASON FOR INCLUDING CHART\n\n\n\n\n\n\n\n\n\n\n\n\n\nA scatterplot\nof median hourly wage of RN’s by year in California, Minnesota, and New York. The x-axis starts at the year 1996 and ends at the year 2020.\nThe three states follow the same linear increasing trend until about 2007, when New York and Minnesota begin to flatten.\n\n\n\n\n\n−+\n01:30"
+    "text": "Alt Text Practice\nCHART TYPE of TYPE OF DATA where REASON FOR INCLUDING CHART\n\n\n\n\n\n\n\n\n\n\n\n\n\nA scatterplot\nof median hourly wage of RN’s by year in California, Minnesota, and New York. The data span the years 1998 to 2020.\nThe three states follow the same linear increasing trend until about 2007, when New York and Minnesota begin to flatten.\n\n\n\nWith a neighbor: which part of the formula is each bullet? What would you add or change? How does it compare to yours?\n\n\n\n\n−+\n02:00"
+  },
+  {
+    "objectID": "slides/06/slides06.html#whats-wrong-with-these-alt-texts",
+    "href": "slides/06/slides06.html#whats-wrong-with-these-alt-texts",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "What’s wrong with these alt texts?",
+    "text": "What’s wrong with these alt texts?\nA. “Image of a graph.”\nB. “A scatterplot of nurse wages.”\nC. “California: $23.95 in 1998, $25.12 in 1999, $26.50 in 2000, $27.36 in 2001, $28.38 in 2002, $29.47 in 2003, and so on for every year and every state…”\n\nFor each one: what’s missing, or what’s too much? Use the formula (chart type, type of data, reason for including the chart) to help."
+  },
+  {
+    "objectID": "slides/06/slides06.html#screen-reader-demo-no-alt-text",
+    "href": "slides/06/slides06.html#screen-reader-demo-no-alt-text",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Screen reader demo: no alt text",
+    "text": "Screen reader demo: no alt text\n\nListen: what do you learn about this graph?\n\n\n\n\n\n\n\n\n\n\n\nScreen reader demo (dry run first!). Turn VoiceOver on/off with Cmd+F5. Move to the image with Control+Option+Right Arrow (VO+Right Arrow). Safari tends to work best with VoiceOver."
+  },
+  {
+    "objectID": "slides/06/slides06.html#screen-reader-demo-with-alt-text",
+    "href": "slides/06/slides06.html#screen-reader-demo-with-alt-text",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Screen reader demo: with alt text",
+    "text": "Screen reader demo: with alt text\n\nListen again: what changed? What could you do now that you couldn’t before?"
   },
   {
     "objectID": "slides/06/slides06.html#section-5",
@@ -3765,7 +3877,7 @@
     "href": "index.html",
     "title": "Stat 220: Intro to Data Science",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nREFERENCE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Sep 14\n📝complete welcome survey\n\n\nWelcome + data, R review\n\nslides01 01-example-tuition\n\n\n\n\n1\nW\nWed, Sep 16\n📚 R basics  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\n📚 R4DS 28.1-28.5 \n\nGithub + reproducible reports\n\nslides02 02-example-lego Lego report to replicate\n\n\n\n\n1\nF\nFri, Sep 18\n📝 10 minute activity on markdown  📺 intro to ggplot\n\n📚 R4DS Ch1 \n\nggplot\n\nslides03 03-ggplot-intro\n\nHW 1\n\n\n2\nM\nMon, Sep 21\n📚 Skim the entire reference reading for today, pick one “rule” and summarize it\n\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04 04-customizing-plots\n\n\n\n\n2\nW\nWed, Sep 23\n\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05 05-maps\n\nHW 2\n\n\n2\nF\nFri, Sep 25\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\n\nAccesibility for data viz\ntbd\n\n\n\n3\nM\nMon, Sep 28\n🌎 Skim ?nycflights23::flights` in the console and jot down 2 questions you could answer with this data\n📚 R4DS 3.1-3.4 \n\nVerbs\ntbd\n\n\n\n3\nW\nWed, Sep 30\n🌎 Watch the pivot_longer/pivot_wider animations at gadenbuie.com/projects/tidyexplain to get a feel for reshaping before we do it live\n📚 R4DS 3.5  📚 R4DS 5.1-5.4 \n\nGroups and summarizing Tidy data\ntbd\nHW 3\n\n\n3\nF\nFri, Oct 2\n\n📚 R4DS 4 \n\nCode style\ntbd\n\nLab Quiz 1 \n\n\n\n4\nM\nMon, Oct 5\n\n📚 R4DS 19.1-19.3\n\nCombining datasets\ntbd\n\n\n\n4\nW\nWed, Oct 7\n📝 Open [ADD CSV] in a plain text editor (not Excel) and note anything that looks “off”\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\ntbd\n\nHW 4  [Portfolio 1]\n\n\n4\nF\nFri, Oct 9\n\n📚 R4DS 16 \n\nWorking with factors\ntbd\n\n\n\n5\nM\nMon, Oct 12\n\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\ntbd\n\n\n\n5\nW\nWed, Oct 14\n🌎 Google ngram viewer\n\n📚 MDSR 19.2 \n\nIntro to Text Analysis\ntbd\nHW 5\n\n\n5\nF\nFri, Oct 16\n📚 The Trouble with Sentiment Analysis\n\n\nText Analysis\ntbd\nLab Quiz 2\n\n\n6\nM\nMon, Oct 19\n\n\n🏝️ Midterm Break; no class\ntbd\n\n\n\n6\nW\nWed, Oct 21\n\n📚 R4DS 25\n\nFunctions\ntbd\n\n\n\n6\nF\nFri, Oct 23\n\n📚 MDSR 7.1-7.3\n\nIteration\ntbd\nHW6\n\n\n7\nM\nMon, Oct 26\n\n\nIteration II\ntbd\n\n\n\n7\nW\nWed, Oct 28\n📚What is an API?  📝 sign up for a census API key\n\n📚R4DS 23 (skip case studies) \n\nAPIs\ntbd\n\nHW7 \n\n\n\n7\nF\nFri, Oct 30\n\n\nScraping I\ntbd\n\nLab Quiz 3 , [Final Project Idea Form]\n\n\n8\nM\nMon, Nov 2\n📝 install and test selectorGadget\n\n📚 R4DS 24.2;24.5 \n\nScraping II\ntbd\n[Final Project Ranking Form]  [Portfolio 2]\n\n\n8\nW\nWed, Nov 4\n🌎 Explore htmlWidgets gallery + source code  🌎 Explore NZ Earthquakes and source code\n\n\nIntro to Interactivity\ntbd\nHW8\n\n\n8\nF\nFri, Nov 6\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\n\nShiny 1\ntbd\n\n\n\n9\nM\nMon, Nov 9\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\n\nShiny 2\ntbd\n\n\n\n9\nW\nWed, Nov 11\n\n\nShiny 3\ntbd\nFinal Project sketch\n\n\n9\nF\nFri, Nov 13\n\n📚MDSR 15.1-15.4\n\nSQL\ntbd\n[Portfolio 3]\n\n\n10\nM\nMon, Nov 16\n\n\nProject Demos\ntbd\n\n\n\n10\nW\nWed, Nov 18\n\n\nProject Demos\ntbd\nHW9\n\n\n\n\nFri, Nov 20\n\n\n🏝️ Reading days\ntbd\n\n\n\n\n\nMon, Nov 23\n\n\nFinal Project Due @ noon\ntbd\n[Final Project]",
+    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nREFERENCE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Sep 14\n📝complete welcome survey\n\n\nWelcome + data, R review\n\nslides01 01-example-tuition\n\n\n\n\n1\nW\nWed, Sep 16\n📚 R basics  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\n📚 R4DS 28.1-28.5 \n\nGithub + reproducible reports\n\nslides02 02-example-lego Lego report to replicate\n\n\n\n\n1\nF\nFri, Sep 18\n📝 10 minute activity on markdown  📺 intro to ggplot\n\n📚 R4DS Ch1 \n\nggplot\n\nslides03 03-ggplot-intro\n\nHW 1\n\n\n2\nM\nMon, Sep 21\n📚 Skim the entire reference reading for today, pick one “rule” and summarize it\n\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04 04-customizing-plots\n\n\n\n\n2\nW\nWed, Sep 23\n\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05 05-maps\n\nHW 2\n\n\n2\nF\nFri, Sep 25\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Sep 28\n🌎 Skim ?nycflights23::flights` in the console and jot down 2 questions you could answer with this data\n📚 R4DS 3.1-3.4 \n\nVerbs\ntbd\n\n\n\n3\nW\nWed, Sep 30\n🌎 Watch the pivot_longer/pivot_wider animations at gadenbuie.com/projects/tidyexplain to get a feel for reshaping before we do it live\n📚 R4DS 3.5  📚 R4DS 5.1-5.4 \n\nGroups and summarizing Tidy data\ntbd\nHW 3\n\n\n3\nF\nFri, Oct 2\n\n📚 R4DS 4 \n\nCode style\ntbd\n\nLab Quiz 1 \n\n\n\n4\nM\nMon, Oct 5\n\n📚 R4DS 19.1-19.3\n\nCombining datasets\ntbd\n\n\n\n4\nW\nWed, Oct 7\n📝 Open [ADD CSV] in a plain text editor (not Excel) and note anything that looks “off”\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\ntbd\n\nHW 4  [Portfolio 1]\n\n\n4\nF\nFri, Oct 9\n\n📚 R4DS 16 \n\nWorking with factors\ntbd\n\n\n\n5\nM\nMon, Oct 12\n\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\ntbd\n\n\n\n5\nW\nWed, Oct 14\n🌎 Google ngram viewer\n\n📚 MDSR 19.2 \n\nIntro to Text Analysis\ntbd\nHW 5\n\n\n5\nF\nFri, Oct 16\n📚 The Trouble with Sentiment Analysis\n\n\nText Analysis\ntbd\nLab Quiz 2\n\n\n6\nM\nMon, Oct 19\n\n\n🏝️ Midterm Break; no class\ntbd\n\n\n\n6\nW\nWed, Oct 21\n\n📚 R4DS 25\n\nFunctions\ntbd\n\n\n\n6\nF\nFri, Oct 23\n\n📚 MDSR 7.1-7.3\n\nIteration\ntbd\nHW6\n\n\n7\nM\nMon, Oct 26\n\n\nIteration II\ntbd\n\n\n\n7\nW\nWed, Oct 28\n📚What is an API?  📝 sign up for a census API key\n\n📚R4DS 23 (skip case studies) \n\nAPIs\ntbd\n\nHW7 \n\n\n\n7\nF\nFri, Oct 30\n\n\nScraping I\ntbd\n\nLab Quiz 3 , [Final Project Idea Form]\n\n\n8\nM\nMon, Nov 2\n📝 install and test selectorGadget\n\n📚 R4DS 24.2;24.5 \n\nScraping II\ntbd\n[Final Project Ranking Form]  [Portfolio 2]\n\n\n8\nW\nWed, Nov 4\n🌎 Explore htmlWidgets gallery + source code  🌎 Explore NZ Earthquakes and source code\n\n\nIntro to Interactivity\ntbd\nHW8\n\n\n8\nF\nFri, Nov 6\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\n\nShiny 1\ntbd\n\n\n\n9\nM\nMon, Nov 9\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\n\nShiny 2\ntbd\n\n\n\n9\nW\nWed, Nov 11\n\n\nShiny 3\ntbd\nFinal Project sketch\n\n\n9\nF\nFri, Nov 13\n\n📚MDSR 15.1-15.4\n\nSQL\ntbd\n[Portfolio 3]\n\n\n10\nM\nMon, Nov 16\n\n\nProject Demos\ntbd\n\n\n\n10\nW\nWed, Nov 18\n\n\nProject Demos\ntbd\nHW9\n\n\n\n\nFri, Nov 20\n\n\n🏝️ Reading days\ntbd\n\n\n\n\n\nMon, Nov 23\n\n\nFinal Project Due @ noon\ntbd\n[Final Project]",
     "crumbs": [
       "Course information",
       "Schedule"
@@ -7739,7 +7851,49 @@
     "href": "lab-quiz/lab-quiz-01.html",
     "title": "Lab Quiz 01 Info",
     "section": "",
-    "text": "Our first lab quiz is scheduled for Friday of Week 3. The second half of class will cover new content, and the first half of class you will complete the lab quiz.\n\n\n\n\n\n\nTipIn progress\n\n\n\nCheck back soon for more details!"
+    "text": "Our first lab quiz is scheduled for Friday of Week 3. It will only take ~40 minutes of the class period."
+  },
+  {
+    "objectID": "lab-quiz/lab-quiz-01.html#r-basics",
+    "href": "lab-quiz/lab-quiz-01.html#r-basics",
+    "title": "Lab Quiz 01 Info",
+    "section": "R Basics",
+    "text": "R Basics\n\nGiven a vector, list, or data frame, extract an element of interest.\n\nKnow how to use each extractor (x$__, x[__], x[[__]]) and what they return\nConstruct logical vectors to use as an index to subset a vector or data frame\nConstruct integer vectors to use as an index to subset a vector or data frame\n\n\nGiven a vector, list, or data frame, obtain a quick summary such as the length, dimension, or type of each element\n\nFunctions to know: length(), nrow(), ncol(), dim(), summary(), glimpse(), class(), typeof(), head(), tail()."
+  },
+  {
+    "objectID": "lab-quiz/lab-quiz-01.html#data-visualization",
+    "href": "lab-quiz/lab-quiz-01.html#data-visualization",
+    "title": "Lab Quiz 01 Info",
+    "section": "Data Visualization",
+    "text": "Data Visualization\n\nIdentify the appropriate layer to add to a static graphic in order to display specific information\n\nYou should know the geom (and associated aesthetics) for the following charts: bar/column chart, histograms, boxplots, density plots, violin plots, scatterplots, time series line plots, map, chloropleth map\n\n\nGiven a graph and a dataset structure, fill in ggplot2 code to replicate the graphic:\n\nbase layers\naxis labels, titles, captions\n\nscale_x functions for aesthetics\n\nfacet_wrap() and facet_grid()\n\n\n\nGiven a question of interest and data set, decide on an appropriate graphic to address/answer the question\n\nYou should know when the graphs mentioned above are appropriate\n\n\nGiven a graphic, identify which variables are shown and which aesthetic (x, y, color, size, etc.) each one is mapped to\nGiven a graphic, describe the strengths and weaknesses of it from a design perspective\n\nCore principles: show the data (don’t distort it), choose the right plot, use color meaningfully and with restraint, tell a story, leave out non-story details\nAccessibility considerations: color, alt text, direct labeling, etc."
+  },
+  {
+    "objectID": "lab-quiz/lab-quiz-01.html#data-wrangling-covered-in-week-3",
+    "href": "lab-quiz/lab-quiz-01.html#data-wrangling-covered-in-week-3",
+    "title": "Lab Quiz 01 Info",
+    "section": "Data Wrangling (covered in Week 3)",
+    "text": "Data Wrangling (covered in Week 3)\n\nKnow how the following verbs act on a data set: filter, slice, select\n\nSyntax for using\nDescribe what the output would look like\n\n\nGiven a data set and goal, identify and utilize the appropriate verb to create the data set of interest\nUse {dplyr} verbs AND the logical vector approach to subset a data frame"
+  },
+  {
+    "objectID": "lab-quiz/lab-quiz-01.html#revision",
+    "href": "lab-quiz/lab-quiz-01.html#revision",
+    "title": "Lab Quiz 01 Info",
+    "section": "Revision",
+    "text": "Revision\n[more details next week]"
+  },
+  {
+    "objectID": "lab-quiz/lab-quiz-01.html#data",
+    "href": "lab-quiz/lab-quiz-01.html#data",
+    "title": "Lab Quiz 01 Info",
+    "section": "Data",
+    "text": "Data\n\n\n\n\n\n\nTip\n\n\n\nThe quiz will use one dataset, and I will give you some information about it at the beginning of the quiz. All of the questions will use the same data, so if the answer to one question helps you with another, that’s just fine!\n\n\nThe nycflights23 package contains information about all flights that departed from NYC (e.g. EWR, JFK and LGA) in 2023. The main data is in the flights data frame.\nFor this lab quiz, we’re going to work with a random sample of 300 flights (called flights_sampl)\n\nset.seed(011725)\nlibrary(tidyverse)\nlibrary(nycflights23)\nflights_sampl &lt;- flights |&gt;\n  sample_n(300) |&gt;\n  select(year, month, day, carrier, origin, dest, sched_dep_time, dep_delay, air_time) |&gt;\n  left_join(airports |&gt; select(dest = faa, lat, lon))\n\nglimpse(flights_sampl)\n\nRows: 300\nColumns: 11\n$ year           &lt;int&gt; 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2…\n$ month          &lt;int&gt; 10, 7, 3, 12, 7, 6, 8, 12, 2, 7, 8, 1, 1, 3, 1, 2, 2, 5…\n$ day            &lt;int&gt; 8, 28, 6, 21, 21, 4, 22, 13, 28, 18, 21, 11, 21, 26, 11…\n$ carrier        &lt;chr&gt; \"9E\", \"YX\", \"AA\", \"UA\", \"DL\", \"B6\", \"9E\", \"9E\", \"YX\", \"…\n$ origin         &lt;chr&gt; \"LGA\", \"EWR\", \"JFK\", \"EWR\", \"LGA\", \"JFK\", \"LGA\", \"LGA\",…\n$ dest           &lt;chr&gt; \"JAX\", \"IND\", \"LAX\", \"RDU\", \"ATL\", \"RDU\", \"PWM\", \"CHS\",…\n$ sched_dep_time &lt;int&gt; 1525, 1059, 725, 1815, 1259, 837, 2130, 1149, 1759, 132…\n$ dep_delay      &lt;dbl&gt; 16, 22, -9, -1, 7, -7, -7, -8, -5, NA, -7, 164, 3, 26, …\n$ air_time       &lt;dbl&gt; 132, 109, 376, 67, 107, 70, 50, 103, 120, NA, 52, 149, …\n$ lat            &lt;dbl&gt; 30.49410, 39.71730, 33.94250, 35.87760, 33.63670, 35.87…\n$ lon            &lt;dbl&gt; -81.6879, -86.2944, -118.4080, -78.7875, -84.4281, -78.…"
+  },
+  {
+    "objectID": "lab-quiz/lab-quiz-01.html#questions",
+    "href": "lab-quiz/lab-quiz-01.html#questions",
+    "title": "Lab Quiz 01 Info",
+    "section": "Questions",
+    "text": "Questions\nGiven a vector, list, or data frame, extract an element of interest.\nWrite R code to do the following tasks:\n\nStore the dep_delay column in a vector called delay_minutes\nExtract rows of flights_sampl where dep_delay is more than 15 minutes\n\n\n\n\n\n\n\nTip\n\n\n\nThe practice data here is a data frame. For practice with lists (including [[ ]] vs [ ]), see the Lists section of the R Basics reading and its check point.\n\n\nGiven a vector, list, or data frame, obtain a quick summary such as the length, dimension, or type of each element\nCarefully and clearly describe the result produced by the following commands:\n\nlength(flights_sampl)\ndim(flights_sampl)\n\nIdentify the appropriate layer to add to a static graphic in order to display specific information\nConsider the ggplot code below.\n\nggplot(data = flights_sampl, aes(x = air_time, y = dep_delay)) + \n  geom_point() \n\n\nSketch a possible graph that this code would create\n\nNote: I know that you do not know what the trends, etc. will look like, so you should focus on making sure that all of the aesthetics are correctly mapped and all of the layers are there\n\nIf I wanted to color the points by month, how would I edit the code above?\n\nGiven a graph and a dataset structure, provide ggplot2 code to replicate the graphic\nThe map below displays the locations of airports with flights arriving from NYC. A few things to note:\n\nThe state borders are black\n\nThe color within the borders is lightblue\n\nThe map uses two datasets.\nThestates dataset was generated with map_data(\"state\"). It has the following columns:\n\nlong\nlat\ngroup\norder\nregion\n\n\nThe second dataset is flights_sampl\n\n\n\n\n\n\n\n\n\n\nFill in the missing R code that is required to create this map:\n\nstates &lt;- map_data(\"state\")\n\nggplot(___) +\n  geom_map(aes(map_id = ___),\n           map = ___,\n           ___) +\n  geom_point(data = ___,\n             aes(___),\n             ___) +\n  expand_limits(x = ___, y = ___) +\n  coord_map() +\n  theme_map() +\n  theme(legend.position = \"bottom\") +\n  scale_color_viridis_d(end = .75, option = \"plasma\")\n\nGiven a question of interest and data set, decide on an appropriate graphic to address/answer the question\nClearly describe one graph that you could make to answer the following questions:\n\nDo flights in winter months have longer delays than summer months?\nIs there a relationship between flight length and delay amount?\nWhat carriers are most common at each of the three origin airports?\n\nGiven a graphic, describe the strengths and weaknesses of it from a design perspective\nConsider the ggplot graphic below:\n\n\n\n\n\n\n\n\n\nWhich variables are shown in this graph, and which aesthetic (e.g., x-axis, y-axis, color) is each one mapped to?\nSummarize what you think the “main point” of this graph is in 1 sentence\nGive one improvement this graph could make in the aesthetic or geometry layer to make the “main point” more understandable\nGive one improvement this graph could make in the theme layer to make it more readable or accessible\n\nKnow how the following verbs act on a data set: filter, slice, select\nDescribe or sketch out what the following R code would produce:\n\nflights_sampl |&gt;\n  filter(origin == \"LGA\") |&gt;\n  select(carrier, dep_delay)\n\nGiven a data set and goal, identify and utilize the appropriate verb to create the data set of interest\nThe small dataset below was generated from flights_sampl. What dplyr verbs were used?\n\n\n# A tibble: 2 × 4\n  month dest  origin air_time\n  &lt;int&gt; &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;\n1     4 MSP   LGA         140\n2     6 MSP   LGA         149"
   },
   {
     "objectID": "lab-quiz/lab-quiz-03.html",
