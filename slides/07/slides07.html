@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8f4e3aabaa80e3e650ae20f2c24f966b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8cab17c520dfb5fd83702a774e8ef3fe.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>Stat 220 – Data Wrangling:  Verbs</title>
@@ -239,7 +239,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_fcaf7d84" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_d54731c0" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
 </div>
@@ -317,7 +317,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_e663af8a" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_508fdfc7" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -396,7 +396,7 @@ Prof Amanda Luby
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">glimpse</span>(storms)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 19,537
+<pre><code>Rows: 20,778
 Columns: 13
 $ name                         &lt;chr&gt; "Amy", "Amy", "Amy", "Amy", "Amy", "Amy",…
 $ year                         &lt;dbl&gt; 1975, 1975, 1975, 1975, 1975, 1975, 1975,…
@@ -427,7 +427,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">select</span>(storms, status<span class="sc">:</span>pressure)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 19,537 × 4
+<pre><code># A tibble: 20,778 × 4
    status              category  wind pressure
    &lt;fct&gt;                  &lt;dbl&gt; &lt;int&gt;    &lt;int&gt;
  1 tropical depression       NA    25     1013
@@ -440,7 +440,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8 tropical depression       NA    30     1006
  9 tropical storm            NA    35     1004
 10 tropical storm            NA    40     1002
-# ℹ 19,527 more rows</code></pre>
+# ℹ 20,768 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -449,7 +449,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">select</span>(storms, <span class="sc">-</span><span class="fu">c</span>(status, pressure))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 19,537 × 11
+<pre><code># A tibble: 20,778 × 11
    name   year month   day  hour   lat  long category  wind
    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;
  1 Amy    1975     6    27     0  27.5 -79         NA    25
@@ -462,7 +462,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8 Amy    1975     6    28    18  34   -77         NA    30
  9 Amy    1975     6    29     0  34.4 -75.8       NA    35
 10 Amy    1975     6    29     6  34   -74.8       NA    40
-# ℹ 19,527 more rows
+# ℹ 20,768 more rows
 # ℹ 2 more variables: tropicalstorm_force_diameter &lt;int&gt;,
 #   hurricane_force_diameter &lt;int&gt;</code></pre>
 </div>
@@ -473,7 +473,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">select</span>(storms, <span class="fu">starts_with</span>(<span class="st">"w"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 19,537 × 1
+<pre><code># A tibble: 20,778 × 1
     wind
    &lt;int&gt;
  1    25
@@ -486,7 +486,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8    30
  9    35
 10    40
-# ℹ 19,527 more rows</code></pre>
+# ℹ 20,768 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -495,7 +495,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">select</span>(storms, <span class="fu">ends_with</span>(<span class="st">"e"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 19,537 × 2
+<pre><code># A tibble: 20,778 × 2
    name  pressure
    &lt;chr&gt;    &lt;int&gt;
  1 Amy       1013
@@ -508,7 +508,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8 Amy       1006
  9 Amy       1004
 10 Amy       1002
-# ℹ 19,527 more rows</code></pre>
+# ℹ 20,768 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -517,7 +517,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">select</span>(storms, <span class="fu">contains</span>(<span class="st">"d"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 19,537 × 4
+<pre><code># A tibble: 20,778 × 4
      day  wind tropicalstorm_force_diameter hurricane_force_diameter
    &lt;int&gt; &lt;int&gt;                        &lt;int&gt;                    &lt;int&gt;
  1    27    25                           NA                       NA
@@ -530,7 +530,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8    28    30                           NA                       NA
  9    29    35                           NA                       NA
 10    29    40                           NA                       NA
-# ℹ 19,527 more rows</code></pre>
+# ℹ 20,768 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -550,7 +550,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_c0697e03" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_e39c473c" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -571,7 +571,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>storms</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 19,537 × 13
+<pre><code># A tibble: 20,778 × 13
    name   year month   day  hour   lat  long status      category  wind pressure
    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt; &lt;int&gt;    &lt;int&gt;
  1 Amy    1975     6    27     0  27.5 -79   tropical d…       NA    25     1013
@@ -584,7 +584,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8 Amy    1975     6    28    18  34   -77   tropical d…       NA    30     1006
  9 Amy    1975     6    29     0  34.4 -75.8 tropical s…       NA    35     1004
 10 Amy    1975     6    29     6  34   -74.8 tropical s…       NA    40     1002
-# ℹ 19,527 more rows
+# ℹ 20,768 more rows
 # ℹ 2 more variables: tropicalstorm_force_diameter &lt;int&gt;,
 #   hurricane_force_diameter &lt;int&gt;</code></pre>
 </div>
@@ -594,7 +594,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">arrange</span>(storms, wind)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 19,537 × 13
+<pre><code># A tibble: 20,778 × 13
    name      year month   day  hour   lat  long status   category  wind pressure
    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt; &lt;int&gt;    &lt;int&gt;
  1 Bonnie    1986     6    28     6  36.5 -91.3 tropica…       NA    10     1013
@@ -607,7 +607,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8 Charley   1986     8    14    18  32.4 -82   subtrop…       NA    10     1015
  9 AL031987  1987     8    16    18  30.9 -83.2 tropica…       NA    10     1014
 10 AL031987  1987     8    17     0  31.4 -82.9 tropica…       NA    10     1015
-# ℹ 19,527 more rows
+# ℹ 20,768 more rows
 # ℹ 2 more variables: tropicalstorm_force_diameter &lt;int&gt;,
 #   hurricane_force_diameter &lt;int&gt;</code></pre>
 </div>
@@ -617,7 +617,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">arrange</span>(storms, <span class="fu">desc</span>(wind))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 19,537 × 13
+<pre><code># A tibble: 20,778 × 13
    name     year month   day  hour   lat  long status    category  wind pressure
    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;        &lt;dbl&gt; &lt;int&gt;    &lt;int&gt;
  1 Allen    1980     8     7    18  21.8 -86.4 hurricane        5   165      899
@@ -630,7 +630,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8 Allen    1980     8     8     0  22.2 -87.9 hurricane        5   155      920
  9 Allen    1980     8     9     6  25   -94.2 hurricane        5   155      909
 10 Gilbert  1988     9    14     6  19.9 -85.3 hurricane        5   155      889
-# ℹ 19,527 more rows
+# ℹ 20,768 more rows
 # ℹ 2 more variables: tropicalstorm_force_diameter &lt;int&gt;,
 #   hurricane_force_diameter &lt;int&gt;</code></pre>
 </div>
@@ -652,7 +652,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_acdad474" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_240c4e5a" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
 </div>
@@ -729,7 +729,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">select</span>(storms, wind, wind_kmh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 19,537 × 2
+<pre><code># A tibble: 20,778 × 2
     wind wind_kmh
    &lt;int&gt;    &lt;dbl&gt;
  1    25     40.2
@@ -742,7 +742,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8    30     48.3
  9    35     56.3
 10    40     64.4
-# ℹ 19,527 more rows</code></pre>
+# ℹ 20,768 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -753,7 +753,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_9b6daf78" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_fc442665" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
 </div>
@@ -853,7 +853,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4,803 × 14
+<pre><code># A tibble: 5,100 × 14
    name      year month   day  hour   lat  long status   category  wind pressure
    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt; &lt;int&gt;    &lt;int&gt;
  1 Blanche   1975     7    27     6  35.9 -70   hurrica…        1    65      987
@@ -866,7 +866,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8 Eloise    1975     9    17     0  19.6 -69.2 hurrica…        1    65      997
  9 Eloise    1975     9    22     6  24.8 -89.4 hurrica…        1    65      993
 10 Faye      1975     9    26     0  26.5 -60   hurrica…        1    65      990
-# ℹ 4,793 more rows
+# ℹ 5,090 more rows
 # ℹ 3 more variables: tropicalstorm_force_diameter &lt;int&gt;,
 #   hurricane_force_diameter &lt;int&gt;, wind_kmh &lt;dbl&gt;</code></pre>
 </div>
@@ -883,7 +883,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2,255 × 14
+<pre><code># A tibble: 2,393 × 14
    name    year month   day  hour   lat  long status    category  wind pressure
    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;        &lt;dbl&gt; &lt;int&gt;    &lt;int&gt;
  1 Eloise  1975     9    22    18  26.5 -89.4 hurricane        2    85      980
@@ -896,7 +896,7 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8 Emmy    1976     8    28    12  33.5 -56.6 hurricane        2    85      975
  9 Emmy    1976     8    31    12  35.1 -44.9 hurricane        2    85      977
 10 Gloria  1976     9    30     6  32.2 -59.8 hurricane        2    85      971
-# ℹ 2,245 more rows
+# ℹ 2,383 more rows
 # ℹ 3 more variables: tropicalstorm_force_diameter &lt;int&gt;,
 #   hurricane_force_diameter &lt;int&gt;, wind_kmh &lt;dbl&gt;</code></pre>
 </div>
@@ -910,13 +910,17 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-code-line-numbers="1-3|4|4-9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>storms <span class="sc">|&gt;</span></span>
 <span id="cb40-2"><a></a>  <span class="fu">filter</span>(status <span class="sc">==</span> <span class="st">"hurricane"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb40-3"><a></a>  <span class="fu">filter</span>(category <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb40-4"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wind, <span class="at">y =</span> hurricane_force_diameter)) <span class="sc">+</span> </span>
+<span id="cb40-4"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wind, <span class="at">y =</span> hurricane_force_diameter)) <span class="sc">+</span></span>
 <span id="cb40-5"><a></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
 <span id="cb40-6"><a></a>  <span class="fu">labs</span>(</span>
 <span id="cb40-7"><a></a>    <span class="at">title =</span> <span class="st">"Force diameter vs wind speed"</span>,</span>
 <span id="cb40-8"><a></a>    <span class="at">subtitle =</span> <span class="st">"Hurricanes only"</span></span>
 <span id="cb40-9"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column fragment">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1168 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -925,6 +929,21 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 </div>
 </div></div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p><code>hurricane_force_diameter</code> was only recorded starting in 2004, so <code>ggplot()</code> silently drops about half of these hurricanes from the plot above.</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="your-turn-2" class="slide level2">
 <h2>Your turn</h2>
@@ -934,18 +953,28 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_b92faa58" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_a09f8c34" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">04</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
 </section></section>
+<section>
 <section id="lab-quiz-1" class="title-slide slide level1 maize center">
 <h1>Lab Quiz 1</h1>
 
-
 </section>
+<section id="coming-up-friday" class="slide level2">
+<h2>Coming up: Friday</h2>
+<ul>
+<li><strong>Friday of this week</strong>: Lab Quiz 1, ~40 minutes of class</li>
+<li>Covers: R basics, data visualization, and the <code>filter</code>/<code>slice</code>/<code>select</code> verbs from today</li>
+<li>Full details and practice questions: <a href="../../lab-quiz/lab-quiz-01.html">lab-quiz-01.qmd</a></li>
+</ul>
+
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
