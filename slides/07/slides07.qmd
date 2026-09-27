@@ -486,19 +486,24 @@ Pipes become especially useful when we combine them with `ggplot()`:
 
 ```{r}
 #| echo: true
+#| warning: true
 #| output-location: column-fragment
 #| code-line-numbers: "1-3|4|4-9"
 
 storms |>
   filter(status == "hurricane") |>
   filter(category > 1) |>
-  ggplot(aes(x = wind, y = hurricane_force_diameter)) + 
+  ggplot(aes(x = wind, y = hurricane_force_diameter)) +
   geom_jitter() +
   labs(
     title = "Force diameter vs wind speed",
     subtitle = "Hurricanes only"
   )
 ```
+
+::: {.callout-note .fragment}
+`hurricane_force_diameter` was only recorded starting in 2004, so `ggplot()` silently drops about half of these hurricanes from the plot above.
+:::
 
 ## Your turn
 
@@ -513,3 +518,11 @@ countdown::countdown(4)
 ```
 
 # Lab Quiz 1 {.maize}
+
+## Coming up: Friday
+
+::: {.nonincremental}
+-   **Friday of this week**: Lab Quiz 1, ~40 minutes of class
+-   Covers: R basics, data visualization, and the `filter`/`slice`/`select` verbs from today
+-   Full details and practice questions: [lab-quiz-01.qmd](../../lab-quiz/lab-quiz-01.qmd)
+:::
