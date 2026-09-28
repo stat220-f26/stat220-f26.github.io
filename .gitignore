@@ -7,8 +7,12 @@
 # Rendered output from the package check / one-off doc renders
 /_playground/*.html
 /_playground/*.pdf
-/*_files/
-/*_cache/
+**/*_files/
+**/*_cache/
+
+# Standalone renders of individual slides (real output lives in _site/, published via gh-pages)
+slides/*/slides*.html
+/site_libs/
 
 # macOS / editor cruft
 .DS_Store
