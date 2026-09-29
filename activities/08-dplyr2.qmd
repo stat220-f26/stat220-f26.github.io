@@ -21,7 +21,7 @@ Using the `flights` data from the {nycflights23} package, use `summarize()` to c
 3.  The median `dep_delay`
 
 ```{r}
-flights
+# include your code here
 ```
 
 ## `summarize()` II
@@ -36,7 +36,7 @@ Then use `summarize()` and a summary function to find:
 
 
 ```{r}
-flights
+# include your code here
 ```
 
 ## `group_by()`
@@ -44,7 +44,7 @@ flights
 Use `group_by()`, `summarize()`, and `slice_max()` to display the five `dest` airports with the most flights from NYC airports in 2023. Your display should include the median flight delay for these airports.
 
 ```{r}
-flights
+# include your code here
 ```
 
 # Intro to Tidy Data

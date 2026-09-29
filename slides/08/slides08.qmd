@@ -173,7 +173,7 @@ colleges %>% group_by(state) %>% print(n = 3)
 
 How does this help us?
 
-## Spit-apply-combine
+## Split-apply-combine
 
 ```{r echo=FALSE}
 knitr::include_graphics("../img/08-split-apply-combine.png")
