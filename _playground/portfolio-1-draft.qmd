@@ -10,30 +10,17 @@ decisions (numbering, pairs, due date, class scaffolding, shortlist vetting). --
 
 # Overview
 
-A surprising amount of the data on Kaggle isn't real. Some of it is openly
-synthetic (generated to look like a real dataset), some is simulated from a
-textbook or a model, some is a real dataset that has been quietly padded,
-duplicated, or "cleaned" beyond recognition, and some is exactly what it claims
-to be. It's easy to get several hours into an analysis before you realize the
-patterns you're describing were never in the world at all.
+If you've done a "find your own data" project in the past, you are probably familiar with Kaggle. But, a surprising amount of the data on Kaggle isn't real. Some of it is openly synthetic (generated to look like a real dataset), some is simulated from a textbook or a model, some is a real dataset that has been quietly "cleaned" beyond recognition, and some was truly collected in the real world and posted online. It's easy to get several hours into an analysis before you realize the patterns you're describing don't actually exist in the real world. 
 
-In this project you'll build that instinct on purpose. You'll pick one dataset,
-investigate how it was really produced, and make a **data-driven argument** about
-whether it reflects a genuine data-collection process or was fabricated,
-simulated, or synthetically generated.
+In this project, you'll build up your "fake data" alarm bell. You'll pick one dataset, investigate how it was really produced, and make a data-driven argument about whether it reflects a genuine data-collection process or was fabricated, simulated, or synthetically generated.
 
-**The verdict is not the point of the project. The evidence is.** A careful
-report that concludes "I found strong but not conclusive signs this is synthetic"
-&mdash; or "this is real, but it has serious data-quality problems that would
-have bitten me later" &mdash; earns full marks if the investigation is good. What
-you're being graded on is whether you can use `ggplot2` and basic wrangling to
-interrogate a dataset and reason about it under uncertainty.
+The verdict is not the point of the project. A carefulreport that concludes "I found strong but not conclusive signs this is synthetic"  or "this is real, but it has serious data-quality problems that would have bitten me later" earns full marks if the investigation backs up those statements. What you're being graded on is whether you can use `ggplot2` and basic wrangling to interrogate a dataset and reason about ity.
 
 ## What your report should contain
 
-Keep it short &mdash; about 3 pages if rendered to PDF.
+Keep it short: about 3 pages if rendered to PDF (including figures).
 
-1. **Introduction** &mdash; one paragraph: what the dataset is, where on Kaggle
+1. **Introduction** one paragraph: what the dataset is, where on Kaggle
    you found it (link), what it claims to be, and what its data card / description
    says about where it came from.
 2. **At least three lines of evidence.** Each one is a short subsection with:
@@ -41,10 +28,10 @@ Keep it short &mdash; about 3 pages if rendered to PDF.
      numbers?", "should these two columns agree, and do they?"),
    - a single graph *or* summary table that addresses it,
    - two or three sentences on what it shows and how it moves your thinking.
-3. **Verdict** &mdash; your best judgment, stated with a confidence level (e.g.
+3. **Verdict** your best judgment, stated with a confidence level (e.g.
    "likely synthetic", "probably real but poorly documented", "genuinely can't
    tell, and here's why"), justified by the evidence above.
-4. **Reflection** &mdash; one short paragraph: if you'd found this out on day one,
+4. **Reflection** one short paragraph: if you'd found this out on day one,
    how would it change what you'd do with this dataset next? Or: what would you
    need from the dataset's authors to be confident?
 
@@ -54,29 +41,28 @@ should be clean and readable.
 ## Lines of inquiry to try
 
 You don't need all of these, and a good project usually goes deep on a few rather
-than shallow on all. We'll work through several of these together in class.
+than shallow on all. 
 
-- **Distributions that are too clean** &mdash; suspiciously uniform, perfectly
-  bell-shaped, no outliers, variance that doesn't grow with the mean the way it
-  usually does in real measurements.
-- **Impossible or contradictory records** &mdash; a `0` where a `0` can't happen
+- **Distributions that are too clean**   suspiciously uniform, perfectly
+  bell-shaped, no outliers, constant variance.
+- **Impossible or contradictory records**   a `0` where a `0` can't happen
   (zero blood pressure, zero price), an end date before a start date, a total
   that doesn't equal the sum of its parts, a city in the wrong state.
-- **Duplicates and near-duplicates** &mdash; exact repeated rows, or rows that
+- **Duplicates and near-duplicates**   exact repeated rows, or rows that
   differ only in an ID. Real collection produces some; a lot is a red flag.
-- **Round-number clustering** &mdash; humans and generators both love round
+- **Round-number clustering**   humans and generators both love round
   numbers, but real instruments usually don't.
-- **Decimal precision** &mdash; every value to exactly two decimals, or a column
+- **Decimal precision**   every value to exactly two decimals, or a column
   of "measurements" with more precision than any real instrument would give.
-- **Correlation structure** &mdash; variables that *should* be related in the
-  real world (height and weight, price and size) but aren't, or vice versa.
-- **Categorical balance** &mdash; categories split almost exactly evenly, or a
+- **Correlation structure**   variables that *should* be related in the
+  real world (height and weight, price and size) but aren't, or vice versa. Extremely strong correlation in variables that are surprising. 
+- **Categorical balance**   categories split almost exactly evenly, or a
   grouping variable with implausibly equal group sizes.
-- **Time structure** &mdash; timestamps at perfectly regular intervals, no
+- **Time structure**   timestamps at perfectly regular intervals, no
   weekday/weekend effect, no gaps.
-- **External benchmarks** &mdash; does the mean / range / proportion match what
+- **External benchmarks**   does the mean / range / proportion match what
   you can look up about the real world?
-- **The paper trail** &mdash; the data card, the uploader's other datasets, a
+- **The paper trail**   the data card, the uploader's other datasets, a
   cited source you can go check, a "generated with" note in the description.
 
 # Dataset shortlist
@@ -84,34 +70,32 @@ than shallow on all. We'll work through several of these together in class.
 Pick one of these, **or** bring your own (see below). Download the CSV from
 Kaggle and commit it to the `data/` folder of your project repo.
 
-Your report should not just repeat what someone else concluded &mdash; if you
+Your report should not just repeat what someone else concluded. If you
 find a discussion of the dataset's authenticity online, cite it, but the analysis
-must be your own.
+must be your own. (But I would prefer you don't go searching for this!)
 
-1. **Medical Cost Personal Datasets** (`insurance.csv`) &mdash;
+1. **Medical Cost Personal Datasets** (`insurance.csv`)  
    <https://www.kaggle.com/datasets/mirichoi0218/insurance>. Age, sex, BMI,
    number of children, smoker status, region, and annual medical charges for
    ~1,300 people.
-2. **Students Performance in Exams** &mdash;
+2. **Students Performance in Exams**  
    <https://www.kaggle.com/datasets/spscientist/students-performance-in-exams>.
    Demographic fields plus math, reading, and writing scores for 1,000 students.
-3. **Pima Indians Diabetes Database** &mdash;
+3. **Pima Indians Diabetes Database**  
    <https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database>. Eight
    clinical measurements and a diabetes outcome for 768 women.
-4. **Red Wine Quality (Cortez et al., 2009)** &mdash;
+4. **Red Wine Quality (Cortez et al., 2009)**  
    <https://www.kaggle.com/datasets/uciml/red-wine-quality-cortez-et-al-2009>.
    Eleven physicochemical measurements and a quality rating for ~1,600 Portuguese
    wines.
-5. **Superstore Sales** &mdash; search Kaggle for "Superstore dataset" (e.g.
+5. **Superstore Sales**   search Kaggle for "Superstore dataset" (e.g.
    `vivek468/superstore-dataset-final`). ~10,000 retail orders with customer,
    product, geography, sales, and profit fields.
-6. **Spotify Tracks Dataset** &mdash;
+6. **Spotify Tracks Dataset**  
    <https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset>.
    Audio features (danceability, tempo, loudness, &hellip;), popularity, and
    genre for a large sample of tracks.
 
-*Also worth a look:* the "Heart Disease Dataset" reuploads on Kaggle, which vary
-a lot in size &mdash; comparing two of them can itself be a line of evidence.
 
 ## Bring your own
 
@@ -120,7 +104,7 @@ If none of these grab you, choose your own Kaggle dataset, subject to:
 - at least **6 variables**, with at least **2 quantitative** and **2
   categorical**,
 - at least **500 rows**,
-- provenance that is **genuinely ambiguous** &mdash; do not pick a dataset whose
+- provenance that is **genuinely ambiguous**   do not pick a dataset whose
   description already tells you it's synthetic, and don't pick something so
   famous the answer is common knowledge,
 - **run your choice by me on Ed before you start** so I know the dataset.
@@ -146,9 +130,9 @@ A **successful** project will:
 - [ ] State what the dataset claims to be and where it was found
 - [ ] Present **at least three distinct lines of evidence**, each supported by a
       graph or a summary table
-- [ ] Interpret the evidence correctly &mdash; written claims match what the
+- [ ] Interpret the evidence correctly: written claims match what the
       graph or table actually shows
-- [ ] Use at least two different `geom`s across the report
+- [ ] Use at least two different `geom`s  and `aesthetics` across the report
 - [ ] Reach a clear verdict with a stated confidence level, justified by the
       evidence (a well-argued "I can't be sure" is acceptable)
 - [ ] Meet minimum submission quality standards
@@ -160,14 +144,14 @@ An **excellent** project will meet all of the requirements for a successful
 project, plus
 
 - [ ] At least one line of evidence goes beyond single-variable distributions
-      &mdash; e.g. a cross-variable consistency check, correlation structure that
+        e.g. a cross-variable consistency check, correlation structure that
       should or shouldn't exist, duplicate / near-duplicate detection, decimal or
       digit-pattern analysis, or a comparison to an external real-world benchmark
 - [ ] At least one graph uses two or more layers, or a `ggplot2` element beyond
       what we covered in class
-- [ ] Graphs use a consistent theme customized beyond a full theme (e.g. past
+- [ ] Graphs use a consistent theme customized beyond a full theme (e.g. more than
       `theme_minimal()`), and at least one graph uses a custom `scale_` element
-- [ ] The reflection genuinely engages with the "so what" &mdash; how an early
+- [ ] The reflection genuinely engages with the "so what": how an early
       finding would have changed the downstream analysis, or what would be needed
       to resolve the ambiguity
 - [ ] A clear commit history that shows the investigation developing
@@ -176,7 +160,7 @@ project, plus
 ::: callout-note
 ## On not being sure
 
-For some datasets you will not be able to *prove* anything &mdash; that's
+For some datasets you will not be able to *prove* anything. That's
 realistic, and it's fine. Grade yourself on whether your evidence is varied and
 correctly read and your argument is honest about its own limits. And remember
 only 2 of the 3 portfolio projects need to hit "excellent" for an A, so it's OK
