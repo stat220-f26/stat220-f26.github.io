@@ -20,4 +20,8 @@ After page 1, each course day will get two pages in "booklet style"
 - p2-3: Fill in at some point with `ggplot` and data visualization notes
 - p4-5: In-class: what is an example of data that would work well for a choropleth map? What about a proportional symbol map?
 - p5-6: In class: what aspects of a graph made writing alt-text hard/easy? what aspects of an alt-text description made recreating the graph harder or easier?
+- p7-8: put an "X" where you currently feel about the quiz/class in general
 
+![](img/journal-day7.jpeg){fig-alt="A blank graph with lab quiz on the y-axis and class in general on the x-axis. Negative values correspond to very chill and positive values correspond to very stressed."}
+
+- p9-10: Sketch the tidy version of the `bakeoff` dataset (see the original prompt in [slides09](https://stat220-f26.github.io/slides/08/slides08.html#/discuss))

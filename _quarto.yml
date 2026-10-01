@@ -49,6 +49,8 @@ website:
             text: Git/Github in Stat 220
           - href: computing/computing-cheatsheets.qmd
             text: Cheatsheets
+      - href: notes/00-journals.qmd
+        text: Journals
           
   page-footer:
     right: "This page is built with ☕️ and [Quarto](https://quarto.org/)."
