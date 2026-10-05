@@ -6,9 +6,9 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8cab17c520dfb5fd83702a774e8ef3fe.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8f4e3aabaa80e3e650ae20f2c24f966b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="author" content="Prof Amanda Luby">
 <title>Stat 220 – APIs</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1458,7 +1458,7 @@ Census API call: https://api.census.gov/data/2020/acs/acs5?get=B01003_001E%2CB01
 </div></div>
 </section><section id="sending-our-census-query" class="slide level2"><h2>Sending our census query</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>hmong_state_request <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://api.census.gov/data"</span>) <span class="sc">%&gt;%</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>hmong_state_request <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://api.census.gov/data"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb28-2"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"2019"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb28-3"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"acs"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb28-4"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"acs1"</span>) <span class="sc">%&gt;%</span> </span>
