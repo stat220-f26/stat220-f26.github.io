@@ -30,7 +30,6 @@ library(maps)
 library(mapproj)
 library(ggthemes)
 library(nycflights23)
-library(here)
 
 slides_theme = theme_minimal(
   base_family = "Atkinson Hyperlegible",
@@ -41,8 +40,9 @@ theme_set(slides_theme)
 
 ## Today
 
-1. Importing data into R
-2. Working with dates and times
+1. Importing data into R from files
+2. Importing data into R from Google Sheets
+3. Working with dates and times
 
 
 ## `desserts` data
@@ -56,7 +56,7 @@ theme_set(slides_theme)
 :::
 
 ```{r}
-desserts <- read_csv("../../data/desserts.csv") # https://stat220-f26.github.io/data/desserts.csv
+desserts <- read_csv("https://stat220-f26.github.io/data/desserts.csv")
 desserts
 ```
 
@@ -101,7 +101,7 @@ read_tsv()   | Tab delimited values
 :::
 
 ```{r}
-desserts <- read_csv("../../data/desserts.csv") # https://stat220-f26.github.io/data/desserts.csv
+desserts <- read_csv("https://stat220-f26.github.io/data/desserts.csv")
 desserts
 ```
 
@@ -109,7 +109,7 @@ desserts
 Source: Allison Hill and the [bakeoff](https://bakeoff.netlify.app) package; compiled by Adam Loy
 :::
 
-## Warm up {.smaller} {.scrollable}
+## Warm up {.smaller .scrollable}
 
 ::: {.task .nonincremental}
 
@@ -129,7 +129,7 @@ countdown::countdown(6)
 
 ```{r}
 desserts <- read_csv(
-  "../../data/desserts.csv", # https://stat220-f26.github.io/data/desserts.csv
+  "https://stat220-f26.github.io/data/desserts.csv",
   col_types = list(
     technical = col_number(), 
     uk_airdate = col_date(format = "%d %B %Y")
@@ -169,7 +169,7 @@ desserts |>
 #| echo: true
 
 
-desserts <- read_csv("../../data/desserts.csv") # https://stat220-f26.github.io/data/desserts.csv
+desserts <- read_csv("https://stat220-f26.github.io/data/desserts.csv")
 glimpse(desserts)
 ```
 
@@ -177,7 +177,7 @@ glimpse(desserts)
 
 A couple issues...
 
-- `technical` is character, not numeric
+- `technical` is character, not numeric 
 
 - `uk_airdate` is character, not date
 
@@ -192,7 +192,7 @@ By default, `read_csv` looks at first 1000 rows to guess variable data types (`g
 #| echo: true
 #| code-line-numbers: "1|2-5"
 #| output-location: fragment
-desserts <- read_csv( "../../data/desserts.csv", # https://stat220-f26.github.io/data/desserts.csv
+desserts <- read_csv( "https://stat220-f26.github.io/data/desserts.csv",
   col_types = list( 
     technical = col_number(), 
     uk_airdate = col_date()   
@@ -241,7 +241,7 @@ What we have: `17 August 2010`
 #| echo: true
 #| code-line-numbers: "5"
 desserts <- read_csv(
-  "../../data/desserts.csv", # https://stat220-f26.github.io/data/desserts.csv
+  "https://stat220-f26.github.io/data/desserts.csv",
   col_types = list(
     technical = col_number(), 
     uk_airdate = col_date(format = "%d %B %Y")  
@@ -276,7 +276,7 @@ By default `na = c("", "NA")` are the recognized missing values
 #| echo: true
 #| code-line-numbers: "7"
 desserts <- read_csv(
-  "../../data/desserts.csv", # https://stat220-f26.github.io/data/desserts.csv
+  "https://stat220-f26.github.io/data/desserts.csv",
   col_types = list(
     technical = col_number(), 
     uk_airdate = col_date(format = "%d %B %Y")
@@ -340,7 +340,7 @@ Use the appropriate `read_<type>()` function to import the following data sets:
 
 - `tricky-1.csv`
 
-The full URLs are in the `11-import.Rmd` activity. (It might be helpful to look at the data file before trying to import it into R)
+The full URLs are in the `11-import.qmd` activity. (It might be helpful to look at the data file before trying to import it into R)
 
 If you hit any errors/problems, be sure to explore them and identify the issue, even if you can't "fix" it.
 :::
@@ -455,7 +455,7 @@ countdown::countdown(5)
 
 ```{r message=FALSE, collapse=TRUE}
 #| message: false
-mn_ultras <- read_csv(here("data", "mn_ultra_results.csv"))
+mn_ultras <- read_csv("https://stat220-f26.github.io/data/mn_ultra_results.csv")
 glimpse(mn_ultras)
 ```
 
@@ -482,21 +482,21 @@ glimpse(mn_ultras)
 #| echo: true
 
 library(lubridate)
-mdy("01/29/25")
+mdy("01/29/26")
 ```
 
 . . . 
 
 ```{r}
 #| echo: true
-dmy("29-01-2025")
+dmy("29-01-2026")
 ```
 
 . . . 
 
 ```{r}
 #| echo: true
-ymd("2025-01-29")
+ymd("2026-01-29")
 ```
 
 . . . 
@@ -504,7 +504,7 @@ ymd("2025-01-29")
 
 ```{r}
 #| echo: true
-ymd_hm("2025-01-29 09:55")
+ymd_hm("2026-01-29 09:55")
 ```
 
 ## Ultramarathon example
@@ -628,18 +628,19 @@ as.duration(today() - race)
 :::
 
 ::: {.column .nonincremental width="50%"}
+Daylight saving time starts on 2026-03-08:
+
 ```{r }
 #| echo: true
-ymd_hms("2025-01-29 09:55:00", 
-        tz = "America/Chicago") + 
-  days(1)
+dst <- ymd_hms("2026-03-07 09:55:00",
+               tz = "America/Chicago")
+
+dst + days(1)
 ```
 
 ```{r }
 #| echo: true
-ymd_hms("2023-02-28 09:55:00", 
-        tz = "America/Chicago") + 
-  days(1)
+dst + ddays(1)
 ```
 :::
 :::::
@@ -664,9 +665,9 @@ Then, create a new column called `how_long_ago` that measures the time between t
 countdown::countdown(5)
 ```
 
-## If time
+## If time (optional)
 
-Get as far as you can in replicating this plot of series 8 data:
+Get as far as you can in replicating this plot of series 8 data. You will need the {gghighlight} package (`install.packages("gghighlight")`).
 
 ```{r}
 desserts |>

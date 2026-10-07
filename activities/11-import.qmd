@@ -5,7 +5,9 @@ title: "Data import and dates/times"
 ```{r}
 library(tidyverse)
 library(ggthemes)
-library(readxl)
+library(googlesheets4)
+
+gs4_deauth()
 ```
 
 Click the "code" button above to copy and paste the source code into RStudio
@@ -68,9 +70,14 @@ Step 1: read in the data so it looks like the following:
 ```
 
 ```{r}
-library(googlesheets4)
 # your code here
 ```
+
+::: callout-tip
+## Hint
+
+The sheet has a few rows of text above the data. See the `skip` and `col_names` arguments in `?read_sheet`.
+:::
 
 Step 2 (Stretch goal): Manipulate the data so that it looks like the following:
 
@@ -114,6 +121,14 @@ Then, create a new column called `how_long_ago` that measures the time between t
   - in days
   
 (*Hint:* see `?time_length`)
+
+```{r}
+# your code here
+```
+
+# If time (optional)
+
+Try to replicate the plot of series 8 data shown at the end of the slides. You will need the {gghighlight} package (`install.packages("gghighlight")`).
 
 ```{r}
 # your code here
