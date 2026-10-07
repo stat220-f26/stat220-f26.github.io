@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Data Science Journals – Stat 220</title>
 <style>
@@ -68,9 +68,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6e03bc272f1cdef1d8296ac38e217ebd.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4a17e18fdf56099d4f6da1e105f33a53.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -399,15 +399,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>After page 1, each course day will get two pages in “booklet style” - Left, top: Prep/pre-work for the day (answer my question or jot down your own question, can be left blank) - Left, bottom: reflections from in-class prompt - Right: your space to summarize the main points for the day</p>
 <p><img src="../images/open-journal.png" class="img-fluid"></p>
 <section id="table-of-contents" class="level1"><h1>Table of Contents</h1>
+<p><em>Note:</em> if you deviate from this ToC, that’s perfectly fine! Just please keep your first page updated with what your ToC follows so I can find what I’m looking for</p>
 <ul>
-<li>p2-3: Fill in at some point with <code>ggplot</code> and data visualization notes</li>
-<li>p4-5: In-class: what is an example of data that would work well for a choropleth map? What about a proportional symbol map?</li>
-<li>p5-6: In class: what aspects of a graph made writing alt-text hard/easy? what aspects of an alt-text description made recreating the graph harder or easier?</li>
-<li>p7-8: put an “X” where you currently feel about the quiz/class in general</li>
+<li>Day4 | p2-3: Fill in at some point with <code>ggplot</code> and data visualization notes</li>
+<li>Day5 | p4-5: In-class: what is an example of data that would work well for a choropleth map? What about a proportional symbol map?</li>
+<li>Day6| p5-6: In class: what aspects of a graph made writing alt-text hard/easy? what aspects of an alt-text description made recreating the graph harder or easier?</li>
+<li>Day7 | p7-8: put an “X” where you currently feel about the quiz/class in general</li>
 </ul>
 <p><img src="img/journal-day7.jpeg" class="img-fluid" alt="A blank graph with lab quiz on the y-axis and class in general on the x-axis. Negative values correspond to very chill and positive values correspond to very stressed."></p>
 <ul>
-<li>p9-10: Sketch the tidy version of the <code>bakeoff</code> dataset (see the original prompt in <a href="https://stat220-f26.github.io/slides/08/slides08.html#/discuss">slides09</a>)</li>
+<li><p>Day8 | p9-10: Sketch the tidy version of the <code>bakeoff</code> dataset (see the original prompt in <a href="https://stat220-f26.github.io/slides/08/slides08.html#/discuss">slides09</a>)</p></li>
+<li><p>Day9: Quiz01! No journal entry</p></li>
+<li><p>Day10| p11-12: After completing the last prompt in the activity, tell me which dessert you would most like to sample from the list</p></li>
+<li><p>Day11 | p13-14: Sketch what the first 3 rows of <code>cafe_orders.csv</code> look like as raw text, then sketch the data frame R builds from it. Circle one place where the two don’t match. What did R guess wrong, and which argument (col_types, na, format) would you use to fix it?</p></li>
 </ul>
 
 
@@ -903,14 +907,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu"># Table of Contents</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>p2-3: Fill in at some point with <span class="in">`ggplot`</span> and data visualization notes</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>p4-5: In-class: what is an example of data that would work well for a choropleth map? What about a proportional symbol map?</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>p5-6: In class: what aspects of a graph made writing alt-text hard/easy? what aspects of an alt-text description made recreating the graph harder or easier?</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>p7-8: put an "X" where you currently feel about the quiz/class in general</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="al">![](img/journal-day7.jpeg)</span>{fig-alt="A blank graph with lab quiz on the y-axis and class in general on the x-axis. Negative values correspond to very chill and positive values correspond to very stressed."}</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>*Note:* if you deviate from this ToC, that's perfectly fine! Just please keep your first page updated with what your ToC follows so I can find what I'm looking for</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Day4 | p2-3: Fill in at some point with <span class="in">`ggplot`</span> and data visualization notes</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Day5 | p4-5: In-class: what is an example of data that would work well for a choropleth map? What about a proportional symbol map?</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Day6| p5-6: In class: what aspects of a graph made writing alt-text hard/easy? what aspects of an alt-text description made recreating the graph harder or easier?</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Day7 | p7-8: put an "X" where you currently feel about the quiz/class in general</span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>p9-10: Sketch the tidy version of the <span class="in">`bakeoff`</span> dataset (see the original prompt in <span class="co">[</span><span class="ot">slides09</span><span class="co">](https://stat220-f26.github.io/slides/08/slides08.html#/discuss)</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="al">![](img/journal-day7.jpeg)</span>{fig-alt="A blank graph with lab quiz on the y-axis and class in general on the x-axis. Negative values correspond to very chill and positive values correspond to very stressed."}</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Day8 | p9-10: Sketch the tidy version of the <span class="in">`bakeoff`</span> dataset (see the original prompt in <span class="co">[</span><span class="ot">slides09</span><span class="co">](https://stat220-f26.github.io/slides/08/slides08.html#/discuss)</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Day9: Quiz01! No journal entry</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Day10| p11-12: After completing the last prompt in the activity, tell me which dessert you would most like to sample from the list</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Day11 | p13-14: Sketch what the first 3 rows of <span class="in">`cafe_orders.csv`</span> look like as raw text, then sketch the data frame R builds from it. Circle one place where the two don't match. What did R guess wrong, and which argument (col_types, na, format) would you use to fix it?</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
