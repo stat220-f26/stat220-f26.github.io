@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8f4e3aabaa80e3e650ae20f2c24f966b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8cab17c520dfb5fd83702a774e8ef3fe.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>Stat 220 – Data Import &amp;  Dates/Times</title>
@@ -215,7 +215,8 @@ Prof Amanda Luby
 <section id="today" class="slide level2">
 <h2>Today</h2>
 <ol type="1">
-<li class="fragment">Importing data into R</li>
+<li class="fragment">Importing data into R from files</li>
+<li class="fragment">Importing data into R from Google Sheets</li>
 <li class="fragment">Working with dates and times</li>
 </ol>
 </section>
@@ -227,7 +228,7 @@ Prof Amanda Luby
 </ul>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 549 x 16
+<pre><code># A tibble: 549 × 16
    series episode baker     technical result uk_airdate     us_season us_airdate
     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;              &lt;dbl&gt; &lt;date&gt;    
  1      1       1 Annetha   2nd       IN     17 August 2010        NA NA        
@@ -240,8 +241,8 @@ Prof Amanda Luby
  8      1       1 Ruth      N/A       IN     17 August 2010        NA NA        
  9      1       1 Lea       10th      OUT    17 August 2010        NA NA        
 10      1       1 Mark      N/A       OUT    17 August 2010        NA NA        
-# i 539 more rows
-# i 8 more variables: showstopper_chocolate &lt;chr&gt;, showstopper_dessert &lt;chr&gt;,
+# ℹ 539 more rows
+# ℹ 8 more variables: showstopper_chocolate &lt;chr&gt;, showstopper_dessert &lt;chr&gt;,
 #   showstopper_fruit &lt;chr&gt;, showstopper_nut &lt;chr&gt;, signature_chocolate &lt;chr&gt;,
 #   signature_dessert &lt;chr&gt;, signature_fruit &lt;chr&gt;, signature_nut &lt;chr&gt;</code></pre>
 </div>
@@ -306,7 +307,7 @@ Prof Amanda Luby
 </ul>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 549 x 16
+<pre><code># A tibble: 549 × 16
    series episode baker     technical result uk_airdate     us_season us_airdate
     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;              &lt;dbl&gt; &lt;date&gt;    
  1      1       1 Annetha   2nd       IN     17 August 2010        NA NA        
@@ -319,8 +320,8 @@ Prof Amanda Luby
  8      1       1 Ruth      N/A       IN     17 August 2010        NA NA        
  9      1       1 Lea       10th      OUT    17 August 2010        NA NA        
 10      1       1 Mark      N/A       OUT    17 August 2010        NA NA        
-# i 539 more rows
-# i 8 more variables: showstopper_chocolate &lt;chr&gt;, showstopper_dessert &lt;chr&gt;,
+# ℹ 539 more rows
+# ℹ 8 more variables: showstopper_chocolate &lt;chr&gt;, showstopper_dessert &lt;chr&gt;,
 #   showstopper_fruit &lt;chr&gt;, showstopper_nut &lt;chr&gt;, signature_chocolate &lt;chr&gt;,
 #   signature_dessert &lt;chr&gt;, signature_fruit &lt;chr&gt;, signature_nut &lt;chr&gt;</code></pre>
 </div>
@@ -329,8 +330,8 @@ Prof Amanda Luby
 <aside><div>
 <p>Source: Allison Hill and the <a href="https://bakeoff.netlify.app">bakeoff</a> package; compiled by Adam Loy</p>
 </div></aside></section>
-<section id="warm-up-.smaller" class="slide level2 scrollable">
-<h2>Warm up {.smaller}</h2>
+<section id="warm-up" class="slide level2 smaller scrollable">
+<h2>Warm up</h2>
 <div class="task">
 <ol type="1">
 <li><p>Use <code>read_csv()</code> to import the <code>desserts</code> data set from <br> https://stat220-f26.github.io/data/desserts.csv</p></li>
@@ -340,7 +341,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_632292f0" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_83685448" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -350,7 +351,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides11_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+<p><img data-src="slides11_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -359,27 +360,27 @@ Prof Amanda Luby
 <section id="did-it-work-as-expected" class="slide level2 scrollable">
 <h2>Did it work as expected?</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../../data/desserts.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/desserts.csv</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://stat220-f26.github.io/data/desserts.csv"</span>)</span>
 <span id="cb4-2"><a></a><span class="fu">glimpse</span>(desserts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 549
 Columns: 16
-$ series                &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ~
-$ episode               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, ~
-$ baker                 &lt;chr&gt; "Annetha", "David", "Edd", "Jasminder", "Jonatha~
-$ technical             &lt;chr&gt; "2nd", "3rd", "1st", "N/A", "9th", "N/A", "8th",~
-$ result                &lt;chr&gt; "IN", "IN", "IN", "IN", "IN", "IN", "IN", "IN", ~
-$ uk_airdate            &lt;chr&gt; "17 August 2010", "17 August 2010", "17 August 2~
-$ us_season             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-$ us_airdate            &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-$ showstopper_chocolate &lt;chr&gt; "chocolate", "chocolate", "no chocolate", "no ch~
-$ showstopper_dessert   &lt;chr&gt; "other", "other", "other", "other", "other", "ca~
-$ showstopper_fruit     &lt;chr&gt; "no fruit", "no fruit", "no fruit", "no fruit", ~
-$ showstopper_nut       &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "almond"~
-$ signature_chocolate   &lt;chr&gt; "no chocolate", "chocolate", "no chocolate", "no~
-$ signature_dessert     &lt;chr&gt; "cake", "cake", "cake", "cake", "cake", "cake", ~
-$ signature_fruit       &lt;chr&gt; "no fruit", "fruit", "fruit", "fruit", "fruit", ~
-$ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no nut"~</code></pre>
+$ series                &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ episode               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, …
+$ baker                 &lt;chr&gt; "Annetha", "David", "Edd", "Jasminder", "Jonatha…
+$ technical             &lt;chr&gt; "2nd", "3rd", "1st", "N/A", "9th", "N/A", "8th",…
+$ result                &lt;chr&gt; "IN", "IN", "IN", "IN", "IN", "IN", "IN", "IN", …
+$ uk_airdate            &lt;chr&gt; "17 August 2010", "17 August 2010", "17 August 2…
+$ us_season             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ us_airdate            &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ showstopper_chocolate &lt;chr&gt; "chocolate", "chocolate", "no chocolate", "no ch…
+$ showstopper_dessert   &lt;chr&gt; "other", "other", "other", "other", "other", "ca…
+$ showstopper_fruit     &lt;chr&gt; "no fruit", "no fruit", "no fruit", "no fruit", …
+$ showstopper_nut       &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "almond"…
+$ signature_chocolate   &lt;chr&gt; "no chocolate", "chocolate", "no chocolate", "no…
+$ signature_dessert     &lt;chr&gt; "cake", "cake", "cake", "cake", "cake", "cake", …
+$ signature_fruit       &lt;chr&gt; "no fruit", "fruit", "fruit", "fruit", "fruit", …
+$ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no nut"…</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -395,7 +396,7 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <p>By default, <code>read_csv</code> looks at first 1000 rows to guess variable data types (<code>guess_max</code>), but we can also tell R how to read column types</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-code-line-numbers="1|2-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>( <span class="st">"../../data/desserts.csv"</span>, <span class="co"># https://stat220-f26.github.io/data/desserts.csv</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-code-line-numbers="1|2-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>( <span class="st">"https://stat220-f26.github.io/data/desserts.csv"</span>,</span>
 <span id="cb6-2"><a></a>  <span class="at">col_types =</span> <span class="fu">list</span>( </span>
 <span id="cb6-3"><a></a>    <span class="at">technical =</span> <span class="fu">col_number</span>(), </span>
 <span id="cb6-4"><a></a>    <span class="at">uk_airdate =</span> <span class="fu">col_date</span>()   </span>
@@ -408,22 +409,22 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 549
 Columns: 16
-$ series                &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ~
-$ episode               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, ~
-$ baker                 &lt;chr&gt; "Annetha", "David", "Edd", "Jasminder", "Jonatha~
-$ technical             &lt;dbl&gt; 2, 3, 1, NA, 9, NA, 8, NA, 10, NA, 8, 6, 2, 1, 3~
-$ result                &lt;chr&gt; "IN", "IN", "IN", "IN", "IN", "IN", "IN", "IN", ~
-$ uk_airdate            &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-$ us_season             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-$ us_airdate            &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-$ showstopper_chocolate &lt;chr&gt; "chocolate", "chocolate", "no chocolate", "no ch~
-$ showstopper_dessert   &lt;chr&gt; "other", "other", "other", "other", "other", "ca~
-$ showstopper_fruit     &lt;chr&gt; "no fruit", "no fruit", "no fruit", "no fruit", ~
-$ showstopper_nut       &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "almond"~
-$ signature_chocolate   &lt;chr&gt; "no chocolate", "chocolate", "no chocolate", "no~
-$ signature_dessert     &lt;chr&gt; "cake", "cake", "cake", "cake", "cake", "cake", ~
-$ signature_fruit       &lt;chr&gt; "no fruit", "fruit", "fruit", "fruit", "fruit", ~
-$ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no nut"~</code></pre>
+$ series                &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ episode               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, …
+$ baker                 &lt;chr&gt; "Annetha", "David", "Edd", "Jasminder", "Jonatha…
+$ technical             &lt;dbl&gt; 2, 3, 1, NA, 9, NA, 8, NA, 10, NA, 8, 6, 2, 1, 3…
+$ result                &lt;chr&gt; "IN", "IN", "IN", "IN", "IN", "IN", "IN", "IN", …
+$ uk_airdate            &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ us_season             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ us_airdate            &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ showstopper_chocolate &lt;chr&gt; "chocolate", "chocolate", "no chocolate", "no ch…
+$ showstopper_dessert   &lt;chr&gt; "other", "other", "other", "other", "other", "ca…
+$ showstopper_fruit     &lt;chr&gt; "no fruit", "no fruit", "no fruit", "no fruit", …
+$ showstopper_nut       &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "almond"…
+$ signature_chocolate   &lt;chr&gt; "no chocolate", "chocolate", "no chocolate", "no…
+$ signature_dessert     &lt;chr&gt; "cake", "cake", "cake", "cake", "cake", "cake", …
+$ signature_fruit       &lt;chr&gt; "no fruit", "fruit", "fruit", "fruit", "fruit", …
+$ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no nut"…</code></pre>
 </div>
 </div>
 </div>
@@ -434,20 +435,20 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">problems</span>(desserts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 556 x 5
-     row   col expected        actual         file                              
-   &lt;int&gt; &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;                             
- 1     2     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220~
- 2     3     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220~
- 3     4     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220~
- 4     5     4 a number        N/A            /Users/aluby/github-repos/stat220~
- 5     5     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220~
- 6     6     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220~
- 7     7     4 a number        N/A            /Users/aluby/github-repos/stat220~
- 8     7     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220~
- 9     8     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220~
-10     9     4 a number        N/A            /Users/aluby/github-repos/stat220~
-# i 546 more rows</code></pre>
+<pre><code># A tibble: 556 × 5
+     row   col expected        actual         file 
+   &lt;int&gt; &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;
+ 1     2     6 date in ISO8601 17 August 2010 ""   
+ 2     3     6 date in ISO8601 17 August 2010 ""   
+ 3     4     6 date in ISO8601 17 August 2010 ""   
+ 4     5     4 a number        N/A            ""   
+ 5     5     6 date in ISO8601 17 August 2010 ""   
+ 6     6     6 date in ISO8601 17 August 2010 ""   
+ 7     7     4 a number        N/A            ""   
+ 8     7     6 date in ISO8601 17 August 2010 ""   
+ 9     8     6 date in ISO8601 17 August 2010 ""   
+10     9     4 a number        N/A            ""   
+# ℹ 546 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -455,15 +456,15 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <h2>Date formatting woes</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 556 x 5
-    row   col expected        actual         file                               
-  &lt;int&gt; &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;                              
-1     2     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220-~
-2     3     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220-~
-3     4     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220-~
-4     5     4 a number        N/A            /Users/aluby/github-repos/stat220-~
-5     5     6 date in ISO8601 17 August 2010 /Users/aluby/github-repos/stat220-~
-# i 551 more rows</code></pre>
+<pre><code># A tibble: 556 × 5
+    row   col expected        actual         file 
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;
+1     2     6 date in ISO8601 17 August 2010 ""   
+2     3     6 date in ISO8601 17 August 2010 ""   
+3     4     6 date in ISO8601 17 August 2010 ""   
+4     5     4 a number        N/A            ""   
+5     5     6 date in ISO8601 17 August 2010 ""   
+# ℹ 551 more rows</code></pre>
 </div>
 </div>
 <p>ISO8601 format: <code>2010-08-17</code></p>
@@ -480,7 +481,7 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <h2>Adding <code>format</code> instructions</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb11-2"><a></a>  <span class="st">"../../data/desserts.csv"</span>, <span class="co"># https://stat220-f26.github.io/data/desserts.csv</span></span>
+<span id="cb11-2"><a></a>  <span class="st">"https://stat220-f26.github.io/data/desserts.csv"</span>,</span>
 <span id="cb11-3"><a></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
 <span id="cb11-4"><a></a>    <span class="at">technical =</span> <span class="fu">col_number</span>(), </span>
 <span id="cb11-5"><a></a>    <span class="at">uk_airdate =</span> <span class="fu">col_date</span>(<span class="at">format =</span> <span class="st">"%d %B %Y"</span>)  </span>
@@ -499,16 +500,16 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">problems</span>(desserts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 x 5
-    row   col expected actual file                                              
-  &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;                                             
-1     5     4 a number N/A    /Users/aluby/github-repos/stat220-f26.github.io/d~
-2     7     4 a number N/A    /Users/aluby/github-repos/stat220-f26.github.io/d~
-3     9     4 a number N/A    /Users/aluby/github-repos/stat220-f26.github.io/d~
-4    11     4 a number N/A    /Users/aluby/github-repos/stat220-f26.github.io/d~
-5    35     4 a number N/A    /Users/aluby/github-repos/stat220-f26.github.io/d~
-6    36     4 a number N/A    /Users/aluby/github-repos/stat220-f26.github.io/d~
-7    37     4 a number N/A    /Users/aluby/github-repos/stat220-f26.github.io/d~</code></pre>
+<pre><code># A tibble: 7 × 5
+    row   col expected actual file 
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;
+1     5     4 a number N/A    ""   
+2     7     4 a number N/A    ""   
+3     9     4 a number N/A    ""   
+4    11     4 a number N/A    ""   
+5    35     4 a number N/A    ""   
+6    36     4 a number N/A    ""   
+7    37     4 a number N/A    ""   </code></pre>
 </div>
 </div>
 </section>
@@ -518,7 +519,7 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <div class="fragment">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb14-2"><a></a>  <span class="st">"../../data/desserts.csv"</span>, <span class="co"># https://stat220-f26.github.io/data/desserts.csv</span></span>
+<span id="cb14-2"><a></a>  <span class="st">"https://stat220-f26.github.io/data/desserts.csv"</span>,</span>
 <span id="cb14-3"><a></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
 <span id="cb14-4"><a></a>    <span class="at">technical =</span> <span class="fu">col_number</span>(), </span>
 <span id="cb14-5"><a></a>    <span class="at">uk_airdate =</span> <span class="fu">col_date</span>(<span class="at">format =</span> <span class="st">"%d %B %Y"</span>)</span>
@@ -533,8 +534,8 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <p>List of potential problems parsing the file</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 0 x 5
-# i 5 variables: row &lt;int&gt;, col &lt;int&gt;, expected &lt;chr&gt;, actual &lt;chr&gt;, file &lt;chr&gt;</code></pre>
+<pre><code># A tibble: 0 × 5
+# ℹ 5 variables: row &lt;int&gt;, col &lt;int&gt;, expected &lt;chr&gt;, actual &lt;chr&gt;, file &lt;chr&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -543,7 +544,7 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>desserts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 549 x 16
+<pre><code># A tibble: 549 × 16
    series episode baker     technical result uk_airdate us_season us_airdate
     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;  &lt;date&gt;         &lt;dbl&gt; &lt;date&gt;    
  1      1       1 Annetha           2 IN     2010-08-17        NA NA        
@@ -556,8 +557,8 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
  8      1       1 Ruth             NA IN     2010-08-17        NA NA        
  9      1       1 Lea              10 OUT    2010-08-17        NA NA        
 10      1       1 Mark             NA OUT    2010-08-17        NA NA        
-# i 539 more rows
-# i 8 more variables: showstopper_chocolate &lt;chr&gt;, showstopper_dessert &lt;chr&gt;,
+# ℹ 539 more rows
+# ℹ 8 more variables: showstopper_chocolate &lt;chr&gt;, showstopper_dessert &lt;chr&gt;,
 #   showstopper_fruit &lt;chr&gt;, showstopper_nut &lt;chr&gt;, signature_chocolate &lt;chr&gt;,
 #   signature_dessert &lt;chr&gt;, signature_fruit &lt;chr&gt;, signature_nut &lt;chr&gt;</code></pre>
 </div>
@@ -628,7 +629,7 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <li><p><code>data-4.csv</code></p></li>
 <li><p><code>tricky-1.csv</code></p></li>
 </ul>
-<p>The full URLs are in the <code>11-import.Rmd</code> activity. (It might be helpful to look at the data file before trying to import it into R)</p>
+<p>The full URLs are in the <code>11-import.qmd</code> activity. (It might be helpful to look at the data file before trying to import it into R)</p>
 <p>If you hit any errors/problems, be sure to explore them and identify the issue, even if you can’t “fix” it.</p>
 </div>
 </section>
@@ -714,7 +715,7 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 </div></div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_099e8d5a" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_9edf44dc" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -736,17 +737,17 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <div class="cell">
 <pre><code>## Rows: 392
 ## Columns: 11
-## $ state            &lt;chr&gt; "Minnesota", "Minnesota", "Minnesota", "Minnesota", "~
-## $ Event            &lt;chr&gt; "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zu~
-## $ City             &lt;chr&gt; "Theilman", "Theilman", "Theilman", "Theilman", "Thei~
-## $ race_url         &lt;chr&gt; "https://calendar.ultrarunning.com/event/zumbro", "ht~
-## $ date             &lt;chr&gt; "04/08/21", "04/11/20", "04/13/19", "04/13/18", "04/0~
-## $ Finishers        &lt;chr&gt; "121", "Race Cancelled", "Race Cancelled", "49", "149~
-## $ top_result_m     &lt;chr&gt; "5:23:55", "Race Cancelled", "Race Cancelled", "9:13:~
-## $ top_result_f     &lt;chr&gt; "6:30:42", "Race Cancelled", "Race Cancelled", "10:15~
-## $ distance         &lt;chr&gt; "34 Miles", "50 Miles", "50 Miles", "50 Miles", "50 M~
-## $ elevation_rating &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,~
-## $ surface_rating   &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,~</code></pre>
+## $ state            &lt;chr&gt; "Minnesota", "Minnesota", "Minnesota", "Minnesota", "…
+## $ Event            &lt;chr&gt; "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zu…
+## $ City             &lt;chr&gt; "Theilman", "Theilman", "Theilman", "Theilman", "Thei…
+## $ race_url         &lt;chr&gt; "https://calendar.ultrarunning.com/event/zumbro", "ht…
+## $ date             &lt;chr&gt; "04/08/21", "04/11/20", "04/13/19", "04/13/18", "04/0…
+## $ Finishers        &lt;chr&gt; "121", "Race Cancelled", "Race Cancelled", "49", "149…
+## $ top_result_m     &lt;chr&gt; "5:23:55", "Race Cancelled", "Race Cancelled", "9:13:…
+## $ top_result_f     &lt;chr&gt; "6:30:42", "Race Cancelled", "Race Cancelled", "10:15…
+## $ distance         &lt;chr&gt; "34 Miles", "50 Miles", "50 Miles", "50 Miles", "50 M…
+## $ elevation_rating &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…
+## $ surface_rating   &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…</code></pre>
 </div>
 </div>
 </section>
@@ -772,32 +773,32 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <p><code>{lubridate}</code> functions are intuitively named</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb24-2"><a></a><span class="fu">mdy</span>(<span class="st">"01/29/25"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb24-2"><a></a><span class="fu">mdy</span>(<span class="st">"01/29/26"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-01-29"</code></pre>
+<pre><code>[1] "2026-01-29"</code></pre>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">dmy</span>(<span class="st">"29-01-2025"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">dmy</span>(<span class="st">"29-01-2026"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-01-29"</code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">ymd</span>(<span class="st">"2025-01-29"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-01-29"</code></pre>
+<pre><code>[1] "2026-01-29"</code></pre>
 </div>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">ymd_hm</span>(<span class="st">"2025-01-29 09:55"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">ymd</span>(<span class="st">"2026-01-29"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-01-29 09:55:00 UTC"</code></pre>
+<pre><code>[1] "2026-01-29"</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">ymd_hm</span>(<span class="st">"2026-01-29 09:55"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2026-01-29 09:55:00 UTC"</code></pre>
 </div>
 </div>
 </div>
@@ -813,17 +814,17 @@ $ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 392
 Columns: 11
-$ state            &lt;chr&gt; "Minnesota", "Minnesota", "Minnesota", "Minnesota", "~
-$ Event            &lt;chr&gt; "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zu~
-$ City             &lt;chr&gt; "Theilman", "Theilman", "Theilman", "Theilman", "Thei~
-$ race_url         &lt;chr&gt; "https://calendar.ultrarunning.com/event/zumbro", "ht~
-$ date             &lt;date&gt; 2021-04-08, 2020-04-11, 2019-04-13, 2018-04-13, 2017~
-$ Finishers        &lt;chr&gt; "121", "Race Cancelled", "Race Cancelled", "49", "149~
-$ top_result_m     &lt;chr&gt; "5:23:55", "Race Cancelled", "Race Cancelled", "9:13:~
-$ top_result_f     &lt;chr&gt; "6:30:42", "Race Cancelled", "Race Cancelled", "10:15~
-$ distance         &lt;chr&gt; "34 Miles", "50 Miles", "50 Miles", "50 Miles", "50 M~
-$ elevation_rating &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,~
-$ surface_rating   &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,~</code></pre>
+$ state            &lt;chr&gt; "Minnesota", "Minnesota", "Minnesota", "Minnesota", "…
+$ Event            &lt;chr&gt; "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zu…
+$ City             &lt;chr&gt; "Theilman", "Theilman", "Theilman", "Theilman", "Thei…
+$ race_url         &lt;chr&gt; "https://calendar.ultrarunning.com/event/zumbro", "ht…
+$ date             &lt;date&gt; 2021-04-08, 2020-04-11, 2019-04-13, 2018-04-13, 2017…
+$ Finishers        &lt;chr&gt; "121", "Race Cancelled", "Race Cancelled", "49", "149…
+$ top_result_m     &lt;chr&gt; "5:23:55", "Race Cancelled", "Race Cancelled", "9:13:…
+$ top_result_f     &lt;chr&gt; "6:30:42", "Race Cancelled", "Race Cancelled", "10:15…
+$ distance         &lt;chr&gt; "34 Miles", "50 Miles", "50 Miles", "50 Miles", "50 M…
+$ elevation_rating &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…
+$ surface_rating   &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…</code></pre>
 </div>
 </div>
 </section>
@@ -907,7 +908,7 @@ Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>race <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">"2022-01-31"</span>)</span>
 <span id="cb40-2"><a></a><span class="fu">today</span>() <span class="sc">-</span> race</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 1684 days</code></pre>
+<pre><code>Time difference of 1710 days</code></pre>
 </div>
 </div>
 <ul>
@@ -931,7 +932,7 @@ Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">as.duration</span>(<span class="fu">today</span>() <span class="sc">-</span> race)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "145497600s (~4.61 years)"</code></pre>
+<pre><code>[1] "147744000s (~4.68 years)"</code></pre>
 </div>
 </div>
 </div></div>
@@ -943,20 +944,20 @@ Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</code></pre>
 <div class="column" style="width:50%;">
 <p><img data-src="../img/lubridate-period.png" height="500"></p>
 </div><div class="column" style="width:50%;">
+<p>Daylight saving time starts on 2026-03-08:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">ymd_hms</span>(<span class="st">"2025-01-29 09:55:00"</span>, </span>
-<span id="cb44-2"><a></a>        <span class="at">tz =</span> <span class="st">"America/Chicago"</span>) <span class="sc">+</span> </span>
-<span id="cb44-3"><a></a>  <span class="fu">days</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>dst <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(<span class="st">"2026-03-07 09:55:00"</span>,</span>
+<span id="cb44-2"><a></a>               <span class="at">tz =</span> <span class="st">"America/Chicago"</span>)</span>
+<span id="cb44-3"><a></a></span>
+<span id="cb44-4"><a></a>dst <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-01-30 09:55:00 CST"</code></pre>
+<pre><code>[1] "2026-03-08 09:55:00 CDT"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">ymd_hms</span>(<span class="st">"2023-02-28 09:55:00"</span>, </span>
-<span id="cb46-2"><a></a>        <span class="at">tz =</span> <span class="st">"America/Chicago"</span>) <span class="sc">+</span> </span>
-<span id="cb46-3"><a></a>  <span class="fu">days</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>dst <span class="sc">+</span> <span class="fu">ddays</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2023-03-01 09:55:00 CST"</code></pre>
+<pre><code>[1] "2026-03-08 10:55:00 CDT"</code></pre>
 </div>
 </div>
 </div></div>
@@ -976,21 +977,21 @@ Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_87d1453b" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_6a9da43e" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
 </section>
-<section id="if-time" class="slide level2">
-<h2>If time</h2>
-<p>Get as far as you can in replicating this plot of series 8 data:</p>
+<section id="if-time-optional" class="slide level2">
+<h2>If time (optional)</h2>
+<p>Get as far as you can in replicating this plot of series 8 data. You will need the {gghighlight} package (<code>install.packages("gghighlight")</code>).</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides11_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
+<p><img data-src="slides11_files/figure-html/unnamed-chunk-32-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1215,44 +1216,6 @@ Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</code></pre>
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
