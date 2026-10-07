@@ -1,0 +1,21 @@
+order_id,date,drink,size,price,wait_minutes
+1001,2026-09-14,latte,medium,4.50,3
+1002,9/14/2026,"latte",small,3.75,NA
+1003,Sept 15 2026,mocha,large,5.25,6
+1004,15-Sep-26,"mocha",medium,-999,4
+1005,2026-09-16,"chai, iced",large,4.95,
+1006,9/16/2026,chai,small,3.50,2
+1007,Sept 17 2026,drip,medium,2.75,-999
+1008,17-Sep-26,"drip",large,3.25,1
+1009,2026-09-18,latte,small,NA,3
+1010,9/18/2026,"cold brew",medium,4.25,5
+1011,Sept 19 2026,cold brew,large, ,7
+1012,19-Sep-26,"latte",medium,4.50,NA
+1013,2026-09-20,mocha,small,-999,2
+1014,9/20/2026,"chai, iced",medium,4.50,4
+1015,Sept 21 2026,drip,small,2.25,
+1016,21-Sep-26,"cold brew",small,3.75,3
+1017,2026-09-22,latte,large,NA,-999
+1018,9/22/2026,mocha,medium,4.75,5
+1019,Sept 23 2026,"drip",medium, ,2
+1020,23-Sep-26,chai,large,4.25,NA
