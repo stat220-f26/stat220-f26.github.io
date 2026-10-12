@@ -1,0 +1,156 @@
+---
+title: "Build a word predictor"
+---
+
+```{r}
+library(tidyverse)
+library(tidytext)
+```
+
+Large language models (LLMs) are, at their core, programs that predict the next word (or piece of a word) given the words so far. In this activity you will build a tiny version of this idea, using only tools you already know: tokenizing, counting, and a bit of `dplyr`. You will not need an LLM or any AI tool for this activity.
+
+This should take about 15 to 20 minutes. The questions marked **Turn in** should be answered in complete sentences in your next homework.
+
+# The data
+
+We will use the same Coursera reviews you worked with on Wednesday.
+
+```{r}
+reviews <- read_csv("https://stat220-f26.github.io/data/en_coursera_sample.csv")
+glimpse(reviews)
+```
+
+# Step 1: Tokenize into bigrams
+
+A *bigram* is a pair of words that appear next to each other. Fill in the blanks to split every review into bigrams, then separate each bigram into its first and second word.
+
+```{r}
+#| eval: false # Remember to remove this line
+
+bigrams <- reviews |>
+  unnest_tokens(output = bigram, input = ___, token = "___", n = ___) |>
+  filter(!is.na(bigram)) |>
+  separate(bigram, into = c("word1", "word2"), sep = " ")
+
+bigrams
+```
+
+*Hint:* see `?unnest_tokens`, or look back at Wednesday's activity.
+
+# Step 2: Count the bigrams
+
+Count how many times each `word1`, `word2` pair appears, sorted from most to least common.
+
+```{r}
+#| eval: false # Remember to remove this line
+
+bigram_counts <- bigrams |>
+  ___(word1, word2, sort = TRUE)
+
+bigram_counts
+```
+
+**Turn in (Question 1):** What are the three most common bigrams? Notice that we did *not* remove stopwords this time. Why would removing them be a bad idea if our goal is to predict the next word?
+
+# Step 3: Predict the next word
+
+Suppose someone types a word and we want to guess the next one. One simple rule: pick the word that most often follows it in the reviews.
+
+```{r}
+#| eval: false # Remember to remove this line
+
+bigram_counts |>
+  filter(word1 == "___") |>
+  slice_max(___, n = 5)
+```
+
+Try this for `"data"`, `"the"`, and one word of your choice.
+
+**Turn in (Question 2):** For `"data"`, what are the top predicted next words? If we always picked the single most likely next word, what would go wrong when we tried to generate a whole sentence?
+
+# Step 4: Turn counts into probabilities
+
+Counts are hard to compare across words (`"the"` shows up far more often than `"python"`). Convert them to probabilities: for each `word1`, what proportion of the time is it followed by each `word2`?
+
+```{r}
+#| eval: false # Remember to remove this line
+
+bigram_probs <- bigram_counts |>
+  group_by(___) |>
+  mutate(prob = n / sum(___)) |>
+  ungroup()
+```
+
+As a check, the probabilities for any one `word1` should add up to 1:
+
+```{r}
+#| eval: false # Remember to remove this line
+
+bigram_probs |>
+  filter(word1 == "great") |>
+  summarize(total = sum(prob))
+```
+
+# Step 5: Generate text
+
+Instead of always taking the most likely word, we can *sample* the next word at random, giving more likely words a better chance. Run this chunk a few times:
+
+```{r}
+#| eval: false # Remember to remove this line
+
+bigram_probs |>
+  filter(word1 == "great") |>
+  slice_sample(n = 1, weight_by = prob) |>
+  pull(word2)
+```
+
+Now we repeat that step over and over, using each new word as the next starting point. The function below does this for you. (Don't worry about how it works yet; we will learn how to write functions and loops next week.)
+
+```{r}
+#| eval: false # Remember to remove this line
+
+generate_text <- function(start, n_words = 10) {
+  words <- start
+  for (i in seq_len(n_words)) {
+    next_word <- bigram_probs |>
+      filter(word1 == words[length(words)]) |>
+      slice_sample(n = 1, weight_by = prob) |>
+      pull(word2)
+    if (length(next_word) == 0) break
+    words <- c(words, next_word)
+  }
+  paste(words, collapse = " ")
+}
+
+generate_text("this", n_words = 12)
+```
+
+Run `generate_text()` several times, with different starting words (try `"the"`, `"i"`, `"great"`, and a word of your choice). Try a starting word that you think will *not* be in the reviews at all.
+
+**Turn in (Question 3):** Paste one generated sentence that you think is the most convincing and one that is the least convincing. What does the model get right? What does it get wrong, and why do you think that happens (hint: how many previous words does it use to choose the next one?)
+
+# Step 6: Change the training data
+
+The model only knows what it has seen. Re-build it using only a subset of the reviews, then generate text again. In the chunk below, choose a condition for `filter()`. For example, `Label <= 2` keeps only 1 and 2 star reviews, and `Label == 5` keeps only 5 star reviews. You could also use `str_detect(CourseId, "data-science")` to keep one subject.
+
+```{r}
+#| eval: false # Remember to remove this line
+
+bigram_probs <- reviews |>
+  filter(___) |>
+  unnest_tokens(output = bigram, input = Review, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram)) |>
+  separate(bigram, into = c("word1", "word2"), sep = " ") |>
+  count(word1, word2) |>
+  group_by(word1) |>
+  mutate(prob = n / sum(n)) |>
+  ungroup()
+
+generate_text("this", n_words = 12)
+```
+
+**Turn in (Question 4):** What subset did you choose? Generate a few sentences and describe how they differ from the ones you generated with all of the reviews. What does this tell you about where a language model's "knowledge" comes from?
+
+# If time (optional)
+
+Our model only looks at *one* previous word. What would change if it looked at two (a trigram model)? Use `n = 3` in `unnest_tokens()` and look at the most common trigrams. How many different trigrams are there compared to bigrams? What proportion of each appear only once?

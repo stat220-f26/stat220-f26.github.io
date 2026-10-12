@@ -1,0 +1,317 @@
+---
+title: "How LLMs <br>Work"
+subtitle: Day 15 (video)
+institute: "Carleton College <br> Stat 220 - Fall 2026"
+author: "Prof Amanda Luby"
+footer: "[🔗 stat220-f26.github.io](https://stat220-f26.github.io)"
+format:
+  revealjs:
+    # These settings normally come from slides/_metadata.yml.
+    # Remove this block (and fix the image paths) when moving into slides/NN/.
+    theme: ../slides/slides.scss
+    transition: fade
+    slide-number: true
+    chalkboard: true
+    highlight-style: a11y-dark
+    code-block-border-left: "#31BAE9"
+    incremental: true
+    code-copy: true
+    scrollable: true
+auto-stretch: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+library(tidytext)
+library(ggthemes)
+
+slides_theme = theme_minimal(
+  base_family = "Atkinson Hyperlegible",
+  base_size = 16)
+
+theme_set(slides_theme)
+
+set.seed(220)
+
+reviews <- read_csv("https://stat220-f26.github.io/data/en_coursera_sample.csv")
+
+bigram_probs <- reviews |>
+  unnest_tokens(output = bigram, input = Review, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram)) |>
+  separate(bigram, into = c("word1", "word2"), sep = " ") |>
+  count(word1, word2, sort = TRUE) |>
+  group_by(word1) |>
+  mutate(prob = n / sum(n)) |>
+  ungroup()
+
+generate_text <- function(start, n_words = 10) {
+  words <- start
+  for (i in seq_len(n_words)) {
+    next_word <- bigram_probs |>
+      filter(word1 == words[length(words)]) |>
+      slice_sample(n = 1, weight_by = prob) |>
+      pull(word2)
+    if (length(next_word) == 0) break
+    words <- c(words, next_word)
+  }
+  paste(words, collapse = " ")
+}
+```
+
+## Today {.nonincremental}
+
+1. What you built
+2. Where it breaks
+3. What LLMs change
+4. Takeaways
+
+## Autocomplete {.center}
+
+When you type a text message, your phone suggests the next word.
+
+. . .
+
+Today's question: **what would it take to turn your bigram model into something like ChatGPT?**
+
+# What you built {.maize}
+
+## A language model
+
+::: {.nonincremental}
+A *language model* assigns a probability to the next token, given the text so far.
+:::
+
+1. Split text into tokens (here: words)
+2. Count which tokens follow which
+3. Turn counts into probabilities
+4. *Sample* the next token, and repeat
+
+## From counts to probabilities
+
+```{r}
+#| echo: true
+bigram_probs |>
+  filter(word1 == "great") |>
+  slice_max(prob, n = 5)
+```
+
+## Sampling the next word
+
+```{r}
+#| echo: true
+#| eval: false
+bigram_probs |>
+  filter(word1 == "great") |>
+  slice_sample(n = 1, weight_by = prob) |>
+  pull(word2)
+```
+
+. . .
+
+Always picking the most likely word gives the same boring text every time. Sampling gives different text each run, with likely words chosen more often.
+
+## Text from your model
+
+```{r}
+#| echo: true
+generate_text("this", n_words = 12)
+generate_text("the", n_words = 12)
+generate_text("i", n_words = 12)
+```
+
+# Where it breaks {.maize}
+
+## Problem 1: one word of context
+
+Each new word only "sees" the word right before it, so sentences wander.
+
+```{r}
+#| echo: false
+generate_text("great", n_words = 15)
+```
+
+. . .
+
+Nothing connects the beginning of a sentence to its end.
+
+## Problem 2: words it has never seen
+
+```{r}
+#| echo: true
+generate_text("xyzzy", n_words = 10)
+```
+
+. . .
+
+If a word never appeared in the training reviews, the model has nothing to say.
+
+## Problem 3: no notion of meaning
+
+To the model, `great` and `excellent` are just two unrelated rows in a table. What it learns about one tells it nothing about the other.
+
+```{r}
+#| echo: false
+bigram_probs |>
+  filter(word1 %in% c("great", "excellent", "awesome", "fantastic", "superb", "terrific")) |>
+  group_by(word1) |>
+  summarize(`times seen` = sum(n), `different next words` = n()) |>
+  arrange(desc(`times seen`))
+```
+
+. . .
+
+Words that mean almost the same thing end up with very different amounts of data.
+
+## Problem 4: more context means less data
+
+```{r}
+#| echo: false
+tri_counts <- reviews |>
+  unnest_tokens(output = trigram, input = Review, token = "ngrams", n = 3) |>
+  filter(!is.na(trigram)) |>
+  count(trigram)
+
+bi_counts <- bigram_probs
+
+tibble(
+  model = c("Bigrams (1 word of context)", "Trigrams (2 words of context)"),
+  `different combinations` = scales::comma(c(nrow(bi_counts), nrow(tri_counts))),
+  `seen only once` = scales::percent(c(mean(bi_counts$n == 1), mean(tri_counts$n == 1)), accuracy = 1)
+)
+```
+
+. . .
+
+Looking at more words makes the model smarter, but most combinations are then ones it has barely seen.
+
+# What LLMs change {.maize}
+
+## Fix 1: tokens are pieces of words
+
+LLMs usually split text into *subword tokens*, not words. Rare and new words are built from familiar pieces.
+
+```
+unbelievably helpful instructors
+
+un | believ | ably |  helpful |  instruct | ors
+```
+
+::: {.aside}
+Illustrative only. Real tokenizers split text differently.
+:::
+
+## Fix 2: meaning as numbers
+
+Each token is represented by a list of numbers (an *embedding*), learned so that tokens used in similar contexts get similar numbers.
+
+```{r}
+#| fig-height: 4
+#| fig-alt: "A scatterplot with made-up two-dimensional coordinates for words. Great, excellent, and fantastic are close together, python, java, and code are close together, and instructor, teacher, and professor are close together."
+emb <- tribble(
+  ~word,        ~x,   ~y,
+  "great",      1.0,  3.2,
+  "excellent",  1.4,  3.5,
+  "fantastic",  0.8,  3.7,
+  "boring",     1.2,  0.6,
+  "terrible",   0.7,  0.9,
+  "python",     4.2,  2.1,
+  "java",       4.6,  2.4,
+  "code",       4.0,  2.7,
+  "instructor", 2.6,  1.2,
+  "teacher",    2.9,  1.5,
+  "professor",  2.4,  1.6
+)
+
+ggplot(emb, aes(x, y, label = word)) +
+  geom_point(size = 3) +
+  geom_text(vjust = -0.8, size = 5) +
+  labs(x = NULL, y = NULL, caption = "Made-up coordinates, for illustration") +
+  theme(axis.text = element_blank(), panel.grid = element_blank())
+```
+
+. . .
+
+This lets a model handle contexts it has never seen *exactly*.
+
+## Fix 3: attention
+
+Instead of one previous word, the model looks at all of the text so far and learns which earlier words matter most for the next one.
+
+```{r}
+#| fig-height: 3
+#| fig-alt: "A sentence 'the instructors were so helpful that I' with arrows from the next-word position pointing to earlier words. The thickest arrows point to 'instructors' and 'helpful'."
+w <- c("the", "instructors", "were", "so", "helpful", "that", "I", "...?")
+att <- tibble(
+  word = w[1:7],
+  x = 1:7,
+  weight = c(0.3, 2.2, 0.4, 0.4, 2.8, 0.8, 1.0)
+)
+
+ggplot() +
+  geom_segment(
+    data = att,
+    aes(x = 8, xend = x, y = 1, yend = 0.15, linewidth = weight),
+    arrow = arrow(length = unit(0.12, "inches")),
+    show.legend = FALSE
+  ) +
+  geom_text(data = tibble(x = 1:8, y = 0, word = w), aes(x, y, label = word), size = 6) +
+  scale_linewidth(range = c(0.2, 2.5)) +
+  scale_y_continuous(limits = c(-0.2, 1.2)) +
+  labs(x = NULL, y = NULL, caption = "Made-up weights, for illustration") +
+  theme_void(base_family = "Atkinson Hyperlegible")
+```
+
+. . .
+
+This idea, plus a very large neural network, is what a *transformer* is.
+
+## Training at scale
+
+::: {.nonincremental}
+Same task as your bigram model: **predict the next token**.
+:::
+
+1. *Pretraining*: predict the next token over a huge amount of text, with an enormous number of adjustable numbers
+2. *Fine-tuning*: further training, including human feedback, so the model follows instructions and is helpful
+
+## Temperature
+
+Temperature controls how much the model favors the top choices when it samples.
+
+```{r}
+#| fig-height: 4
+#| fig-alt: "Three bar charts of next-word probabilities after 'great'. At low temperature, 'course' has nearly all the probability. At high temperature, the probabilities are spread more evenly across words."
+great_next <- bigram_probs |>
+  filter(word1 == "great")
+
+crossing(temp = c(0.5, 1, 2), great_next) |>
+  group_by(temp) |>
+  mutate(p_adj = prob^(1 / temp) / sum(prob^(1 / temp))) |>
+  slice_max(prob, n = 8) |>
+  ungroup() |>
+  mutate(temp = factor(temp, labels = c("Low (0.5)", "Medium (1)", "High (2)"))) |>
+  ggplot(aes(x = p_adj, y = fct_reorder(word2, prob))) +
+  geom_col() +
+  facet_wrap(~temp) +
+  labs(x = "Probability of next word, after \"great\"", y = NULL)
+```
+
+# Takeaways {.maize}
+
+## Three things to remember
+
+1. An LLM is the same idea you built: predict the next token, then sample. What changes is how much context it uses and how words are represented.
+2. It predicts *plausible* text, not *true* text, so a fluent answer can be wrong.
+3. Its outputs reflect its training data (Step 6 of the activity).
+
+## What this means for this course
+
+::: {.nonincremental}
+- Check anything an LLM tells you, the same way you would check a source you do not trust
+- Our course AI policy is in the syllabus
+- The activity and check questions are due before class on Wednesday 10/21
+:::
