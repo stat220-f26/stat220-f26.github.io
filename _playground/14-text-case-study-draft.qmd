@@ -1,0 +1,126 @@
+---
+title: "14-text-case-study"
+---
+
+```{r}
+library(tidyverse)
+library(tidytext) # functions for doing text analysis
+```
+
+# Regex practice
+
+A vector called `words` is loaded with `stringr` and contains a corpus of 980 words used in text analysis. Use `stringr` functions and regular expressions to find the words that satisfy the following descriptions.
+
+```{r}
+pattern <- "type your pattern here"
+str_subset(words, pattern)
+```
+
+1. Find all words that start with `y`.
+2. Find all words that end with `x`.
+3. Find all words that start with a vowel.
+4. Find all words that start with consonants.
+5. Find all words that are exactly three letters long.
+6. Find all words that end with `ing` or `ise`.
+7. Find all words that have seven letters or more.
+8. Find all words that start with three consonants.
+
+# Load the Data
+
+Random sample of 26,882 reviews of Coursera courses (Source: [Kaggle](https://www.kaggle.com/datasets/septa97/100k-courseras-course-reviews-dataset/data)).
+
+```{r}
+en_coursera_reviews <- read_csv("https://stat220-f26.github.io/data/en_coursera_sample.csv")
+glimpse(en_coursera_reviews)
+```
+
+# Tokenize
+
+```{r}
+en_coursera_reviews |>
+  unnest_tokens(output = word, input = Review) |>
+  select(CourseId, word)
+```
+
+# Count the tokens
+
+```{r}
+en_coursera_reviews |>
+  unnest_tokens(output = word, input = Review) |>
+  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |>
+  filter(str_detect(CourseId, "data-science")) |>
+  group_by(CourseId) |>
+  count(word) |>
+  slice_max(n, n = 10) |>
+  ggplot(aes(x = n, y = fct_reorder(word, n))) +
+  geom_col() +
+  facet_wrap(~CourseId, scales = "free_y", nrow = 2) +
+  labs(
+    y = "Word"
+  )
+```
+
+# Bigrams
+
+A *bigram* is a pair of words that appear next to each other. We make them with `token = "ngrams"` and `n = 2`.
+
+## Most common bigrams
+
+```{r}
+bigrams <- en_coursera_reviews |>
+  unnest_tokens(output = bigram, input = Review, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram))
+
+bigrams |>
+  count(bigram, sort = TRUE)
+```
+
+**Question 1.** What are the five most common bigrams? We did not remove stopwords. How would the list change if we had removed them first?
+
+## Remove stopwords first
+
+To remove stopwords *and* keep bigrams, remove them from each review first (this is the "clean" review idea), then make bigrams from the clean reviews.
+
+```{r}
+coursera_reviews <- en_coursera_reviews |>
+  unnest_tokens(word, Review) |>
+  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |>
+  group_by(CourseId, review_id) |>
+  summarize(review_clean = paste(word, collapse = " "), .groups = "drop")
+
+coursera_reviews |>
+  unnest_tokens(output = bigram, input = review_clean, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram)) |>
+  count(bigram, sort = TRUE)
+```
+
+**Question 2.** What are the five most common bigrams now? Describe in a sentence what each list (with and without stopwords) is useful for.
+
+## Which word comes next?
+
+```{r}
+bigrams_sep <- bigrams |>
+  separate(bigram, into = c("word1", "word2"), sep = " ")
+
+bigrams_sep |>
+  count(word1, word2, sort = TRUE)
+```
+
+Pick a word and find the words that most often come after it:
+
+```{r}
+bigrams_sep |>
+  filter(word1 == "data") |>
+  count(word2, sort = TRUE) |>
+  slice_max(n, n = 5)
+```
+
+**Question 3.** Try three different words in place of `"data"`. Which one gives the most predictable next word, and which gives the least predictable? (We'll build on this on Friday.)
+
+# Your turn
+
+Explore the `en_coursera_reviews` dataset with the folks around you. Can you replicate my analyses, and try a few of your own? Here are some ideas:
+
+- Explore another subject (besides `data-science`)
+- `Label` contains the numeric rating for the course. How do the most common words or bigrams differ between highly rated and low-rated courses?
+- `stopwords::stopwords_getsources()` gives the available stopword dictionaries. How do these differ, and how do they change your results?

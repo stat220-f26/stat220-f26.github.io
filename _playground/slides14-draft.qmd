@@ -1,0 +1,613 @@
+---
+title: "Regex and <br>Text Analysis"
+subtitle: Day 14
+title-slide-attributes:
+  data-background-image: ../slides/img/horst_stringr.jpeg
+  data-background-size: 70%
+  data-background-position: bottom right
+  data-background-opacity: "0.8"
+  data-slide-number: none
+institute: "Carleton College <br> Stat 220 - Fall 2026"
+author: "Prof Amanda Luby"
+footer: "[🔗 stat220-f26.github.io](https://stat220-f26.github.io)"
+format:
+  revealjs:
+    # These settings normally come from slides/_metadata.yml.
+    # Remove this block (and fix the image paths) when moving into slides/14/.
+    theme: ../slides/slides.scss
+    transition: fade
+    slide-number: true
+    chalkboard: true
+    highlight-style: a11y-dark
+    code-block-border-left: "#31BAE9"
+    incremental: true
+    code-copy: true
+    code-link: true
+    scrollable: true
+auto-stretch: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(countdown)
+library(tidyverse)
+library(ggthemes)
+library(tidytext)
+
+slides_theme = theme_minimal(
+  base_family = "Atkinson Hyperlegible",
+  base_size = 16)
+
+theme_set(slides_theme)
+```
+
+## Today {.nonincremental}
+
+1. Portfolio Project 2
+2. Regex, continued
+3. Intro to text analysis: tokens, stopwords, and bigrams
+
+# Portfolio Project 2 {.maize}
+
+## Portfolio Project 2
+
+TODO: due date, partner info, where to find the prompt.
+
+# Regular Expressions, continued {.maize}
+
+## Where we left off
+
+Suppose we wish to anonymize phone numbers in survey results
+
+```{r}
+a1 <- "Home: 507-645-5489"
+a2 <- "Cell: 219.917.9871"
+a3 <- "My work phone is 507-202-2332"
+a4 <- "I don't have a phone"
+info <- c(a1, a2, a3, a4)
+```
+
+::: {.nonincremental}
+Last time: literal matches, `.`, and `[]`. Today: special patterns, anchors, alternatives, and repetition.
+:::
+
+## Special patterns 
+
+There are a number of special patterns that match more than one character
+
+::: nonincremental 
+- `\\d` - digit
+- `\\s` - white space
+- `\\w` - word
+- `\\t` - tab
+- `\\n` - newline
+:::
+
+. . . 
+
+```{r }
+str_view(a1, "\\d")
+```
+
+::: aside
+Outside of R, these would be single back slashes.
+:::
+
+## Caution!
+
+```{r }
+str_view(a1, "\\w")
+```
+
+## `[^]` match any occurence except
+
+ANYTHING BUT numbers between 2 and 7
+
+```{r }
+str_view(a1, "[^2-7]")
+```
+
+::: aside
+Common pitfall: forgetting the brackets
+:::
+
+## Anchors
+
+Anchors look for matches at the start `^` or end `$`
+
+```{r}
+#| echo: false
+str_view(info)
+```
+
+::: panel-tabset
+
+### Entries that start with a digit
+
+```{r}
+str_view(info, "^\\d")
+```
+
+
+### Entries that end with a digit
+
+```{r}
+str_view(info, "\\d$")
+```
+
+:::
+
+## Use regex in `str_detect`, `str_sub`, etc: 
+
+```{r }
+str_view(info)
+```
+
+```{r }
+str_detect(info, "\\d")
+```
+
+```{r }
+str_replace_all(info, "\\d", "X")
+```
+
+## Your turn
+
+::: task
+A vector called `words` is loaded with `stringr` and contains a corpus of 980 words used in text analysis. Use `stringr` functions and regular expressions to find the words that satisfy the following descriptions. 
+
+#### 1. Find all words that start with `y`.
+
+```{r}
+#| eval: false
+pattern <- "type your pattern here"
+str_subset(words, pattern)
+```
+
+#### 2. Find all words that end with `x`.
+
+#### 3. Find all words that start with a vowel.
+
+#### 4. Find all words that start with consonants.
+:::
+
+```{r}
+#| echo: false
+
+countdown::countdown(4)
+```
+
+## Alternative patterns
+
+`|` allows you to match one or more alternative patterns
+
+```{r}
+str_view(info, "^H|C")
+```
+
+
+## "Fixing" the order of operations
+
+Why are these different?
+
+::::: columns
+::: {.column .nonincremental width="50%"}
+```{r}
+str_view(info, "^H|C.")
+```
+:::
+
+
+::: {.column .nonincremental width="50%"}
+```{r}
+str_view(info, "^(H|C).")
+```
+:::
+:::::
+
+## Repetition
+
+You can search for a pattern followed by the number  of matches
+
+::::: columns
+::: {.column .nonincremental width="50%"}
+- `?`: 0 or 1
+- `+`: 1 or more
+- `*`: 0 or more
+- `{n}`: exactly n times
+- `{n,}`: n or more times
+- `{,m}`: at most m times
+- `{n,m}`: between n and m times
+:::
+
+::: {.column .nonincremental .fragment width="50%"}
+Example: detect three digits in a row
+
+```{r}
+str_view(a1, "\\d{3}")
+```
+
+:::
+:::::
+
+## Your turn: 
+
+::: task
+#### Find all words that are exactly three letters long.
+
+#### Find all words that end with `ing` or `ise`.
+
+#### Find all words that have seven letters or more.
+
+#### Find all words that start with three consonants.
+:::
+
+```{r}
+#| echo: false
+
+countdown::countdown(2.5)
+```
+
+# Intro to Text Analysis {.maize}
+
+## Text Analysis
+
+Up to this point, we've been thinking of string data as a column in our dataset: 
+
+  - Names
+  - Phone numbers
+  - Addresses
+  - Course titles
+  - etc. 
+
+. . . 
+
+which are all relatively short and structured. We can extract meaning from them using relatively simple functions and "know what we're looking for".
+
+## {background-image="../slides/img/coursera-data-sci.png"}
+
+
+## Sometimes, text data is more unstructured
+
+Random (?) sample of 26,882 reviews of coursera courses
+
+```{r}
+en_coursera_reviews <- read_csv("https://stat220-f26.github.io/data/en_coursera_sample.csv")
+en_coursera_reviews
+```
+
+::: aside
+Source: [Kaggle](https://www.kaggle.com/datasets/septa97/100k-courseras-course-reviews-dataset/data)
+:::
+
+*Note:* may need to install `tidytext` and `stopwords` packages
+
+## Sometimes, text data is more unstructured
+
+```{r}
+en_coursera_reviews %>%
+  filter(str_detect(Review, "ggplot")) %>%
+  pull(Review)
+``` 
+
+## {.center}
+
+::::: columns
+::: {.column .nonincremental width="50%"}
+
+![](https://juliasilge.github.io/tidytext/reference/figures/tidytext.png){width="60%"}
+:::
+
+:::{.column .nonincremental width="50%"}
+- Functions for text analysis that follow tidy data principles
+
+- *Not* part of the `tidyverse`, but plays well with other packages
+
+```{r}
+library(tidytext)
+```
+
+:::
+:::::
+
+## Some notation
+
+*document*: an observation of text data (in this case, a review)
+
+. . . 
+
+*corpus*: collection of many documents
+
+. . . 
+
+*token*: a unit of analysis within the document (typically a word, but could be a sentence or a line or a pair of words, etc.)
+
+## Text as tidy data
+
+1. *tokenize* each document
+    - Each *row* in the dataset is a token
+2. Remove *stopwords*
+    - Words like "the" and "is" typically aren't interesting
+    - Makes the dataset smaller and easier to work with
+3. Count the tokens
+4. (optional) *fancy count* the tokens
+    - Standardize based on total number of tokens
+    - How common is a token *relative to other documents*
+    - How common are "good words" or "bad words"
+
+## `unnest_tokens()`
+
+::::: columns
+::: {.column width="50%"}
+- `tbl`: our data
+- `output`: what should the output column be called?
+- `input`: what column do we tokenize?
+- `token`: default is "word" but can also be "ngrams", "sentences", "lines", "paragraphs", etc.
+- `to_lower`: should tokens be converted to lowercase
+:::
+::: {.column .nonincremental width="50%"}
+```{r}
+#| eval: false
+unnest_tokens(
+  tbl,
+  output,
+  input,
+  token = "words",
+  to_lower = TRUE,
+  drop = TRUE,
+  ...
+)
+```
+:::
+:::::
+
+
+## Tokenize
+
+```{r}
+library(tidytext)
+en_coursera_reviews |>
+  unnest_tokens(output = word, input = Review) |>
+  select(CourseId, word)
+```
+
+
+## Stopwords
+
+```{r}
+get_stopwords(source = "stopwords-iso") |> pull(word)
+```
+
+## `anti_join`
+
+![](../slides/img/anti-join.gif)
+
+## Remove stopwords
+
+```{r}
+#| code-line-numbers: "3"
+
+en_coursera_reviews |>
+  unnest_tokens(output = word, input = Review) |>
+  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |>
+  select(CourseId, word)
+```
+
+## Filter to include only data science courses
+
+```{r}
+#| code-line-numbers: "4"
+
+en_coursera_reviews |>
+  unnest_tokens(output = word, input = Review) |>
+  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |>
+  filter(str_detect(CourseId, "data-science")) |> 
+  select(CourseId, word)
+```
+
+## Count the tokens
+
+```{r}
+#| output-location: slide
+#| code-line-numbers: "5-6|7|8-10"
+
+en_coursera_reviews |>
+  unnest_tokens(output = word, input = Review) |>
+  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |>
+  filter(str_detect(CourseId, "data-science")) |> 
+  group_by(CourseId) %>%
+  count(word) %>%
+  slice_max(n, n = 10) %>%
+  ggplot(aes(x = n, y = fct_reorder(word, n))) + 
+  geom_col() + 
+  facet_wrap(~CourseId, scales = "free_y", nrow = 2) + 
+  labs(
+    y = "Word"
+  ) + 
+  theme(strip.text = element_text(size = 8))
+```
+
+# Bigrams {.maize}
+
+## Tokens don't have to be single words
+
+A *bigram* is a pair of words that appear next to each other. Use `token = "ngrams"` and `n = 2`.
+
+```{r}
+en_coursera_reviews |>
+  filter(review_id == 6) |>
+  pull(Review)
+```
+
+```{r}
+en_coursera_reviews |>
+  filter(review_id == 6) |>
+  unnest_tokens(output = bigram, input = Review, token = "ngrams", n = 2) |>
+  select(review_id, bigram)
+```
+
+. . .
+
+Each word (except the first and last) appears in *two* bigrams.
+
+## Most common bigrams
+
+```{r}
+#| output-location: slide
+en_coursera_reviews |>
+  unnest_tokens(output = bigram, input = Review, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram)) |>
+  count(bigram, sort = TRUE) |>
+  slice_max(n, n = 10) |>
+  ggplot(aes(x = n, y = fct_reorder(bigram, n))) +
+  geom_col() +
+  labs(y = "Bigram", x = "Number of reviews")
+```
+
+. . .
+
+We did *not* remove stopwords here. `anti_join()` on bigrams would not work anyway, because no bigram is a stopword.
+
+## If we do want to remove stopwords
+
+Remove stopwords from each review *first*, then make bigrams from the cleaned reviews.
+
+```{r}
+#| code-line-numbers: "1-5|7-10"
+coursera_reviews <- en_coursera_reviews |>
+  unnest_tokens(word, Review) |>
+  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |>
+  group_by(CourseId, review_id) |>
+  summarize(review_clean = paste(word, collapse = " "), .groups = "drop")
+
+coursera_reviews |>
+  unnest_tokens(output = bigram, input = review_clean, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram)) |>
+  count(bigram, sort = TRUE)
+```
+
+## Which should we use?
+
+::: {.nonincremental}
+- Removing stopwords: **what are people talking about?** (`machine learning`, `data science`, `programming assignments`)
+- Keeping stopwords: **what does the language look like?** (`this course`, `a lot`, `thank you`)
+:::
+
+. . .
+
+It depends on the question. For the next piece, we will keep them.
+
+## Which word comes next?
+
+Split each bigram into its first and second word:
+
+```{r}
+bigrams <- en_coursera_reviews |>
+  unnest_tokens(output = bigram, input = Review, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram)) |>
+  separate(bigram, into = c("word1", "word2"), sep = " ")
+
+bigrams |>
+  count(word1, word2, sort = TRUE)
+```
+
+. . .
+
+What word most often comes after `data`?
+
+```{r}
+bigrams |>
+  filter(word1 == "data") |>
+  count(word2, sort = TRUE) |>
+  slice_max(n, n = 5)
+```
+
+## Your turn
+
+::: {.task .nonincremental}
+Work through `14-text-case-study.qmd`, including the bigram section. Then, with the folks around you, explore the reviews:
+
+- Explore another subject (besides `data-science`)
+- `Label` contains the numeric rating for the course. How do the most common words or bigrams differ between highly rated and low-rated reviews?
+- Which words most often follow `not`? What does that tell you about how people use it?
+:::
+
+```{r}
+#| echo: false
+countdown::countdown(8)
+```
+
+## Friday
+
+::: {.nonincremental}
+- Lab Quiz 2 in class
+- Out of class: "How LLMs work" video and a short activity where you build a word predictor from the bigram counts you just made
+- Due before class on Wednesday 10/21
+:::
+
+# For reference {.maize}
+
+Not covered in class, but here if you want to use them in your own analysis.
+
+## Removing stopwords: a different dictionary
+
+`stopwords::stopwords_getsources()` lists the available dictionaries, and they give different results.
+
+```{r}
+coursera_reviews2 <- en_coursera_reviews |>
+  unnest_tokens(word, Review) |>
+  anti_join(get_stopwords(source = "snowball"), by = "word") |>
+  group_by(CourseId, review_id) |>
+  summarize(review_clean = paste(word, collapse = " "), .groups = "drop")
+```
+
+Original review:
+
+```{r}
+en_coursera_reviews |> filter(review_id == 6) |> pull(Review)
+```
+
+Clean review (`stopwords-iso`):
+
+```{r}
+coursera_reviews |> filter(review_id == 6) |> pull(review_clean)
+```
+
+Clean review (`snowball`):
+
+```{r}
+coursera_reviews2 |> filter(review_id == 6) |> pull(review_clean)
+```
+
+## tf-idf
+
+Idea: how common are certain tokens *relative to the rest of the documents in the corpus*?
+
+. . .
+
+tf(t,d) = "term frequency": what proportion of document d is term t?
+
+. . .
+
+idf = "inverse document frequency": log-scaled inverse fraction of documents that contain the term
+
+$$\text{idf} = \log \frac{\text{number of documents}}{\text{number of documents containing term t}}$$
+
+. . .
+
+$$\text{tf-idf(t, d)} = \text{tf(t, d)} \times \text{idf(t)}$$
+
+## tf-idf in R
+
+Highest tf-idf words are used a lot within a document, and rarely in other documents.
+
+```{r}
+en_coursera_reviews |>
+  unnest_tokens(word, Review) |>
+  count(review_id, word) |>
+  bind_tf_idf(word, review_id, n) |>
+  arrange(desc(tf_idf))
+```
