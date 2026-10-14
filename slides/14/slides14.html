@@ -234,14 +234,15 @@ Prof Amanda Luby
 <p>[graphs from google]</p>
 </section><section id="other-feedback" class="slide level2"><h2>Other feedback:</h2>
 <ul>
-<li class="fragment">finished .qmd files would be helpful (sometimes answers come and go too fast)</li>
-<li class="fragment">I do not like the lab quizzes, think its undue stress and we know most of the code anyway. I don’t like the moving around group work personally, but I think working on larger projects in groups would be a good thing as I feel like thats how it works in the real world often, but I understand that sharing R documents/code can be a pain</li>
+<li class="fragment">I do not like the lab quizzes, think its undue stress and we know most of the code anyway.</li>
+<li class="fragment">I don’t like the moving around group work personally, but I think working on larger projects in groups would be a good thing as I feel like thats how it works in the real world often, but I understand that sharing R documents/code can be a pain</li>
 <li class="fragment">I feel like random errors always pop up in R/RStudio right as I’m about to submit, so I would love a little more guidance on how to navigate these particular situations.</li>
-<li class="fragment">I think a small note sheet created by ourselves could be very helpful on the lab quizzes. Some of the coding can be very hard to memorize, even if is short. Especially since we cannot check our work mid quiz since it is on paper.</li>
+<li class="fragment">I know time in class is limited, but I would appreciate a slower approach to the ways code works, specifically in terms of what different command looks like and the logic behind why commands work in the way they do.</li>
 <li class="fragment">For the lab quizzes I’d really like more resources, particularly practice problems to study. The study guide felt much easier compared to the quiz and it didn’t feel like their was enouph content on it to learn everything I needed to.</li>
 </ul></section><section id="suggested-changes" class="slide level2"><h2>Suggested changes:</h2>
 <ul>
-<li class="fragment">Additional small note sheet for lab quizzes ✅</li>
+<li class="fragment">finished .qmd files would be helpful (sometimes answers come and go too fast) ✅</li>
+<li class="fragment">I think a small note sheet created by ourselves could be very helpful on the lab quizzes. Some of the coding can be very hard to memorize, even if is short. Especially since we cannot check our work mid quiz since it is on paper. ✅</li>
 <li class="fragment">Lab quizzes being handwritten isn’t ideal ？</li>
 <li class="fragment">I don’t like group work ❌</li>
 </ul></section><section id="goals-of-the-grading-scheme" class="slide level2 smaller"><h2>Goals of the grading scheme:</h2>
@@ -269,7 +270,7 @@ Prof Amanda Luby
 </ul>
 </div></div>
 <div class="fragment">
-<h3 id="revision-is-a-key-part-of-this-course-design">Revision is a key part of this course design!</h3>
+<h3 id="revision-is-a-key-part-of-this-course">Revision is a key part of this course!</h3>
 </div>
 </section><section><section id="regular-expressions-regex" class="title-slide slide level1 maize center"><h1>Regular Expressions (regex)</h1>
 
@@ -432,7 +433,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_e6f37870" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_071fd390" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -507,7 +508,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_75504a01" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_21112fd7" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -999,7 +1000,7 @@ Prof Amanda Luby
 </div>
 </div>
 </section><section id="anti_join" class="slide level2"><h2><code>anti_join</code></h2>
-<p><img data-src="../slides/img/anti-join.gif"></p>
+<p><img data-src="../img/anti-join.gif"></p>
 </section><section id="remove-stopwords" class="slide level2"><h2>Remove stopwords</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>en_coursera_reviews <span class="sc">|&gt;</span></span>
@@ -1068,7 +1069,7 @@ Prof Amanda Luby
 </section><section id="count-the-tokens-output" class="slide level2 output-location-slide"><h2>Count the tokens</h2><div class="cell output-location-slide">
 <div class="cell-output-display">
 <div>
-<figure><p><img data-src="slides14_files/figure-html/unnamed-chunk-30-1.png" width="672"></p>
+<figure><p><img data-src="slides14_files/figure-revealjs/unnamed-chunk-30-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1130,7 +1131,7 @@ Prof Amanda Luby
 </section><section id="most-common-bigrams-output" class="slide level2 output-location-slide"><h2>Most common bigrams</h2><div class="cell output-location-slide">
 <div class="cell-output-display">
 <div>
-<figure><p><img data-src="slides14_files/figure-html/unnamed-chunk-33-1.png" width="672"></p>
+<figure><p><img data-src="slides14_files/figure-revealjs/unnamed-chunk-33-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1143,10 +1144,30 @@ Prof Amanda Luby
 <span id="cb55-4"><a></a>  <span class="fu">group_by</span>(CourseId, review_id) <span class="sc">|&gt;</span></span>
 <span id="cb55-5"><a></a>  <span class="fu">summarize</span>(<span class="at">review_clean =</span> <span class="fu">paste</span>(word, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
 <span id="cb55-6"><a></a></span>
-<span id="cb55-7"><a></a>coursera_reviews <span class="sc">|&gt;</span></span>
-<span id="cb55-8"><a></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> bigram, <span class="at">input =</span> review_clean, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
-<span id="cb55-9"><a></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bigram)) <span class="sc">|&gt;</span></span>
-<span id="cb55-10"><a></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb55-7"><a></a>coursera_reviews</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25,553 × 3
+   CourseId                 review_id review_clean                              
+   &lt;chr&gt;                        &lt;dbl&gt; &lt;chr&gt;                                     
+ 1 2-speed-it                    1774 designed mooc                             
+ 2 2-speed-it                    3489 piece lifehacks cio                       
+ 3 2-speed-it                   14001 content deeper areas.but peer review all.…
+ 4 2d-cad                       16986 basic learners autocad experiences        
+ 5 3d-printing-applications      3012 nutritional real examples understand pote…
+ 6 3d-printing-applications      3753 rights patents                            
+ 7 3d-printing-applications      8805 content particuarly week design thinking …
+ 8 3d-printing-applications      8898 merged 1                                  
+ 9 3d-printing-applications     12132 content glean wealth                      
+10 3d-printing-applications     12949 excellent overview 3d printing future     
+# ℹ 25,543 more rows</code></pre>
+</div>
+</div>
+</section><section id="make-bigrams-from-cleaned-reviews" class="slide level2"><h2>Make bigrams from cleaned reviews</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a>coursera_reviews <span class="sc">|&gt;</span></span>
+<span id="cb57-2"><a></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> bigram, <span class="at">input =</span> review_clean, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb57-3"><a></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bigram)) <span class="sc">|&gt;</span></span>
+<span id="cb57-4"><a></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 141,878 × 2
    bigram                      n
@@ -1175,13 +1196,13 @@ Prof Amanda Luby
 </section><section id="which-word-comes-next" class="slide level2"><h2>Which word comes next?</h2>
 <p>Split each bigram into its first and second word:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a>bigrams <span class="ot">&lt;-</span> en_coursera_reviews <span class="sc">|&gt;</span></span>
-<span id="cb57-2"><a></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> bigram, <span class="at">input =</span> Review, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
-<span id="cb57-3"><a></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bigram)) <span class="sc">|&gt;</span></span>
-<span id="cb57-4"><a></a>  <span class="fu">separate</span>(bigram, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"word1"</span>, <span class="st">"word2"</span>), <span class="at">sep =</span> <span class="st">" "</span>)</span>
-<span id="cb57-5"><a></a></span>
-<span id="cb57-6"><a></a>bigrams <span class="sc">|&gt;</span></span>
-<span id="cb57-7"><a></a>  <span class="fu">count</span>(word1, word2, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>bigrams <span class="ot">&lt;-</span> en_coursera_reviews <span class="sc">|&gt;</span></span>
+<span id="cb59-2"><a></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> bigram, <span class="at">input =</span> Review, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb59-3"><a></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bigram)) <span class="sc">|&gt;</span></span>
+<span id="cb59-4"><a></a>  <span class="fu">separate</span>(bigram, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"word1"</span>, <span class="st">"word2"</span>), <span class="at">sep =</span> <span class="st">" "</span>)</span>
+<span id="cb59-5"><a></a></span>
+<span id="cb59-6"><a></a>bigrams <span class="sc">|&gt;</span></span>
+<span id="cb59-7"><a></a>  <span class="fu">count</span>(word1, word2, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 180,469 × 3
    word1  word2      n
@@ -1202,10 +1223,10 @@ Prof Amanda Luby
 <div class="fragment">
 <p>What word most often comes after <code>data</code>?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>bigrams <span class="sc">|&gt;</span></span>
-<span id="cb59-2"><a></a>  <span class="fu">filter</span>(word1 <span class="sc">==</span> <span class="st">"data"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb59-3"><a></a>  <span class="fu">count</span>(word2, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb59-4"><a></a>  <span class="fu">slice_max</span>(n, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>bigrams <span class="sc">|&gt;</span></span>
+<span id="cb61-2"><a></a>  <span class="fu">filter</span>(word1 <span class="sc">==</span> <span class="st">"data"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb61-3"><a></a>  <span class="fu">count</span>(word2, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb61-4"><a></a>  <span class="fu">slice_max</span>(n, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 2
   word2          n
@@ -1230,7 +1251,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_431c4edd" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_79571f45" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -1248,29 +1269,29 @@ Prof Amanda Luby
 </section><section id="removing-stopwords-a-different-dictionary" class="slide level2"><h2>Removing stopwords: a different dictionary</h2>
 <p><code><a href="https://rdrr.io/pkg/stopwords/man/stopwords_getsources.html">stopwords::stopwords_getsources()</a></code> lists the available dictionaries, and they give different results.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>coursera_reviews2 <span class="ot">&lt;-</span> en_coursera_reviews <span class="sc">|&gt;</span></span>
-<span id="cb61-2"><a></a>  <span class="fu">unnest_tokens</span>(word, Review) <span class="sc">|&gt;</span></span>
-<span id="cb61-3"><a></a>  <span class="fu">anti_join</span>(<span class="fu">get_stopwords</span>(<span class="at">source =</span> <span class="st">"snowball"</span>), <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb61-4"><a></a>  <span class="fu">group_by</span>(CourseId, review_id) <span class="sc">|&gt;</span></span>
-<span id="cb61-5"><a></a>  <span class="fu">summarize</span>(<span class="at">review_clean =</span> <span class="fu">paste</span>(word, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>coursera_reviews2 <span class="ot">&lt;-</span> en_coursera_reviews <span class="sc">|&gt;</span></span>
+<span id="cb63-2"><a></a>  <span class="fu">unnest_tokens</span>(word, Review) <span class="sc">|&gt;</span></span>
+<span id="cb63-3"><a></a>  <span class="fu">anti_join</span>(<span class="fu">get_stopwords</span>(<span class="at">source =</span> <span class="st">"snowball"</span>), <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb63-4"><a></a>  <span class="fu">group_by</span>(CourseId, review_id) <span class="sc">|&gt;</span></span>
+<span id="cb63-5"><a></a>  <span class="fu">summarize</span>(<span class="at">review_clean =</span> <span class="fu">paste</span>(word, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Original review:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a>en_coursera_reviews <span class="sc">|&gt;</span> <span class="fu">filter</span>(review_id <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(Review)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a>en_coursera_reviews <span class="sc">|&gt;</span> <span class="fu">filter</span>(review_id <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(Review)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Words cannot describe how useful this courses have been for me, 10 stars if possible!"</code></pre>
 </div>
 </div>
 <p>Clean review (<code>stopwords-iso</code>):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a>coursera_reviews <span class="sc">|&gt;</span> <span class="fu">filter</span>(review_id <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(review_clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a>coursera_reviews <span class="sc">|&gt;</span> <span class="fu">filter</span>(review_id <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(review_clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "courses stars"</code></pre>
 </div>
 </div>
 <p>Clean review (<code>snowball</code>):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a>coursera_reviews2 <span class="sc">|&gt;</span> <span class="fu">filter</span>(review_id <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(review_clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a>coursera_reviews2 <span class="sc">|&gt;</span> <span class="fu">filter</span>(review_id <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(review_clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "words describe useful courses 10 stars possible"</code></pre>
 </div>
@@ -1290,11 +1311,11 @@ Prof Amanda Luby
 </section><section id="tf-idf-in-r" class="slide level2"><h2>tf-idf in R</h2>
 <p>Highest tf-idf words are used a lot within a document, and rarely in other documents.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a>en_coursera_reviews <span class="sc">|&gt;</span></span>
-<span id="cb68-2"><a></a>  <span class="fu">unnest_tokens</span>(word, Review) <span class="sc">|&gt;</span></span>
-<span id="cb68-3"><a></a>  <span class="fu">count</span>(review_id, word) <span class="sc">|&gt;</span></span>
-<span id="cb68-4"><a></a>  <span class="fu">bind_tf_idf</span>(word, review_id, n) <span class="sc">|&gt;</span></span>
-<span id="cb68-5"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf_idf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a>en_coursera_reviews <span class="sc">|&gt;</span></span>
+<span id="cb70-2"><a></a>  <span class="fu">unnest_tokens</span>(word, Review) <span class="sc">|&gt;</span></span>
+<span id="cb70-3"><a></a>  <span class="fu">count</span>(review_id, word) <span class="sc">|&gt;</span></span>
+<span id="cb70-4"><a></a>  <span class="fu">bind_tf_idf</span>(word, review_id, n) <span class="sc">|&gt;</span></span>
+<span id="cb70-5"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf_idf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 547,524 × 6
    review_id word             n    tf   idf tf_idf
@@ -1514,6 +1535,41 @@ Prof Amanda Luby
           RevealZoom
         ]
       });
+    </script><script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
     </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
