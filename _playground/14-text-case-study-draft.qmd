@@ -1,7 +1,7 @@
 ---
 title: "14-text-case-study"
 ---
-
+  
 ```{r}
 library(tidyverse)
 library(tidytext) # functions for doing text analysis

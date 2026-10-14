@@ -111,24 +111,11 @@ Things that are going well:
 
 ### Revision is a key part of this course design! 
 
-# Portfolio Project 2 {.maize}
-
 # Regular Expressions (regex) {.maize}
 
-## Regular expressions
+## Where we left off
 
-- Sometimes the patterns we wish to detect, extract, etc. too complex for exact matching 
-
-    + Extract all time stamps of the form `HH:MM:SS`
-    + Extract the string that comes after the dash (e.g. `hw01-aluby`)
-
-- **Regular expressions** (regexps) are a very terse language that allow you to describe patterns in strings
-
-- Confusing at first, but extremely useful
-
-## Example
-
-Suppose we wish to anonymize phone numbers in survey results 
+Suppose we wish to anonymize phone numbers in survey results
 
 ```{r}
 a1 <- "Home: 507-645-5489"
@@ -138,9 +125,9 @@ a4 <- "I don't have a phone"
 info <- c(a1, a2, a3, a4)
 ```
 
-```{r echo=FALSE}
-info
-```
+::: {.nonincremental}
+Last time: literal matches, `.`, and `[]`. Today: special patterns, anchors, alternatives, and repetition.
+:::
 
 ## Visualizing matches
 
@@ -334,6 +321,24 @@ str_view(a1, "\\d{3}")
 :::
 :::::
 
+## Your turn: 
+
+::: task
+#### Find all words that are exactly three letters long.
+
+#### Find all words that end with `ing` or `ise`.
+
+#### Find all words that have seven letters or more.
+
+#### Find all words that start with three consonants.
+:::
+
+```{r}
+#| echo: false
+
+countdown::countdown(3)
+```
+
 # Intro to Text Analysis {.maize}
 
 ## Text Analysis
@@ -457,6 +462,7 @@ en_coursera_reviews |>
   select(CourseId, word)
 ```
 
+
 ## Stopwords
 
 ```{r}
@@ -465,7 +471,7 @@ get_stopwords(source = "stopwords-iso") |> pull(word)
 
 ## `anti_join`
 
-![](../img/anti-join.gif)
+![](../slides/img/anti-join.gif)
 
 ## Remove stopwords
 
@@ -512,192 +518,184 @@ en_coursera_reviews |>
   theme(strip.text = element_text(size = 8))
 ```
 
-## Make it ~ fancy ~: n-grams
+# Bigrams {.maize}
 
-::::: columns
-::: {.column width="50%"}
-- `token` is set to "ngrams"
-- also specify `n=2` (2 words)
-:::
-::: {.column .nonincremental width="50%"}
+## Tokens don't have to be single words
+
+A *bigram* is a pair of words that appear next to each other. Use `token = "ngrams"` and `n = 2`.
+
 ```{r}
-#| eval: false
-unnest_tokens(
-  tbl,
-  output,
-  input,
-  token = "words",
-  to_lower = TRUE,
-  drop = TRUE,
-  ...
-)
+en_coursera_reviews |>
+  filter(review_id == 6) |>
+  pull(Review)
 ```
-:::
-:::::
 
-## Make it ~ fancy ~: n-grams
+```{r}
+en_coursera_reviews |>
+  filter(review_id == 6) |>
+  unnest_tokens(output = bigram, input = Review, token = "ngrams", n = 2) |>
+  select(review_id, bigram)
+```
+
+. . .
+
+Each word (except the first and last) appears in *two* bigrams.
+
+## Most common bigrams
 
 ```{r}
 #| output-location: slide
-#| code-line-numbers: "2,4,7"
-
 en_coursera_reviews |>
-  unnest_tokens(output = word, input = Review, token = "ngrams", n=2) |>
-  anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |>
-  filter(str_detect(CourseId, "data-science")) |> 
-  group_by(CourseId) %>%
-  count(word) %>%
-  slice_max(n, n = 10) %>%
-  ggplot(aes(x = n, y = fct_reorder(word, n))) + 
-  geom_col() + 
-  facet_wrap(~CourseId, scales = "free_y", nrow = 2) + 
-  labs(
-    y = "Word"
-  ) + 
-  theme(strip.text = element_text(size = 8))
-
+  unnest_tokens(output = bigram, input = Review, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram)) |>
+  count(bigram, sort = TRUE) |>
+  slice_max(n, n = 10) |>
+  ggplot(aes(x = n, y = fct_reorder(bigram, n))) +
+  geom_col() +
+  labs(y = "Bigram", x = "Number of reviews")
 ```
 
-## Removing stopwords from reviews *first*
+. . .
+
+We did *not* remove stopwords here. `anti_join()` on bigrams would not work anyway, because no bigram is a stopword.
+
+## If we do want to remove stopwords
+
+Remove stopwords from each review *first*, then make bigrams from the cleaned reviews.
 
 ```{r}
-#| code-line-numbers: "2|3|5"
+#| code-line-numbers: "1-5|7-10"
 coursera_reviews <- en_coursera_reviews |>
   unnest_tokens(word, Review) |>
   anti_join(get_stopwords(source = "stopwords-iso"), by = "word") |>
   group_by(CourseId, review_id) |>
-  summarize(review_clean = paste(word, collapse = " "))
+  summarize(review_clean = paste(word, collapse = " "), .groups = "drop")
+
+coursera_reviews |>
+  unnest_tokens(output = bigram, input = review_clean, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram)) |>
+  count(bigram, sort = TRUE)
 ```
 
-. . . 
+## Which should we use?
 
-Original Review:
+::: {.nonincremental}
+- Removing stopwords: **what are people talking about?** (`machine learning`, `data science`, `programming assignments`)
+- Keeping stopwords: **what does the language look like?** (`this course`, `a lot`, `thank you`)
+:::
+
+. . .
+
+It depends on the question. For the next piece, we will keep them.
+
+## Which word comes next?
+
+Split each bigram into its first and second word:
 
 ```{r}
-en_coursera_reviews |> filter(review_id == 6) |> pull(Review)
+bigrams <- en_coursera_reviews |>
+  unnest_tokens(output = bigram, input = Review, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram)) |>
+  separate(bigram, into = c("word1", "word2"), sep = " ")
+
+bigrams |>
+  count(word1, word2, sort = TRUE)
 ```
 
-. . . 
+. . .
 
-"Clean" Review
+What word most often comes after `data`?
 
 ```{r}
-coursera_reviews |> filter(review_id == 6) |> pull(review_clean)
+bigrams |>
+  filter(word1 == "data") |>
+  count(word2, sort = TRUE) |>
+  slice_max(n, n = 5)
 ```
 
-## What if we use a different stopwords dictionary?
+## Your turn
+
+::: {.task .nonincremental}
+Work through `14-text-case-study.qmd`, including the bigram section. Then, with the folks around you, explore the reviews:
+
+- Explore another subject (besides `data-science`)
+- `Label` contains the numeric rating for the course. How do the most common words or bigrams differ between highly rated and low-rated reviews?
+- Which words most often follow `not`? What does that tell you about how people use it?
+:::
+
+```{r}
+#| echo: false
+countdown::countdown(8)
+```
+
+## Friday
+
+::: {.nonincremental}
+- Lab Quiz 2 in class
+- Out of class: "How LLMs work" video and a short activity where you build a word predictor from the bigram counts you just made
+- Will turn in as part of next homework
+:::
+
+# For reference {.maize}
+
+Not covered in class, but here if you want to use them in your own analysis.
+
+## Removing stopwords: a different dictionary
+
+`stopwords::stopwords_getsources()` lists the available dictionaries, and they give different results.
 
 ```{r}
 coursera_reviews2 <- en_coursera_reviews |>
   unnest_tokens(word, Review) |>
   anti_join(get_stopwords(source = "snowball"), by = "word") |>
   group_by(CourseId, review_id) |>
-  summarize(review_clean = paste(word, collapse = " "))
+  summarize(review_clean = paste(word, collapse = " "), .groups = "drop")
 ```
 
-Original Review:
+Original review:
 
 ```{r}
 en_coursera_reviews |> filter(review_id == 6) |> pull(Review)
 ```
 
-Clean Review:
+Clean review (`stopwords-iso`):
+
+```{r}
+coursera_reviews |> filter(review_id == 6) |> pull(review_clean)
+```
+
+Clean review (`snowball`):
 
 ```{r}
 coursera_reviews2 |> filter(review_id == 6) |> pull(review_clean)
 ```
 
-## tokens on clean reviews
+## tf-idf
 
-```{r}
-#| output-location: slide
-#| code-line-numbers: "3|4"
+Idea: how common are certain tokens *relative to the rest of the documents in the corpus*?
 
-en_coursera_reviews |>
-  left_join(coursera_reviews, by = c("CourseId", "review_id")) |>
-  filter(str_detect(CourseId, "data-science")) |> 
-  unnest_tokens(word, review_clean, token = "words") |>
-  group_by(CourseId) %>%
-  count(word) %>%
-  slice_max(n, n = 10) %>%
-  filter( n > 1) %>%
-  ggplot(aes(x = n, y = fct_reorder(word, n))) + 
-  geom_col() + 
-  facet_wrap(~CourseId, scales = "free_y", nrow = 2) + 
-  labs(
-    y = "2-gram"
-  )
-```
+. . .
 
-## Make it ~ fancy ~: tf-idf
+tf(t,d) = "term frequency": what proportion of document d is term t?
 
-Idea: how common are certain tokens *relative to the rest of the documents in the corpus*? 
-
-. . . 
-
-tf(t,d) =  "term frequency": what proportion of document d is term t? 
-
-. . . 
+. . .
 
 idf = "inverse document frequency": log-scaled inverse fraction of documents that contain the term
 
-
 $$\text{idf} = \log \frac{\text{number of documents}}{\text{number of documents containing term t}}$$
 
-. . . 
+. . .
 
-$$\text{tf-df(t, d)} = \frac{\text{tf(t, d)}}{\text{idf(t)}}$$
+$$\text{tf-idf(t, d)} = \text{tf(t, d)} \times \text{idf(t)}$$
 
-## highest tf-idf's are used a lot within a review, and rarely in other reviews
+## tf-idf in R
 
-```{r}
-en_coursera_reviews |>
-  left_join(coursera_reviews, by = c("review_id")) |>
-  unnest_tokens(word, review_clean) |>
-  count(review_id, word) |>
-  bind_tf_idf(word, review_id, n) 
-
-```
-
-## highest tf-idf's are used a lot within a review, and rarely in other reviews
+Highest tf-idf words are used a lot within a document, and rarely in other documents.
 
 ```{r}
 en_coursera_reviews |>
   unnest_tokens(word, Review) |>
   count(review_id, word) |>
   bind_tf_idf(word, review_id, n) |>
-  group_by(word) |>
-  mutate(total_n = sum(n)) |>
-  ungroup() |>
-  arrange(desc(tf_idf)) 
+  arrange(desc(tf_idf))
 ```
-
-## 
-
-```{r}
-#| output-location: slide
-#| code-line-numbers: "4|5-6|7,10"
-en_coursera_reviews |>
-  unnest_tokens(word, Review) |>
-  count(CourseId, review_id, word) |>
-  bind_tf_idf(word, review_id, n)  |>
-  filter(str_detect(CourseId, "data-science")) |>
-  group_by(CourseId) %>%
-  slice_max(tf_idf, n = 10) %>%
-  ggplot(aes(x = n, y = fct_reorder(word, n))) + 
-  geom_col() + 
-  facet_wrap(~CourseId, scales = "free_y", nrow = 2) + 
-  labs(
-    y = "word"
-  )
-```
-
-## Your turn
-
-::: {.task .nonincremental}
-Explore the `en_coursera_reviews` dataset with the folks around you. Can you replicate my analyses, and try a few of your own? Here are some ideas: 
-
-- Explore another subject (besides `data-science`)
-- `Label` contains the numeric rating for the course. How does the review text differ between highly rated and low-rated courses?
-- `stopwords::stopwords_getsources()` gives the available stopword dictionaries. How do these differ, and how do they change your results?
-:::

@@ -7,6 +7,30 @@ library(tidyverse)
 library(tidytext) # functions for doing text analysis
 ```
 
+# Regex practice
+
+A vector called `words` is loaded with `stringr` and contains a corpus of 980 words used in text analysis. Use `stringr` functions and regular expressions to find the words that satisfy the following descriptions.
+
+```{r}
+pattern <- "type your pattern here"
+str_subset(words, pattern)
+```
+
+## Part 1
+
+1. Find all words that start with `y`.
+2. Find all words that end with `x`.
+3. Find all words that start with a vowel.
+4. Find all words that start with consonants.
+
+## Part 2
+
+5. Find all words that are exactly three letters long.
+6. Find all words that end with `ing` or `ise`.
+7. Find all words that have seven letters or more.
+8. Find all words that start with three consonants.
+
+
 # Load the Data
 
 ```{r}
