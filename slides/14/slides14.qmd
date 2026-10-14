@@ -63,17 +63,16 @@ Things that are going well:
 [graphs from google]
 
 ## Other feedback:
-
-- finished .qmd files would be helpful (sometimes answers come and go too fast)
-- I do not like the lab quizzes, think its undue stress and we know most of the code anyway. I don't like the moving around group work personally, but I think working on larger projects in groups would be a good thing as I feel like thats how it works in the real world often, but I understand that sharing R documents/code can be a pain
+- I do not like the lab quizzes, think its undue stress and we know most of the code anyway. 
+- I don't like the moving around group work personally, but I think working on larger projects in groups would be a good thing as I feel like thats how it works in the real world often, but I understand that sharing R documents/code can be a pain
 - I feel like random errors always pop up in R/RStudio right as I'm about to submit, so I would love a little more guidance on how to navigate these particular situations.
-- I think a small note sheet created by ourselves could be very helpful on the lab quizzes. Some of the coding can be very hard to memorize, even if is short. Especially since we cannot check our work mid quiz since it is on paper.
+- I know time in class is limited, but I would appreciate a slower approach to the ways code works, specifically in terms of what different command looks like and the logic behind why commands work in the way they do.
 - For the lab quizzes I'd really like more resources, particularly practice problems to study. The study guide felt much easier compared to the quiz and it didn't feel like their was enouph content on it to learn everything I needed to.
 
 
 ## Suggested changes: 
-
-- Additional small note sheet for lab quizzes ✅
+- finished .qmd files would be helpful (sometimes answers come and go too fast) ✅
+- I think a small note sheet created by ourselves could be very helpful on the lab quizzes. Some of the coding can be very hard to memorize, even if is short. Especially since we cannot check our work mid quiz since it is on paper. ✅
 - Lab quizzes being handwritten isn't ideal ？
 - I don't like group work ❌
 
@@ -109,7 +108,7 @@ Things that are going well:
 
 . . . 
 
-### Revision is a key part of this course design! 
+### Revision is a key part of this course! 
 
 # Regular Expressions (regex) {.maize}
 
@@ -471,7 +470,7 @@ get_stopwords(source = "stopwords-iso") |> pull(word)
 
 ## `anti_join`
 
-![](../slides/img/anti-join.gif)
+![](../img/anti-join.gif)
 
 ## Remove stopwords
 
@@ -571,6 +570,12 @@ coursera_reviews <- en_coursera_reviews |>
   group_by(CourseId, review_id) |>
   summarize(review_clean = paste(word, collapse = " "), .groups = "drop")
 
+coursera_reviews
+```
+
+## Make bigrams from cleaned reviews
+
+```{r}
 coursera_reviews |>
   unnest_tokens(output = bigram, input = review_clean, token = "ngrams", n = 2) |>
   filter(!is.na(bigram)) |>
