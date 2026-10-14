@@ -36,7 +36,7 @@ After page 1, each course day will get two pages in "booklet style"
 
 - Day12 | p16-17: 
 
-- Day13 | p17-18: fill in the following bar graph: 
+- Day13 | p18-19: fill in the following bar graph: 
 
 ```{r}
 #| fig-width: 5
@@ -69,3 +69,7 @@ ggplot(tibble(topic = factor(topics, levels = rev(topics))),
   theme_minimal(base_size = 10) +
   theme(panel.grid.minor = element_blank())
 ```
+
+- Day14 | p19-20: Work on the text analysis activity on `coursera` reviews, and tell me what you did and what you learned (this could be a graph, number, sentence description, etc.)
+
+- Day15 | Quiz02! No journal entry
