@@ -1,9 +1,9 @@
 ---
-title: "Sentiment <br>Analysis"
+title: "How LLMs <br>Work"
 subtitle: Day 15
 title-slide-attributes:
-  data-background-image: ../img/horst_stringr.jpeg
-  data-background-size: 70%
+  data-background-image: ../img/llm-title.png
+  data-background-size: 65%
   data-background-position: bottom right
   data-background-opacity: "0.8"
   data-slide-number: none
@@ -19,150 +19,289 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
-library(countdown)
 library(tidyverse)
-library(lubridate)
-library(palmerpenguins)
-library(patchwork)
+library(tidytext)
 library(ggthemes)
-library(nycflights23)
-library(here)
+
 slides_theme = theme_minimal(
   base_family = "Atkinson Hyperlegible",
   base_size = 16)
 
 theme_set(slides_theme)
 
-set.seed(0206)
+set.seed(220)
+
+reviews <- read_csv("https://stat220-f26.github.io/data/en_coursera_sample.csv")
+
+bigram_probs <- reviews |>
+  unnest_tokens(output = bigram, input = Review, token = "ngrams", n = 2) |>
+  filter(!is.na(bigram)) |>
+  separate(bigram, into = c("word1", "word2"), sep = " ") |>
+  count(word1, word2, sort = TRUE) |>
+  group_by(word1) |>
+  mutate(prob = n / sum(n)) |>
+  ungroup()
+
+generate_text <- function(start, n_words = 10) {
+  words <- start
+  for (i in seq_len(n_words)) {
+    next_word <- bigram_probs |>
+      filter(word1 == words[length(words)]) |>
+      slice_sample(n = 1, weight_by = prob) |>
+      pull(word2)
+    if (length(next_word) == 0) break
+    words <- c(words, next_word)
+  }
+  paste(words, collapse = " ")
+}
 ```
 
-## Today
+## Today {.nonincremental}
 
-1. Sentiment analysis
-2. Lab Quiz 2! 
+Today's question: **what would it take to turn your bigram model into something like ChatGPT?**
 
-## {background-image="../img/coursera-data-sci.png"}
+1. What you built
+2. Where it breaks
+3. What LLMs change
+4. Takeaways
 
-## Data for today
+# What you built {.maize}
 
-Random (?) sample of 26,882 reviews of coursera courses
+## A language model
 
-```{r}
-en_coursera_reviews <- read_csv("../../data/en_coursera_sample.csv") # https://stat220-f26.github.io/data/en_coursera_sample.csv
-en_coursera_reviews
-```
-
-::: aside
-Source: [Kaggle](https://www.kaggle.com/datasets/septa97/100k-courseras-course-reviews-dataset/data)
-
+::: {.nonincremental}
+A *language model* assigns a probability to the next token, given the text so far.
 :::
 
+1. Split text into tokens (here: words)
+2. Count which tokens follow which
+3. Turn counts into probabilities
+4. *Sample* the next token, and repeat
 
-
-## Are these positive or negative reviews?
-
-"thank you so much it was great course"  
-
-"Too reliant on materials directly collected by professor, too little context of larger artistic community." 
-
-"Excellent! easy to follow and engaging!"  
-
-"Slow and redundant. Would have preferred a faster-paced and more substantive course." 
-
-"Way too shallow and way too english :("   
-
-## Sentiment analysis
-
-One way to analyze the *sentiment* is to consider the text as a combination of the individual words. It's computationally convenient because we're able to use the `tidy` tools that we've been building up: 
-
-1. *tokenize* the text
-2. *join* the sentiment values to each token
-3. *group* the words in the document to *summarize* the overall sentiment
-
-## Sentiment datasets: `bing`
+## From counts to probabilities
 
 ```{r}
-#| output-location: column
-library(tidytext)
-get_sentiments("bing") %>%
-  slice_sample(n = 20)
+#| echo: true
+bigram_probs |>
+  filter(word1 == "great") |>
+  slice_max(prob, n = 5)
 ```
 
-## Sentiment datasets: `afinn`
+## Sampling the next word
 
 ```{r}
-#| output-location: column
-library(textdata)
-get_sentiments("afinn") %>%
-  slice_sample(n = 20)
+#| echo: true
+bigram_probs |>
+  filter(word1 == "great") |>
+  slice_sample(n = 1, weight_by = prob) |>
+  pull(word2)
+
+bigram_probs |>
+  filter(word1 == "great") |>
+  slice_sample(n = 1, weight_by = prob) |>
+  pull(word2)
 ```
 
-## 
+. . .
+
+Always picking the most likely word gives the same boring text every time. Sampling gives different text each run, with likely words chosen more often.
+
+## Text from your model
 
 ```{r}
-en_coursera_reviews 
+#| echo: true
+generate_text("this", n_words = 12)
+generate_text("the", n_words = 12)
+generate_text("i", n_words = 12)
 ```
 
-## `inner_join`
+# Where it breaks {.maize}
 
-![](../img/inner-join.gif)
+## Problem 1: one word of context
 
-## `join`ing the sentiment data
+Each new word only "sees" the word right before it, so sentences wander.
 
 ```{r}
-#| output-location: column-fragment
-#| code-line-numbers: "1|2-3|4"
-bing_sentiments = get_sentiments("bing")
-en_coursera_reviews %>%
-  unnest_tokens(word, Review) %>% 
-  inner_join(bing_sentiments, by = "word") %>%
-  select(-c(CourseId, cld2))
+#| echo: false
+generate_text("great", n_words = 15)
 ```
 
-## `group_by` review ID, `summarize` overall sentiment
+. . .
+
+&rarr; Nothing connects the beginning of a sentence to its end.
+
+## Problem 2: words it has never seen
 
 ```{r}
-#| output-location: column-fragment
-#| code-line-numbers: "4|5-8"
-bing_review_scores <- en_coursera_reviews %>%
-  unnest_tokens(word, Review) %>% 
-  inner_join(bing_sentiments, by = "word") %>%
-  group_by(review_id) %>%
-  summarize(
-    sum = (sum(sentiment == "positive") - sum(sentiment == "negative"))
-  )
-
-bing_review_scores
+#| echo: true
+generate_text("llm", n_words = 10)
 ```
 
-## Most positive review (by `sum`): 
+. . .
+
+&rarr; If a word never appeared in the training reviews, the model has nothing to say.
+
+## Problem 3: no notion of meaning
+
+To the model, `great` and `excellent` are just two unrelated rows in a table. What it learns about one tells it nothing about the other.
 
 ```{r}
-#| output-location: column-fragment
-#| code-line-numbers: "1|2|3|4"
-
-en_coursera_reviews %>%
-  left_join(bing_review_scores, by = "review_id") %>%
-  slice_max(sum) %>%
-  pull(Review)
+#| echo: false
+bigram_probs |>
+  filter(word1 %in% c("great", "excellent", "awesome", "fantastic", "superb", "terrific")) |>
+  group_by(word1) |>
+  summarize(`times seen` = sum(n), `different next words` = n()) |>
+  arrange(desc(`times seen`))
 ```
 
-## Most negative reviews (by `sum`): 
+. . .
+
+&rarr; Words that mean almost the same thing end up with very different amounts of data.
+
+## Problem 4: more context means less data
 
 ```{r}
-#| output-location: column
+#| echo: false
+tri_counts <- reviews |>
+  unnest_tokens(output = trigram, input = Review, token = "ngrams", n = 3) |>
+  filter(!is.na(trigram)) |>
+  count(trigram)
 
-en_coursera_reviews %>%
-  left_join(bing_review_scores, by = "review_id") %>%
-  slice_min(sum) %>%
-  pull(Review) %>%
-  pluck(1)
+bi_counts <- bigram_probs
+
+tibble(
+  model = c("Bigrams (1 word of context)", "Trigrams (2 words of context)"),
+  `different combinations` = scales::comma(c(nrow(bi_counts), nrow(tri_counts))),
+  `seen only once` = scales::percent(c(mean(bi_counts$n == 1), mean(tri_counts$n == 1)), accuracy = 1)
+) |>
+  knitr::kable()
 ```
 
-# What weaknesses do you notice about this analysis? 
+. . .
 
-What could we change?
+&rarr; Looking at more words makes the model smarter, but most combinations are then ones it has barely seen.
 
-# Live coding time
+# What LLMs change {.maize}
+
+## Fix 1: tokens are pieces of words
+
+LLMs usually split text into *subword tokens*, not words. Rare and new words are built from familiar pieces.
+
+```
+unbelievably helpful instructors
+
+un | believ | ably |  help | ful |  instruct | ors
+```
+
+::: {.aside}
+Illustrative only. Real tokenizers split text differently.
+:::
+
+## Fix 2: meaning as numbers
+
+Each token is represented by a list of numbers (an *embedding*) so that tokens used in similar contexts get similar numbers.
+
+```{r}
+#| fig-height: 4
+#| fig-alt: "A scatterplot with made-up two-dimensional coordinates for words. Great, excellent, and fantastic are close together, python, java, and code are close together, and instructor, teacher, and professor are close together."
+emb <- tribble(
+  ~word,        ~x,   ~y,
+  "great",      1.0,  3.2,
+  "excellent",  1.4,  3.1,
+  "fantastic",  0.5,  3.3,
+  "boring",     1.2,  0.6,
+  "terrible",   0.7,  0.9,
+  "python",     4.2,  2.1,
+  "java",       4.6,  2.4,
+  "code",       4.0,  2.7,
+  "instructor", 2.6,  1.2,
+  "teacher",    2.9,  1.5,
+  "professor",  2.4,  1.6
+)
+
+ggplot(emb, aes(x, y, label = word)) +
+  geom_point(size = 3) +
+  geom_text(vjust = -0.8, size = 5) +
+  scale_x_continuous(expand = expansion(mult = 0.1)) +
+  scale_y_continuous(expand = expansion(mult = c(0.08, 0.2))) +
+  labs(x = NULL, y = NULL, caption = "Made-up coordinates, for illustration") +
+  theme(axis.text = element_blank(), panel.grid = element_blank())
+```
+
+. . .
+
+&rarr; This lets a model handle contexts it has never seen *exactly*.
+
+## Fix 3: attention
+
+Instead of one previous word, the model looks at all of the text so far and learns which earlier words matter most for the next one.
+
+```{r}
+#| fig-height: 3
+#| fig-alt: "A sentence 'the instructors were so helpful that I' with arrows from the next-word position pointing to earlier words. The thickest arrows point to 'instructors' and 'helpful'."
+w <- c("the", "instructors", "were", "so", "helpful", "that", "I", "...?")
+att <- tibble(
+  word = w[1:7],
+  x = 1:7,
+  weight = c(0.3, 2.2, 0.4, 0.4, 2.8, 0.8, 1.0)
+)
+
+ggplot() +
+  geom_segment(
+    data = att,
+    aes(x = 8, xend = x, y = 1, yend = 0.15, linewidth = weight),
+    arrow = arrow(length = unit(0.12, "inches")),
+    show.legend = FALSE
+  ) +
+  geom_text(data = tibble(x = 1:8, y = 0, word = w), aes(x, y, label = word), size = 6) +
+  scale_linewidth(range = c(0.2, 2.5)) +
+  scale_y_continuous(limits = c(-0.2, 1.2)) +
+  labs(x = NULL, y = NULL, caption = "Made-up weights, for illustration") +
+  theme_void(base_family = "Atkinson Hyperlegible")
+```
+
+. . .
+
+This idea, plus a very large neural network, is what a *transformer* is.
+
+## Training at scale
+
+::: {.nonincremental}
+Same task as your bigram model: **predict the next token**.
+:::
+
+1. *Pretraining*: predict the next token over a huge amount of text, with an enormous number of adjustable numbers
+2. *Fine-tuning*: further training, including human feedback, so the model follows instructions and is helpful
+
+## Temperature
+
+Temperature controls how much the model favors the top choices when it samples. High temperature = more randomness
+
+```{r}
+#| fig-height: 4
+#| fig-alt: "Three bar charts of next-word probabilities after 'great'. At low temperature, 'course' has nearly all the probability. At high temperature, the probabilities are spread more evenly across words."
+great_next <- bigram_probs |>
+  filter(word1 == "great")
+
+crossing(temp = c(0.5, 1, 2), great_next) |>
+  group_by(temp) |>
+  mutate(p_adj = prob^(1 / temp) / sum(prob^(1 / temp))) |>
+  slice_max(prob, n = 8) |>
+  ungroup() |>
+  mutate(temp = factor(temp, labels = c("Low (0.5)", "Medium (1)", "High (2)"))) |>
+  ggplot(aes(x = p_adj, y = fct_reorder(word2, prob))) +
+  geom_col() +
+  facet_wrap(~temp) +
+  labs(x = "Probability of next word, after \"great\"", y = NULL)
+```
+
+# Takeaways {.maize}
+
+## Three things to remember
+
+1. An LLM is the same idea you built: predict the next token, then sample. What changes is how much context it uses and how words are represented.
+2. It predicts *plausible* text, not *true* text, so a fluent answer can be wrong.
+3. Its outputs reflect its training data (Step 6 of the activity).
+
