@@ -89,7 +89,7 @@ Carefully and clearly describe what each set of commands does
 
 (a) 
 ```{r}
-cleaned <- flights |>
+jfk_msp_flights <- flights |>
   filter(origin == "JFK" & dest == "MSP")
 ```
 
@@ -197,7 +197,7 @@ Here is the code that I used to create the `ggplot`. Edit this code so that the 
 #| fig-width: 8
 #| eval: false
 
-plot_data = read_csv("https://stat220-s25.github.io/data/lq2_plot_data.csv")
+plot_data = read_csv("https://stat220-f26.github.io/data/lq2_plot_data.csv")
 
 plot_data %>%
   ggplot(
