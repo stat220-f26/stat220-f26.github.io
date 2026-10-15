@@ -81,7 +81,7 @@
     "href": "lab-quiz/lab-quiz-02.html#questions",
     "title": "Lab Quiz 02 Info",
     "section": "Questions",
-    "text": "Questions\nKnow how the following verbs act on a data set\nCarefully and clearly describe what each set of commands does\n\n\n\n\ncleaned &lt;- flights |&gt;\n  filter(origin == \"JFK\" & dest == \"MSP\")\n\n\n\n\n\njfk_msp_flights %&gt;%\n  group_by(month) %&gt;%\n  summarize(\n    med_flight_delay = median(dep_delay, na.rm = TRUE)\n  )\n\n\n\n\nExplain why na.rm = TRUE is included in the code chunk from part (b)\nGiven a data set and goal, identify and utilize the appropriate verb to create the data set of interest\nUse the plot below to answer the questions.\n\n\n\n\n\n\n\n\n\nTo create this plot, I had to do a few things. First, I combined the flights dataset (which contains information about arrival delay) with the airports dataset (which contains the full name of the airports, along with their time zones). Did I use a left_join, full_join, bind_rows, or bind_cols to combine them? Explain how you can tell.\n\n\nglimpse(flights)\n\nRows: 435,352\nColumns: 19\n$ year           &lt;int&gt; 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2…\n$ month          &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ day            &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ dep_time       &lt;int&gt; 1, 18, 31, 33, 36, 503, 520, 524, 537, 547, 549, 551, 5…\n$ sched_dep_time &lt;int&gt; 2038, 2300, 2344, 2140, 2048, 500, 510, 530, 520, 545, …\n$ dep_delay      &lt;dbl&gt; 203, 78, 47, 173, 228, 3, 10, -6, 17, 2, -10, -9, -7, -…\n$ arr_time       &lt;int&gt; 328, 228, 500, 238, 223, 808, 948, 645, 926, 845, 905, …\n$ sched_arr_time &lt;int&gt; 3, 135, 426, 2352, 2252, 815, 949, 710, 818, 852, 901, …\n$ arr_delay      &lt;dbl&gt; 205, 53, 34, 166, 211, -7, -1, -25, 68, -7, 4, -13, -14…\n$ carrier        &lt;chr&gt; \"UA\", \"DL\", \"B6\", \"B6\", \"UA\", \"AA\", \"B6\", \"AA\", \"UA\", \"…\n$ flight         &lt;int&gt; 628, 393, 371, 1053, 219, 499, 996, 981, 206, 225, 800,…\n$ tailnum        &lt;chr&gt; \"N25201\", \"N830DN\", \"N807JB\", \"N265JB\", \"N17730\", \"N925…\n$ origin         &lt;chr&gt; \"EWR\", \"JFK\", \"JFK\", \"JFK\", \"EWR\", \"EWR\", \"JFK\", \"EWR\",…\n$ dest           &lt;chr&gt; \"SMF\", \"ATL\", \"BQN\", \"CHS\", \"DTW\", \"MIA\", \"BQN\", \"ORD\",…\n$ air_time       &lt;dbl&gt; 367, 108, 190, 108, 80, 154, 192, 119, 258, 157, 164, 1…\n$ distance       &lt;dbl&gt; 2500, 760, 1576, 636, 488, 1085, 1576, 719, 1400, 1065,…\n$ hour           &lt;dbl&gt; 20, 23, 23, 21, 20, 5, 5, 5, 5, 5, 5, 6, 5, 6, 6, 6, 6,…\n$ minute         &lt;dbl&gt; 38, 0, 44, 40, 48, 0, 10, 30, 20, 45, 59, 0, 59, 0, 0, …\n$ time_hour      &lt;dttm&gt; 2023-01-01 20:00:00, 2023-01-01 23:00:00, 2023-01-01 2…\n\nglimpse(airports)\n\nRows: 1,255\nColumns: 8\n$ faa   &lt;chr&gt; \"AAF\", \"AAP\", \"ABE\", \"ABI\", \"ABL\", \"ABQ\", \"ABR\", \"ABY\", \"ACK\", \"…\n$ name  &lt;chr&gt; \"Apalachicola Regional Airport\", \"Andrau Airpark\", \"Lehigh Valle…\n$ lat   &lt;dbl&gt; 29.72750, 29.72250, 40.65210, 32.41130, 67.10630, 35.04020, 45.4…\n$ lon   &lt;dbl&gt; -85.02750, -95.58830, -75.44080, -99.68190, -157.85699, -106.609…\n$ alt   &lt;dbl&gt; 20, 79, 393, 1791, 334, 5355, 1302, 197, 47, 516, 221, 75, 18, 7…\n$ tz    &lt;dbl&gt; -5, -6, -5, -6, -9, -7, -6, -5, -5, -6, -8, -5, -10, -6, -9, -6,…\n$ dst   &lt;chr&gt; \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\",…\n$ tzone &lt;chr&gt; \"America/New_York\", \"America/Chicago\", \"America/New_York\", \"Amer…\n\n\n\nNext, I grouped by airport name and found the median arrival delay with summarize. I then created a new variable called colorby using mutate that I used to color the points. How do you think I computed this variable? Be as specific as possible.\n\nGiven a dataset, describe if it is tidy. If it is not, describe what a tidy format would look like\nThe dataset below contains the minimum and maximum wind speed recorded at JFK for each day in the dataset. Is this tidy? If not, how would we make it tidy? (You should provide R code AND sketch the tidy dataset)\n\n\n# A tibble: 728 × 5\n    year month   day name           value\n   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;          &lt;dbl&gt;\n 1  2023     1     1 min_wind_speed  0   \n 2  2023     1     1 max_wind_speed 15.0 \n 3  2023     1     2 min_wind_speed  4.60\n 4  2023     1     2 max_wind_speed 11.5 \n 5  2023     1     3 min_wind_speed  0   \n 6  2023     1     3 max_wind_speed 10.4 \n 7  2023     1     4 min_wind_speed  0   \n 8  2023     1     4 max_wind_speed  9.21\n 9  2023     1     5 min_wind_speed  0   \n10  2023     1     5 max_wind_speed 10.4 \n# ℹ 718 more rows\n\n\nUse {lubridate} functions to parse dates into ISO8601 format\n\nHow would you parse 2/8/2023 to ISO format?\nHow would you parse 8 Feb 2023 to ISO format?\n\nUse {lubridate} functions to to extract elements of a date/time\nUse mutate to create a new column in the flights dataset that contains the day of the week of the flight (“Monday”, “Tuesday”, etc.).\nCreate a factor to represent a categorical variable\nUse mutate to create a new column in the flights dataset that contains the season of the flight according to the following:\n\nDecember - February: Winter\nMarch - May: Spring\nJune - August: Summer\nSeptember - November: Fall\n\nGiven a factor, modify the levels as needed for the analysis by recoding, reordering, or combining levels\nHere is the code that I used to create the ggplot. Edit this code so that the airports are listed in order of shortest arrival delay at the top to longest arrival delay at the bottom\n\nplot_data = read_csv(\"https://stat220-s25.github.io/data/lq2_plot_data.csv\")\n\nplot_data %&gt;%\n  ggplot(\n    aes(x = med_arr_delay, y = name, col = colorby)\n  ) +\n  geom_point() + \n  theme(legend.position = \"bottom\") + \n  labs(\n    title = \"Median Arrival Delay for flights from NYC airports in 2023\",\n    subtitle = \"Among West Coast time zone airports\"\n  )"
+    "text": "Questions\nKnow how the following verbs act on a data set\nCarefully and clearly describe what each set of commands does\n\n\n\n\ncleaned &lt;- flights |&gt;\n  filter(origin == \"JFK\" & dest == \"MSP\")\n\n\n\n\n\njfk_msp_flights %&gt;%\n  group_by(month) %&gt;%\n  summarize(\n    med_flight_delay = median(dep_delay, na.rm = TRUE)\n  )\n\n\n\n\nExplain why na.rm = TRUE is included in the code chunk from part (b)\nGiven a data set and goal, identify and utilize the appropriate verb to create the data set of interest\nUse the plot below to answer the questions.\n\n\n\n\n\n\n\n\n\nTo create this plot, I had to do a few things. First, I combined the flights dataset (which contains information about arrival delay) with the airports dataset (which contains the full name of the airports, along with their time zones). Did I use a left_join, full_join, bind_rows, or bind_cols to combine them? Explain how you can tell.\n\n\nglimpse(flights)\n\nRows: 435,352\nColumns: 19\n$ year           &lt;int&gt; 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2…\n$ month          &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ day            &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ dep_time       &lt;int&gt; 1, 18, 31, 33, 36, 503, 520, 524, 537, 547, 549, 551, 5…\n$ sched_dep_time &lt;int&gt; 2038, 2300, 2344, 2140, 2048, 500, 510, 530, 520, 545, …\n$ dep_delay      &lt;dbl&gt; 203, 78, 47, 173, 228, 3, 10, -6, 17, 2, -10, -9, -7, -…\n$ arr_time       &lt;int&gt; 328, 228, 500, 238, 223, 808, 948, 645, 926, 845, 905, …\n$ sched_arr_time &lt;int&gt; 3, 135, 426, 2352, 2252, 815, 949, 710, 818, 852, 901, …\n$ arr_delay      &lt;dbl&gt; 205, 53, 34, 166, 211, -7, -1, -25, 68, -7, 4, -13, -14…\n$ carrier        &lt;chr&gt; \"UA\", \"DL\", \"B6\", \"B6\", \"UA\", \"AA\", \"B6\", \"AA\", \"UA\", \"…\n$ flight         &lt;int&gt; 628, 393, 371, 1053, 219, 499, 996, 981, 206, 225, 800,…\n$ tailnum        &lt;chr&gt; \"N25201\", \"N830DN\", \"N807JB\", \"N265JB\", \"N17730\", \"N925…\n$ origin         &lt;chr&gt; \"EWR\", \"JFK\", \"JFK\", \"JFK\", \"EWR\", \"EWR\", \"JFK\", \"EWR\",…\n$ dest           &lt;chr&gt; \"SMF\", \"ATL\", \"BQN\", \"CHS\", \"DTW\", \"MIA\", \"BQN\", \"ORD\",…\n$ air_time       &lt;dbl&gt; 367, 108, 190, 108, 80, 154, 192, 119, 258, 157, 164, 1…\n$ distance       &lt;dbl&gt; 2500, 760, 1576, 636, 488, 1085, 1576, 719, 1400, 1065,…\n$ hour           &lt;dbl&gt; 20, 23, 23, 21, 20, 5, 5, 5, 5, 5, 5, 6, 5, 6, 6, 6, 6,…\n$ minute         &lt;dbl&gt; 38, 0, 44, 40, 48, 0, 10, 30, 20, 45, 59, 0, 59, 0, 0, …\n$ time_hour      &lt;dttm&gt; 2023-01-01 20:00:00, 2023-01-01 23:00:00, 2023-01-01 2…\n\nglimpse(airports)\n\nRows: 1,251\nColumns: 8\n$ faa   &lt;chr&gt; \"AAF\", \"AAP\", \"ABE\", \"ABI\", \"ABL\", \"ABQ\", \"ABR\", \"ABY\", \"ACK\", \"…\n$ name  &lt;chr&gt; \"Apalachicola Regional Airport\", \"Andrau Airpark\", \"Lehigh Valle…\n$ lat   &lt;dbl&gt; 29.72750, 29.72250, 40.65210, 32.41130, 67.10630, 35.04020, 45.4…\n$ lon   &lt;dbl&gt; -85.02750, -95.58830, -75.44080, -99.68190, -157.85699, -106.609…\n$ alt   &lt;dbl&gt; 20, 79, 393, 1791, 334, 5355, 1302, 197, 47, 516, 221, 75, 18, 7…\n$ tz    &lt;dbl&gt; -5, -6, -5, -6, -9, -7, -6, -5, -5, -6, -8, -5, -10, -6, -9, -6,…\n$ dst   &lt;chr&gt; \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\",…\n$ tzone &lt;chr&gt; \"America/New_York\", \"America/Chicago\", \"America/New_York\", \"Amer…\n\n\n\nNext, I grouped by airport name and found the median arrival delay with summarize. I then created a new variable called colorby using mutate that I used to color the points. How do you think I computed this variable? Be as specific as possible.\n\nGiven a dataset, describe if it is tidy. If it is not, describe what a tidy format would look like\nThe dataset below contains the minimum and maximum wind speed recorded at JFK for each day in the dataset. Is this tidy? If not, how would we make it tidy? (You should provide R code AND sketch the tidy dataset)\n\n\n# A tibble: 728 × 5\n    year month   day name           value\n   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;          &lt;dbl&gt;\n 1  2023     1     1 min_wind_speed  0   \n 2  2023     1     1 max_wind_speed 15.0 \n 3  2023     1     2 min_wind_speed  4.60\n 4  2023     1     2 max_wind_speed 11.5 \n 5  2023     1     3 min_wind_speed  0   \n 6  2023     1     3 max_wind_speed 10.4 \n 7  2023     1     4 min_wind_speed  0   \n 8  2023     1     4 max_wind_speed  9.21\n 9  2023     1     5 min_wind_speed  0   \n10  2023     1     5 max_wind_speed 10.4 \n# ℹ 718 more rows\n\n\nUse {lubridate} functions to parse dates into ISO8601 format\n\nHow would you parse 2/8/2023 to ISO format?\nHow would you parse 8 Feb 2023 to ISO format?\n\nUse {lubridate} functions to to extract elements of a date/time\nUse mutate to create a new column in the flights dataset that contains the day of the week of the flight (“Monday”, “Tuesday”, etc.).\nCreate a factor to represent a categorical variable\nUse mutate to create a new column in the flights dataset that contains the season of the flight according to the following:\n\nDecember - February: Winter\nMarch - May: Spring\nJune - August: Summer\nSeptember - November: Fall\n\nGiven a factor, modify the levels as needed for the analysis by recoding, reordering, or combining levels\nHere is the code that I used to create the ggplot. Edit this code so that the airports are listed in order of shortest arrival delay at the top to longest arrival delay at the bottom\n\nplot_data = read_csv(\"https://stat220-s25.github.io/data/lq2_plot_data.csv\")\n\nplot_data %&gt;%\n  ggplot(\n    aes(x = med_arr_delay, y = name, col = colorby)\n  ) +\n  geom_point() + \n  theme(legend.position = \"bottom\") + \n  labs(\n    title = \"Median Arrival Delay for flights from NYC airports in 2023\",\n    subtitle = \"Among West Coast time zone airports\"\n  )"
   },
   {
     "objectID": "TODO-before-term.html",
@@ -397,88 +397,74 @@
     "text": "library(tidyverse)\nlibrary(palmerpenguins)\nlibrary(DT)\nlibrary(plotly)\nlibrary(flexdashboard)\nlibrary(leaflet)\n\nPlotly 1\nLoad the palmerpenguins data set and create a scatterplot of body_mass_g vs. flipper_length_mm from the penguins data set. Use color and shape to specify the species.\nOnce you have a static graphic you’re happy with, load plotly and convert it to an interactive graphic.\n\nWhat tools tips are included by default?\nChange the default tooltip to include “Species”\n(If time) use stringr so that the tooltip shows: “Species: Adelie” instead of just “Adelie”\nPlotly 2\nCreate a bar chart of species from the penguins data set, then convert it to an interactive bar chart.\n\nWhat tools tips are included by default?\nWhat would you change?\nLeaflet\n\nFind the names of the 3 islands in penguins\n\nFind appropriate lat/long locations for each of the islands in penguins using the internet\nCreate a leaflet map with markers for each island (Tip: Start with the world map with no zoom)\nInclude a popup with the island name\nDT Table\n\nCreate a {DT} table of the penguins dataset\nAdd the option to filter, and make the font size 14pt\nPutting it all together\nLet’s improve the 22-dashboard-example.qmd Penguins data explorer:\n\nMake all graphs plotly’s with appropriate tooltips\nReplace the data output with your {DT} datatable\nInclude your leaflet map on a new page\n\nAdd value boxes on the same page as your map that show the number of penguins that live on each island\nChange the theme of the dashboard"
   },
   {
-    "objectID": "activities/19-apis.html",
-    "href": "activities/19-apis.html",
-    "title": "19-apis",
+    "objectID": "activities/15-llms.html",
+    "href": "activities/15-llms.html",
+    "title": "15-llms",
     "section": "",
-    "text": "Install tidycensus if not on maize:\n\ninstall.packages(\"tidycensus\")\n\n\nlibrary(tidycensus)\nlibrary(tidyverse)\n\n\n\nacs_mn_2020 &lt;- tidycensus::get_acs(\n    year = 2020,\n    state = \"MN\",\n    geography = \"county\",\n    variables = c(\"B01003_001\", \"B19013_001\"),\n    output = \"wide\",\n    geometry = TRUE\n)\n\n\n\nCreate a new text file in the same folder as your .rmd\nCopy and paste your census key into the empty file\nSave the file as census_api_key.txt\n\n\n\nmy_key &lt;- readLines(\"census_api_key.txt\")\n\nand tell tidycensus what your API key is with:\n\ncensus_api_key(my_key)\n\nDo not commit and push census_api_key.txt to github\n\nacs_mn_2020 |&gt;\n  mutate(\n    name = str_remove(NAME, \", Minnesota\"),\n    name = str_remove(name, \" County\")\n  ) |&gt; \n  ggplot(aes(x = B19013_001E, \n                          xmin = B19013_001E - B19013_001M, \n                          xmax = B19013_001E + B19013_001M, \n                          y = fct_reorder(name, B19013_001E))) + \n  geom_point() + \n  geom_errorbarh() + \n  labs(\n    x = \"\",\n    y = \"\"\n  )\n\n\nhttps://data.census.gov/\nhttps://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/\n\nAdd “educational attainment” to the topic filters and take a look at the first table. What is it showing you?\n\n\nSearch for the “Median earnings in the past 12 months by major” table that we looked at on the census website using load_variables\n\nRun another call to tidycensus::get_acs to access this variable\n\n\nacs_vars &lt;- load_variables(2020, \"acs5\", cache = TRUE) \nacs_vars \n\n# A tibble: 27,850 × 4\n   name        label                                    concept        geography\n   &lt;chr&gt;       &lt;chr&gt;                                    &lt;chr&gt;          &lt;chr&gt;    \n 1 B01001A_001 Estimate!!Total:                         SEX BY AGE (W… tract    \n 2 B01001A_002 Estimate!!Total:!!Male:                  SEX BY AGE (W… tract    \n 3 B01001A_003 Estimate!!Total:!!Male:!!Under 5 years   SEX BY AGE (W… tract    \n 4 B01001A_004 Estimate!!Total:!!Male:!!5 to 9 years    SEX BY AGE (W… tract    \n 5 B01001A_005 Estimate!!Total:!!Male:!!10 to 14 years  SEX BY AGE (W… tract    \n 6 B01001A_006 Estimate!!Total:!!Male:!!15 to 17 years  SEX BY AGE (W… tract    \n 7 B01001A_007 Estimate!!Total:!!Male:!!18 and 19 years SEX BY AGE (W… tract    \n 8 B01001A_008 Estimate!!Total:!!Male:!!20 to 24 years  SEX BY AGE (W… tract    \n 9 B01001A_009 Estimate!!Total:!!Male:!!25 to 29 years  SEX BY AGE (W… tract    \n10 B01001A_010 Estimate!!Total:!!Male:!!30 to 34 years  SEX BY AGE (W… tract    \n# ℹ 27,840 more rows"
+    "text": "library(tidyverse)\nlibrary(tidytext)\n\nLarge language models (LLMs) are, at their core, programs that predict the next word (or piece of a word) given the words so far. In this activity you will build a tiny version of this idea, using only tools you already know: tokenizing, counting, and a bit of dplyr. You will not need an LLM or any AI tool for this activity.\nThis should take about 15 to 20 minutes, and you should watch the video after trying this activity. There will be a homework problem on HW6 where you will turn in your written answers.\nThe data\nWe will use the same Coursera reviews you worked with on Wednesday.\n\nreviews &lt;- read_csv(\"https://stat220-f26.github.io/data/en_coursera_sample.csv\")\nglimpse(reviews)\n\nRows: 26,882\nColumns: 5\n$ CourseId  &lt;chr&gt; \"nurture-market-strategies\", \"nand2tetris2\", \"schedule-proje…\n$ Review    &lt;chr&gt; \"It would be better if the instructors cared to respond to q…\n$ Label     &lt;dbl&gt; 1, 5, 5, 5, 5, 5, 5, 3, 5, 1, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, …\n$ cld2      &lt;chr&gt; \"en\", \"en\", \"en\", \"en\", \"en\", \"en\", \"en\", \"en\", \"en\", \"en\", …\n$ review_id &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1…\n\n\nStep 1: Tokenize into bigrams\nA bigram is a pair of words that appear next to each other. Fill in the blanks to split every review into bigrams, then separate each bigram into its first and second word.\n\nbigrams &lt;- reviews |&gt;\n  unnest_tokens(output = bigram, input = ___, token = \"___\", n = ___) |&gt;\n  filter(!is.na(bigram)) |&gt;\n  separate(bigram, into = c(\"word1\", \"word2\"), sep = \" \")\n\nbigrams\n\nHint: see ?unnest_tokens, or look back at Wednesday’s activity.\nStep 2: Count the bigrams\nCount how many times each word1, word2 pair appears, sorted from most to least common.\n\nbigram_counts &lt;- bigrams |&gt;\n  ___(___, ___, sort = TRUE)\n\nbigram_counts\n\nTurn in (Part A): What are the three most common bigrams? Notice that we did not remove stopwords this time. Why would removing them be a bad idea if our goal is to predict the next word?\nStep 3: Predict the next word\nSuppose someone types a word and we want to guess the next one. One simple rule: pick the word that most often follows it in the reviews.\n\nbigram_counts |&gt;\n  filter(word1 == \"___\") |&gt;\n  slice_max(___, n = 5)\n\nTry this for \"data\", \"the\", and one word of your choice.\nTurn in (Part B): For \"data\", what are the top predicted next words? If we always picked the single most likely next word, what would go wrong when we tried to generate a whole sentence?\nStep 4: Turn counts into probabilities\nCounts are hard to compare across words (\"the\" shows up far more often than \"python\"). Convert them to probabilities: for each word1, what proportion of the time is it followed by each word2?\n\nbigram_probs &lt;- bigram_counts |&gt;\n  group_by(___) |&gt;\n  mutate(prob = n / sum(___)) |&gt;\n  ungroup()\n\nAs a check, the probabilities for any one word1 should add up to 1:\n\nbigram_probs |&gt;\n  filter(word1 == \"great\") |&gt;\n  summarize(total = sum(prob))\n\nStep 5: Generate text\nInstead of always taking the most likely word, we can sample the next word at random, giving more likely words a better chance. Run this chunk a few times:\n\nbigram_probs |&gt;\n  filter(word1 == \"great\") |&gt;\n  slice_sample(n = 1, weight_by = prob) |&gt;\n  pull(word2)\n\nNow we repeat that step over and over, using each new word as the next starting point (instead of always using \"great\"). The function below does this for you. (Don’t worry about how it works yet; we will learn how to write functions and loops next week.)\n\ngenerate_text &lt;- function(start, n_words = 10) {\n  words &lt;- start\n  for (i in seq_len(n_words)) {\n    next_word &lt;- bigram_probs |&gt;\n      filter(word1 == words[length(words)]) |&gt;\n      slice_sample(n = 1, weight_by = prob) |&gt;\n      pull(word2)\n    if (length(next_word) == 0) break\n    words &lt;- c(words, next_word)\n  }\n  paste(words, collapse = \" \")\n}\n\ngenerate_text(\"this\", n_words = 12)\n\nRun generate_text() several times, with different starting words (try \"the\", \"i\", \"great\", and a word of your choice). Try a starting word that you think will not be in the reviews at all.\nTurn in (Part C): Paste one generated sentence that you think is the most convincing and one that is the least convincing. What does the model get right? What does it get wrong, and why do you think that happens?\nStep 6: Change the training data\nThe model only knows what it has seen. Re-build it using only a subset of the reviews, then generate text again. In the chunk below, choose a condition for filter(). For example, Label &lt;= 2 keeps only 1 and 2 star reviews, and Label == 5 keeps only 5 star reviews. You could also use str_detect(CourseId, \"data-science\") to keep one subject.\n\nbigram_probs &lt;- reviews |&gt;\n  filter(___) |&gt;\n  unnest_tokens(output = bigram, input = Review, token = \"ngrams\", n = 2) |&gt;\n  filter(!is.na(bigram)) |&gt;\n  separate(bigram, into = c(\"word1\", \"word2\"), sep = \" \") |&gt;\n  count(word1, word2) |&gt;\n  group_by(word1) |&gt;\n  mutate(prob = n / sum(n)) |&gt;\n  ungroup()\n\ngenerate_text(\"this\", n_words = 12)\n\nTurn in (Part D): What subset did you choose? Generate a few sentences and describe how they differ from the ones you generated with all of the reviews. What does this tell you about where a language model’s “knowledge” comes from?"
   },
   {
-    "objectID": "activities/19-apis.html#example-call",
-    "href": "activities/19-apis.html#example-call",
-    "title": "19-apis",
+    "objectID": "activities/17-iteration.html",
+    "href": "activities/17-iteration.html",
+    "title": "17: Iteration",
     "section": "",
-    "text": "acs_mn_2020 &lt;- tidycensus::get_acs(\n    year = 2020,\n    state = \"MN\",\n    geography = \"county\",\n    variables = c(\"B01003_001\", \"B19013_001\"),\n    output = \"wide\",\n    geometry = TRUE\n)"
+    "text": "library(tidyverse)"
   },
   {
-    "objectID": "activities/19-apis.html#storing-your-api-key",
-    "href": "activities/19-apis.html#storing-your-api-key",
-    "title": "19-apis",
+    "objectID": "activities/17-iteration.html#your-turn-for-loop",
+    "href": "activities/17-iteration.html#your-turn-for-loop",
+    "title": "17: Iteration",
+    "section": "Your turn: For loop",
+    "text": "Your turn: For loop\nLoad the palmerpenguins package.\nWrite a for loop that calculates the mean of the numeric variables in the penguins data set and stores the means in a named vector."
+  },
+  {
+    "objectID": "activities/17-iteration.html#your-turn-summarytable-for-loop",
+    "href": "activities/17-iteration.html#your-turn-summarytable-for-loop",
+    "title": "17: Iteration",
+    "section": "Your turn: summary/table for loop",
+    "text": "Your turn: summary/table for loop\nRevisit the {palmerpenguins} penguins data.\nWrite a for loop that calculates the summary() of a numeric variable and the table() of a factor variable.\nStore the results in a list (it will have length 8)."
+  },
+  {
+    "objectID": "activities/17-iteration.html#your-turn-across",
+    "href": "activities/17-iteration.html#your-turn-across",
+    "title": "17: Iteration",
+    "section": "Your turn: across",
+    "text": "Your turn: across\nUse summarize and across to find the range of any quantitative variables, and the number of levels of any factor variables in the penguins dataset."
+  },
+  {
+    "objectID": "activities/18-iteration-2.html",
+    "href": "activities/18-iteration-2.html",
+    "title": "18: Iteration II",
     "section": "",
-    "text": "Create a new text file in the same folder as your .rmd\nCopy and paste your census key into the empty file\nSave the file as census_api_key.txt\n\n\n\nmy_key &lt;- readLines(\"census_api_key.txt\")\n\nand tell tidycensus what your API key is with:\n\ncensus_api_key(my_key)\n\nDo not commit and push census_api_key.txt to github\n\nacs_mn_2020 |&gt;\n  mutate(\n    name = str_remove(NAME, \", Minnesota\"),\n    name = str_remove(name, \" County\")\n  ) |&gt; \n  ggplot(aes(x = B19013_001E, \n                          xmin = B19013_001E - B19013_001M, \n                          xmax = B19013_001E + B19013_001M, \n                          y = fct_reorder(name, B19013_001E))) + \n  geom_point() + \n  geom_errorbarh() + \n  labs(\n    x = \"\",\n    y = \"\"\n  )"
+    "text": "library(tidyverse)"
   },
   {
-    "objectID": "activities/19-apis.html#links-to-more-info-about-census",
-    "href": "activities/19-apis.html#links-to-more-info-about-census",
-    "title": "19-apis",
-    "section": "",
-    "text": "https://data.census.gov/\nhttps://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/"
+    "objectID": "activities/18-iteration-2.html#try-it-map",
+    "href": "activities/18-iteration-2.html#try-it-map",
+    "title": "18: Iteration II",
+    "section": "Try it: map\n",
+    "text": "Try it: map\n\n\nEdit the code chunk below so it returns a numeric vector (remove eval: false)\nEdit the code chunk so it only maps to the numeric columns (3-12) of unscaled cancer\n\n\nmap(unscaled_cancer, mean)\n\n\n\nmap the summary function to all columns in the {palmerpenguins} penguins data\n\n\n# your code here"
   },
   {
-    "objectID": "activities/19-apis.html#try-it",
-    "href": "activities/19-apis.html#try-it",
-    "title": "19-apis",
-    "section": "",
-    "text": "Add “educational attainment” to the topic filters and take a look at the first table. What is it showing you?"
+    "objectID": "activities/18-iteration-2.html#your-turn-penguins-and-map",
+    "href": "activities/18-iteration-2.html#your-turn-penguins-and-map",
+    "title": "18: Iteration II",
+    "section": "Your turn: penguins and map\n",
+    "text": "Your turn: penguins and map\n\nUsing the penguins data, use map to calculate the range of a numeric variable and the table of a factor variable. (It may be helpful to first write a custom function for this output)\nYour result should be a list (it will have length 8).\n\n# your code here"
   },
   {
-    "objectID": "activities/19-apis.html#your-turn",
-    "href": "activities/19-apis.html#your-turn",
-    "title": "19-apis",
-    "section": "",
-    "text": "Search for the “Median earnings in the past 12 months by major” table that we looked at on the census website using load_variables\n\nRun another call to tidycensus::get_acs to access this variable\n\n\nacs_vars &lt;- load_variables(2020, \"acs5\", cache = TRUE) \nacs_vars \n\n# A tibble: 27,850 × 4\n   name        label                                    concept        geography\n   &lt;chr&gt;       &lt;chr&gt;                                    &lt;chr&gt;          &lt;chr&gt;    \n 1 B01001A_001 Estimate!!Total:                         SEX BY AGE (W… tract    \n 2 B01001A_002 Estimate!!Total:!!Male:                  SEX BY AGE (W… tract    \n 3 B01001A_003 Estimate!!Total:!!Male:!!Under 5 years   SEX BY AGE (W… tract    \n 4 B01001A_004 Estimate!!Total:!!Male:!!5 to 9 years    SEX BY AGE (W… tract    \n 5 B01001A_005 Estimate!!Total:!!Male:!!10 to 14 years  SEX BY AGE (W… tract    \n 6 B01001A_006 Estimate!!Total:!!Male:!!15 to 17 years  SEX BY AGE (W… tract    \n 7 B01001A_007 Estimate!!Total:!!Male:!!18 and 19 years SEX BY AGE (W… tract    \n 8 B01001A_008 Estimate!!Total:!!Male:!!20 to 24 years  SEX BY AGE (W… tract    \n 9 B01001A_009 Estimate!!Total:!!Male:!!25 to 29 years  SEX BY AGE (W… tract    \n10 B01001A_010 Estimate!!Total:!!Male:!!30 to 34 years  SEX BY AGE (W… tract    \n# ℹ 27,840 more rows"
+    "objectID": "activities/18-iteration-2.html#more-practice-survivor-data",
+    "href": "activities/18-iteration-2.html#more-practice-survivor-data",
+    "title": "18: Iteration II",
+    "section": "More practice: survivor data",
+    "text": "More practice: survivor data\n\nus_castaway_results \n\n# A tibble: 870 × 7\n   castaway_id castaway season_name      season place jury  finalist\n   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;   \n 1 US0001      Sonja    Survivor: Borneo      1    16 FALSE FALSE   \n 2 US0002      B.B.     Survivor: Borneo      1    15 FALSE FALSE   \n 3 US0003      Stacey   Survivor: Borneo      1    14 FALSE FALSE   \n 4 US0004      Ramona   Survivor: Borneo      1    13 FALSE FALSE   \n 5 US0005      Dirk     Survivor: Borneo      1    12 FALSE FALSE   \n 6 US0006      Joel     Survivor: Borneo      1    11 FALSE FALSE   \n 7 US0007      Gretchen Survivor: Borneo      1    10 FALSE FALSE   \n 8 US0008      Greg     Survivor: Borneo      1     9 TRUE  FALSE   \n 9 US0009      Jenna    Survivor: Borneo      1     8 TRUE  FALSE   \n10 US0010      Gervase  Survivor: Borneo      1     7 TRUE  FALSE   \n# ℹ 860 more rows\n\n\n\nWrite a function called finalists that takes the input of a survivor season (as a numeric) and outputs a string of the finalists’ names for that season. The finalists’ names should be separated with a comma.\nUse map_chr to return a character vector of finalists for seasons 31-40."
   },
   {
-    "objectID": "activities/19-apis.html#example-call-1",
-    "href": "activities/19-apis.html#example-call-1",
-    "title": "19-apis",
-    "section": "Example call",
-    "text": "Example call\n\nhmong_state_request &lt;- request(\"https://api.census.gov/data\") %&gt;% \n    req_url_path_append(\"2019\") %&gt;% \n    req_url_path_append(\"acs\") %&gt;% \n    req_url_path_append(\"acs1\") %&gt;% \n    req_url_query(get = c(\"NAME\", \"B02015_009E\", \"B02015_009M\"), `for` = I(\"state:*\"), key = my_key, .multi = \"comma\")\n\n\nhmong_state_response &lt;- req_perform(hmong_state_request)\n\n\nhmong_state_tbl &lt;- hmong_state_response %&gt;%\n  resp_body_json(simplifyVector = TRUE) %&gt;%\n  janitor::row_to_names(1) %&gt;%\n  as_tibble()\n\nhmong_state_tbl"
-  },
-  {
-    "objectID": "activities/19-apis.html#your-turn-1",
-    "href": "activities/19-apis.html#your-turn-1",
-    "title": "19-apis",
-    "section": "Your Turn",
-    "text": "Your Turn\n\nEdit the httr code to access the B15013_002E variable from 2024 (median income for “computers, math, statistics” majors)\n\nTo get US level estimates, use I(\"us:1\") in the for argument\nTo check your answer, copy the URL into a browser and make sure you get \"102338\"\n\n\n\nMake a httr request to access the 1-year ACS data from 2022 and 2023. Make sure to save your results from each call!\nCombine all years into a single dataset (you may need to create a column for year)\nMake a time series plot with your chosen variable on the y-axis and year on the x-axis\n\nYou will need to do some cleaning of the data\n\n\nBrainstorm some ways to make the graph more interesting through gathering more data from the census API, and implement those ideas if you have time!"
-  },
-  {
-    "objectID": "activities/23-shiny1.html",
-    "href": "activities/23-shiny1.html",
-    "title": "23-shiny",
-    "section": "",
-    "text": "Editing a shiny app: Part 1\napp-w26.R contains a starter shiny app. Your tasks for today are:\n\nRun the app! What does it show us?\nRead the code: find the inputs and the outputs\nAdapt the app to allow the user to specify what variable maps to the point color in the scatterplot\nAdapt the app to allow the user to filter the data by annual_salary. Allow values between the minimum and maximum annual_salary selected.\n\n\n\n\n\n\n\nTipHint\n\n\n\nuse sliderInput and specify a vector of lenth 2 for value\n\n\n\nAdapt the app to allow the user to select whether the plot should have a white background\n\n\n\n\n\n\n\nTipHint\n\n\n\nuse checkBoxInput for the user input and theme_minimal() with an if statement to control the theme of the plot\n\n\n\nCreate an interactive histogram that allows the user to select what quantitative variable should be displayed and what categorical variable should be used to fill the bars. Add any other interactive elements (e.g., binwidth adjustments) that you want to.\n\n\n\n\n\n\n\nCredit: Mine Çetinkaya-Rundel’s Ask a Manager application exercise"
-  },
-  {
-    "objectID": "activities/15-sentiment.html",
-    "href": "activities/15-sentiment.html",
-    "title": "15-sentiment",
-    "section": "",
-    "text": "library(tidyverse)\nlibrary(tidytext) # functions for doing text analysis"
-  },
-  {
-    "objectID": "activities/15-sentiment.html#bing",
-    "href": "activities/15-sentiment.html#bing",
-    "title": "15-sentiment",
-    "section": "“bing”",
-    "text": "“bing”\n\nbing_sentiments = get_sentiments(\"bing\") %&gt;%\n  slice_sample(n = 20)"
-  },
-  {
-    "objectID": "activities/15-sentiment.html#afinn",
-    "href": "activities/15-sentiment.html#afinn",
-    "title": "15-sentiment",
-    "section": "“afinn”",
-    "text": "“afinn”\n\nlibrary(textdata)\nget_sentiments(\"afinn\") %&gt;%\n  slice_sample(n = 20)\n\n# A tibble: 20 × 2\n   word          value\n   &lt;chr&gt;         &lt;dbl&gt;\n 1 weary            -2\n 2 comforting        2\n 3 novel             2\n 4 substantially     1\n 5 costly           -2\n 6 appreciated       2\n 7 piteous          -2\n 8 excite            3\n 9 revered           2\n10 flu              -2\n11 cancelling       -1\n12 benefits          2\n13 beautify          3\n14 unconcerned      -2\n15 fortunate         2\n16 vulnerability    -2\n17 goddamn          -3\n18 restore           1\n19 menace           -2\n20 enlightens        2"
+    "objectID": "activities/18-iteration-2.html#your-turn-sample_finalists",
+    "href": "activities/18-iteration-2.html#your-turn-sample_finalists",
+    "title": "18: Iteration II",
+    "section": "Your turn: sample_finalists\n",
+    "text": "Your turn: sample_finalists\n\nSome survivor seasons only had 16 players, while others had 22. This could result in some seasons being slightly under/overrepresented in our sample. Let’s account for this.\nEdit this experiment to instead randomly sample one player from each season (this results in 47 players) and then sample 20 players from the 47 random ones.\n(Hint: look at the by argument in slice_sample)\n\n# edit this function\nsample_finalists = function(n){\n    us_castaway_results %&gt;%\n    slice_sample(n = n) %&gt;%\n    filter(finalist) %&gt;%\n    count() %&gt;%\n    pull(n)\n}\n\n\n# your iteration code here"
   },
   {
     "objectID": "activities/13-strings-regex.html",
@@ -716,7 +702,7 @@
     "href": "activities/05-maps.html#load-data-1",
     "title": "Maps",
     "section": "Load Data",
-    "text": "Load Data\nThe maps package (already loaded) includes us.cities, a data set of US cities and their populations (as of 2006). We’ll filter to cities with a population over 100,000, and exclude Alaska and Hawaii so the map isn’t stretched out.\n\ndata(us.cities)\n\nbig_cities &lt;- us.cities |&gt;\n  filter(!country.etc %in% c(\"AK\", \"HI\"), pop &gt; 100000)\n\n\n\nname: city and state\n\npop: population\n\nlat, long: the city’s location"
+    "text": "Load Data\nThe {maps} package (already loaded) includes us.cities, a data set of US cities and their populations (as of 2006). We’ll filter to cities with a population over 100,000, and exclude Alaska and Hawaii so the map isn’t stretched out.\n\ndata(us.cities)\n\nbig_cities &lt;- us.cities |&gt;\n  filter(!country.etc %in% c(\"AK\", \"HI\"), pop &gt; 100000)\n\n\n\nname: city and state\n\npop: population\n\nlat, long: the city’s location"
   },
   {
     "objectID": "activities/05-maps.html#starter-map-base-points",
@@ -877,7 +863,7 @@
     "href": "notes/00-journals.html",
     "title": "Data Science Journals",
     "section": "",
-    "text": "Page 1: Leave blank for name/table of contents\nAfter page 1, each course day will get two pages in “booklet style” - Left, top: Prep/pre-work for the day (answer my question or jot down your own question, can be left blank) - Left, bottom: reflections from in-class prompt - Right: your space to summarize the main points for the day\n\nTable of Contents\nNote: if you deviate from this ToC, that’s perfectly fine! Just please keep your first page updated with what your ToC follows so I can find what I’m looking for\n\nDay4 | p2-3: Fill in at some point with ggplot and data visualization notes\nDay5 | p4-5: In-class: what is an example of data that would work well for a choropleth map? What about a proportional symbol map?\nDay6| p6-7: In class: what aspects of a graph made writing alt-text hard/easy? what aspects of an alt-text description made recreating the graph harder or easier?\nDay7 | p8-9: put an “X” where you currently feel about the quiz/class in general\n\n\n\n\n\n\nDay8 | p10-11: Sketch the tidy version of the bakeoff dataset (see the original prompt in slides09)\nDay9: Quiz01! No journal entry\nDay10| p12-13: After completing the last prompt in the activity, tell me which dessert you would most like to sample from the list\nDay11 | p14-15: Sketch what the first 3 rows of cafe_orders.csv look like as raw text, then sketch the data frame R builds from it. Circle one place where the two don’t match. What did R guess wrong, and how (in words!) you would fix it?\nDay12 | p16-17:\nDay13 | p17-18: fill in the following bar graph:",
+    "text": "Page 1: Leave blank for name/table of contents\nAfter page 1, each course day will get two pages in “booklet style” - Left, top: Prep/pre-work for the day (answer my question or jot down your own question, can be left blank) - Left, bottom: reflections from in-class prompt - Right: your space to summarize the main points for the day\n\nTable of Contents\nNote: if you deviate from this ToC, that’s perfectly fine! Just please keep your first page updated with what your ToC follows so I can find what I’m looking for\n\nDay4 | p2-3: Fill in at some point with ggplot and data visualization notes\nDay5 | p4-5: In-class: what is an example of data that would work well for a choropleth map? What about a proportional symbol map?\nDay6| p6-7: In class: what aspects of a graph made writing alt-text hard/easy? what aspects of an alt-text description made recreating the graph harder or easier?\nDay7 | p8-9: put an “X” where you currently feel about the quiz/class in general\n\n\n\n\n\n\nDay8 | p10-11: Sketch the tidy version of the bakeoff dataset (see the original prompt in slides09)\nDay9: Quiz01! No journal entry\nDay10| p12-13: After completing the last prompt in the activity, tell me which dessert you would most like to sample from the list\nDay11 | p14-15: Sketch what the first 3 rows of cafe_orders.csv look like as raw text, then sketch the data frame R builds from it. Circle one place where the two don’t match. What did R guess wrong, and how (in words!) you would fix it?\nDay12 | p16-17:\nDay13 | p18-19: fill in the following bar graph:\n\n\n\n\n\n\n\n\n\n\nDay14 | p19-20: Work on the text analysis activity on coursera reviews, and tell me what you did and what you learned (this could be a graph, number, sentence description, etc.)\nDay15 | Quiz02! No journal entry",
     "crumbs": [
       "Journals"
     ]
@@ -4030,7 +4016,7 @@
     "href": "index.html",
     "title": "Stat 220: Intro to Data Science",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nREFERENCE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Sep 14\n📝complete welcome survey\n\n\nWelcome + data, R review\n\nslides01 01-example-tuition\n\n\n\n\n1\nW\nWed, Sep 16\n📚 R basics  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\n📚 R4DS 28.1-28.5 \n\nGithub + reproducible reports\n\nslides02 02-example-lego Lego report to replicate\n\n\n\n\n1\nF\nFri, Sep 18\n📝 10 minute activity on markdown  📺 intro to ggplot\n\n📚 R4DS Ch1 \n\nggplot\n\nslides03 03-ggplot-intro\n\nHW 1\n\n\n2\nM\nMon, Sep 21\n📚 Skim the entire reference reading for today, pick one “rule” and summarize it\n\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04 04-customizing-plots\n\n\n\n\n2\nW\nWed, Sep 23\n\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05 05-maps\n\nHW 2\n\n\n2\nF\nFri, Sep 25\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Sep 28\n🌎 Skim ?nycflights23::flights` in the console and jot down 2 questions you could answer with this data\n📚 R4DS 3.1-3.4 \n\nVerbs\n\nslides07 07-verbs\n\n\n\n\n3\nW\nWed, Sep 30\n🌎 Watch the pivot_longer/pivot_wider animations to get a feel for reshaping before we do it live  📚 Read portfolio 1 prompt and jot down any questions\n📚 R4DS 3.5  📚 R4DS 5.1-5.4 \n\nGroups and summarizing Tidy data\n\nslides08 08-dplyr2\n\nHW 3\n\n\n3\nF\nFri, Oct 2\n\n📚 R4DS 4 \n\nCode style\n\nvideo + slides09 \n\n\nLab Quiz 1 \n\n\n\n4\nM\nMon, Oct 5\n\n📚 R4DS 19.1-19.3\n\nCombining datasets\n\nslides10 10-combining\n\n\n\n\n4\nW\nWed, Oct 7\n📝 Open cafe_orders in a plain text editor (not Excel) and note anything that looks “off” (odd formats, text where you’d expect numbers, inconsistent blanks)\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\nslides11 11-import\n\n\nHW 4 Portfolio 1\n\n\n\n4\nF\nFri, Oct 9\n\n📚 R4DS 16 \n\nWorking with factors\n\nslides12 12-factors\n\n\n\n\n5\nM\nMon, Oct 12\n\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\nslides13 13-strings-regex\n\n\n\n\n5\nW\nWed, Oct 14\n🌎 Google ngram viewer\n\n📚 MDSR 19.2 \n\nIntro to Text Analysis\n\nslides14 14-text-case-study\n\nHW 5\n\n\n5\nF\nFri, Oct 16\n\n\nText Analysis\ntbd\nLab Quiz 2\n\n\n6\nM\nMon, Oct 19\n\n\n🏝️ Midterm Break; no class\ntbd\n\n\n\n6\nW\nWed, Oct 21\n\n📚 R4DS 25\n\nFunctions\ntbd\n\n\n\n6\nF\nFri, Oct 23\n\n📚 MDSR 7.1-7.3\n\nIteration\ntbd\nHW6\n\n\n7\nM\nMon, Oct 26\n\n\nIteration II\ntbd\n\n\n\n7\nW\nWed, Oct 28\n📚What is an API?  📝 sign up for a census API key\n\n📚R4DS 23 (skip case studies) \n\nAPIs\ntbd\n\nHW7 \n\n\n\n7\nF\nFri, Oct 30\n\n\nScraping I\ntbd\n\nLab Quiz 3 , [Final Project Idea Form]\n\n\n8\nM\nMon, Nov 2\n📝 install and test selectorGadget\n\n📚 R4DS 24.2;24.5 \n\nScraping II\ntbd\n[Final Project Ranking Form]  [Portfolio 2]\n\n\n8\nW\nWed, Nov 4\n🌎 Explore htmlWidgets gallery + source code  🌎 Explore NZ Earthquakes and source code\n\n\nIntro to Interactivity\ntbd\nHW8\n\n\n8\nF\nFri, Nov 6\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\n\nShiny 1\ntbd\n\n\n\n9\nM\nMon, Nov 9\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\n\nShiny 2\ntbd\n\n\n\n9\nW\nWed, Nov 11\n\n\nShiny 3\ntbd\nFinal Project sketch\n\n\n9\nF\nFri, Nov 13\n\n📚MDSR 15.1-15.4\n\nSQL\ntbd\n[Portfolio 3]\n\n\n10\nM\nMon, Nov 16\n\n\nProject Demos\ntbd\n\n\n\n10\nW\nWed, Nov 18\n\n\nProject Demos\ntbd\nHW9\n\n\n\n\nFri, Nov 20\n\n\n🏝️ Reading days\ntbd\n\n\n\n\n\nMon, Nov 23\n\n\nFinal Project Due @ noon\ntbd\n[Final Project]",
+    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nREFERENCE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Sep 14\n📝complete welcome survey\n\n\nWelcome + data, R review\n\nslides01 01-example-tuition\n\n\n\n\n1\nW\nWed, Sep 16\n📚 R basics  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\n📚 R4DS 28.1-28.5 \n\nGithub + reproducible reports\n\nslides02 02-example-lego Lego report to replicate\n\n\n\n\n1\nF\nFri, Sep 18\n📝 10 minute activity on markdown  📺 intro to ggplot\n\n📚 R4DS Ch1 \n\nggplot\n\nslides03 03-ggplot-intro\n\nHW 1\n\n\n2\nM\nMon, Sep 21\n📚 Skim the entire reference reading for today, pick one “rule” and summarize it\n\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04 04-customizing-plots\n\n\n\n\n2\nW\nWed, Sep 23\n\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05 05-maps\n\nHW 2\n\n\n2\nF\nFri, Sep 25\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Sep 28\n🌎 Skim ?nycflights23::flights` in the console and jot down 2 questions you could answer with this data\n📚 R4DS 3.1-3.4 \n\nVerbs\n\nslides07 07-verbs\n\n\n\n\n3\nW\nWed, Sep 30\n🌎 Watch the pivot_longer/pivot_wider animations to get a feel for reshaping before we do it live  📚 Read portfolio 1 prompt and jot down any questions\n📚 R4DS 3.5  📚 R4DS 5.1-5.4 \n\nGroups and summarizing Tidy data\n\nslides08 08-dplyr2\n\nHW 3\n\n\n3\nF\nFri, Oct 2\n\n📚 R4DS 4 \n\nCode style\n\nvideo + slides09 \n\n\nLab Quiz 1 \n\n\n\n4\nM\nMon, Oct 5\n\n📚 R4DS 19.1-19.3\n\nCombining datasets\n\nslides10 10-combining\n\n\n\n\n4\nW\nWed, Oct 7\n📝 Open cafe_orders in a plain text editor (not Excel) and note anything that looks “off” (odd formats, text where you’d expect numbers, inconsistent blanks)\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\nslides11 11-import\n\n\nHW 4 Portfolio 1\n\n\n\n4\nF\nFri, Oct 9\n\n📚 R4DS 16 \n\nWorking with factors\n\nslides12 12-factors\n\n\n\n\n5\nM\nMon, Oct 12\n\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\nslides13 13-strings-regex\n\n\n\n\n5\nW\nWed, Oct 14\n🌎 Google ngram viewer\n\n📚 MDSR 19.2 \n\nIntro to Text Analysis\n\nslides14 14-text-case-study\n\nHW 5\n\n\n5\nF\nFri, Oct 16\n\n\nText Analysis\n\nslides15 15-sentiment\n\nLab Quiz 2\n\n\n6\nM\nMon, Oct 19\n\n\n🏝️ Midterm Break; no class\ntbd\n\n\n\n6\nW\nWed, Oct 21\n\n📚 R4DS 25\n\nFunctions\ntbd\n\n\n\n6\nF\nFri, Oct 23\n\n📚 MDSR 7.1-7.3\n\nIteration\ntbd\nHW6\n\n\n7\nM\nMon, Oct 26\n\n\nIteration II\ntbd\n\n\n\n7\nW\nWed, Oct 28\n📚What is an API?  📝 sign up for a census API key\n\n📚R4DS 23 (skip case studies) \n\nAPIs\ntbd\n\nHW7 \n\n\n\n7\nF\nFri, Oct 30\n\n\nScraping I\ntbd\n\nLab Quiz 3 , [Final Project Idea Form]\n\n\n8\nM\nMon, Nov 2\n📝 install and test selectorGadget\n\n📚 R4DS 24.2;24.5 \n\nScraping II\ntbd\n[Final Project Ranking Form]  [Portfolio 2]\n\n\n8\nW\nWed, Nov 4\n🌎 Explore htmlWidgets gallery + source code  🌎 Explore NZ Earthquakes and source code\n\n\nIntro to Interactivity\ntbd\nHW8\n\n\n8\nF\nFri, Nov 6\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\n\nShiny 1\ntbd\n\n\n\n9\nM\nMon, Nov 9\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\n\nShiny 2\ntbd\n\n\n\n9\nW\nWed, Nov 11\n\n\nShiny 3\ntbd\nFinal Project sketch\n\n\n9\nF\nFri, Nov 13\n\n📚MDSR 15.1-15.4\n\nSQL\ntbd\n[Portfolio 3]\n\n\n10\nM\nMon, Nov 16\n\n\nProject Demos\ntbd\n\n\n\n10\nW\nWed, Nov 18\n\n\nProject Demos\ntbd\nHW9\n\n\n\n\nFri, Nov 20\n\n\n🏝️ Reading days\ntbd\n\n\n\n\n\nMon, Nov 23\n\n\nFinal Project Due @ noon\ntbd\n[Final Project]",
     "crumbs": [
       "Course information",
       "Schedule"
@@ -6381,86 +6367,107 @@
   {
     "objectID": "slides/15/slides15.html#today",
     "href": "slides/15/slides15.html#today",
-    "title": "Sentiment Analysis",
+    "title": "How LLMs Work",
     "section": "Today",
-    "text": "Today\n\nSentiment analysis\nLab Quiz 2!"
+    "text": "Today\nToday’s question: what would it take to turn your bigram model into something like ChatGPT?\n\nWhat you built\nWhere it breaks\nWhat LLMs change\nTakeaways"
   },
   {
-    "objectID": "slides/15/slides15.html#data-for-today",
-    "href": "slides/15/slides15.html#data-for-today",
-    "title": "Sentiment Analysis",
-    "section": "Data for today",
-    "text": "Data for today\nRandom (?) sample of 26,882 reviews of coursera courses\n\nen_coursera_reviews &lt;- read_csv(\"../../data/en_coursera_sample.csv\") # https://stat220-f26.github.io/data/en_coursera_sample.csv\nen_coursera_reviews\n\n# A tibble: 26,882 x 5\n   CourseId                    Review                      Label cld2  review_id\n   &lt;chr&gt;                       &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;\n 1 nurture-market-strategies   It would be better if the ~     1 en            1\n 2 nand2tetris2                Superb course. Great prese~     5 en            2\n 3 schedule-projects           Excellent course!               5 en            3\n 4 teaching-english-capstone-2 I'd recommend this course ~     5 en            4\n 5 machine-learning            This course was so effecti~     5 en            5\n 6 python-network-data         Words cannot describe how ~     5 en            6\n 7 clinical-trials             Great course!                   5 en            7\n 8 python-genomics             I didn't know anything abo~     3 en            8\n 9 strategic-management        Loved everything about thi~     5 en            9\n10 script-writing              No significant instruction~     1 en           10\n# i 26,872 more rows\n\n\n\n\nSource: Kaggle"
+    "objectID": "slides/15/slides15.html#a-language-model",
+    "href": "slides/15/slides15.html#a-language-model",
+    "title": "How LLMs Work",
+    "section": "A language model",
+    "text": "A language model\nA language model assigns a probability to the next token, given the text so far.\n\nSplit text into tokens (here: words)\nCount which tokens follow which\nTurn counts into probabilities\n\nSample the next token, and repeat"
   },
   {
-    "objectID": "slides/15/slides15.html#are-these-positive-or-negative-reviews",
-    "href": "slides/15/slides15.html#are-these-positive-or-negative-reviews",
-    "title": "Sentiment Analysis",
-    "section": "Are these positive or negative reviews?",
-    "text": "Are these positive or negative reviews?\n“thank you so much it was great course”\n“Too reliant on materials directly collected by professor, too little context of larger artistic community.”\n“Excellent! easy to follow and engaging!”\n“Slow and redundant. Would have preferred a faster-paced and more substantive course.”\n“Way too shallow and way too english :(”"
+    "objectID": "slides/15/slides15.html#from-counts-to-probabilities",
+    "href": "slides/15/slides15.html#from-counts-to-probabilities",
+    "title": "How LLMs Work",
+    "section": "From counts to probabilities",
+    "text": "From counts to probabilities\n\nbigram_probs |&gt;\n  filter(word1 == \"great\") |&gt;\n  slice_max(prob, n = 5)\n\n# A tibble: 5 × 4\n  word1 word2            n   prob\n  &lt;chr&gt; &lt;chr&gt;        &lt;int&gt;  &lt;dbl&gt;\n1 great course        2287 0.373 \n2 great introduction   241 0.0393\n3 great job            141 0.0230\n4 great teacher        140 0.0228\n5 great and            131 0.0214"
   },
   {
-    "objectID": "slides/15/slides15.html#sentiment-analysis",
-    "href": "slides/15/slides15.html#sentiment-analysis",
-    "title": "Sentiment Analysis",
-    "section": "Sentiment analysis",
-    "text": "Sentiment analysis\nOne way to analyze the sentiment is to consider the text as a combination of the individual words. It’s computationally convenient because we’re able to use the tidy tools that we’ve been building up:\n\n\ntokenize the text\n\njoin the sentiment values to each token\n\ngroup the words in the document to summarize the overall sentiment"
+    "objectID": "slides/15/slides15.html#sampling-the-next-word",
+    "href": "slides/15/slides15.html#sampling-the-next-word",
+    "title": "How LLMs Work",
+    "section": "Sampling the next word",
+    "text": "Sampling the next word\n\nbigram_probs |&gt;\n  filter(word1 == \"great\") |&gt;\n  slice_sample(n = 1, weight_by = prob) |&gt;\n  pull(word2)\n\n[1] \"course\"\n\nbigram_probs |&gt;\n  filter(word1 == \"great\") |&gt;\n  slice_sample(n = 1, weight_by = prob) |&gt;\n  pull(word2)\n\n[1] \"passion\"\n\n\n\nAlways picking the most likely word gives the same boring text every time. Sampling gives different text each run, with likely words chosen more often."
   },
   {
-    "objectID": "slides/15/slides15.html#sentiment-datasets-bing",
-    "href": "slides/15/slides15.html#sentiment-datasets-bing",
-    "title": "Sentiment Analysis",
-    "section": "Sentiment datasets: bing\n",
-    "text": "Sentiment datasets: bing\n\n\n\nlibrary(tidytext)\nget_sentiments(\"bing\") %&gt;%\n  slice_sample(n = 20)\n\n\n# A tibble: 20 x 2\n   word          sentiment\n   &lt;chr&gt;         &lt;chr&gt;    \n 1 undercutting  negative \n 2 unexpectedly  negative \n 3 slack         negative \n 4 fabrication   negative \n 5 majesty       positive \n 6 perilously    negative \n 7 cave          negative \n 8 partisan      negative \n 9 prik          negative \n10 miserableness negative \n11 flourish      positive \n12 acridness     negative \n13 darling       positive \n14 undisputed    positive \n15 crabby        negative \n16 inexperience  negative \n17 boastful      negative \n18 unequivocally positive \n19 greatness     positive \n20 gratify       positive"
+    "objectID": "slides/15/slides15.html#text-from-your-model",
+    "href": "slides/15/slides15.html#text-from-your-model",
+    "title": "How LLMs Work",
+    "section": "Text from your model",
+    "text": "Text from your model\n\ngenerate_text(\"this\", n_words = 12)\n\n[1] \"this very useful course easy introduction to follow this course disappointed with unix\"\n\ngenerate_text(\"the\", n_words = 12)\n\n[1] \"the forums and would be more directed self trainer for each concept is\"\n\ngenerate_text(\"i\", n_words = 12)\n\n[1] \"i loved it was not mentions lots to understand and get 100 more\""
   },
   {
-    "objectID": "slides/15/slides15.html#sentiment-datasets-afinn",
-    "href": "slides/15/slides15.html#sentiment-datasets-afinn",
-    "title": "Sentiment Analysis",
-    "section": "Sentiment datasets: afinn\n",
-    "text": "Sentiment datasets: afinn\n\n\n\nlibrary(textdata)\nget_sentiments(\"afinn\") %&gt;%\n  slice_sample(n = 20)\n\n\n# A tibble: 20 x 2\n   word           value\n   &lt;chr&gt;          &lt;dbl&gt;\n 1 postponed         -1\n 2 beautifully        3\n 3 chagrin           -2\n 4 appreciation       2\n 5 spark              1\n 6 mope              -1\n 7 empathetic         2\n 8 oversimplified    -2\n 9 stimulating        2\n10 exaggerates       -2\n11 disconsolation    -2\n12 sophisticated      2\n13 fearing           -2\n14 bereaving         -2\n15 dejected          -2\n16 stopped           -1\n17 strikers          -2\n18 scary             -2\n19 worse             -3\n20 protesters        -2"
+    "objectID": "slides/15/slides15.html#problem-1-one-word-of-context",
+    "href": "slides/15/slides15.html#problem-1-one-word-of-context",
+    "title": "How LLMs Work",
+    "section": "Problem 1: one word of context",
+    "text": "Problem 1: one word of context\nEach new word only “sees” the word right before it, so sentences wander.\n\n\n[1] \"great points discussed in an excellent course for those academic publishing the right was ok swirl\"\n\n\n\n→ Nothing connects the beginning of a sentence to its end."
   },
   {
-    "objectID": "slides/15/slides15.html#section-1",
-    "href": "slides/15/slides15.html#section-1",
-    "title": "Sentiment Analysis",
-    "section": "",
-    "text": "en_coursera_reviews \n\n# A tibble: 26,882 x 5\n   CourseId                    Review                      Label cld2  review_id\n   &lt;chr&gt;                       &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;\n 1 nurture-market-strategies   It would be better if the ~     1 en            1\n 2 nand2tetris2                Superb course. Great prese~     5 en            2\n 3 schedule-projects           Excellent course!               5 en            3\n 4 teaching-english-capstone-2 I'd recommend this course ~     5 en            4\n 5 machine-learning            This course was so effecti~     5 en            5\n 6 python-network-data         Words cannot describe how ~     5 en            6\n 7 clinical-trials             Great course!                   5 en            7\n 8 python-genomics             I didn't know anything abo~     3 en            8\n 9 strategic-management        Loved everything about thi~     5 en            9\n10 script-writing              No significant instruction~     1 en           10\n# i 26,872 more rows"
+    "objectID": "slides/15/slides15.html#problem-2-words-it-has-never-seen",
+    "href": "slides/15/slides15.html#problem-2-words-it-has-never-seen",
+    "title": "How LLMs Work",
+    "section": "Problem 2: words it has never seen",
+    "text": "Problem 2: words it has never seen\n\ngenerate_text(\"llm\", n_words = 10)\n\n[1] \"llm\"\n\n\n\n→ If a word never appeared in the training reviews, the model has nothing to say."
   },
   {
-    "objectID": "slides/15/slides15.html#inner_join",
-    "href": "slides/15/slides15.html#inner_join",
-    "title": "Sentiment Analysis",
-    "section": "inner_join",
-    "text": "inner_join"
+    "objectID": "slides/15/slides15.html#problem-3-no-notion-of-meaning",
+    "href": "slides/15/slides15.html#problem-3-no-notion-of-meaning",
+    "title": "How LLMs Work",
+    "section": "Problem 3: no notion of meaning",
+    "text": "Problem 3: no notion of meaning\nTo the model, great and excellent are just two unrelated rows in a table. What it learns about one tells it nothing about the other.\n\n\n# A tibble: 6 × 3\n  word1     `times seen` `different next words`\n  &lt;chr&gt;            &lt;int&gt;                  &lt;int&gt;\n1 great             6133                    680\n2 excellent         2654                    396\n3 awesome            749                    186\n4 fantastic          440                    119\n5 superb              70                     40\n6 terrific            29                     18\n\n\n\n→ Words that mean almost the same thing end up with very different amounts of data."
   },
   {
-    "objectID": "slides/15/slides15.html#joining-the-sentiment-data",
-    "href": "slides/15/slides15.html#joining-the-sentiment-data",
-    "title": "Sentiment Analysis",
-    "section": "\njoining the sentiment data",
-    "text": "joining the sentiment data\n\n\nbing_sentiments = get_sentiments(\"bing\")\nen_coursera_reviews %&gt;%\n  unnest_tokens(word, Review) %&gt;% \n  inner_join(bing_sentiments, by = \"word\") %&gt;%\n  select(-c(CourseId, cld2))\n\n\n# A tibble: 69,951 x 4\n   Label review_id word        sentiment\n   &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    \n 1     1         1 better      positive \n 2     5         2 superb      positive \n 3     5         2 great       positive \n 4     5         2 challenging negative \n 5     5         2 fun         positive \n 6     5         2 recommend   positive \n 7     5         3 excellent   positive \n 8     5         4 recommend   positive \n 9     5         4 enjoyed     positive \n10     5         4 great       positive \n# i 69,941 more rows"
+    "objectID": "slides/15/slides15.html#problem-4-more-context-means-less-data",
+    "href": "slides/15/slides15.html#problem-4-more-context-means-less-data",
+    "title": "How LLMs Work",
+    "section": "Problem 4: more context means less data",
+    "text": "Problem 4: more context means less data\n\n\n\n\nmodel\ndifferent combinations\nseen only once\n\n\n\nBigrams (1 word of context)\n180,469\n72%\n\n\nTrigrams (2 words of context)\n396,151\n86%\n\n\n\n\n\n\n→ Looking at more words makes the model smarter, but most combinations are then ones it has barely seen."
   },
   {
-    "objectID": "slides/15/slides15.html#group_by-review-id-summarize-overall-sentiment",
-    "href": "slides/15/slides15.html#group_by-review-id-summarize-overall-sentiment",
-    "title": "Sentiment Analysis",
-    "section": "\ngroup_by review ID, summarize overall sentiment",
-    "text": "group_by review ID, summarize overall sentiment\n\n\nbing_review_scores &lt;- en_coursera_reviews %&gt;%\n  unnest_tokens(word, Review) %&gt;% \n  inner_join(bing_sentiments, by = \"word\") %&gt;%\n  group_by(review_id) %&gt;%\n  summarize(\n    sum = (sum(sentiment == \"positive\") - sum(sentiment == \"negative\"))\n  )\n\nbing_review_scores\n\n\n# A tibble: 25,409 x 2\n   review_id   sum\n       &lt;dbl&gt; &lt;int&gt;\n 1         1     1\n 2         2     3\n 3         3     1\n 4         4     3\n 5         5     5\n 6         6     1\n 7         7     1\n 8         8     2\n 9         9     5\n10        10     0\n# i 25,399 more rows"
+    "objectID": "slides/15/slides15.html#fix-1-tokens-are-pieces-of-words",
+    "href": "slides/15/slides15.html#fix-1-tokens-are-pieces-of-words",
+    "title": "How LLMs Work",
+    "section": "Fix 1: tokens are pieces of words",
+    "text": "Fix 1: tokens are pieces of words\nLLMs usually split text into subword tokens, not words. Rare and new words are built from familiar pieces.\nunbelievably helpful instructors\n\nun | believ | ably |  help | ful |  instruct | ors\n\n\nIllustrative only. Real tokenizers split text differently."
   },
   {
-    "objectID": "slides/15/slides15.html#most-positive-review-by-sum",
-    "href": "slides/15/slides15.html#most-positive-review-by-sum",
-    "title": "Sentiment Analysis",
-    "section": "Most positive review (by sum):",
-    "text": "Most positive review (by sum):\n\n\nen_coursera_reviews %&gt;%\n  left_join(bing_review_scores, by = \"review_id\") %&gt;%\n  slice_max(sum) %&gt;%\n  pull(Review)\n\n\n[1] \"This course is awesome on so many levels. This is the best inferential statistics course I've come across. Here's why:*** The slides are beautiful and visually appealing, making following the rigorous content easier to digest.*** Instructors are captivating and articulate, the explanations are clear and concise.*** The assignments are very very tough, making the course incredibly challenging, but worth it. Honestly, I don't get why people give 1 star because the course is tough. This should be a huge plus.It was a real challenge getting 100% for everything. For every quiz, I attempted 2 - 3 times to get 100%. The challenge is worth it. I couldn't thank you enough for this course. You explain tough statistical concepts like the difference between prediction intervals and confidence intervals really well. Also, I think this course has the best teaching for Analysis of Variance (I have taken a few other statistics moocs). Also, your course helped me appreciate the meaning of R-squared, standard errors, confidence intervals in a very intuitive fashion. There are many other new things I've learnt from your course, some of them I thought I knew, but you helped me to either \\\"Aha\\\" or understand them more deeply.Before this course, most of the time statistics to me is like plug-and-play using procedures and and softwares. But now, I can understand the concepts and what the calculations really mean.Thank you for creating quizzes that make us really do step-by-step calculations and not just plug data into equations to get results like so many other statistics moocs do.The pedagogy is really great. Sometimes quizzes can be frustrating because I need to read very carefully into the meaning of the questions and all the options. However, the learning experience is really worth it.Again, thank you for an amazing course! This is rare stuff!It is without a doubt, a lot of passion and effort has been put into this course and this series.\""
+    "objectID": "slides/15/slides15.html#fix-2-meaning-as-numbers",
+    "href": "slides/15/slides15.html#fix-2-meaning-as-numbers",
+    "title": "How LLMs Work",
+    "section": "Fix 2: meaning as numbers",
+    "text": "Fix 2: meaning as numbers\nEach token is represented by a list of numbers (an embedding) so that tokens used in similar contexts get similar numbers.\n\n\n\n\n\n\n\n\n\n→ This lets a model handle contexts it has never seen exactly."
   },
   {
-    "objectID": "slides/15/slides15.html#most-negative-reviews-by-sum",
-    "href": "slides/15/slides15.html#most-negative-reviews-by-sum",
-    "title": "Sentiment Analysis",
-    "section": "Most negative reviews (by sum):",
-    "text": "Most negative reviews (by sum):\n\n\nen_coursera_reviews %&gt;%\n  left_join(bing_review_scores, by = \"review_id\") %&gt;%\n  slice_min(sum) %&gt;%\n  pull(Review) %&gt;%\n  pluck(1)\n\n\n[1] \"My course 3/4 in this specialization is still incomplete because the questions had wrong answers in the module quizzes and it was literally taking HOURS to complete the quizzes because you had to guess which one of the wrong answers would be correct this time. The questions rotate through slightly different questions each attempt so you can't simply use elimination on each attempt, YOU GUESS EVERY SINGLE TIME. IT'S LITERALLY 100% LUCK! I thought maybe course 4/4 would be better but nope, same problems here. I've wasted over 6 hours in total trying to pass these broken tests and I'm completely over it. I also reached out to chat support, they went through and said they couldn't find anything wrong and couldn't help me and a refund was impossible because it's past the refund date. Even though I paid for 2 broken, un-proofread, time wasting courses. Also, in course 4/4, the math tables in the videos are staggered all over the place and looks terrible. Seriously an issue of someone not even looking at the video before publishing, would have taken less than 5 mins to fix for the entire course. Also, every time a \\\"checkpoint\\\" question is supposed to pop up, nothing happens. In every single video, they're all missing. I've used Coursera for a few other courses and thought they were reliable but this makes me think otherwise and I feel like such an idiot for paying $200 for this COMPLETE GARBAGE. Other people in the forums have shown they have the same problem posted over a month ago but nothing. Please, someone from Coursera get a hold of me and help me resolve this ridiculous problem.\""
+    "objectID": "slides/15/slides15.html#fix-3-attention",
+    "href": "slides/15/slides15.html#fix-3-attention",
+    "title": "How LLMs Work",
+    "section": "Fix 3: attention",
+    "text": "Fix 3: attention\nInstead of one previous word, the model looks at all of the text so far and learns which earlier words matter most for the next one.\n\n\n\n\n\n\n\n\n\nThis idea, plus a very large neural network, is what a transformer is."
+  },
+  {
+    "objectID": "slides/15/slides15.html#training-at-scale",
+    "href": "slides/15/slides15.html#training-at-scale",
+    "title": "How LLMs Work",
+    "section": "Training at scale",
+    "text": "Training at scale\nSame task as your bigram model: predict the next token.\n\n\nPretraining: predict the next token over a huge amount of text, with an enormous number of adjustable numbers\n\nFine-tuning: further training, including human feedback, so the model follows instructions and is helpful"
+  },
+  {
+    "objectID": "slides/15/slides15.html#temperature",
+    "href": "slides/15/slides15.html#temperature",
+    "title": "How LLMs Work",
+    "section": "Temperature",
+    "text": "Temperature\nTemperature controls how much the model favors the top choices when it samples. High temperature = more randomness"
+  },
+  {
+    "objectID": "slides/15/slides15.html#three-things-to-remember",
+    "href": "slides/15/slides15.html#three-things-to-remember",
+    "title": "How LLMs Work",
+    "section": "Three things to remember",
+    "text": "Three things to remember\n\nAn LLM is the same idea you built: predict the next token, then sample. What changes is how much context it uses and how words are represented.\nIt predicts plausible text, not true text, so a fluent answer can be wrong.\nIts outputs reflect its training data (Step 6 of the activity)."
   },
   {
     "objectID": "slides/13/slides13.html#today",
@@ -7422,67 +7429,67 @@
     "text": "Task 2\n\nClean the episode and period column\nMake a line plot with episode on the x-axis, rating on the y-axis, colored by series. (You will also need to map the group aesthetic to series)"
   },
   {
-    "objectID": "activities/18-iteration-2.html",
-    "href": "activities/18-iteration-2.html",
-    "title": "18: Iteration II",
+    "objectID": "activities/23-shiny1.html",
+    "href": "activities/23-shiny1.html",
+    "title": "23-shiny",
     "section": "",
-    "text": "library(tidyverse)"
+    "text": "Editing a shiny app: Part 1\napp-w26.R contains a starter shiny app. Your tasks for today are:\n\nRun the app! What does it show us?\nRead the code: find the inputs and the outputs\nAdapt the app to allow the user to specify what variable maps to the point color in the scatterplot\nAdapt the app to allow the user to filter the data by annual_salary. Allow values between the minimum and maximum annual_salary selected.\n\n\n\n\n\n\n\nTipHint\n\n\n\nuse sliderInput and specify a vector of lenth 2 for value\n\n\n\nAdapt the app to allow the user to select whether the plot should have a white background\n\n\n\n\n\n\n\nTipHint\n\n\n\nuse checkBoxInput for the user input and theme_minimal() with an if statement to control the theme of the plot\n\n\n\nCreate an interactive histogram that allows the user to select what quantitative variable should be displayed and what categorical variable should be used to fill the bars. Add any other interactive elements (e.g., binwidth adjustments) that you want to.\n\n\n\n\n\n\n\nCredit: Mine Çetinkaya-Rundel’s Ask a Manager application exercise"
   },
   {
-    "objectID": "activities/18-iteration-2.html#try-it-map",
-    "href": "activities/18-iteration-2.html#try-it-map",
-    "title": "18: Iteration II",
-    "section": "Try it: map\n",
-    "text": "Try it: map\n\n\nEdit the code chunk below so it returns a numeric vector (remove eval: false)\nEdit the code chunk so it only maps to the numeric columns (3-12) of unscaled cancer\n\n\nmap(unscaled_cancer, mean)\n\n\n\nmap the summary function to all columns in the {palmerpenguins} penguins data\n\n\n# your code here"
-  },
-  {
-    "objectID": "activities/18-iteration-2.html#your-turn-penguins-and-map",
-    "href": "activities/18-iteration-2.html#your-turn-penguins-and-map",
-    "title": "18: Iteration II",
-    "section": "Your turn: penguins and map\n",
-    "text": "Your turn: penguins and map\n\nUsing the penguins data, use map to calculate the range of a numeric variable and the table of a factor variable. (It may be helpful to first write a custom function for this output)\nYour result should be a list (it will have length 8).\n\n# your code here"
-  },
-  {
-    "objectID": "activities/18-iteration-2.html#more-practice-survivor-data",
-    "href": "activities/18-iteration-2.html#more-practice-survivor-data",
-    "title": "18: Iteration II",
-    "section": "More practice: survivor data",
-    "text": "More practice: survivor data\n\nus_castaway_results \n\n# A tibble: 870 × 7\n   castaway_id castaway season_name      season place jury  finalist\n   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;   \n 1 US0001      Sonja    Survivor: Borneo      1    16 FALSE FALSE   \n 2 US0002      B.B.     Survivor: Borneo      1    15 FALSE FALSE   \n 3 US0003      Stacey   Survivor: Borneo      1    14 FALSE FALSE   \n 4 US0004      Ramona   Survivor: Borneo      1    13 FALSE FALSE   \n 5 US0005      Dirk     Survivor: Borneo      1    12 FALSE FALSE   \n 6 US0006      Joel     Survivor: Borneo      1    11 FALSE FALSE   \n 7 US0007      Gretchen Survivor: Borneo      1    10 FALSE FALSE   \n 8 US0008      Greg     Survivor: Borneo      1     9 TRUE  FALSE   \n 9 US0009      Jenna    Survivor: Borneo      1     8 TRUE  FALSE   \n10 US0010      Gervase  Survivor: Borneo      1     7 TRUE  FALSE   \n# ℹ 860 more rows\n\n\n\nWrite a function called finalists that takes the input of a survivor season (as a numeric) and outputs a string of the finalists’ names for that season. The finalists’ names should be separated with a comma.\nUse map_chr to return a character vector of finalists for seasons 31-40."
-  },
-  {
-    "objectID": "activities/18-iteration-2.html#your-turn-sample_finalists",
-    "href": "activities/18-iteration-2.html#your-turn-sample_finalists",
-    "title": "18: Iteration II",
-    "section": "Your turn: sample_finalists\n",
-    "text": "Your turn: sample_finalists\n\nSome survivor seasons only had 16 players, while others had 22. This could result in some seasons being slightly under/overrepresented in our sample. Let’s account for this.\nEdit this experiment to instead randomly sample one player from each season (this results in 47 players) and then sample 20 players from the 47 random ones.\n(Hint: look at the by argument in slice_sample)\n\n# edit this function\nsample_finalists = function(n){\n    us_castaway_results %&gt;%\n    slice_sample(n = n) %&gt;%\n    filter(finalist) %&gt;%\n    count() %&gt;%\n    pull(n)\n}\n\n\n# your iteration code here"
-  },
-  {
-    "objectID": "activities/17-iteration.html",
-    "href": "activities/17-iteration.html",
-    "title": "17: Iteration",
+    "objectID": "activities/19-apis.html",
+    "href": "activities/19-apis.html",
+    "title": "19-apis",
     "section": "",
-    "text": "library(tidyverse)"
+    "text": "Install tidycensus if not on maize:\n\ninstall.packages(\"tidycensus\")\n\n\nlibrary(tidycensus)\nlibrary(tidyverse)\n\n\n\nacs_mn_2020 &lt;- tidycensus::get_acs(\n    year = 2020,\n    state = \"MN\",\n    geography = \"county\",\n    variables = c(\"B01003_001\", \"B19013_001\"),\n    output = \"wide\",\n    geometry = TRUE\n)\n\n\n\nCreate a new text file in the same folder as your .rmd\nCopy and paste your census key into the empty file\nSave the file as census_api_key.txt\n\n\n\nmy_key &lt;- readLines(\"census_api_key.txt\")\n\nand tell tidycensus what your API key is with:\n\ncensus_api_key(my_key)\n\nDo not commit and push census_api_key.txt to github\n\nacs_mn_2020 |&gt;\n  mutate(\n    name = str_remove(NAME, \", Minnesota\"),\n    name = str_remove(name, \" County\")\n  ) |&gt; \n  ggplot(aes(x = B19013_001E, \n                          xmin = B19013_001E - B19013_001M, \n                          xmax = B19013_001E + B19013_001M, \n                          y = fct_reorder(name, B19013_001E))) + \n  geom_point() + \n  geom_errorbarh() + \n  labs(\n    x = \"\",\n    y = \"\"\n  )\n\n\nhttps://data.census.gov/\nhttps://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/\n\nAdd “educational attainment” to the topic filters and take a look at the first table. What is it showing you?\n\n\nSearch for the “Median earnings in the past 12 months by major” table that we looked at on the census website using load_variables\n\nRun another call to tidycensus::get_acs to access this variable\n\n\nacs_vars &lt;- load_variables(2020, \"acs5\", cache = TRUE) \nacs_vars \n\n# A tibble: 27,850 × 4\n   name        label                                    concept        geography\n   &lt;chr&gt;       &lt;chr&gt;                                    &lt;chr&gt;          &lt;chr&gt;    \n 1 B01001A_001 Estimate!!Total:                         SEX BY AGE (W… tract    \n 2 B01001A_002 Estimate!!Total:!!Male:                  SEX BY AGE (W… tract    \n 3 B01001A_003 Estimate!!Total:!!Male:!!Under 5 years   SEX BY AGE (W… tract    \n 4 B01001A_004 Estimate!!Total:!!Male:!!5 to 9 years    SEX BY AGE (W… tract    \n 5 B01001A_005 Estimate!!Total:!!Male:!!10 to 14 years  SEX BY AGE (W… tract    \n 6 B01001A_006 Estimate!!Total:!!Male:!!15 to 17 years  SEX BY AGE (W… tract    \n 7 B01001A_007 Estimate!!Total:!!Male:!!18 and 19 years SEX BY AGE (W… tract    \n 8 B01001A_008 Estimate!!Total:!!Male:!!20 to 24 years  SEX BY AGE (W… tract    \n 9 B01001A_009 Estimate!!Total:!!Male:!!25 to 29 years  SEX BY AGE (W… tract    \n10 B01001A_010 Estimate!!Total:!!Male:!!30 to 34 years  SEX BY AGE (W… tract    \n# ℹ 27,840 more rows"
   },
   {
-    "objectID": "activities/17-iteration.html#your-turn-for-loop",
-    "href": "activities/17-iteration.html#your-turn-for-loop",
-    "title": "17: Iteration",
-    "section": "Your turn: For loop",
-    "text": "Your turn: For loop\nLoad the palmerpenguins package.\nWrite a for loop that calculates the mean of the numeric variables in the penguins data set and stores the means in a named vector."
+    "objectID": "activities/19-apis.html#example-call",
+    "href": "activities/19-apis.html#example-call",
+    "title": "19-apis",
+    "section": "",
+    "text": "acs_mn_2020 &lt;- tidycensus::get_acs(\n    year = 2020,\n    state = \"MN\",\n    geography = \"county\",\n    variables = c(\"B01003_001\", \"B19013_001\"),\n    output = \"wide\",\n    geometry = TRUE\n)"
   },
   {
-    "objectID": "activities/17-iteration.html#your-turn-summarytable-for-loop",
-    "href": "activities/17-iteration.html#your-turn-summarytable-for-loop",
-    "title": "17: Iteration",
-    "section": "Your turn: summary/table for loop",
-    "text": "Your turn: summary/table for loop\nRevisit the {palmerpenguins} penguins data.\nWrite a for loop that calculates the summary() of a numeric variable and the table() of a factor variable.\nStore the results in a list (it will have length 8)."
+    "objectID": "activities/19-apis.html#storing-your-api-key",
+    "href": "activities/19-apis.html#storing-your-api-key",
+    "title": "19-apis",
+    "section": "",
+    "text": "Create a new text file in the same folder as your .rmd\nCopy and paste your census key into the empty file\nSave the file as census_api_key.txt\n\n\n\nmy_key &lt;- readLines(\"census_api_key.txt\")\n\nand tell tidycensus what your API key is with:\n\ncensus_api_key(my_key)\n\nDo not commit and push census_api_key.txt to github\n\nacs_mn_2020 |&gt;\n  mutate(\n    name = str_remove(NAME, \", Minnesota\"),\n    name = str_remove(name, \" County\")\n  ) |&gt; \n  ggplot(aes(x = B19013_001E, \n                          xmin = B19013_001E - B19013_001M, \n                          xmax = B19013_001E + B19013_001M, \n                          y = fct_reorder(name, B19013_001E))) + \n  geom_point() + \n  geom_errorbarh() + \n  labs(\n    x = \"\",\n    y = \"\"\n  )"
   },
   {
-    "objectID": "activities/17-iteration.html#your-turn-across",
-    "href": "activities/17-iteration.html#your-turn-across",
-    "title": "17: Iteration",
-    "section": "Your turn: across",
-    "text": "Your turn: across\nUse summarize and across to find the range of any quantitative variables, and the number of levels of any factor variables in the penguins dataset."
+    "objectID": "activities/19-apis.html#links-to-more-info-about-census",
+    "href": "activities/19-apis.html#links-to-more-info-about-census",
+    "title": "19-apis",
+    "section": "",
+    "text": "https://data.census.gov/\nhttps://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/"
+  },
+  {
+    "objectID": "activities/19-apis.html#try-it",
+    "href": "activities/19-apis.html#try-it",
+    "title": "19-apis",
+    "section": "",
+    "text": "Add “educational attainment” to the topic filters and take a look at the first table. What is it showing you?"
+  },
+  {
+    "objectID": "activities/19-apis.html#your-turn",
+    "href": "activities/19-apis.html#your-turn",
+    "title": "19-apis",
+    "section": "",
+    "text": "Search for the “Median earnings in the past 12 months by major” table that we looked at on the census website using load_variables\n\nRun another call to tidycensus::get_acs to access this variable\n\n\nacs_vars &lt;- load_variables(2020, \"acs5\", cache = TRUE) \nacs_vars \n\n# A tibble: 27,850 × 4\n   name        label                                    concept        geography\n   &lt;chr&gt;       &lt;chr&gt;                                    &lt;chr&gt;          &lt;chr&gt;    \n 1 B01001A_001 Estimate!!Total:                         SEX BY AGE (W… tract    \n 2 B01001A_002 Estimate!!Total:!!Male:                  SEX BY AGE (W… tract    \n 3 B01001A_003 Estimate!!Total:!!Male:!!Under 5 years   SEX BY AGE (W… tract    \n 4 B01001A_004 Estimate!!Total:!!Male:!!5 to 9 years    SEX BY AGE (W… tract    \n 5 B01001A_005 Estimate!!Total:!!Male:!!10 to 14 years  SEX BY AGE (W… tract    \n 6 B01001A_006 Estimate!!Total:!!Male:!!15 to 17 years  SEX BY AGE (W… tract    \n 7 B01001A_007 Estimate!!Total:!!Male:!!18 and 19 years SEX BY AGE (W… tract    \n 8 B01001A_008 Estimate!!Total:!!Male:!!20 to 24 years  SEX BY AGE (W… tract    \n 9 B01001A_009 Estimate!!Total:!!Male:!!25 to 29 years  SEX BY AGE (W… tract    \n10 B01001A_010 Estimate!!Total:!!Male:!!30 to 34 years  SEX BY AGE (W… tract    \n# ℹ 27,840 more rows"
+  },
+  {
+    "objectID": "activities/19-apis.html#example-call-1",
+    "href": "activities/19-apis.html#example-call-1",
+    "title": "19-apis",
+    "section": "Example call",
+    "text": "Example call\n\nhmong_state_request &lt;- request(\"https://api.census.gov/data\") %&gt;% \n    req_url_path_append(\"2019\") %&gt;% \n    req_url_path_append(\"acs\") %&gt;% \n    req_url_path_append(\"acs1\") %&gt;% \n    req_url_query(get = c(\"NAME\", \"B02015_009E\", \"B02015_009M\"), `for` = I(\"state:*\"), key = my_key, .multi = \"comma\")\n\n\nhmong_state_response &lt;- req_perform(hmong_state_request)\n\n\nhmong_state_tbl &lt;- hmong_state_response %&gt;%\n  resp_body_json(simplifyVector = TRUE) %&gt;%\n  janitor::row_to_names(1) %&gt;%\n  as_tibble()\n\nhmong_state_tbl"
+  },
+  {
+    "objectID": "activities/19-apis.html#your-turn-1",
+    "href": "activities/19-apis.html#your-turn-1",
+    "title": "19-apis",
+    "section": "Your Turn",
+    "text": "Your Turn\n\nEdit the httr code to access the B15013_002E variable from 2024 (median income for “computers, math, statistics” majors)\n\nTo get US level estimates, use I(\"us:1\") in the for argument\nTo check your answer, copy the URL into a browser and make sure you get \"102338\"\n\n\n\nMake a httr request to access the 1-year ACS data from 2022 and 2023. Make sure to save your results from each call!\nCombine all years into a single dataset (you may need to create a column for year)\nMake a time series plot with your chosen variable on the y-axis and year on the x-axis\n\nYou will need to do some cleaning of the data\n\n\nBrainstorm some ways to make the graph more interesting through gathering more data from the census API, and implement those ideas if you have time!"
   },
   {
     "objectID": "activities/07-dplyr1.html",

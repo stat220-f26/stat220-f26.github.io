@@ -6,11 +6,11 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8cab17c520dfb5fd83702a774e8ef3fe.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8f4e3aabaa80e3e650ae20f2c24f966b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="author" content="Prof Amanda Luby">
-<title>Stat 220 – Sentiment  Analysis</title>
+<title>Stat 220 – How LLMs  Work</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -195,7 +195,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="../img/horst_stringr.jpeg" data-background-opacity="0.8" data-background-position="bottom right" data-background-size="70%" data-slide-number="none" class="quarto-title-block center"><h1 class="title">Sentiment <br>Analysis</h1>
+<section id="title-slide" data-background-image="../img/llm-title.png" data-background-opacity="0.8" data-background-position="bottom right" data-background-size="65%" data-slide-number="none" class="quarto-title-block center"><h1 class="title">How LLMs <br>Work</h1>
   <p class="subtitle">Day 15</p>
 
 <div class="quarto-title-authors">
@@ -209,230 +209,205 @@ Prof Amanda Luby
     </div>
 </div>
 
-</section><section id="today" class="slide level2 scrollable"><h2>Today</h2>
+</section><section id="today" class="slide level2 nonincremental scrollable"><h2>Today</h2>
+<p>Today’s question: <strong>what would it take to turn your bigram model into something like ChatGPT?</strong></p>
 <ol type="1">
-<li class="fragment">Sentiment analysis</li>
-<li class="fragment">Lab Quiz 2!</li>
-</ol></section><section id="section" class="slide level2" data-background-image="../img/coursera-data-sci.png"><h2></h2>
-</section><section id="data-for-today" class="slide level2"><h2>Data for today</h2>
-<p>Random (?) sample of 26,882 reviews of coursera courses</p>
+<li class="fragment">What you built</li>
+<li class="fragment">Where it breaks</li>
+<li class="fragment">What LLMs change</li>
+<li class="fragment">Takeaways</li>
+</ol></section><section><section id="what-you-built" class="title-slide slide level1 maize center"><h1>What you built</h1>
+
+</section><section id="a-language-model" class="slide level2 scrollable"><h2>A language model</h2>
+<p>A <em>language model</em> assigns a probability to the next token, given the text so far.</p>
+<ol type="1">
+<li class="fragment">Split text into tokens (here: words)</li>
+<li class="fragment">Count which tokens follow which</li>
+<li class="fragment">Turn counts into probabilities</li>
+<li class="fragment">
+<em>Sample</em> the next token, and repeat</li>
+</ol></section><section id="from-counts-to-probabilities" class="slide level2"><h2>From counts to probabilities</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>en_coursera_reviews <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../../data/en_coursera_sample.csv"</span>) <span class="co"># https://stat220-f26.github.io/data/en_coursera_sample.csv</span></span>
-<span id="cb1-2"><a></a>en_coursera_reviews</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>bigram_probs <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a></a>  <span class="fu">filter</span>(word1 <span class="sc">==</span> <span class="st">"great"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a></a>  <span class="fu">slice_max</span>(prob, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 26,882 x 5
-   CourseId                    Review                      Label cld2  review_id
-   &lt;chr&gt;                       &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
- 1 nurture-market-strategies   It would be better if the ~     1 en            1
- 2 nand2tetris2                Superb course. Great prese~     5 en            2
- 3 schedule-projects           Excellent course!               5 en            3
- 4 teaching-english-capstone-2 I'd recommend this course ~     5 en            4
- 5 machine-learning            This course was so effecti~     5 en            5
- 6 python-network-data         Words cannot describe how ~     5 en            6
- 7 clinical-trials             Great course!                   5 en            7
- 8 python-genomics             I didn't know anything abo~     3 en            8
- 9 strategic-management        Loved everything about thi~     5 en            9
-10 script-writing              No significant instruction~     1 en           10
-# i 26,872 more rows</code></pre>
+<pre><code># A tibble: 5 × 4
+  word1 word2            n   prob
+  &lt;chr&gt; &lt;chr&gt;        &lt;int&gt;  &lt;dbl&gt;
+1 great course        2287 0.373 
+2 great introduction   241 0.0393
+3 great job            141 0.0230
+4 great teacher        140 0.0228
+5 great and            131 0.0214</code></pre>
 </div>
 </div>
+</section><section id="sampling-the-next-word" class="slide level2"><h2>Sampling the next word</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>bigram_probs <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a></a>  <span class="fu">filter</span>(word1 <span class="sc">==</span> <span class="st">"great"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">weight_by =</span> prob) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a></a>  <span class="fu">pull</span>(word2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "course"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>bigram_probs <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a></a>  <span class="fu">filter</span>(word1 <span class="sc">==</span> <span class="st">"great"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">weight_by =</span> prob) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a></a>  <span class="fu">pull</span>(word2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "passion"</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Always picking the most likely word gives the same boring text every time. Sampling gives different text each run, with likely words chosen more often.</p>
+</div>
+</section><section id="text-from-your-model" class="slide level2"><h2>Text from your model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">generate_text</span>(<span class="st">"this"</span>, <span class="at">n_words =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "this very useful course easy introduction to follow this course disappointed with unix"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">generate_text</span>(<span class="st">"the"</span>, <span class="at">n_words =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "the forums and would be more directed self trainer for each concept is"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">generate_text</span>(<span class="st">"i"</span>, <span class="at">n_words =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "i loved it was not mentions lots to understand and get 100 more"</code></pre>
+</div>
+</div>
+</section></section><section><section id="where-it-breaks" class="title-slide slide level1 maize center"><h1>Where it breaks</h1>
+
+</section><section id="problem-1-one-word-of-context" class="slide level2"><h2>Problem 1: one word of context</h2>
+<p>Each new word only “sees” the word right before it, so sentences wander.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "great points discussed in an excellent course for those academic publishing the right was ok swirl"</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>→ Nothing connects the beginning of a sentence to its end.</p>
+</div>
+</section><section id="problem-2-words-it-has-never-seen" class="slide level2"><h2>Problem 2: words it has never seen</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">generate_text</span>(<span class="st">"llm"</span>, <span class="at">n_words =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "llm"</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>→ If a word never appeared in the training reviews, the model has nothing to say.</p>
+</div>
+</section><section id="problem-3-no-notion-of-meaning" class="slide level2"><h2>Problem 3: no notion of meaning</h2>
+<p>To the model, <code>great</code> and <code>excellent</code> are just two unrelated rows in a table. What it learns about one tells it nothing about the other.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  word1     `times seen` `different next words`
+  &lt;chr&gt;            &lt;int&gt;                  &lt;int&gt;
+1 great             6133                    680
+2 excellent         2654                    396
+3 awesome            749                    186
+4 fantastic          440                    119
+5 superb              70                     40
+6 terrific            29                     18</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>→ Words that mean almost the same thing end up with very different amounts of data.</p>
+</div>
+</section><section id="problem-4-more-context-means-less-data" class="slide level2"><h2>Problem 4: more context means less data</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead><tr class="header">
+<th style="text-align: left;">model</th>
+<th style="text-align: left;">different combinations</th>
+<th style="text-align: left;">seen only once</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bigrams (1 word of context)</td>
+<td style="text-align: left;">180,469</td>
+<td style="text-align: left;">72%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trigrams (2 words of context)</td>
+<td style="text-align: left;">396,151</td>
+<td style="text-align: left;">86%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="fragment">
+<p>→ Looking at more words makes the model smarter, but most combinations are then ones it has barely seen.</p>
+</div>
+</section></section><section><section id="what-llms-change" class="title-slide slide level1 maize center"><h1>What LLMs change</h1>
+
+</section><section id="fix-1-tokens-are-pieces-of-words" class="slide level2"><h2>Fix 1: tokens are pieces of words</h2>
+<p>LLMs usually split text into <em>subword tokens</em>, not words. Rare and new words are built from familiar pieces.</p>
+<pre><code>unbelievably helpful instructors
+
+un | believ | ably |  help | ful |  instruct | ors</code></pre>
 
 <aside><div>
-<p>Source: <a href="https://www.kaggle.com/datasets/septa97/100k-courseras-course-reviews-dataset/data">Kaggle</a></p>
-</div></aside></section><section id="are-these-positive-or-negative-reviews" class="slide level2"><h2>Are these positive or negative reviews?</h2>
-<p>“thank you so much it was great course”</p>
-<p>“Too reliant on materials directly collected by professor, too little context of larger artistic community.”</p>
-<p>“Excellent! easy to follow and engaging!”</p>
-<p>“Slow and redundant. Would have preferred a faster-paced and more substantive course.”</p>
-<p>“Way too shallow and way too english :(”</p>
-</section><section id="sentiment-analysis" class="slide level2 scrollable"><h2>Sentiment analysis</h2>
-<p>One way to analyze the <em>sentiment</em> is to consider the text as a combination of the individual words. It’s computationally convenient because we’re able to use the <code>tidy</code> tools that we’ve been building up:</p>
+<p>Illustrative only. Real tokenizers split text differently.</p>
+</div></aside></section><section id="fix-2-meaning-as-numbers" class="slide level2"><h2>Fix 2: meaning as numbers</h2>
+<p>Each token is represented by a list of numbers (an <em>embedding</em>) so that tokens used in similar contexts get similar numbers.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure><p><img data-src="slides15_files/figure-revealjs/unnamed-chunk-8-1.png" alt="A scatterplot with made-up two-dimensional coordinates for words. Great, excellent, and fantastic are close together, python, java, and code are close together, and instructor, teacher, and professor are close together." width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>→ This lets a model handle contexts it has never seen <em>exactly</em>.</p>
+</div>
+</section><section id="fix-3-attention" class="slide level2"><h2>Fix 3: attention</h2>
+<p>Instead of one previous word, the model looks at all of the text so far and learns which earlier words matter most for the next one.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure><p><img data-src="slides15_files/figure-revealjs/unnamed-chunk-9-1.png" alt="A sentence 'the instructors were so helpful that I' with arrows from the next-word position pointing to earlier words. The thickest arrows point to 'instructors' and 'helpful'." width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>This idea, plus a very large neural network, is what a <em>transformer</em> is.</p>
+</div>
+</section><section id="training-at-scale" class="slide level2 scrollable"><h2>Training at scale</h2>
+<p>Same task as your bigram model: <strong>predict the next token</strong>.</p>
 <ol type="1">
 <li class="fragment">
-<em>tokenize</em> the text</li>
+<em>Pretraining</em>: predict the next token over a huge amount of text, with an enormous number of adjustable numbers</li>
 <li class="fragment">
-<em>join</em> the sentiment values to each token</li>
-<li class="fragment">
-<em>group</em> the words in the document to <em>summarize</em> the overall sentiment</li>
-</ol></section><section id="sentiment-datasets-bing" class="slide level2"><h2>Sentiment datasets: <code>bing</code>
-</h2>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb3-2"><a></a><span class="fu">get_sentiments</span>(<span class="st">"bing"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 x 2
-   word          sentiment
-   &lt;chr&gt;         &lt;chr&gt;    
- 1 undercutting  negative 
- 2 unexpectedly  negative 
- 3 slack         negative 
- 4 fabrication   negative 
- 5 majesty       positive 
- 6 perilously    negative 
- 7 cave          negative 
- 8 partisan      negative 
- 9 prik          negative 
-10 miserableness negative 
-11 flourish      positive 
-12 acridness     negative 
-13 darling       positive 
-14 undisputed    positive 
-15 crabby        negative 
-16 inexperience  negative 
-17 boastful      negative 
-18 unequivocally positive 
-19 greatness     positive 
-20 gratify       positive </code></pre>
-</div>
-</div></div>
-</section><section id="sentiment-datasets-afinn" class="slide level2"><h2>Sentiment datasets: <code>afinn</code>
-</h2>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(textdata)</span>
-<span id="cb5-2"><a></a><span class="fu">get_sentiments</span>(<span class="st">"afinn"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 x 2
-   word           value
-   &lt;chr&gt;          &lt;dbl&gt;
- 1 postponed         -1
- 2 beautifully        3
- 3 chagrin           -2
- 4 appreciation       2
- 5 spark              1
- 6 mope              -1
- 7 empathetic         2
- 8 oversimplified    -2
- 9 stimulating        2
-10 exaggerates       -2
-11 disconsolation    -2
-12 sophisticated      2
-13 fearing           -2
-14 bereaving         -2
-15 dejected          -2
-16 stopped           -1
-17 strikers          -2
-18 scary             -2
-19 worse             -3
-20 protesters        -2</code></pre>
-</div>
-</div></div>
-</section><section id="section-1" class="slide level2"><h2></h2>
+<em>Fine-tuning</em>: further training, including human feedback, so the model follows instructions and is helpful</li>
+</ol></section><section id="temperature" class="slide level2"><h2>Temperature</h2>
+<p>Temperature controls how much the model favors the top choices when it samples. High temperature = more randomness</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>en_coursera_reviews </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 26,882 x 5
-   CourseId                    Review                      Label cld2  review_id
-   &lt;chr&gt;                       &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
- 1 nurture-market-strategies   It would be better if the ~     1 en            1
- 2 nand2tetris2                Superb course. Great prese~     5 en            2
- 3 schedule-projects           Excellent course!               5 en            3
- 4 teaching-english-capstone-2 I'd recommend this course ~     5 en            4
- 5 machine-learning            This course was so effecti~     5 en            5
- 6 python-network-data         Words cannot describe how ~     5 en            6
- 7 clinical-trials             Great course!                   5 en            7
- 8 python-genomics             I didn't know anything abo~     3 en            8
- 9 strategic-management        Loved everything about thi~     5 en            9
-10 script-writing              No significant instruction~     1 en           10
-# i 26,872 more rows</code></pre>
+<div class="cell-output-display">
+<div>
+<figure><p><img data-src="slides15_files/figure-revealjs/unnamed-chunk-10-1.png" alt="Three bar charts of next-word probabilities after 'great'. At low temperature, 'course' has nearly all the probability. At high temperature, the probabilities are spread more evenly across words." width="960"></p>
+</figure>
 </div>
 </div>
-</section><section id="inner_join" class="slide level2"><h2><code>inner_join</code></h2>
-<p><img data-src="../img/inner-join.gif"></p>
-</section><section id="joining-the-sentiment-data" class="slide level2"><h2>
-<code>join</code>ing the sentiment data</h2>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-code-line-numbers="1|2-3|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>bing_sentiments <span class="ot">=</span> <span class="fu">get_sentiments</span>(<span class="st">"bing"</span>)</span>
-<span id="cb9-2"><a></a>en_coursera_reviews <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a></a>  <span class="fu">unnest_tokens</span>(word, Review) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-4"><a></a>  <span class="fu">inner_join</span>(bing_sentiments, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-5"><a></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(CourseId, cld2))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 69,951 x 4
-   Label review_id word        sentiment
-   &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    
- 1     1         1 better      positive 
- 2     5         2 superb      positive 
- 3     5         2 great       positive 
- 4     5         2 challenging negative 
- 5     5         2 fun         positive 
- 6     5         2 recommend   positive 
- 7     5         3 excellent   positive 
- 8     5         4 recommend   positive 
- 9     5         4 enjoyed     positive 
-10     5         4 great       positive 
-# i 69,941 more rows</code></pre>
 </div>
-</div></div>
-</section><section id="group_by-review-id-summarize-overall-sentiment" class="slide level2"><h2>
-<code>group_by</code> review ID, <code>summarize</code> overall sentiment</h2>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-code-line-numbers="4|5-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>bing_review_scores <span class="ot">&lt;-</span> en_coursera_reviews <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a></a>  <span class="fu">unnest_tokens</span>(word, Review) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-3"><a></a>  <span class="fu">inner_join</span>(bing_sentiments, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-4"><a></a>  <span class="fu">group_by</span>(review_id) <span class="sc">%&gt;%</span></span>
-<span id="cb11-5"><a></a>  <span class="fu">summarize</span>(</span>
-<span id="cb11-6"><a></a>    <span class="at">sum =</span> (<span class="fu">sum</span>(sentiment <span class="sc">==</span> <span class="st">"positive"</span>) <span class="sc">-</span> <span class="fu">sum</span>(sentiment <span class="sc">==</span> <span class="st">"negative"</span>))</span>
-<span id="cb11-7"><a></a>  )</span>
-<span id="cb11-8"><a></a></span>
-<span id="cb11-9"><a></a>bing_review_scores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 25,409 x 2
-   review_id   sum
-       &lt;dbl&gt; &lt;int&gt;
- 1         1     1
- 2         2     3
- 3         3     1
- 4         4     3
- 5         5     5
- 6         6     1
- 7         7     1
- 8         8     2
- 9         9     5
-10        10     0
-# i 25,399 more rows</code></pre>
-</div>
-</div></div>
-</section><section id="most-positive-review-by-sum" class="slide level2"><h2>Most positive review (by <code>sum</code>):</h2>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" data-code-line-numbers="1|2|3|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>en_coursera_reviews <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a></a>  <span class="fu">left_join</span>(bing_review_scores, <span class="at">by =</span> <span class="st">"review_id"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a></a>  <span class="fu">slice_max</span>(sum) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a></a>  <span class="fu">pull</span>(Review)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "This course is awesome on so many levels. This is the best inferential statistics course I've come across. Here's why:*** The slides are beautiful and visually appealing, making following the rigorous content easier to digest.*** Instructors are captivating and articulate, the explanations are clear and concise.*** The assignments are very very tough, making the course incredibly challenging, but worth it. Honestly, I don't get why people give 1 star because the course is tough. This should be a huge plus.It was a real challenge getting 100% for everything. For every quiz, I attempted 2 - 3 times to get 100%. The challenge is worth it. I couldn't thank you enough for this course. You explain tough statistical concepts like the difference between prediction intervals and confidence intervals really well. Also, I think this course has the best teaching for Analysis of Variance (I have taken a few other statistics moocs). Also, your course helped me appreciate the meaning of R-squared, standard errors, confidence intervals in a very intuitive fashion. There are many other new things I've learnt from your course, some of them I thought I knew, but you helped me to either \"Aha\" or understand them more deeply.Before this course, most of the time statistics to me is like plug-and-play using procedures and and softwares. But now, I can understand the concepts and what the calculations really mean.Thank you for creating quizzes that make us really do step-by-step calculations and not just plug data into equations to get results like so many other statistics moocs do.The pedagogy is really great. Sometimes quizzes can be frustrating because I need to read very carefully into the meaning of the questions and all the options. However, the learning experience is really worth it.Again, thank you for an amazing course! This is rare stuff!It is without a doubt, a lot of passion and effort has been put into this course and this series."</code></pre>
-</div>
-</div></div>
-</section><section id="most-negative-reviews-by-sum" class="slide level2"><h2>Most negative reviews (by <code>sum</code>):</h2>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>en_coursera_reviews <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a></a>  <span class="fu">left_join</span>(bing_review_scores, <span class="at">by =</span> <span class="st">"review_id"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a></a>  <span class="fu">slice_min</span>(sum) <span class="sc">%&gt;%</span></span>
-<span id="cb15-4"><a></a>  <span class="fu">pull</span>(Review) <span class="sc">%&gt;%</span></span>
-<span id="cb15-5"><a></a>  <span class="fu">pluck</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "My course 3/4 in this specialization is still incomplete because the questions had wrong answers in the module quizzes and it was literally taking HOURS to complete the quizzes because you had to guess which one of the wrong answers would be correct this time. The questions rotate through slightly different questions each attempt so you can't simply use elimination on each attempt, YOU GUESS EVERY SINGLE TIME. IT'S LITERALLY 100% LUCK! I thought maybe course 4/4 would be better but nope, same problems here. I've wasted over 6 hours in total trying to pass these broken tests and I'm completely over it. I also reached out to chat support, they went through and said they couldn't find anything wrong and couldn't help me and a refund was impossible because it's past the refund date. Even though I paid for 2 broken, un-proofread, time wasting courses. Also, in course 4/4, the math tables in the videos are staggered all over the place and looks terrible. Seriously an issue of someone not even looking at the video before publishing, would have taken less than 5 mins to fix for the entire course. Also, every time a \"checkpoint\" question is supposed to pop up, nothing happens. In every single video, they're all missing. I've used Coursera for a few other courses and thought they were reliable but this makes me think otherwise and I feel like such an idiot for paying $200 for this COMPLETE GARBAGE. Other people in the forums have shown they have the same problem posted over a month ago but nothing. Please, someone from Coursera get a hold of me and help me resolve this ridiculous problem."</code></pre>
-</div>
-</div></div>
-</section><section id="what-weaknesses-do-you-notice-about-this-analysis" class="title-slide slide level1 center"><h1>What weaknesses do you notice about this analysis?</h1>
-<p>What could we change?</p>
-</section><section id="live-coding-time" class="title-slide slide level1 center"><h1>Live coding time</h1>
+</section></section><section><section id="takeaways" class="title-slide slide level1 maize center"><h1>Takeaways</h1>
+
+</section><section id="three-things-to-remember" class="slide level2 scrollable"><h2>Three things to remember</h2>
+<ol type="1">
+<li class="fragment">An LLM is the same idea you built: predict the next token, then sample. What changes is how much context it uses and how words are represented.</li>
+<li class="fragment">It predicts <em>plausible</em> text, not <em>true</em> text, so a fluent answer can be wrong.</li>
+<li class="fragment">Its outputs reflect its training data (Step 6 of the activity).</li>
+</ol>
 
 
-</section>
+</section></section>
 </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
