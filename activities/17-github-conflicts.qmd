@@ -93,7 +93,7 @@ Everyone should have the repo cloned and open in RStudio and know which role num
 
 ### Role 1
 
--   Go to `writeup.qmd` in your project repo. Change the `[authors]` to your actual name (not your partners!)
+-   Go to `writeup.qmd` in your project repo. Change the `[author]` in the header to your actual name (not your partner's!)
 -   Render, then stage and commit **only** `writeup.qmd`, and push. (You should be able to see your changes on github.com)
 
 ::: callout-important
@@ -102,7 +102,7 @@ Make sure the previous role has finished before moving on to the next step.
 
 ### Role 2
 
-- Change the `[authors]` to be *your* name
+- Change the `[author]` in the header to be *your* name
 - Render, then stage and commit **only** `writeup.qmd`
 - Now, try to push your changes. You should get an error.
 
@@ -127,7 +127,7 @@ Make sure the previous role has finished before moving on to the next step.
 
 ### Role 1 (again)
 
-- In the body of the document (not in the header at the top), change one sentence of the text
+- In the body of the document (not in the header at the top), replace the *first* `[report goes here]` (under `# Billion Dollar Disasters`) with a sentence of your own
 - Render, then stage and commit **only** `writeup.qmd`, and push. You should get an error.
 - Pull. No merge conflicts should occur, but you should see a message about merging
 - Now push.
@@ -139,7 +139,7 @@ Make sure the previous role has finished before moving on to the next step.
 ### Role 2 (again)
 
 - Pull all changes from the remote repo
-- Change a *different* sentence in the body of the document (not the one Role 1 changed)
+- Replace the *second* `[report goes here]` (under `# Reflection`) with a sentence of your own
 - Render, then stage and commit **only** `writeup.qmd`, and push. You should not get an error because you pulled first. This is "good" collaborative behavior: start with pulling before doing any work
 
 ::: callout-important
