@@ -1,0 +1,226 @@
+---
+title: "Lab Quiz 02 Practice Questions: Solutions"
+format:
+  html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+Solutions to the practice questions in `lab-quiz/lab-quiz-02.qmd`. The questions follow the order of the skills list (data wrangling, dates/times, factors). Each solution gives the answer a student could write on paper, followed by the R code and output where useful.
+
+```{r setup}
+library(tidyverse)
+library(nycflights23)
+```
+
+
+# Know how the following verbs act on a data set
+
+## (a)
+
+```{r}
+jfk_msp_flights <- flights |>
+  filter(origin == "JFK" & dest == "MSP")
+
+nrow(jfk_msp_flights)
+```
+
+This keeps only the rows (flights) of `flights` where the origin airport is JFK **and** the destination is MSP, and saves them in a new data frame called `jfk_msp_flights`. It has all of the same columns as `flights` but far fewer rows (1,196 of them).
+
+## (b)
+
+```{r}
+jfk_msp_flights |>
+  group_by(month) |>
+  summarize(
+    med_flight_delay = median(dep_delay, na.rm = TRUE)
+  )
+```
+
+This groups the JFK to MSP flights by `month`, and then computes the median departure delay (in minutes) within each month, ignoring missing values. The result is a data frame with one row per month (12 rows) and two columns, `month` and `med_flight_delay`. (Negative values mean that the typical flight left *early* that month.)
+
+## (c)
+
+`dep_delay` is `NA` for flights that were cancelled (and some others), and `median()` of a vector containing any `NA` returns `NA`. Without `na.rm = TRUE`, every month with at least one missing value would have a median of `NA`:
+
+```{r}
+jfk_msp_flights |>
+  group_by(month) |>
+  summarize(med_flight_delay = median(dep_delay)) |>
+  head(7)
+```
+
+Including `na.rm = TRUE` tells `median()` to drop the missing values before computing the median, so we get an answer for every month.
+
+
+# Given a data set and goal, identify and utilize the appropriate verb
+
+## (a)
+
+A **`left_join`**. The goal is to *add* the airport's name and time zone to the flights data: every flight should stay in the data set, whether or not its destination appears in `airports`. `bind_rows()` stacks data sets that have the same columns (and would add rows), and `bind_cols()` would paste columns side by side by *position*, not by matching on a key, so neither makes sense here. `full_join` would also keep airports that no flight went to (extra rows, with `NA` for all of the flight columns), which we don't want.
+
+The `glimpse()` output shows the key: `flights` has a `dest` column of three-letter airport codes, and `airports` has a `faa` column with the same codes. So the join looks like:
+
+```{r}
+flights |>
+  left_join(airports, by = join_by(dest == faa)) |>
+  select(year, month, day, dest, name, tzone) |>
+  head(3)
+```
+
+## (b)
+
+`colorby` is a logical (`TRUE`/`FALSE`) variable that is `TRUE` when an airport's median arrival delay is greater than 0 (typically *late*) and `FALSE` when it is 0 or less (on time or early). It was created inside `mutate()` from the summarized column, like this:
+
+```{r}
+#| eval: false
+mutate(colorby = med_arr_delay > 0)
+```
+
+We can tell because the points in the plot are split into two colors, and the points on the right (positive values on the x-axis) are in the other color from those on the left.
+
+
+# Given a dataset, describe if it is tidy
+
+The data set is **not** tidy. Each *observation* is one day at JFK, and the two *variables* measured on that day are the minimum and the maximum wind speed. In the data set shown, though, `name` holds the names of the two variables (`min_wind_speed`, `max_wind_speed`), and `value` holds both kinds of measurement mixed together, so each day takes up two rows and a single column (`value`) is mixing two different variables.
+
+A tidy version has one row per day, with one column for each variable. We get this with `pivot_wider()`:
+
+```{r}
+tidy_wind <- weather |>
+  filter(origin == "JFK") |>
+  group_by(year, month, day) |>
+  summarize(
+    min_wind_speed = min(wind_speed, na.rm = TRUE),
+    max_wind_speed = max(wind_speed, na.rm = TRUE)
+  ) |>
+  pivot_longer(min_wind_speed:max_wind_speed) |>
+  ungroup()
+
+tidy_wind |>
+  pivot_wider(names_from = name, values_from = value) |>
+  head(3)
+```
+
+Sketch of the tidy data set:
+
+| year | month | day | min_wind_speed | max_wind_speed |
+|:----:|:-----:|:---:|:--------------:|:--------------:|
+| 2023 | 1 | 1 | 0 | 15.0 |
+| 2023 | 1 | 2 | 4.6 | 11.5 |
+| 2023 | 1 | 3 | 0 | 10.4 |
+| ... | ... | ... | ... | ... |
+
+(Simply not running `pivot_longer()` in the first place would also give this data set, but the question asks how to go from the data as shown to a tidy format.)
+
+
+# Use {lubridate} functions to parse dates into ISO8601 format
+
+## (a)
+
+The order of the parts is month/day/year, so use `mdy()`:
+
+```{r}
+mdy("2/8/2023")
+```
+
+## (b)
+
+The order is day, month (abbreviated name), year, so use `dmy()`:
+
+```{r}
+dmy("8 Feb 2023")
+```
+
+Both give `"2023-02-08"` (February 8th). Note that `2/8/2023` in part (a) is read as February 8th and *not* August 2nd, because we chose `mdy()`.
+
+
+# Use {lubridate} functions to extract elements of a date/time
+
+```{r}
+flights |>
+  mutate(
+    weekday = wday(time_hour, label = TRUE, abbr = FALSE)
+  ) |>
+  select(time_hour, weekday) |>
+  head(3)
+```
+
+`wday()` extracts the day of the week. By default it returns a number from 1 to 7, `label = TRUE` returns the name instead, and `abbr = FALSE` gives the full names ("Monday") rather than the abbreviations ("Mon"). Any of the following also works for the question as written, as long as the result is the day of the week: `wday(time_hour, label = TRUE)`; `wday(make_date(year, month, day), label = TRUE, abbr = FALSE)`.
+
+
+# Create a factor to represent a categorical variable
+
+```{r}
+flights |>
+  mutate(
+    season = case_when(
+      month %in% c(12, 1, 2) ~ "Winter",
+      month %in% c(3, 4, 5) ~ "Spring",
+      month %in% c(6, 7, 8) ~ "Summer",
+      month %in% c(9, 10, 11) ~ "Fall"
+    ),
+    season = factor(season, levels = c("Winter", "Spring", "Summer", "Fall"))
+  ) |>
+  count(season)
+```
+
+`case_when()` assigns each flight a season based on its `month`, and `factor()` with `levels = ` turns the result into a factor with the levels in calendar order (otherwise the levels would be in alphabetical order: Fall, Spring, Summer, Winter).
+
+An alternative that goes straight from the month to the factor:
+
+```{r}
+#| eval: false
+flights |>
+  mutate(
+    season = fct_collapse(
+      factor(month),
+      Winter = c("12", "1", "2"),
+      Spring = c("3", "4", "5"),
+      Summer = c("6", "7", "8"),
+      Fall   = c("9", "10", "11")
+    )
+  )
+```
+
+(This one requires a `fct_relevel()` afterward if the levels need to be in calendar order.)
+
+
+# Given a factor, modify the levels as needed
+
+The default order of the labels on the y-axis is alphabetical, because `name` is a character variable. We reorder `name` by `med_arr_delay` with `fct_reorder()`. In `ggplot`, the first level of a factor is drawn at the *bottom* of the axis, so `fct_reorder()` on its own would put the smallest delay at the bottom; we want it at the top, so we reverse the order with `fct_rev()` (or, equivalently, use `.desc = TRUE`).
+
+```{r}
+#| fig-height: 4
+#| fig-width: 8
+
+plot_data <- read_csv("../data/lq2_plot_data.csv")
+
+plot_data |>
+  ggplot(
+    aes(x = med_arr_delay, y = fct_rev(fct_reorder(name, med_arr_delay)), col = colorby)
+  ) +
+  geom_point() +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "Median Arrival Delay for flights from NYC airports in 2023",
+    subtitle = "Among West Coast time zone airports",
+    y = NULL
+  )
+```
+
+Equivalent: `y = fct_reorder(name, med_arr_delay, .desc = TRUE)`.
+
+Common errors: using `arrange(med_arr_delay)` on the data (this doesn't change the order that ggplot draws a character variable in); `fct_reorder(med_arr_delay, name)` (arguments swapped); and `fct_reorder()` without the reversal, which gives the *longest* delay at the top.
+
+
+# Notes on the practice questions (not part of the solutions)
+
+- **Object name mismatch (fixed):** part (a) now saves `jfk_msp_flights`, matching part (b).
+- **Dead data link (fixed):** the last question now reads `plot_data` from `https://stat220-f26.github.io/data/lq2_plot_data.csv`, which will work once the site is live (the file is already in `data/`).
+- **Day-of-week wording:** the question says ("Monday", "Tuesday", etc.), which is `wday(..., label = TRUE, abbr = FALSE)`. A student who answers with `wday(time_hour, label = TRUE)` gets "Mon", "Tue"; the grading should accept this.
+- **Older solutions:** the only previous solutions are `stat220-repos/s25/stat220-s25-solutions/lq2-practice-sols.Rmd`, which cover an earlier, shorter version of the practice questions (no tidy/pivot question, no date parsing, no season factor). This file replaces it.
+- **Questions covered by the skills list but not practiced:** `bind_rows`/`bind_cols`, `separate`/`unite`, `rowwise`, `fct_reorder2`, `fct_infreq`.

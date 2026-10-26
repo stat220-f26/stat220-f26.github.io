@@ -1,0 +1,173 @@
+---
+title: "19-apis"
+---
+
+```{r}
+library(tidyverse)
+library(tidycensus)
+library(httr2)
+library(sf)
+```
+
+**Our question:** how many people work from home, and where?
+
+We'll get the same data from the Census Bureau's American Community Survey (ACS) three ways: with a wrapper package (`tidycensus`), with a URL, and with `httr2`.
+
+The table is `B08301`, *Means of transportation to work*:
+
+- `B08301_001`: total workers (16 and over)
+- `B08301_021`: workers who **worked from home**
+
+# Before you start: your Census key
+
+1. Request a key at <https://api.census.gov/data/key_signup.html> (it is emailed to you).
+2. Store it once. Run this **in the console** (not in your .qmd), with your own key:
+
+```{r}
+#| eval: false
+census_api_key("PASTE-YOUR-KEY-HERE", install = TRUE)
+```
+
+3. Restart R (Session > Restart R in RStudio, or Ctrl/Cmd + Shift + F10).
+4. Check that R can see your key, *without printing it*. This should say `TRUE`:
+
+```{r}
+nchar(Sys.getenv("CENSUS_API_KEY")) == 40
+```
+
+::: {.callout-warning}
+Never paste your key into a .qmd, and never print it in a document you commit. After this step you shouldn't need to type it again.
+:::
+
+# Part 1: `tidycensus`
+
+## Example call
+
+```{r}
+#| eval: false
+wfh_mn <- get_acs(
+  geography = "county",
+  state = "MN",
+  variables = "B08301_021",
+  summary_var = "B08301_001",
+  year = 2024,
+  survey = "acs5",
+  geometry = TRUE
+)
+```
+
+Run it, then look at `wfh_mn`.
+
+- What does each row represent?
+- What are `estimate`, `moe`, `summary_est`, and `summary_moe`?
+
+## Map it
+
+```{r}
+#| eval: false
+wfh_mn |>
+  mutate(pct_wfh = estimate / summary_est) |>
+  ggplot(aes(fill = pct_wfh)) +
+  geom_sf() +
+  scale_fill_viridis_c(labels = scales::label_percent()) +
+  labs(fill = "Work from home") +
+  theme_void()
+```
+
+Which counties have the highest share? Which have the lowest? Why might that be?
+
+## Finding variables
+
+Getting variables from the Census or ACS requires knowing the variable ID. You can search the labels with `load_variables()`:
+
+```{r}
+acs_vars <- load_variables(2024, "acs5", cache = TRUE)
+
+acs_vars |>
+  filter(str_detect(label, "Worked from home"), !str_detect(name, "PR")) |>
+  select(name, concept, label) |>
+  head(4)
+```
+
+The same label shows up in several tables: the `concept` tells you which one you want.
+
+## Your turn 1
+
+- Search `acs_vars` for another means of transportation in the "Means of Transportation to Work" table (for example, public transportation, walked, or drove alone).
+- Edit the `get_acs()` call to get that variable for Minnesota counties, and make the map.
+- *If you have time:* try a different state.
+
+# Part 2: What is `get_acs()` doing?
+
+Add `show_call = TRUE` to your `get_acs()` call to see the request that is being sent.
+
+The Census API request is just a URL. For example, the number of workers and the number who work from home in each Minnesota county, 2020-2024:
+
+```
+https://api.census.gov/data/2024/acs/acs5?get=NAME,B08301_001E,B08301_021E&for=county:*&in=state:27&key=YOUR_KEY
+```
+
+Paste it into your browser (replace `YOUR_KEY` with your key). Then answer:
+
+1. Which part of the URL is the year? The dataset? The variables? The geography?
+2. What does `county:*` mean? What does `&in=state:27` do?
+3. What would you change to ask about only Hennepin County? (*Hint:* Hennepin County's FIPS code is 053. See the "Example API Queries" page of the Census API user guide: <https://www.census.gov/data/developers/guidance/api-user-guide.Example_API_Queries.html>.)
+
+# Part 3: `httr2`
+
+## Example call
+
+```{r}
+#| eval: false
+wfh_request <- request("https://api.census.gov/data") |>
+  req_url_path_append("2024") |>
+  req_url_path_append("acs") |>
+  req_url_path_append("acs5") |>
+  req_url_query(
+    get = c("NAME", "B08301_001E", "B08301_001M", "B08301_021E", "B08301_021M"),
+    `for` = I("county:*"),
+    `in` = I("state:27"),
+    key = Sys.getenv("CENSUS_API_KEY"),
+    .multi = "comma"
+  )
+
+wfh_response <- req_perform(wfh_request)
+```
+
+```{r}
+#| eval: false
+raw <- resp_body_json(wfh_response, simplifyVector = TRUE)
+
+colnames(raw) <- raw[1, ]
+
+wfh_raw <- as_tibble(raw[-1, ]) |>
+  mutate(across(starts_with("B08301"), as.numeric),
+         pct_wfh = B08301_021E / B08301_001E)
+
+wfh_raw
+```
+
+::: {.callout-warning}
+Don't `print()` the request or the response in a document you knit and push: they include your key.
+:::
+
+Compare `wfh_raw` to your `tidycensus` result. Are the shares the same? (*Hint:* `NAME` is in both.)
+
+## Your turn 2
+
+**How has working from home changed in Minnesota?**
+
+- Edit the `httr2` code to get `B08301_001E` and `B08301_021E` for **Minnesota as a whole** from the **2024 1-year ACS**.
+    - The dataset name is `acs/acs1`. For one state, use `` `for` = I("state:27") `` (and no `in`).
+- Make the same request for **2019**. Compute the share working from home in each year. What changed?
+- Now try **2020**. What happens? What does the error message say? (The Census Bureau did not release a standard 2020 1-year ACS. What dataset *does* have 2020?)
+- *If you have time:* pick another state or another year, and compare.
+
+# Before you commit
+
+Run `git status` in the terminal or the Git pane. Make sure that:
+
+- there is no file in your repo containing your key (you shouldn't have made one!)
+- none of your .qmd or output files print your key
+
+*Coming up in homework 8:* make requests for many years at once, and wrap your request in a function.
