@@ -1,0 +1,2282 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.23">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Prof Amanda Luby">
+<title>18: Iteration II – Stat 220</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6e03bc272f1cdef1d8296ac38e217ebd.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-259513009322ede1d75388ff598e6692.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+</head>
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">18: Iteration II</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-center sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none"><img src="../images/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none"></a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/stat220-f26" title="GitHub organization" class="quarto-navigation-tool px-1" aria-label="GitHub organization"><i class="bi bi-github"></i></a>
+    <a href="https://maize.mathcs.carleton.edu/" title="RStudio Server" class="quarto-navigation-tool px-1" aria-label="RStudio Server"><i class="bi bi-code-square"></i></a>
+    <a href="https://moodle.carleton.edu/course/view.php?id=50418" title="Moodle" class="quarto-navigation-tool px-1" aria-label="Moodle"><i class="bi bi-person-fill"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Course information</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../course-syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../course-links.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Useful links</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Computing</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../computing/computing-access.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Access</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../computing/rstudio-stat220.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rstudio in Stat 220</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../computing/git-stat220.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Git/Github in Stat 220</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../computing/computing-cheatsheets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cheatsheets</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/00-journals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Journals</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#part-0-setup" id="toc-part-0-setup" class="nav-link active" data-scroll-target="#part-0-setup">Part 0: Setup</a></li>
+  <li>
+<a href="#part-1-warm-up-and-recap" id="toc-part-1-warm-up-and-recap" class="nav-link" data-scroll-target="#part-1-warm-up-and-recap">Part 1: Warm up and recap</a>
+  <ul class="collapse">
+<li><a href="#a-for-loop-with-an-if" id="toc-a-for-loop-with-an-if" class="nav-link" data-scroll-target="#a-for-loop-with-an-if">A <code>for</code> loop with an <code>if</code></a></li>
+  <li><a href="#recap-across" id="toc-recap-across" class="nav-link" data-scroll-target="#recap-across">Recap: <code>across()</code></a></li>
+  </ul>
+</li>
+  <li>
+<a href="#part-2-map" id="toc-part-2-map" class="nav-link" data-scroll-target="#part-2-map">Part 2: <code>map()</code></a>
+  <ul class="collapse">
+<li><a href="#how-does-mapping-work" id="toc-how-does-mapping-work" class="nav-link" data-scroll-target="#how-does-mapping-work">How does mapping work?</a></li>
+  <li><a href="#the-map_-family" id="toc-the-map_-family" class="nav-link" data-scroll-target="#the-map_-family">The <code>map_*</code> family</a></li>
+  <li><a href="#your-turn-map" id="toc-your-turn-map" class="nav-link" data-scroll-target="#your-turn-map">Your turn: <code>map</code></a></li>
+  </ul>
+</li>
+  <li>
+<a href="#part-3-a-map-example-with-the-bakeoff-data" id="toc-part-3-a-map-example-with-the-bakeoff-data" class="nav-link" data-scroll-target="#part-3-a-map-example-with-the-bakeoff-data">Part 3: A <code>map</code> example with the bakeoff data</a>
+  <ul class="collapse">
+<li><a href="#map-vs.-for-loops" id="toc-map-vs.-for-loops" class="nav-link" data-scroll-target="#map-vs.-for-loops"><code>map</code> vs.&nbsp;<code>for</code> loops</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#part-4-more-practice-with-map" id="toc-part-4-more-practice-with-map" class="nav-link" data-scroll-target="#part-4-more-practice-with-map">Part 4: More practice with <code>map</code></a>
+  <ul class="collapse">
+<li><a href="#penguins-and-a-custom-function" id="toc-penguins-and-a-custom-function" class="nav-link" data-scroll-target="#penguins-and-a-custom-function"><code>penguins</code> and a custom function</a></li>
+  <li><a href="#survivor-data" id="toc-survivor-data" class="nav-link" data-scroll-target="#survivor-data">Survivor data</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#part-5-simulation" id="toc-part-5-simulation" class="nav-link" data-scroll-target="#part-5-simulation">Part 5: Simulation</a>
+  <ul class="collapse">
+<li><a href="#example-survivor-finalists" id="toc-example-survivor-finalists" class="nav-link" data-scroll-target="#example-survivor-finalists">Example: Survivor finalists</a></li>
+  <li>
+<a href="#the-plan" id="toc-the-plan" class="nav-link" data-scroll-target="#the-plan">The plan</a>
+  <ul class="collapse">
+<li><a href="#step-1-a-function-that-runs-the-experiment" id="toc-step-1-a-function-that-runs-the-experiment" class="nav-link" data-scroll-target="#step-1-a-function-that-runs-the-experiment">Step 1: a function that runs the experiment</a></li>
+  <li><a href="#step-2-iterate-with-a-for-loop" id="toc-step-2-iterate-with-a-for-loop" class="nav-link" data-scroll-target="#step-2-iterate-with-a-for-loop">Step 2: iterate with a <code>for</code> loop</a></li>
+  <li><a href="#step-2-again-iterate-with-map" id="toc-step-2-again-iterate-with-map" class="nav-link" data-scroll-target="#step-2-again-iterate-with-map">Step 2 again: iterate with <code>map</code></a></li>
+  </ul>
+</li>
+  <li><a href="#your-turn-sample-one-player-per-season" id="toc-your-turn-sample-one-player-per-season" class="nav-link" data-scroll-target="#your-turn-sample-one-player-per-season">Your turn: sample one player per season</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#part-6-a-permutation-test" id="toc-part-6-a-permutation-test" class="nav-link" data-scroll-target="#part-6-a-permutation-test">Part 6: A permutation test</a>
+  <ul class="collapse">
+<li><a href="#the-idea" id="toc-the-idea" class="nav-link" data-scroll-target="#the-idea">The idea</a></li>
+  <li><a href="#your-turn-run-the-experiment" id="toc-your-turn-run-the-experiment" class="nav-link" data-scroll-target="#your-turn-run-the-experiment">Your turn: run the experiment</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap up</a>
+  <ul class="collapse">
+<li><a href="#function-quick-reference" id="toc-function-quick-reference" class="nav-link" data-scroll-target="#function-quick-reference">Function quick reference</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">18: Iteration II</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">Self-paced tutorial</p>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Prof Amanda Luby </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Carleton College <br> Stat 220 - Fall 2026
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+  
+    
+  </div>
+  
+
+
+</header><style>
+.mcq { border: 1px solid #ccc; border-left: 6px solid #1B365D; border-radius: 6px; padding: 0.8em 1em; margin: 1.2em 0; background: #f6f8fb; }
+.mcq-title { font-weight: bold; color: #1B365D; margin-bottom: 0.4em; }
+.mcq-opt { display: block; width: 100%; text-align: left; margin: 0.35em 0; padding: 0.45em 0.7em; border: 1px solid #bbb; border-radius: 4px; background: white; cursor: pointer; font-size: 0.95em; }
+.mcq-opt:hover { background: #eef2f8; }
+.mcq-opt.right { background: #d9f2d9; border-color: #2e7d32; }
+.mcq-opt.wrong { background: #fde2dd; border-color: #f15a31; }
+.mcq-feedback { margin-top: 0.6em; font-size: 0.95em; }
+</style>
+<script>
+document.addEventListener("click", function (e) {
+  var btn = e.target.closest(".mcq-opt");
+  if (!btn) return;
+  var box = btn.closest(".mcq");
+  box.querySelectorAll(".mcq-opt").forEach(function (b) { b.classList.remove("right", "wrong"); });
+  var correct = btn.dataset.correct === "true";
+  btn.classList.add(correct ? "right" : "wrong");
+  box.querySelector(".mcq-feedback").innerHTML =
+    (correct ? "<strong>Correct!</strong> " : "<strong>Not quite.</strong> ") + btn.dataset.feedback;
+});
+</script><div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Today’s plan
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I’ve lost my voice! Instead of a lecture, you’ll work through this tutorial at your own pace (ideally with your portfolio 2 partner). It covers the same material as the <a href="../slides/18/slides18.html">Day 18 slides</a> and the <a href="../activities/18-iteration-2.html">Day 18 activity</a>. It should take a little less time than the usual class period.</p>
+<ul>
+<li>
+<strong>Code chunks:</strong> click <strong>Run Code</strong> to run them. You can edit the code and run it again.</li>
+<li>
+<strong>“Your turn” exercises:</strong> try them first. If you get stuck, click <strong>Get Hint</strong>, and as a last resort, <strong>Show Solution</strong>.</li>
+<li>
+<strong>Check-in questions:</strong> click an answer to see whether you’re right (and why). Try to answer <em>before</em> you click!</li>
+<li>
+<strong>Numbered questions (Q1, Q2, …):</strong> write your answers in your journal for today.</li>
+</ul>
+<p>I will be wandering around to help in class!</p>
+</div>
+</div>
+<section id="part-0-setup" class="level1"><h1>Part 0: Setup</h1>
+<p>Run the chunk below to load the packages and the three datasets we’ll use today. (Every chunk after this one needs them, so start here! It may take a few seconds to load.)</p>
+<ul>
+<li>
+<code>bakeoff</code>: <em>The Great British Bake Off</em>, season 14 only (one row per baker per episode)</li>
+<li>
+<code>unscaled_cancer</code>: measurements of breast tumor cells (<code>Class</code> is <code>B</code> for benign or <code>M</code> for malignant)</li>
+<li>
+<code>us_castaway_results</code>: every player from the first 47 seasons of <em>Survivor</em> (<code>finalist</code> is <code>TRUE</code> if they made the final)</li>
+<li>
+<code>penguins</code>: the palmerpenguins data (loaded with the package)</li>
+</ul>
+<div class="cell" data-autorun="true">
+<pre class="{webr}"><code><a href="https://dplyr.tidyverse.org">#| autorun: true
+library(dplyr)
+library(purrr)
+library(stringr)
+library(palmerpenguins)
+
+bakeoff &lt;- read.csv("https://stat220-f26.github.io/data/bakeoff-episodes.csv") |&gt;
+  filter(series == 14)
+unscaled_cancer &lt;- read.csv("https://raw.githubusercontent.com/UBC-DSCI/introduction-to-datascience/refs/heads/main/data/wdbc_unscaled.csv")
+# us_castaway_results &lt;- read.csv("https://stat220-f26.github.io/data/survivor-castaway-results.csv")
+us_castaway_results &lt;- here::here("data/survivor-castaway-results.csv")
+
+head(bakeoff, 3)</a></code></pre>
+</div>
+</section><section id="part-1-warm-up-and-recap" class="level1"><h1>Part 1: Warm up and recap</h1>
+<section id="a-for-loop-with-an-if" class="level2"><h2 class="anchored" data-anchor-id="a-for-loop-with-an-if">A <code>for</code> loop with an <code>if</code>
+</h2>
+<p>Read the code below carefully <strong>before</strong> running it.</p>
+<div class="cell">
+<pre class="{webr}"><code>results &lt;- character(10)
+
+for (k in 1:10) {
+  eliminated &lt;- bakeoff |&gt;
+    filter(episode == k, str_detect(result, "Eliminated"))
+
+  if (nrow(eliminated) == 1) {
+    results[k] &lt;- eliminated$showstopper
+  } else if (nrow(eliminated) &gt; 1) {
+    results[k] &lt;- str_flatten(eliminated$showstopper, collapse = ", ")
+  } else {
+    results[k] &lt;- "none"
+  }
+}
+
+results</code></pre>
+</div>
+<p><strong>Q1.</strong> Before you ran the chunk, what did you think <code>results</code> would look like? What does the <code>else</code> branch handle?</p>
+<div class="mcq">
+  <div class="mcq-title">Check-in 1</div>
+  <p>What is stored in <code>results[k]</code>?</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="The code doesn't count anything. Look at what is assigned to <code>results[k]</code>: it's <code>eliminated$showstopper</code>, not <code>nrow(eliminated)</code>.">A. The number of bakers eliminated in episode k</button>
+  <button class="mcq-opt" data-correct="true" data-feedback="It stores the showstopper dish(es) of whoever was eliminated in episode k, separated by commas if there is more than one, or <code>&quot;none&quot;</code> if nobody was eliminated. <code>results</code> was pre-allocated with <code>character(10)</code>, one slot per episode.">B. The showstopper dish(es) of the baker(s) eliminated in episode k, or "none"</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="The code stores the <code>showstopper</code> column (the dish), not the baker's name.">C. The names of the bakers eliminated in episode k</button>
+  <div class="mcq-feedback"></div>
+</div>
+</section><section id="recap-across" class="level2"><h2 class="anchored" data-anchor-id="recap-across">Recap: <code>across()</code>
+</h2>
+<p>Last time we saw that <code>across()</code> lets us do loop-type tasks inside {dplyr} pipelines. Suppose we want the <em>range</em> of every numeric column and the <em>number of levels</em> of every factor column in <code>penguins</code>. Here are both approaches. Run the chunk and check that they give the same answers.</p>
+<div class="cell">
+<pre class="{webr}"><code># for loop
+output &lt;- numeric(8)
+
+for (k in seq_along(penguins)) {
+  if (is.numeric(penguins[[k]])) {
+    output[k] &lt;- max(penguins[[k]], na.rm = TRUE) - min(penguins[[k]], na.rm = TRUE)
+  }
+  if (is.factor(penguins[[k]])) {
+    output[k] &lt;- length(levels(penguins[[k]]))
+  }
+}
+output
+
+# across
+penguins |&gt;
+  summarize(
+    across(where(is.numeric), \(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE)),
+    across(where(is.factor), \(x) length(levels(x)))
+  )</code></pre>
+</div>
+<div class="mcq">
+  <div class="mcq-title">Check-in 2</div>
+  <p>What is the limitation of <code>across()</code>?</p>
+  <button class="mcq-opt" data-correct="true" data-feedback="<code>across()</code> only works inside {dplyr} verbs like <code>mutate()</code> and <code>summarize()</code>. We'd like something more general-purpose: that's <code>map()</code>.">A. It only works inside {dplyr} functions like <code>mutate()</code> and <code>summarize()</code></button>
+  <button class="mcq-opt" data-correct="false" data-feedback="It can: the example above uses <code>where(is.numeric)</code> and <code>where(is.factor)</code> to pick columns by type.">B. It can't choose columns by their type</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="It's usually faster to write and easier to read than a <code>for</code> loop. The limitation is where you can use it.">C. It's much slower than a <code>for</code> loop</button>
+  <div class="mcq-feedback"></div>
+</div>
+</section></section><section id="part-2-map" class="level1"><h1>Part 2: <code>map()</code>
+</h1>
+<p>The purrr package (loaded with <code><a href="https://tidyverse.tidyverse.org">library(tidyverse)</a></code>) gives us <code>map()</code>, which can replace many <code>for</code> loops.</p>
+<ul>
+<li>
+<code>.x</code>: what to iterate over</li>
+<li>
+<code>.f</code>: the function to apply to each element</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">map</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="how-does-mapping-work" class="level2"><h2 class="anchored" data-anchor-id="how-does-mapping-work">How does mapping work?</h2>
+<p>Suppose we have quiz 1 and quiz 2 scores for 4 students stored in a list, and we want the mean score on each quiz.</p>
+<div class="cell">
+<pre class="{webr}"><code>quiz_scores &lt;- list(
+  quiz1 = c(80, 90, 70, 50),
+  quiz2 = c(85, 83, 45, 60)
+)
+
+map(quiz_scores, mean)</code></pre>
+</div>
+<p><code>map()</code> always returns a <strong>list</strong>. If we want the results as a numeric (double) vector instead, we use <code>map_dbl()</code>:</p>
+<div class="cell">
+<pre class="{webr}"><code>map_dbl(quiz_scores, mean)</code></pre>
+</div>
+<p>What if we ask for a character vector? Run this one and read the error message.</p>
+<div class="cell">
+<pre class="{webr}"><code>map_chr(quiz_scores, mean)</code></pre>
+</div>
+<p><strong>Q2.</strong> Why does <code>map_chr(quiz_scores, mean)</code> fail?</p>
+<div class="mcq">
+  <div class="mcq-title">Check-in 3</div>
+  <p>Which function would you use to get the mean of each quiz as a <strong>numeric vector</strong>?</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="<code>map()</code> always returns a list.">A. <code>map()</code></button>
+  <button class="mcq-opt" data-correct="true" data-feedback="<code>map_dbl()</code> returns a double (numeric) vector. The part after <code>map_</code> tells you the type of the output.">B. <code>map_dbl()</code></button>
+  <button class="mcq-opt" data-correct="false" data-feedback="<code>map_chr()</code> returns a character vector, and it fails here because the means are numbers.">C. <code>map_chr()</code></button>
+  <button class="mcq-opt" data-correct="false" data-feedback="<code>map_lgl()</code> returns TRUE/FALSE values.">D. <code>map_lgl()</code></button>
+  <div class="mcq-feedback"></div>
+</div>
+</section><section id="the-map_-family" class="level2"><h2 class="anchored" data-anchor-id="the-map_-family">The <code>map_*</code> family</h2>
+<table class="caption-top table">
+<thead><tr class="header">
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Returns</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>map()</code></td>
+<td style="text-align: left;">a list</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>map_lgl()</code></td>
+<td style="text-align: left;">a logical vector</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>map_int()</code></td>
+<td style="text-align: left;">an integer vector</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>map_dbl()</code></td>
+<td style="text-align: left;">a double (numeric) vector</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>map_chr()</code></td>
+<td style="text-align: left;">a character vector</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<code>map_df()</code> / <code>map_dfr()</code>
+</td>
+<td style="text-align: left;">a data frame (by row binding)</td>
+</tr>
+</tbody>
+</table></section><section id="your-turn-map" class="level2"><h2 class="anchored" data-anchor-id="your-turn-map">Your turn: <code>map</code>
+</h2>
+<p><strong>Exercise A.</strong> Edit the code below so it (1) returns a numeric vector and (2) only maps over the numeric columns (columns 3 to 12) of <code>unscaled_cancer</code>.</p>
+<div class="cell" data-exercise="ex_map_cancer">
+<pre class="{webr}"><code>#| exercise: ex_map_cancer
+map(unscaled_cancer, mean)</code></pre>
+</div>
+<div class="cell" data-exercise="ex_map_cancer" data-hint="true">
+<pre class="{webr}"><code>#| exercise: ex_map_cancer
+#| hint: true
+# Two changes: use a different map_ function, and select columns 3 to 12
+# with square brackets, like unscaled_cancer[, 3:12]</code></pre>
+</div>
+<div class="cell" data-exercise="ex_map_cancer" data-solution="true">
+<pre class="{webr}"><code>#| exercise: ex_map_cancer
+#| solution: true
+map_dbl(unscaled_cancer[, 3:12], mean)</code></pre>
+</div>
+<p><strong>Exercise B.</strong> <code>map</code> the <code>summary</code> function to all of the columns in <code>penguins</code>.</p>
+<div class="cell" data-exercise="ex_map_summary">
+<pre class="{webr}"><code>#| exercise: ex_map_summary
+# your code here</code></pre>
+</div>
+<div class="cell" data-exercise="ex_map_summary" data-solution="true">
+<pre class="{webr}"><code>#| exercise: ex_map_summary
+#| solution: true
+map(penguins, summary)</code></pre>
+</div>
+</section></section><section id="part-3-a-map-example-with-the-bakeoff-data" class="level1"><h1>Part 3: A <code>map</code> example with the bakeoff data</h1>
+<p>Back to the warm up. Here’s the same task done three ways. The function <code>eliminated_showstopper()</code> does the work for a single episode.</p>
+<div class="cell">
+<pre class="{webr}"><code>eliminated_showstopper &lt;- function(ep_number) {
+  bakeoff |&gt;
+    filter(episode == ep_number, str_detect(result, "Eliminated")) |&gt;
+    summarize(
+      n = n(),
+      showstopper = if_else(n &gt; 0, str_flatten(showstopper, collapse = ","), "none")
+    ) |&gt;
+    pull(showstopper)
+}
+
+# for loop + function
+results_loop &lt;- character(10)
+for (k in 1:10) {
+  results_loop[k] &lt;- eliminated_showstopper(k)
+}
+
+# map + function
+results_map &lt;- map_chr(1:10, eliminated_showstopper)
+
+results_map
+identical(results_loop, results_map)</code></pre>
+</div>
+<div class="mcq">
+  <div class="mcq-title">Check-in 4</div>
+  <p>Compared to the <code>for</code> loop, what did we <em>not</em> have to do with <code>map_chr()</code>?</p>
+  <button class="mcq-opt" data-correct="true" data-feedback="With <code>map</code> there's no pre-allocated storage (<code>character(10)</code>) and no index variable (<code>k</code>). Fewer moving parts means fewer places to make mistakes.">A. Pre-allocate storage and define an index</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="We still needed the function. A common cost of <code>map</code> is that you often have to write a function first.">B. Write a function</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="We still chose the output type: <code>map_chr()</code> is the character version.">C. Decide what type of output we want</button>
+  <div class="mcq-feedback"></div>
+</div>
+<section id="map-vs.-for-loops" class="level2"><h2 class="anchored" data-anchor-id="map-vs.-for-loops">
+<code>map</code> vs.&nbsp;<code>for</code> loops</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">
+<code>map</code> pros</th>
+<th style="text-align: left;">
+<code>map</code> cons</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Don’t have to pre-allocate storage</td>
+<td style="text-align: left;">Hard to get used to if you learned <code>for</code> loops first</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Don’t have to define an index</td>
+<td style="text-align: left;">Often need to define a function</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Less error-prone</td>
+<td style="text-align: left;">Less fine-grained control</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Takes advantage of functional programming</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p>For this class, you’ll learn the basics of both and practice them on homework. For projects, you can use whichever approach makes more sense to you.</p>
+<p><strong>Q3.</strong> In Portfolio 2, you’ll read in a different CSV file for each year of data. Would you use a <code>for</code> loop or <code>map</code> for that, and why? (There’s no wrong answer, but give a reason!)</p>
+</section></section><section id="part-4-more-practice-with-map" class="level1"><h1>Part 4: More practice with <code>map</code>
+</h1>
+<section id="penguins-and-a-custom-function" class="level2"><h2 class="anchored" data-anchor-id="penguins-and-a-custom-function">
+<code>penguins</code> and a custom function</h2>
+<p><strong>Exercise C.</strong> Using the <code>penguins</code> data, use <code>map</code> to calculate the range of every numeric variable and the <code>table</code> of every factor variable. Your result should be a list of length 8.</p>
+<p>It may help to first write a custom function that does the right thing depending on the type of the input. (Remember <code><a href="https://rdrr.io/r/base/numeric.html">is.numeric()</a></code> and <code><a href="https://rdrr.io/r/base/factor.html">is.factor()</a></code> from earlier.)</p>
+<div class="cell" data-exercise="ex_penguins">
+<pre class="{webr}"><code>#| exercise: ex_penguins
+summarize_depends &lt;- function(x) {
+  # your code here
+}
+
+map(penguins, summarize_depends)</code></pre>
+</div>
+<div class="cell" data-exercise="ex_penguins" data-hint="true">
+<pre class="{webr}"><code>#| exercise: ex_penguins
+#| hint: true
+# Inside the function: if x is numeric, return max(x, na.rm = TRUE) - min(x, na.rm = TRUE).
+# If x is a factor, return table(x). Use two if() statements with return().</code></pre>
+</div>
+<div class="cell" data-exercise="ex_penguins" data-solution="true">
+<pre class="{webr}"><code>#| exercise: ex_penguins
+#| solution: true
+summarize_depends &lt;- function(x) {
+  if (is.numeric(x)) return(max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+  if (is.factor(x)) return(table(x))
+}
+
+map(penguins, summarize_depends)</code></pre>
+</div>
+</section><section id="survivor-data" class="level2"><h2 class="anchored" data-anchor-id="survivor-data">Survivor data</h2>
+<p>Here are the first few rows of <code>us_castaway_results</code>, which has one row per player per season.</p>
+<div class="cell">
+<pre class="{webr}"><code>head(us_castaway_results)</code></pre>
+</div>
+<p><strong>Exercise D.</strong></p>
+<ol type="1">
+<li>Write a function called <code>finalists</code> that takes a season number (as a number) and returns a single string with the names of that season’s finalists, separated by commas.</li>
+<li>Use <code>map_chr()</code> to return a character vector of the finalists for seasons 31 to 40.</li>
+</ol>
+<div class="cell" data-exercise="ex_finalists">
+<pre class="{webr}"><code>#| exercise: ex_finalists
+finalists &lt;- function(season_number) {
+  # your code here
+}
+
+map_chr(31:40, finalists)</code></pre>
+</div>
+<div class="cell" data-exercise="ex_finalists" data-hint="true">
+<pre class="{webr}"><code>#| exercise: ex_finalists
+#| hint: true
+# Inside the function: filter() to the right season (season == season_number) and to
+# players with finalist == TRUE, then pull() the castaway column. To combine several
+# names into one string, use str_c(..., collapse = ", ").</code></pre>
+</div>
+<div class="cell" data-exercise="ex_finalists" data-solution="true">
+<pre class="{webr}"><code>#| exercise: ex_finalists
+#| solution: true
+finalists &lt;- function(season_number) {
+  us_castaway_results |&gt;
+    filter(season == season_number, finalist) |&gt;
+    pull(castaway) |&gt;
+    str_c(collapse = ", ")
+}
+
+map_chr(31:40, finalists)</code></pre>
+</div>
+</section></section><section id="part-5-simulation" class="level1"><h1>Part 5: Simulation</h1>
+<p>Iteration is especially useful for <strong>simulation</strong>. In statistics we often work with a random sample to learn about a population, and we care about the <em>uncertainty</em> in our results: did we find a real trend, or could it be due to sampling variability?</p>
+<section id="example-survivor-finalists" class="level2"><h2 class="anchored" data-anchor-id="example-survivor-finalists">Example: Survivor finalists</h2>
+<p>If we randomly choose 20 previous Survivor players to play on a new season, how likely are we to get zero finalists? First, here’s one random sample of 20 players. Run it a few times:</p>
+<div class="cell">
+<pre class="{webr}"><code>us_castaway_results |&gt;
+  slice_sample(n = 20) |&gt;
+  filter(finalist) |&gt;
+  count()</code></pre>
+</div>
+<p>You get a different answer each time, because the sampling is random. To make results <strong>reproducible</strong>, we can set a seed. Run this chunk several times:</p>
+<div class="cell">
+<pre class="{webr}"><code>set.seed(0217)
+us_castaway_results |&gt;
+  slice_sample(n = 20) |&gt;
+  filter(finalist) |&gt;
+  count()</code></pre>
+</div>
+<div class="mcq">
+  <div class="mcq-title">Check-in 5</div>
+  <p>What does <code>set.seed(0217)</code> do?</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="The sample is still random. The seed just fixes <em>where the random number generator starts</em>.">A. It makes the sample less random</button>
+  <button class="mcq-opt" data-correct="true" data-feedback="Anything &quot;random&quot; in R relies on a pseudo-random number generator. Setting the seed starts it at the same value, so you (and anyone else) get the same results every time.">B. It makes the random number generator start at the same value, so the results are reproducible</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="It has nothing to do with the size of the sample. That's <code>n = 20</code> in <code>slice_sample()</code>.">C. It sets the number of players in the sample</button>
+  <div class="mcq-feedback"></div>
+</div>
+</section><section id="the-plan" class="level2"><h2 class="anchored" data-anchor-id="the-plan">The plan</h2>
+<p>A single sample doesn’t tell us much. We’ll:</p>
+<ol type="1">
+<li>Write a <strong>function</strong> that runs our “experiment”</li>
+<li>Set up an <strong>iteration</strong> procedure to run our experiment a bunch of times</li>
+<li>
+<strong>Analyze</strong> the results</li>
+</ol>
+<section id="step-1-a-function-that-runs-the-experiment" class="level3"><h3 class="anchored" data-anchor-id="step-1-a-function-that-runs-the-experiment">Step 1: a function that runs the experiment</h3>
+<div class="cell">
+<pre class="{webr}"><code>sample_finalists &lt;- function(n) {
+  us_castaway_results |&gt;
+    slice_sample(n = n) |&gt;
+    filter(finalist) |&gt;
+    count() |&gt;
+    pull(n)
+}
+
+sample_finalists(20)</code></pre>
+</div>
+</section><section id="step-2-iterate-with-a-for-loop" class="level3"><h3 class="anchored" data-anchor-id="step-2-iterate-with-a-for-loop">Step 2: iterate with a <code>for</code> loop</h3>
+<p>Now we run the experiment 1,000 times. (This takes a few seconds in your browser.)</p>
+<div class="cell">
+<pre class="{webr}"><code>set.seed(0217)
+
+n_finalists &lt;- integer(1000)
+
+for (k in 1:1000) {
+  n_finalists[k] &lt;- sample_finalists(20)
+}
+
+table(n_finalists) / 1000</code></pre>
+</div>
+<div class="mcq">
+  <div class="mcq-title">Check-in 6</div>
+  <p>About 14.5% of the players (126 out of 870) were finalists. About how many finalists would you <em>expect</em> in a random sample of 20 players? (Compare with your table above!)</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="That would be a sample with 45% finalists. The expected number is 20 × (126/870) ≈ 2.9.">A. About 9</button>
+  <button class="mcq-opt" data-correct="true" data-feedback="20 × (126/870) ≈ 2.9. The most common values in your table should be around 2 and 3.">B. About 3</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="That's the probability of <em>no</em> finalists, not the expected number. In this simulation it's small (around 4%).">C. About 0</button>
+  <div class="mcq-feedback"></div>
+</div>
+<p><strong>Q4.</strong> According to your simulation, about how likely is it to get zero finalists in a random sample of 20 players? (Look at the <code>0</code> column of your table.)</p>
+</section><section id="step-2-again-iterate-with-map" class="level3"><h3 class="anchored" data-anchor-id="step-2-again-iterate-with-map">Step 2 again: iterate with <code>map</code>
+</h3>
+<p>The same simulation with <code>map_dbl()</code>. We need something to map over: here, 1,000 copies of the number 20.</p>
+<div class="cell">
+<pre class="{webr}"><code>rep(20, 5)</code></pre>
+</div>
+<div class="cell">
+<pre class="{webr}"><code>set.seed(0217)
+
+rep(20, 1000) |&gt;
+  map_dbl(sample_finalists) |&gt;
+  table()</code></pre>
+</div>
+<p>Each element of <code>rep(20, 1000)</code> is passed to <code>sample_finalists()</code> as <code>n</code>, so the function runs 1,000 times with <code>n = 20</code>.</p>
+</section></section><section id="your-turn-sample-one-player-per-season" class="level2"><h2 class="anchored" data-anchor-id="your-turn-sample-one-player-per-season">Your turn: sample one player per season</h2>
+<p>Some Survivor seasons only had 16 players, while others had 22. That could mean some seasons are slightly under- or over-represented in our sample.</p>
+<p><strong>Exercise E.</strong> Edit the experiment to instead randomly sample <strong>one</strong> player from each season (this gives 47 players), and then sample 20 players from those 47. Then run it 1,000 times with <code>map_dbl()</code> and look at the results.</p>
+<p><em>Hint:</em> look at the <code>by</code> argument in <code>slice_sample()</code>.</p>
+<div class="cell" data-exercise="ex_sim2">
+<pre class="{webr}"><code>#| exercise: ex_sim2
+sample_finalists_2 &lt;- function(n) {
+  us_castaway_results |&gt;
+    slice_sample(n = n) |&gt;
+    filter(finalist) |&gt;
+    count() |&gt;
+    pull(n)
+}
+
+set.seed(0217)
+rep(20, 1000) |&gt;
+  map_dbl(sample_finalists_2) |&gt;
+  table() / 1000</code></pre>
+</div>
+<div class="cell" data-exercise="ex_sim2" data-hint="true">
+<pre class="{webr}"><code>#| exercise: ex_sim2
+#| hint: true
+# Replace the first slice_sample() with slice_sample(n = 1, by = season),
+# then add a second slice_sample(n = n) for the 20 players.</code></pre>
+</div>
+<div class="cell" data-exercise="ex_sim2" data-solution="true">
+<pre class="{webr}"><code>#| exercise: ex_sim2
+#| solution: true
+sample_finalists_2 &lt;- function(n) {
+  us_castaway_results |&gt;
+    slice_sample(n = 1, by = season) |&gt;
+    slice_sample(n = n) |&gt;
+    filter(finalist) |&gt;
+    count() |&gt;
+    pull(n)
+}
+
+set.seed(0217)
+rep(20, 1000) |&gt;
+  map_dbl(sample_finalists_2) |&gt;
+  table() / 1000</code></pre>
+</div>
+<p><strong>Q5.</strong> Why is sampling one player per season first a good idea? Did the results change much?</p>
+</section></section><section id="part-6-a-permutation-test" class="level1"><h1>Part 6: A permutation test</h1>
+<p>Recall the <code>unscaled_cancer</code> data. One question we might ask: is the radius of malignant tumors noticeably different from the radius of benign tumors?</p>
+<div class="cell">
+<pre class="{webr}"><code>unscaled_cancer |&gt;
+  group_by(Class) |&gt;
+  summarize(mean = mean(Radius))</code></pre>
+</div>
+<p>This tells us the average difference <em>in this sample</em>, but we don’t know whether that difference is “surprising.”</p>
+<section id="the-idea" class="level2"><h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
+<p>A <strong>permutation test</strong> asks: if there were <em>no</em> difference between the groups, how big of a difference would we see just by chance?</p>
+<ol type="1">
+<li>Assume there is no difference between the groups</li>
+<li>Shuffle the group labels (benign/malignant) at random</li>
+<li>Compute the difference in the group means</li>
+<li>Repeat a bunch of times</li>
+<li>Compare the observed difference to the distribution of simulated differences</li>
+</ol>
+<p>If the observed difference is much bigger than the simulated differences, we have evidence of a statistically significant result.</p>
+<div class="cell">
+<pre class="{webr}"><code># The observed difference (malignant minus benign)
+observed &lt;- mean(unscaled_cancer$Radius[unscaled_cancer$Class == "M"]) - mean(unscaled_cancer$Radius[unscaled_cancer$Class == "B"])
+observed</code></pre>
+</div>
+</section><section id="your-turn-run-the-experiment" class="level2"><h2 class="anchored" data-anchor-id="your-turn-run-the-experiment">Your turn: run the experiment</h2>
+<p><strong>Exercise F.</strong> Finish the function below. It should (1) create a new column <code>class_shuffled</code> that is a random permutation of <code>Class</code> (<em>hint:</em> see the <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> function), (2) group by <code>class_shuffled</code> and compute the group means, and (3) return the difference in the means. Right now <code>class_shuffled</code> is just a copy of <code>Class</code>, so the function returns the observed difference. Edit that line so the labels are shuffled.</p>
+<div class="cell" data-exercise="ex_perm">
+<pre class="{webr}"><code>#| exercise: ex_perm
+permute_diff &lt;- function() {
+  unscaled_cancer |&gt;
+    mutate(class_shuffled = Class) |&gt;   # edit this line
+    group_by(class_shuffled) |&gt;
+    summarize(mean = mean(Radius)) |&gt;
+    pull(mean) |&gt;
+    diff()
+}
+
+permute_diff()</code></pre>
+</div>
+<div class="cell" data-exercise="ex_perm" data-hint="true">
+<pre class="{webr}"><code>#| exercise: ex_perm
+#| hint: true
+# sample(x) returns a random shuffle of the vector x. Which column do you want to shuffle?</code></pre>
+</div>
+<div class="cell" data-exercise="ex_perm" data-solution="true">
+<pre class="{webr}"><code>#| exercise: ex_perm
+#| solution: true
+permute_diff &lt;- function() {
+  unscaled_cancer |&gt;
+    mutate(class_shuffled = sample(Class)) |&gt;
+    group_by(class_shuffled) |&gt;
+    summarize(mean = mean(Radius)) |&gt;
+    pull(mean) |&gt;
+    diff()
+}
+
+permute_diff()</code></pre>
+</div>
+<p>Now we repeat the experiment 1,000 times, save the differences, and make a histogram. The red line is the difference we actually observed. (This takes a few seconds.)</p>
+<p>Functions you define inside an exercise box aren’t saved for the chunks that follow, so the chunk below starts with a complete version of <code>permute_diff()</code>. Compare it with yours!</p>
+<div class="cell">
+<pre class="{webr}"><code>permute_diff &lt;- function() {
+  unscaled_cancer |&gt;
+    mutate(class_shuffled = sample(Class)) |&gt;
+    group_by(class_shuffled) |&gt;
+    summarize(mean = mean(Radius)) |&gt;
+    pull(mean) |&gt;
+    diff()
+}
+
+set.seed(0217)
+diffs &lt;- map_dbl(1:1000, \(i) permute_diff())
+
+hist(diffs,
+     breaks = 30,
+     xlim = range(c(diffs, observed)),
+     main = "Simulated differences in mean radius",
+     xlab = "Difference in means (shuffled labels)")
+abline(v = observed, col = "red", lwd = 3)
+
+tibble(
+  diffs = diffs
+) |&gt;
+  ggplot(aes(x = diffs)) + 
+  geom_histogram(col = "white", bins = 25) + 
+  geom_vline(xintercept = observed, col = "darkred", linetype = "dashed")
+
+# proportion of simulated differences at least as extreme as the observed one
+mean(abs(diffs) &gt;= abs(observed))</code></pre>
+</div>
+<div class="mcq">
+  <div class="mcq-title">Check-in 7</div>
+  <p>The observed difference in mean radius is about 5.3, and the simulated differences are all close to 0. What does this tell us?</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="It's the other way around: a difference as big as ours essentially <em>never</em> shows up when the labels are shuffled.">A. A difference this big happens often by chance</button>
+  <button class="mcq-opt" data-correct="true" data-feedback="If there were really no difference between benign and malignant tumors, shuffling the labels would almost never produce a difference as big as 5.3. That's strong evidence that malignant tumors have a larger mean radius.">B. A difference this big would be extremely unlikely if there were no difference, so we have strong evidence of a real difference</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="The permutation test can only tell us whether the difference is bigger than what chance alone produces. It says nothing about whether the model is a good one for other purposes.">C. The test doesn't tell us anything</button>
+  <div class="mcq-feedback"></div>
+</div>
+<p><strong>Q6.</strong> In your own words, what is the proportion at the bottom of the output telling you? (Look back at step 5 of “The idea.”)</p>
+<p><strong>Q7.</strong> In this simulation, what role did the function play, and what role did <code>map_dbl()</code> play?</p>
+</section></section><section id="wrap-up" class="level1"><h1>Wrap up</h1>
+<p>If you got through everything, great! If not, that’s OK. Finish the rest on your own or with your group, and bring your questions to the next class.</p>
+<p><strong>Q8.</strong> What questions do you have about <code>across()</code>, <code>map()</code>, or simulation? (Write them down! We’ll talk about them next class.)</p>
+<hr>
+<section id="function-quick-reference" class="level2"><h2 class="anchored" data-anchor-id="function-quick-reference">Function quick reference</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 73%">
+</colgroup>
+<thead><tr class="header">
+<th>Function</th>
+<th>Purpose</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>map(.x, .f)</code></td>
+<td>Apply <code>.f</code> to each element of <code>.x</code>; returns a list</td>
+</tr>
+<tr class="even">
+<td>
+<code>map_dbl()</code>, <code>map_chr()</code>, <code>map_lgl()</code>, <code>map_int()</code>
+</td>
+<td>Same, but returns a vector of that type</td>
+</tr>
+<tr class="odd">
+<td><code>map_dfr()</code></td>
+<td>Same, but row-binds the results into a data frame</td>
+</tr>
+<tr class="even">
+<td><code>rep(20, 1000)</code></td>
+<td>A vector with 1,000 copies of 20 (something to <code>map</code> over)</td>
+</tr>
+<tr class="odd">
+<td><code>slice_sample(n = 20)</code></td>
+<td>Randomly sample 20 rows</td>
+</tr>
+<tr class="even">
+<td><code>slice_sample(n = 1, by = group)</code></td>
+<td>Randomly sample 1 row per group</td>
+</tr>
+<tr class="odd">
+<td><code>set.seed(0217)</code></td>
+<td>Make random results reproducible</td>
+</tr>
+<tr class="even">
+<td><code>sample(x)</code></td>
+<td>Randomly shuffle (permute) the vector <code>x</code>
+</td>
+</tr>
+<tr class="odd">
+<td><code>table(x) / length(x)</code></td>
+<td>Proportion of each value of <code>x</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<!-- -->
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "18: Iteration II"</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Self-paced tutorial"</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="an">webr:</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co">  packages:</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co">    - dplyr</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">    - purrr</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co">    - stringr</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co">    - palmerpenguins</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="co">  live-html:</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: "18-iteration-2-tutorial"</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="an">engine:</span><span class="co"> knitr</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> source</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../_extensions/r-wasm/live/_knitr.qmd &gt;}}</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;style&gt;</span></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="in">.mcq { border: 1px solid #ccc; border-left: 6px solid #1B365D; border-radius: 6px; padding: 0.8em 1em; margin: 1.2em 0; background: #f6f8fb; }</span></span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a><span class="in">.mcq-title { font-weight: bold; color: #1B365D; margin-bottom: 0.4em; }</span></span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="in">.mcq-opt { display: block; width: 100%; text-align: left; margin: 0.35em 0; padding: 0.45em 0.7em; border: 1px solid #bbb; border-radius: 4px; background: white; cursor: pointer; font-size: 0.95em; }</span></span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a><span class="in">.mcq-opt:hover { background: #eef2f8; }</span></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a><span class="in">.mcq-opt.right { background: #d9f2d9; border-color: #2e7d32; }</span></span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a><span class="in">.mcq-opt.wrong { background: #fde2dd; border-color: #f15a31; }</span></span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a><span class="in">.mcq-feedback { margin-top: 0.6em; font-size: 0.95em; }</span></span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/style&gt;</span></span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;script&gt;</span></span>
+<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a><span class="in">document.addEventListener("click", function (e) {</span></span>
+<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a><span class="in">  var btn = e.target.closest(".mcq-opt");</span></span>
+<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a><span class="in">  if (!btn) return;</span></span>
+<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a><span class="in">  var box = btn.closest(".mcq");</span></span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a><span class="in">  box.querySelectorAll(".mcq-opt").forEach(function (b) { b.classList.remove("right", "wrong"); });</span></span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a><span class="in">  var correct = btn.dataset.correct === "true";</span></span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a><span class="in">  btn.classList.add(correct ? "right" : "wrong");</span></span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a><span class="in">  box.querySelector(".mcq-feedback").innerHTML =</span></span>
+<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a><span class="in">    (correct ? "&lt;strong&gt;Correct!&lt;/strong&gt; " : "&lt;strong&gt;Not quite.&lt;/strong&gt; ") + btn.dataset.feedback;</span></span>
+<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a><span class="in">});</span></span>
+<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/script&gt;</span></span>
+<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Today's plan</span></span>
+<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a>I've lost my voice! Instead of a lecture, you'll work through this tutorial at your own pace (ideally with your portfolio 2 partner). It covers the same material as the <span class="co">[</span><span class="ot">Day 18 slides</span><span class="co">](../slides/18/slides18.qmd)</span> and the <span class="co">[</span><span class="ot">Day 18 activity</span><span class="co">](18-iteration-2.qmd)</span>. It should take a little less time than the usual class period. </span>
+<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-51"><a href="#cb36-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Code chunks:** click **Run Code** to run them. You can edit the code and run it again.</span>
+<span id="cb36-52"><a href="#cb36-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**"Your turn" exercises:** try them first. If you get stuck, click **Get Hint**, and as a last resort, **Show Solution**.</span>
+<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Check-in questions:** click an answer to see whether you're right (and why). Try to answer *before* you click!</span>
+<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Numbered questions (Q1, Q2, ...):** write your answers in your journal for today. </span>
+<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-56"><a href="#cb36-56" aria-hidden="true" tabindex="-1"></a>I will be wandering around to help in class! </span>
+<span id="cb36-57"><a href="#cb36-57" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 0: Setup</span></span>
+<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a>Run the chunk below to load the packages and the three datasets we'll use today. (Every chunk after this one needs them, so start here! It may take a few seconds to load.)</span>
+<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`bakeoff`</span>: *The Great British Bake Off*, season 14 only (one row per baker per episode)</span>
+<span id="cb36-64"><a href="#cb36-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`unscaled_cancer`</span>: measurements of breast tumor cells (<span class="in">`Class`</span> is <span class="in">`B`</span> for benign or <span class="in">`M`</span> for malignant)</span>
+<span id="cb36-65"><a href="#cb36-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`us_castaway_results`</span>: every player from the first 47 seasons of *Survivor* (<span class="in">`finalist`</span> is <span class="in">`TRUE`</span> if they made the final)</span>
+<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`penguins`</span>: the palmerpenguins data (loaded with the package)</span>
+<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-70"><a href="#cb36-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a><span class="in">#| autorun: true</span></span>
+<span id="cb36-72"><a href="#cb36-72" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)</span></span>
+<span id="cb36-73"><a href="#cb36-73" aria-hidden="true" tabindex="-1"></a><span class="in">library(purrr)</span></span>
+<span id="cb36-74"><a href="#cb36-74" aria-hidden="true" tabindex="-1"></a><span class="in">library(stringr)</span></span>
+<span id="cb36-75"><a href="#cb36-75" aria-hidden="true" tabindex="-1"></a><span class="in">library(palmerpenguins)</span></span>
+<span id="cb36-76"><a href="#cb36-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-77"><a href="#cb36-77" aria-hidden="true" tabindex="-1"></a><span class="in">bakeoff &lt;- read.csv("https://stat220-f26.github.io/data/bakeoff-episodes.csv") |&gt;</span></span>
+<span id="cb36-78"><a href="#cb36-78" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(series == 14)</span></span>
+<span id="cb36-79"><a href="#cb36-79" aria-hidden="true" tabindex="-1"></a><span class="in">unscaled_cancer &lt;- read.csv("https://raw.githubusercontent.com/UBC-DSCI/introduction-to-datascience/refs/heads/main/data/wdbc_unscaled.csv")</span></span>
+<span id="cb36-80"><a href="#cb36-80" aria-hidden="true" tabindex="-1"></a><span class="in"># us_castaway_results &lt;- read.csv("https://stat220-f26.github.io/data/survivor-castaway-results.csv")</span></span>
+<span id="cb36-81"><a href="#cb36-81" aria-hidden="true" tabindex="-1"></a><span class="in">us_castaway_results &lt;- here::here("data/survivor-castaway-results.csv")</span></span>
+<span id="cb36-82"><a href="#cb36-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-83"><a href="#cb36-83" aria-hidden="true" tabindex="-1"></a><span class="in">head(bakeoff, 3)</span></span>
+<span id="cb36-84"><a href="#cb36-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-85"><a href="#cb36-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-86"><a href="#cb36-86" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 1: Warm up and recap</span></span>
+<span id="cb36-87"><a href="#cb36-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-88"><a href="#cb36-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## A `for` loop with an `if`</span></span>
+<span id="cb36-89"><a href="#cb36-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-90"><a href="#cb36-90" aria-hidden="true" tabindex="-1"></a>Read the code below carefully **before** running it.</span>
+<span id="cb36-91"><a href="#cb36-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-94"><a href="#cb36-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-95"><a href="#cb36-95" aria-hidden="true" tabindex="-1"></a><span class="in">results &lt;- character(10)</span></span>
+<span id="cb36-96"><a href="#cb36-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-97"><a href="#cb36-97" aria-hidden="true" tabindex="-1"></a><span class="in">for (k in 1:10) {</span></span>
+<span id="cb36-98"><a href="#cb36-98" aria-hidden="true" tabindex="-1"></a><span class="in">  eliminated &lt;- bakeoff |&gt;</span></span>
+<span id="cb36-99"><a href="#cb36-99" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(episode == k, str_detect(result, "Eliminated"))</span></span>
+<span id="cb36-100"><a href="#cb36-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-101"><a href="#cb36-101" aria-hidden="true" tabindex="-1"></a><span class="in">  if (nrow(eliminated) == 1) {</span></span>
+<span id="cb36-102"><a href="#cb36-102" aria-hidden="true" tabindex="-1"></a><span class="in">    results[k] &lt;- eliminated$showstopper</span></span>
+<span id="cb36-103"><a href="#cb36-103" aria-hidden="true" tabindex="-1"></a><span class="in">  } else if (nrow(eliminated) &gt; 1) {</span></span>
+<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a><span class="in">    results[k] &lt;- str_flatten(eliminated$showstopper, collapse = ", ")</span></span>
+<span id="cb36-105"><a href="#cb36-105" aria-hidden="true" tabindex="-1"></a><span class="in">  } else {</span></span>
+<span id="cb36-106"><a href="#cb36-106" aria-hidden="true" tabindex="-1"></a><span class="in">    results[k] &lt;- "none"</span></span>
+<span id="cb36-107"><a href="#cb36-107" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb36-108"><a href="#cb36-108" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-109"><a href="#cb36-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-110"><a href="#cb36-110" aria-hidden="true" tabindex="-1"></a><span class="in">results</span></span>
+<span id="cb36-111"><a href="#cb36-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-112"><a href="#cb36-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-113"><a href="#cb36-113" aria-hidden="true" tabindex="-1"></a>**Q1.** Before you ran the chunk, what did you think <span class="in">`results`</span> would look like? What does the <span class="in">`else`</span> branch handle?</span>
+<span id="cb36-114"><a href="#cb36-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-115"><a href="#cb36-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb36-116"><a href="#cb36-116" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb36-117"><a href="#cb36-117" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 1&lt;/div&gt;</span></span>
+<span id="cb36-118"><a href="#cb36-118" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;What is stored in &lt;code&gt;results[k]&lt;/code&gt;?&lt;/p&gt;</span></span>
+<span id="cb36-119"><a href="#cb36-119" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="The code doesn't count anything. Look at what is assigned to &lt;code&gt;results[k]&lt;/code&gt;: it's &lt;code&gt;eliminated$showstopper&lt;/code&gt;, not &lt;code&gt;nrow(eliminated)&lt;/code&gt;."&gt;A. The number of bakers eliminated in episode k&lt;/button&gt;</span></span>
+<span id="cb36-120"><a href="#cb36-120" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="It stores the showstopper dish(es) of whoever was eliminated in episode k, separated by commas if there is more than one, or &lt;code&gt;&amp;quot;none&amp;quot;&lt;/code&gt; if nobody was eliminated. &lt;code&gt;results&lt;/code&gt; was pre-allocated with &lt;code&gt;character(10)&lt;/code&gt;, one slot per episode."&gt;B. The showstopper dish(es) of the baker(s) eliminated in episode k, or "none"&lt;/button&gt;</span></span>
+<span id="cb36-121"><a href="#cb36-121" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="The code stores the &lt;code&gt;showstopper&lt;/code&gt; column (the dish), not the baker's name."&gt;C. The names of the bakers eliminated in episode k&lt;/button&gt;</span></span>
+<span id="cb36-122"><a href="#cb36-122" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb36-123"><a href="#cb36-123" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb36-124"><a href="#cb36-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-125"><a href="#cb36-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-126"><a href="#cb36-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recap: `across()`</span></span>
+<span id="cb36-127"><a href="#cb36-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-128"><a href="#cb36-128" aria-hidden="true" tabindex="-1"></a>Last time we saw that <span class="in">`across()`</span> lets us do loop-type tasks inside {dplyr} pipelines. Suppose we want the *range* of every numeric column and the *number of levels* of every factor column in <span class="in">`penguins`</span>. Here are both approaches. Run the chunk and check that they give the same answers.</span>
+<span id="cb36-129"><a href="#cb36-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-132"><a href="#cb36-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-133"><a href="#cb36-133" aria-hidden="true" tabindex="-1"></a><span class="in"># for loop</span></span>
+<span id="cb36-134"><a href="#cb36-134" aria-hidden="true" tabindex="-1"></a><span class="in">output &lt;- numeric(8)</span></span>
+<span id="cb36-135"><a href="#cb36-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-136"><a href="#cb36-136" aria-hidden="true" tabindex="-1"></a><span class="in">for (k in seq_along(penguins)) {</span></span>
+<span id="cb36-137"><a href="#cb36-137" aria-hidden="true" tabindex="-1"></a><span class="in">  if (is.numeric(penguins[[k]])) {</span></span>
+<span id="cb36-138"><a href="#cb36-138" aria-hidden="true" tabindex="-1"></a><span class="in">    output[k] &lt;- max(penguins[[k]], na.rm = TRUE) - min(penguins[[k]], na.rm = TRUE)</span></span>
+<span id="cb36-139"><a href="#cb36-139" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb36-140"><a href="#cb36-140" aria-hidden="true" tabindex="-1"></a><span class="in">  if (is.factor(penguins[[k]])) {</span></span>
+<span id="cb36-141"><a href="#cb36-141" aria-hidden="true" tabindex="-1"></a><span class="in">    output[k] &lt;- length(levels(penguins[[k]]))</span></span>
+<span id="cb36-142"><a href="#cb36-142" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb36-143"><a href="#cb36-143" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-144"><a href="#cb36-144" aria-hidden="true" tabindex="-1"></a><span class="in">output</span></span>
+<span id="cb36-145"><a href="#cb36-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-146"><a href="#cb36-146" aria-hidden="true" tabindex="-1"></a><span class="in"># across</span></span>
+<span id="cb36-147"><a href="#cb36-147" aria-hidden="true" tabindex="-1"></a><span class="in">penguins |&gt;</span></span>
+<span id="cb36-148"><a href="#cb36-148" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(</span></span>
+<span id="cb36-149"><a href="#cb36-149" aria-hidden="true" tabindex="-1"></a><span class="in">    across(where(is.numeric), \(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE)),</span></span>
+<span id="cb36-150"><a href="#cb36-150" aria-hidden="true" tabindex="-1"></a><span class="in">    across(where(is.factor), \(x) length(levels(x)))</span></span>
+<span id="cb36-151"><a href="#cb36-151" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb36-152"><a href="#cb36-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-153"><a href="#cb36-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-154"><a href="#cb36-154" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb36-155"><a href="#cb36-155" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb36-156"><a href="#cb36-156" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 2&lt;/div&gt;</span></span>
+<span id="cb36-157"><a href="#cb36-157" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;What is the limitation of &lt;code&gt;across()&lt;/code&gt;?&lt;/p&gt;</span></span>
+<span id="cb36-158"><a href="#cb36-158" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="&lt;code&gt;across()&lt;/code&gt; only works inside {dplyr} verbs like &lt;code&gt;mutate()&lt;/code&gt; and &lt;code&gt;summarize()&lt;/code&gt;. We'd like something more general-purpose: that's &lt;code&gt;map()&lt;/code&gt;."&gt;A. It only works inside {dplyr} functions like &lt;code&gt;mutate()&lt;/code&gt; and &lt;code&gt;summarize()&lt;/code&gt;&lt;/button&gt;</span></span>
+<span id="cb36-159"><a href="#cb36-159" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="It can: the example above uses &lt;code&gt;where(is.numeric)&lt;/code&gt; and &lt;code&gt;where(is.factor)&lt;/code&gt; to pick columns by type."&gt;B. It can't choose columns by their type&lt;/button&gt;</span></span>
+<span id="cb36-160"><a href="#cb36-160" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="It's usually faster to write and easier to read than a &lt;code&gt;for&lt;/code&gt; loop. The limitation is where you can use it."&gt;C. It's much slower than a &lt;code&gt;for&lt;/code&gt; loop&lt;/button&gt;</span></span>
+<span id="cb36-161"><a href="#cb36-161" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb36-162"><a href="#cb36-162" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb36-163"><a href="#cb36-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-164"><a href="#cb36-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-165"><a href="#cb36-165" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 2: `map()`</span></span>
+<span id="cb36-166"><a href="#cb36-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-167"><a href="#cb36-167" aria-hidden="true" tabindex="-1"></a>The purrr package (loaded with <span class="in">`library(tidyverse)`</span>) gives us <span class="in">`map()`</span>, which can replace many <span class="in">`for`</span> loops.</span>
+<span id="cb36-168"><a href="#cb36-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-169"><a href="#cb36-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`.x`</span>: what to iterate over</span>
+<span id="cb36-170"><a href="#cb36-170" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`.f`</span>: the function to apply to each element</span>
+<span id="cb36-171"><a href="#cb36-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-172"><a href="#cb36-172" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb36-173"><a href="#cb36-173" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(.x, .f, ...)</span>
+<span id="cb36-174"><a href="#cb36-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-175"><a href="#cb36-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-176"><a href="#cb36-176" aria-hidden="true" tabindex="-1"></a><span class="fu">## How does mapping work?</span></span>
+<span id="cb36-177"><a href="#cb36-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-178"><a href="#cb36-178" aria-hidden="true" tabindex="-1"></a>Suppose we have quiz 1 and quiz 2 scores for 4 students stored in a list, and we want the mean score on each quiz.</span>
+<span id="cb36-179"><a href="#cb36-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-182"><a href="#cb36-182" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-183"><a href="#cb36-183" aria-hidden="true" tabindex="-1"></a><span class="in">quiz_scores &lt;- list(</span></span>
+<span id="cb36-184"><a href="#cb36-184" aria-hidden="true" tabindex="-1"></a><span class="in">  quiz1 = c(80, 90, 70, 50),</span></span>
+<span id="cb36-185"><a href="#cb36-185" aria-hidden="true" tabindex="-1"></a><span class="in">  quiz2 = c(85, 83, 45, 60)</span></span>
+<span id="cb36-186"><a href="#cb36-186" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb36-187"><a href="#cb36-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-188"><a href="#cb36-188" aria-hidden="true" tabindex="-1"></a><span class="in">map(quiz_scores, mean)</span></span>
+<span id="cb36-189"><a href="#cb36-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-190"><a href="#cb36-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-191"><a href="#cb36-191" aria-hidden="true" tabindex="-1"></a><span class="in">`map()`</span> always returns a **list**. If we want the results as a numeric (double) vector instead, we use <span class="in">`map_dbl()`</span>:</span>
+<span id="cb36-192"><a href="#cb36-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-195"><a href="#cb36-195" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-196"><a href="#cb36-196" aria-hidden="true" tabindex="-1"></a><span class="in">map_dbl(quiz_scores, mean)</span></span>
+<span id="cb36-197"><a href="#cb36-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-198"><a href="#cb36-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-199"><a href="#cb36-199" aria-hidden="true" tabindex="-1"></a>What if we ask for a character vector? Run this one and read the error message.</span>
+<span id="cb36-200"><a href="#cb36-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-203"><a href="#cb36-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-204"><a href="#cb36-204" aria-hidden="true" tabindex="-1"></a><span class="in">map_chr(quiz_scores, mean)</span></span>
+<span id="cb36-205"><a href="#cb36-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-206"><a href="#cb36-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-207"><a href="#cb36-207" aria-hidden="true" tabindex="-1"></a>**Q2.** Why does <span class="in">`map_chr(quiz_scores, mean)`</span> fail?</span>
+<span id="cb36-208"><a href="#cb36-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-209"><a href="#cb36-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb36-210"><a href="#cb36-210" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb36-211"><a href="#cb36-211" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 3&lt;/div&gt;</span></span>
+<span id="cb36-212"><a href="#cb36-212" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;Which function would you use to get the mean of each quiz as a &lt;strong&gt;numeric vector&lt;/strong&gt;?&lt;/p&gt;</span></span>
+<span id="cb36-213"><a href="#cb36-213" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="&lt;code&gt;map()&lt;/code&gt; always returns a list."&gt;A. &lt;code&gt;map()&lt;/code&gt;&lt;/button&gt;</span></span>
+<span id="cb36-214"><a href="#cb36-214" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="&lt;code&gt;map_dbl()&lt;/code&gt; returns a double (numeric) vector. The part after &lt;code&gt;map_&lt;/code&gt; tells you the type of the output."&gt;B. &lt;code&gt;map_dbl()&lt;/code&gt;&lt;/button&gt;</span></span>
+<span id="cb36-215"><a href="#cb36-215" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="&lt;code&gt;map_chr()&lt;/code&gt; returns a character vector, and it fails here because the means are numbers."&gt;C. &lt;code&gt;map_chr()&lt;/code&gt;&lt;/button&gt;</span></span>
+<span id="cb36-216"><a href="#cb36-216" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="&lt;code&gt;map_lgl()&lt;/code&gt; returns TRUE/FALSE values."&gt;D. &lt;code&gt;map_lgl()&lt;/code&gt;&lt;/button&gt;</span></span>
+<span id="cb36-217"><a href="#cb36-217" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb36-218"><a href="#cb36-218" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb36-219"><a href="#cb36-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-220"><a href="#cb36-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-221"><a href="#cb36-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## The `map_*` family</span></span>
+<span id="cb36-222"><a href="#cb36-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-223"><a href="#cb36-223" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Returns <span class="pp">|</span></span>
+<span id="cb36-224"><a href="#cb36-224" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span></span>
+<span id="cb36-225"><a href="#cb36-225" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`map()`</span> <span class="pp">|</span> a list <span class="pp">|</span></span>
+<span id="cb36-226"><a href="#cb36-226" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`map_lgl()`</span> <span class="pp">|</span> a logical vector <span class="pp">|</span></span>
+<span id="cb36-227"><a href="#cb36-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`map_int()`</span> <span class="pp">|</span> an integer vector <span class="pp">|</span></span>
+<span id="cb36-228"><a href="#cb36-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`map_dbl()`</span> <span class="pp">|</span> a double (numeric) vector <span class="pp">|</span></span>
+<span id="cb36-229"><a href="#cb36-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`map_chr()`</span> <span class="pp">|</span> a character vector <span class="pp">|</span></span>
+<span id="cb36-230"><a href="#cb36-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`map_df()`</span> / <span class="in">`map_dfr()`</span> <span class="pp">|</span> a data frame (by row binding) <span class="pp">|</span></span>
+<span id="cb36-231"><a href="#cb36-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-232"><a href="#cb36-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your turn: `map`</span></span>
+<span id="cb36-233"><a href="#cb36-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-234"><a href="#cb36-234" aria-hidden="true" tabindex="-1"></a>**Exercise A.** Edit the code below so it (1) returns a numeric vector and (2) only maps over the numeric columns (columns 3 to 12) of <span class="in">`unscaled_cancer`</span>.</span>
+<span id="cb36-235"><a href="#cb36-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-238"><a href="#cb36-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-239"><a href="#cb36-239" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_map_cancer</span></span>
+<span id="cb36-240"><a href="#cb36-240" aria-hidden="true" tabindex="-1"></a><span class="in">map(unscaled_cancer, mean)</span></span>
+<span id="cb36-241"><a href="#cb36-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-242"><a href="#cb36-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-245"><a href="#cb36-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-246"><a href="#cb36-246" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_map_cancer</span></span>
+<span id="cb36-247"><a href="#cb36-247" aria-hidden="true" tabindex="-1"></a><span class="in">#| hint: true</span></span>
+<span id="cb36-248"><a href="#cb36-248" aria-hidden="true" tabindex="-1"></a><span class="in"># Two changes: use a different map_ function, and select columns 3 to 12</span></span>
+<span id="cb36-249"><a href="#cb36-249" aria-hidden="true" tabindex="-1"></a><span class="in"># with square brackets, like unscaled_cancer[, 3:12]</span></span>
+<span id="cb36-250"><a href="#cb36-250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-251"><a href="#cb36-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-254"><a href="#cb36-254" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-255"><a href="#cb36-255" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_map_cancer</span></span>
+<span id="cb36-256"><a href="#cb36-256" aria-hidden="true" tabindex="-1"></a><span class="in">#| solution: true</span></span>
+<span id="cb36-257"><a href="#cb36-257" aria-hidden="true" tabindex="-1"></a><span class="in">map_dbl(unscaled_cancer[, 3:12], mean)</span></span>
+<span id="cb36-258"><a href="#cb36-258" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-259"><a href="#cb36-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-260"><a href="#cb36-260" aria-hidden="true" tabindex="-1"></a>**Exercise B.** <span class="in">`map`</span> the <span class="in">`summary`</span> function to all of the columns in <span class="in">`penguins`</span>.</span>
+<span id="cb36-261"><a href="#cb36-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-264"><a href="#cb36-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-265"><a href="#cb36-265" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_map_summary</span></span>
+<span id="cb36-266"><a href="#cb36-266" aria-hidden="true" tabindex="-1"></a><span class="in"># your code here</span></span>
+<span id="cb36-267"><a href="#cb36-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-268"><a href="#cb36-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-271"><a href="#cb36-271" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-272"><a href="#cb36-272" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_map_summary</span></span>
+<span id="cb36-273"><a href="#cb36-273" aria-hidden="true" tabindex="-1"></a><span class="in">#| solution: true</span></span>
+<span id="cb36-274"><a href="#cb36-274" aria-hidden="true" tabindex="-1"></a><span class="in">map(penguins, summary)</span></span>
+<span id="cb36-275"><a href="#cb36-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-276"><a href="#cb36-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-277"><a href="#cb36-277" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 3: A `map` example with the bakeoff data</span></span>
+<span id="cb36-278"><a href="#cb36-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-279"><a href="#cb36-279" aria-hidden="true" tabindex="-1"></a>Back to the warm up. Here's the same task done three ways. The function <span class="in">`eliminated_showstopper()`</span> does the work for a single episode.</span>
+<span id="cb36-280"><a href="#cb36-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-283"><a href="#cb36-283" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-284"><a href="#cb36-284" aria-hidden="true" tabindex="-1"></a><span class="in">eliminated_showstopper &lt;- function(ep_number) {</span></span>
+<span id="cb36-285"><a href="#cb36-285" aria-hidden="true" tabindex="-1"></a><span class="in">  bakeoff |&gt;</span></span>
+<span id="cb36-286"><a href="#cb36-286" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(episode == ep_number, str_detect(result, "Eliminated")) |&gt;</span></span>
+<span id="cb36-287"><a href="#cb36-287" aria-hidden="true" tabindex="-1"></a><span class="in">    summarize(</span></span>
+<span id="cb36-288"><a href="#cb36-288" aria-hidden="true" tabindex="-1"></a><span class="in">      n = n(),</span></span>
+<span id="cb36-289"><a href="#cb36-289" aria-hidden="true" tabindex="-1"></a><span class="in">      showstopper = if_else(n &gt; 0, str_flatten(showstopper, collapse = ","), "none")</span></span>
+<span id="cb36-290"><a href="#cb36-290" aria-hidden="true" tabindex="-1"></a><span class="in">    ) |&gt;</span></span>
+<span id="cb36-291"><a href="#cb36-291" aria-hidden="true" tabindex="-1"></a><span class="in">    pull(showstopper)</span></span>
+<span id="cb36-292"><a href="#cb36-292" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-293"><a href="#cb36-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-294"><a href="#cb36-294" aria-hidden="true" tabindex="-1"></a><span class="in"># for loop + function</span></span>
+<span id="cb36-295"><a href="#cb36-295" aria-hidden="true" tabindex="-1"></a><span class="in">results_loop &lt;- character(10)</span></span>
+<span id="cb36-296"><a href="#cb36-296" aria-hidden="true" tabindex="-1"></a><span class="in">for (k in 1:10) {</span></span>
+<span id="cb36-297"><a href="#cb36-297" aria-hidden="true" tabindex="-1"></a><span class="in">  results_loop[k] &lt;- eliminated_showstopper(k)</span></span>
+<span id="cb36-298"><a href="#cb36-298" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-299"><a href="#cb36-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-300"><a href="#cb36-300" aria-hidden="true" tabindex="-1"></a><span class="in"># map + function</span></span>
+<span id="cb36-301"><a href="#cb36-301" aria-hidden="true" tabindex="-1"></a><span class="in">results_map &lt;- map_chr(1:10, eliminated_showstopper)</span></span>
+<span id="cb36-302"><a href="#cb36-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-303"><a href="#cb36-303" aria-hidden="true" tabindex="-1"></a><span class="in">results_map</span></span>
+<span id="cb36-304"><a href="#cb36-304" aria-hidden="true" tabindex="-1"></a><span class="in">identical(results_loop, results_map)</span></span>
+<span id="cb36-305"><a href="#cb36-305" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-306"><a href="#cb36-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-307"><a href="#cb36-307" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb36-308"><a href="#cb36-308" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb36-309"><a href="#cb36-309" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 4&lt;/div&gt;</span></span>
+<span id="cb36-310"><a href="#cb36-310" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;Compared to the &lt;code&gt;for&lt;/code&gt; loop, what did we &lt;em&gt;not&lt;/em&gt; have to do with &lt;code&gt;map_chr()&lt;/code&gt;?&lt;/p&gt;</span></span>
+<span id="cb36-311"><a href="#cb36-311" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="With &lt;code&gt;map&lt;/code&gt; there's no pre-allocated storage (&lt;code&gt;character(10)&lt;/code&gt;) and no index variable (&lt;code&gt;k&lt;/code&gt;). Fewer moving parts means fewer places to make mistakes."&gt;A. Pre-allocate storage and define an index&lt;/button&gt;</span></span>
+<span id="cb36-312"><a href="#cb36-312" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="We still needed the function. A common cost of &lt;code&gt;map&lt;/code&gt; is that you often have to write a function first."&gt;B. Write a function&lt;/button&gt;</span></span>
+<span id="cb36-313"><a href="#cb36-313" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="We still chose the output type: &lt;code&gt;map_chr()&lt;/code&gt; is the character version."&gt;C. Decide what type of output we want&lt;/button&gt;</span></span>
+<span id="cb36-314"><a href="#cb36-314" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb36-315"><a href="#cb36-315" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb36-316"><a href="#cb36-316" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-317"><a href="#cb36-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-318"><a href="#cb36-318" aria-hidden="true" tabindex="-1"></a><span class="fu">## `map` vs. `for` loops</span></span>
+<span id="cb36-319"><a href="#cb36-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-320"><a href="#cb36-320" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`map`</span> pros <span class="pp">|</span> <span class="in">`map`</span> cons <span class="pp">|</span></span>
+<span id="cb36-321"><a href="#cb36-321" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span></span>
+<span id="cb36-322"><a href="#cb36-322" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Don't have to pre-allocate storage <span class="pp">|</span> Hard to get used to if you learned <span class="in">`for`</span> loops first <span class="pp">|</span></span>
+<span id="cb36-323"><a href="#cb36-323" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Don't have to define an index <span class="pp">|</span> Often need to define a function <span class="pp">|</span></span>
+<span id="cb36-324"><a href="#cb36-324" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Less error-prone <span class="pp">|</span> Less fine-grained control <span class="pp">|</span></span>
+<span id="cb36-325"><a href="#cb36-325" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Takes advantage of functional programming <span class="pp">|</span> <span class="pp">|</span></span>
+<span id="cb36-326"><a href="#cb36-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-327"><a href="#cb36-327" aria-hidden="true" tabindex="-1"></a>For this class, you'll learn the basics of both and practice them on homework. For projects, you can use whichever approach makes more sense to you.</span>
+<span id="cb36-328"><a href="#cb36-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-329"><a href="#cb36-329" aria-hidden="true" tabindex="-1"></a>**Q3.** In Portfolio 2, you'll read in a different CSV file for each year of data. Would you use a <span class="in">`for`</span> loop or <span class="in">`map`</span> for that, and why? (There's no wrong answer, but give a reason!)</span>
+<span id="cb36-330"><a href="#cb36-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-331"><a href="#cb36-331" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 4: More practice with `map`</span></span>
+<span id="cb36-332"><a href="#cb36-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-333"><a href="#cb36-333" aria-hidden="true" tabindex="-1"></a><span class="fu">## `penguins` and a custom function</span></span>
+<span id="cb36-334"><a href="#cb36-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-335"><a href="#cb36-335" aria-hidden="true" tabindex="-1"></a>**Exercise C.** Using the <span class="in">`penguins`</span> data, use <span class="in">`map`</span> to calculate the range of every numeric variable and the <span class="in">`table`</span> of every factor variable. Your result should be a list of length 8.</span>
+<span id="cb36-336"><a href="#cb36-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-337"><a href="#cb36-337" aria-hidden="true" tabindex="-1"></a>It may help to first write a custom function that does the right thing depending on the type of the input. (Remember <span class="in">`is.numeric()`</span> and <span class="in">`is.factor()`</span> from earlier.)</span>
+<span id="cb36-338"><a href="#cb36-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-341"><a href="#cb36-341" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-342"><a href="#cb36-342" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_penguins</span></span>
+<span id="cb36-343"><a href="#cb36-343" aria-hidden="true" tabindex="-1"></a><span class="in">summarize_depends &lt;- function(x) {</span></span>
+<span id="cb36-344"><a href="#cb36-344" aria-hidden="true" tabindex="-1"></a><span class="in">  # your code here</span></span>
+<span id="cb36-345"><a href="#cb36-345" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-346"><a href="#cb36-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-347"><a href="#cb36-347" aria-hidden="true" tabindex="-1"></a><span class="in">map(penguins, summarize_depends)</span></span>
+<span id="cb36-348"><a href="#cb36-348" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-349"><a href="#cb36-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-352"><a href="#cb36-352" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-353"><a href="#cb36-353" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_penguins</span></span>
+<span id="cb36-354"><a href="#cb36-354" aria-hidden="true" tabindex="-1"></a><span class="in">#| hint: true</span></span>
+<span id="cb36-355"><a href="#cb36-355" aria-hidden="true" tabindex="-1"></a><span class="in"># Inside the function: if x is numeric, return max(x, na.rm = TRUE) - min(x, na.rm = TRUE).</span></span>
+<span id="cb36-356"><a href="#cb36-356" aria-hidden="true" tabindex="-1"></a><span class="in"># If x is a factor, return table(x). Use two if() statements with return().</span></span>
+<span id="cb36-357"><a href="#cb36-357" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-358"><a href="#cb36-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-361"><a href="#cb36-361" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-362"><a href="#cb36-362" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_penguins</span></span>
+<span id="cb36-363"><a href="#cb36-363" aria-hidden="true" tabindex="-1"></a><span class="in">#| solution: true</span></span>
+<span id="cb36-364"><a href="#cb36-364" aria-hidden="true" tabindex="-1"></a><span class="in">summarize_depends &lt;- function(x) {</span></span>
+<span id="cb36-365"><a href="#cb36-365" aria-hidden="true" tabindex="-1"></a><span class="in">  if (is.numeric(x)) return(max(x, na.rm = TRUE) - min(x, na.rm = TRUE))</span></span>
+<span id="cb36-366"><a href="#cb36-366" aria-hidden="true" tabindex="-1"></a><span class="in">  if (is.factor(x)) return(table(x))</span></span>
+<span id="cb36-367"><a href="#cb36-367" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-368"><a href="#cb36-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-369"><a href="#cb36-369" aria-hidden="true" tabindex="-1"></a><span class="in">map(penguins, summarize_depends)</span></span>
+<span id="cb36-370"><a href="#cb36-370" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-371"><a href="#cb36-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-372"><a href="#cb36-372" aria-hidden="true" tabindex="-1"></a><span class="fu">## Survivor data</span></span>
+<span id="cb36-373"><a href="#cb36-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-374"><a href="#cb36-374" aria-hidden="true" tabindex="-1"></a>Here are the first few rows of <span class="in">`us_castaway_results`</span>, which has one row per player per season.</span>
+<span id="cb36-375"><a href="#cb36-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-378"><a href="#cb36-378" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-379"><a href="#cb36-379" aria-hidden="true" tabindex="-1"></a><span class="in">head(us_castaway_results)</span></span>
+<span id="cb36-380"><a href="#cb36-380" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-381"><a href="#cb36-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-382"><a href="#cb36-382" aria-hidden="true" tabindex="-1"></a>**Exercise D.**</span>
+<span id="cb36-383"><a href="#cb36-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-384"><a href="#cb36-384" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Write a function called <span class="in">`finalists`</span> that takes a season number (as a number) and returns a single string with the names of that season's finalists, separated by commas.</span>
+<span id="cb36-385"><a href="#cb36-385" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Use <span class="in">`map_chr()`</span> to return a character vector of the finalists for seasons 31 to 40.</span>
+<span id="cb36-386"><a href="#cb36-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-389"><a href="#cb36-389" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-390"><a href="#cb36-390" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_finalists</span></span>
+<span id="cb36-391"><a href="#cb36-391" aria-hidden="true" tabindex="-1"></a><span class="in">finalists &lt;- function(season_number) {</span></span>
+<span id="cb36-392"><a href="#cb36-392" aria-hidden="true" tabindex="-1"></a><span class="in">  # your code here</span></span>
+<span id="cb36-393"><a href="#cb36-393" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-394"><a href="#cb36-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-395"><a href="#cb36-395" aria-hidden="true" tabindex="-1"></a><span class="in">map_chr(31:40, finalists)</span></span>
+<span id="cb36-396"><a href="#cb36-396" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-397"><a href="#cb36-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-400"><a href="#cb36-400" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-401"><a href="#cb36-401" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_finalists</span></span>
+<span id="cb36-402"><a href="#cb36-402" aria-hidden="true" tabindex="-1"></a><span class="in">#| hint: true</span></span>
+<span id="cb36-403"><a href="#cb36-403" aria-hidden="true" tabindex="-1"></a><span class="in"># Inside the function: filter() to the right season (season == season_number) and to</span></span>
+<span id="cb36-404"><a href="#cb36-404" aria-hidden="true" tabindex="-1"></a><span class="in"># players with finalist == TRUE, then pull() the castaway column. To combine several</span></span>
+<span id="cb36-405"><a href="#cb36-405" aria-hidden="true" tabindex="-1"></a><span class="in"># names into one string, use str_c(..., collapse = ", ").</span></span>
+<span id="cb36-406"><a href="#cb36-406" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-407"><a href="#cb36-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-410"><a href="#cb36-410" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-411"><a href="#cb36-411" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_finalists</span></span>
+<span id="cb36-412"><a href="#cb36-412" aria-hidden="true" tabindex="-1"></a><span class="in">#| solution: true</span></span>
+<span id="cb36-413"><a href="#cb36-413" aria-hidden="true" tabindex="-1"></a><span class="in">finalists &lt;- function(season_number) {</span></span>
+<span id="cb36-414"><a href="#cb36-414" aria-hidden="true" tabindex="-1"></a><span class="in">  us_castaway_results |&gt;</span></span>
+<span id="cb36-415"><a href="#cb36-415" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(season == season_number, finalist) |&gt;</span></span>
+<span id="cb36-416"><a href="#cb36-416" aria-hidden="true" tabindex="-1"></a><span class="in">    pull(castaway) |&gt;</span></span>
+<span id="cb36-417"><a href="#cb36-417" aria-hidden="true" tabindex="-1"></a><span class="in">    str_c(collapse = ", ")</span></span>
+<span id="cb36-418"><a href="#cb36-418" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-419"><a href="#cb36-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-420"><a href="#cb36-420" aria-hidden="true" tabindex="-1"></a><span class="in">map_chr(31:40, finalists)</span></span>
+<span id="cb36-421"><a href="#cb36-421" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-422"><a href="#cb36-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-423"><a href="#cb36-423" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 5: Simulation</span></span>
+<span id="cb36-424"><a href="#cb36-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-425"><a href="#cb36-425" aria-hidden="true" tabindex="-1"></a>Iteration is especially useful for **simulation**. In statistics we often work with a random sample to learn about a population, and we care about the *uncertainty* in our results: did we find a real trend, or could it be due to sampling variability?</span>
+<span id="cb36-426"><a href="#cb36-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-427"><a href="#cb36-427" aria-hidden="true" tabindex="-1"></a><span class="fu">## Example: Survivor finalists</span></span>
+<span id="cb36-428"><a href="#cb36-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-429"><a href="#cb36-429" aria-hidden="true" tabindex="-1"></a>If we randomly choose 20 previous Survivor players to play on a new season, how likely are we to get zero finalists? First, here's one random sample of 20 players. Run it a few times:</span>
+<span id="cb36-430"><a href="#cb36-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-433"><a href="#cb36-433" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-434"><a href="#cb36-434" aria-hidden="true" tabindex="-1"></a><span class="in">us_castaway_results |&gt;</span></span>
+<span id="cb36-435"><a href="#cb36-435" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_sample(n = 20) |&gt;</span></span>
+<span id="cb36-436"><a href="#cb36-436" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(finalist) |&gt;</span></span>
+<span id="cb36-437"><a href="#cb36-437" aria-hidden="true" tabindex="-1"></a><span class="in">  count()</span></span>
+<span id="cb36-438"><a href="#cb36-438" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-439"><a href="#cb36-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-440"><a href="#cb36-440" aria-hidden="true" tabindex="-1"></a>You get a different answer each time, because the sampling is random. To make results **reproducible**, we can set a seed. Run this chunk several times:</span>
+<span id="cb36-441"><a href="#cb36-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-444"><a href="#cb36-444" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-445"><a href="#cb36-445" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(0217)</span></span>
+<span id="cb36-446"><a href="#cb36-446" aria-hidden="true" tabindex="-1"></a><span class="in">us_castaway_results |&gt;</span></span>
+<span id="cb36-447"><a href="#cb36-447" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_sample(n = 20) |&gt;</span></span>
+<span id="cb36-448"><a href="#cb36-448" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(finalist) |&gt;</span></span>
+<span id="cb36-449"><a href="#cb36-449" aria-hidden="true" tabindex="-1"></a><span class="in">  count()</span></span>
+<span id="cb36-450"><a href="#cb36-450" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-451"><a href="#cb36-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-452"><a href="#cb36-452" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb36-453"><a href="#cb36-453" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb36-454"><a href="#cb36-454" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 5&lt;/div&gt;</span></span>
+<span id="cb36-455"><a href="#cb36-455" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;What does &lt;code&gt;set.seed(0217)&lt;/code&gt; do?&lt;/p&gt;</span></span>
+<span id="cb36-456"><a href="#cb36-456" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="The sample is still random. The seed just fixes &lt;em&gt;where the random number generator starts&lt;/em&gt;."&gt;A. It makes the sample less random&lt;/button&gt;</span></span>
+<span id="cb36-457"><a href="#cb36-457" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="Anything &amp;quot;random&amp;quot; in R relies on a pseudo-random number generator. Setting the seed starts it at the same value, so you (and anyone else) get the same results every time."&gt;B. It makes the random number generator start at the same value, so the results are reproducible&lt;/button&gt;</span></span>
+<span id="cb36-458"><a href="#cb36-458" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="It has nothing to do with the size of the sample. That's &lt;code&gt;n = 20&lt;/code&gt; in &lt;code&gt;slice_sample()&lt;/code&gt;."&gt;C. It sets the number of players in the sample&lt;/button&gt;</span></span>
+<span id="cb36-459"><a href="#cb36-459" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb36-460"><a href="#cb36-460" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb36-461"><a href="#cb36-461" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-462"><a href="#cb36-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-463"><a href="#cb36-463" aria-hidden="true" tabindex="-1"></a><span class="fu">## The plan</span></span>
+<span id="cb36-464"><a href="#cb36-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-465"><a href="#cb36-465" aria-hidden="true" tabindex="-1"></a>A single sample doesn't tell us much. We'll:</span>
+<span id="cb36-466"><a href="#cb36-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-467"><a href="#cb36-467" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Write a **function** that runs our "experiment"</span>
+<span id="cb36-468"><a href="#cb36-468" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Set up an **iteration** procedure to run our experiment a bunch of times</span>
+<span id="cb36-469"><a href="#cb36-469" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Analyze** the results</span>
+<span id="cb36-470"><a href="#cb36-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-471"><a href="#cb36-471" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1: a function that runs the experiment</span></span>
+<span id="cb36-472"><a href="#cb36-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-475"><a href="#cb36-475" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-476"><a href="#cb36-476" aria-hidden="true" tabindex="-1"></a><span class="in">sample_finalists &lt;- function(n) {</span></span>
+<span id="cb36-477"><a href="#cb36-477" aria-hidden="true" tabindex="-1"></a><span class="in">  us_castaway_results |&gt;</span></span>
+<span id="cb36-478"><a href="#cb36-478" aria-hidden="true" tabindex="-1"></a><span class="in">    slice_sample(n = n) |&gt;</span></span>
+<span id="cb36-479"><a href="#cb36-479" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(finalist) |&gt;</span></span>
+<span id="cb36-480"><a href="#cb36-480" aria-hidden="true" tabindex="-1"></a><span class="in">    count() |&gt;</span></span>
+<span id="cb36-481"><a href="#cb36-481" aria-hidden="true" tabindex="-1"></a><span class="in">    pull(n)</span></span>
+<span id="cb36-482"><a href="#cb36-482" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-483"><a href="#cb36-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-484"><a href="#cb36-484" aria-hidden="true" tabindex="-1"></a><span class="in">sample_finalists(20)</span></span>
+<span id="cb36-485"><a href="#cb36-485" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-486"><a href="#cb36-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-487"><a href="#cb36-487" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2: iterate with a `for` loop</span></span>
+<span id="cb36-488"><a href="#cb36-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-489"><a href="#cb36-489" aria-hidden="true" tabindex="-1"></a>Now we run the experiment 1,000 times. (This takes a few seconds in your browser.)</span>
+<span id="cb36-490"><a href="#cb36-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-493"><a href="#cb36-493" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-494"><a href="#cb36-494" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(0217)</span></span>
+<span id="cb36-495"><a href="#cb36-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-496"><a href="#cb36-496" aria-hidden="true" tabindex="-1"></a><span class="in">n_finalists &lt;- integer(1000)</span></span>
+<span id="cb36-497"><a href="#cb36-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-498"><a href="#cb36-498" aria-hidden="true" tabindex="-1"></a><span class="in">for (k in 1:1000) {</span></span>
+<span id="cb36-499"><a href="#cb36-499" aria-hidden="true" tabindex="-1"></a><span class="in">  n_finalists[k] &lt;- sample_finalists(20)</span></span>
+<span id="cb36-500"><a href="#cb36-500" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-501"><a href="#cb36-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-502"><a href="#cb36-502" aria-hidden="true" tabindex="-1"></a><span class="in">table(n_finalists) / 1000</span></span>
+<span id="cb36-503"><a href="#cb36-503" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-504"><a href="#cb36-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-505"><a href="#cb36-505" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb36-506"><a href="#cb36-506" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb36-507"><a href="#cb36-507" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 6&lt;/div&gt;</span></span>
+<span id="cb36-508"><a href="#cb36-508" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;About 14.5% of the players (126 out of 870) were finalists. About how many finalists would you &lt;em&gt;expect&lt;/em&gt; in a random sample of 20 players? (Compare with your table above!)&lt;/p&gt;</span></span>
+<span id="cb36-509"><a href="#cb36-509" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="That would be a sample with 45% finalists. The expected number is 20 &amp;times; (126/870) &amp;asymp; 2.9."&gt;A. About 9&lt;/button&gt;</span></span>
+<span id="cb36-510"><a href="#cb36-510" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="20 &amp;times; (126/870) &amp;asymp; 2.9. The most common values in your table should be around 2 and 3."&gt;B. About 3&lt;/button&gt;</span></span>
+<span id="cb36-511"><a href="#cb36-511" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="That's the probability of &lt;em&gt;no&lt;/em&gt; finalists, not the expected number. In this simulation it's small (around 4%)."&gt;C. About 0&lt;/button&gt;</span></span>
+<span id="cb36-512"><a href="#cb36-512" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb36-513"><a href="#cb36-513" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb36-514"><a href="#cb36-514" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-515"><a href="#cb36-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-516"><a href="#cb36-516" aria-hidden="true" tabindex="-1"></a>**Q4.** According to your simulation, about how likely is it to get zero finalists in a random sample of 20 players? (Look at the <span class="in">`0`</span> column of your table.)</span>
+<span id="cb36-517"><a href="#cb36-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-518"><a href="#cb36-518" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2 again: iterate with `map`</span></span>
+<span id="cb36-519"><a href="#cb36-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-520"><a href="#cb36-520" aria-hidden="true" tabindex="-1"></a>The same simulation with <span class="in">`map_dbl()`</span>. We need something to map over: here, 1,000 copies of the number 20.</span>
+<span id="cb36-521"><a href="#cb36-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-524"><a href="#cb36-524" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-525"><a href="#cb36-525" aria-hidden="true" tabindex="-1"></a><span class="in">rep(20, 5)</span></span>
+<span id="cb36-526"><a href="#cb36-526" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-527"><a href="#cb36-527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-530"><a href="#cb36-530" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-531"><a href="#cb36-531" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(0217)</span></span>
+<span id="cb36-532"><a href="#cb36-532" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-533"><a href="#cb36-533" aria-hidden="true" tabindex="-1"></a><span class="in">rep(20, 1000) |&gt;</span></span>
+<span id="cb36-534"><a href="#cb36-534" aria-hidden="true" tabindex="-1"></a><span class="in">  map_dbl(sample_finalists) |&gt;</span></span>
+<span id="cb36-535"><a href="#cb36-535" aria-hidden="true" tabindex="-1"></a><span class="in">  table()</span></span>
+<span id="cb36-536"><a href="#cb36-536" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-537"><a href="#cb36-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-538"><a href="#cb36-538" aria-hidden="true" tabindex="-1"></a>Each element of <span class="in">`rep(20, 1000)`</span> is passed to <span class="in">`sample_finalists()`</span> as <span class="in">`n`</span>, so the function runs 1,000 times with <span class="in">`n = 20`</span>.</span>
+<span id="cb36-539"><a href="#cb36-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-540"><a href="#cb36-540" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your turn: sample one player per season</span></span>
+<span id="cb36-541"><a href="#cb36-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-542"><a href="#cb36-542" aria-hidden="true" tabindex="-1"></a>Some Survivor seasons only had 16 players, while others had 22. That could mean some seasons are slightly under- or over-represented in our sample.</span>
+<span id="cb36-543"><a href="#cb36-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-544"><a href="#cb36-544" aria-hidden="true" tabindex="-1"></a>**Exercise E.** Edit the experiment to instead randomly sample **one** player from each season (this gives 47 players), and then sample 20 players from those 47. Then run it 1,000 times with <span class="in">`map_dbl()`</span> and look at the results.</span>
+<span id="cb36-545"><a href="#cb36-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-546"><a href="#cb36-546" aria-hidden="true" tabindex="-1"></a>*Hint:* look at the <span class="in">`by`</span> argument in <span class="in">`slice_sample()`</span>.</span>
+<span id="cb36-547"><a href="#cb36-547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-550"><a href="#cb36-550" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-551"><a href="#cb36-551" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_sim2</span></span>
+<span id="cb36-552"><a href="#cb36-552" aria-hidden="true" tabindex="-1"></a><span class="in">sample_finalists_2 &lt;- function(n) {</span></span>
+<span id="cb36-553"><a href="#cb36-553" aria-hidden="true" tabindex="-1"></a><span class="in">  us_castaway_results |&gt;</span></span>
+<span id="cb36-554"><a href="#cb36-554" aria-hidden="true" tabindex="-1"></a><span class="in">    slice_sample(n = n) |&gt;</span></span>
+<span id="cb36-555"><a href="#cb36-555" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(finalist) |&gt;</span></span>
+<span id="cb36-556"><a href="#cb36-556" aria-hidden="true" tabindex="-1"></a><span class="in">    count() |&gt;</span></span>
+<span id="cb36-557"><a href="#cb36-557" aria-hidden="true" tabindex="-1"></a><span class="in">    pull(n)</span></span>
+<span id="cb36-558"><a href="#cb36-558" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-559"><a href="#cb36-559" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-560"><a href="#cb36-560" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(0217)</span></span>
+<span id="cb36-561"><a href="#cb36-561" aria-hidden="true" tabindex="-1"></a><span class="in">rep(20, 1000) |&gt;</span></span>
+<span id="cb36-562"><a href="#cb36-562" aria-hidden="true" tabindex="-1"></a><span class="in">  map_dbl(sample_finalists_2) |&gt;</span></span>
+<span id="cb36-563"><a href="#cb36-563" aria-hidden="true" tabindex="-1"></a><span class="in">  table() / 1000</span></span>
+<span id="cb36-564"><a href="#cb36-564" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-565"><a href="#cb36-565" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-568"><a href="#cb36-568" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-569"><a href="#cb36-569" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_sim2</span></span>
+<span id="cb36-570"><a href="#cb36-570" aria-hidden="true" tabindex="-1"></a><span class="in">#| hint: true</span></span>
+<span id="cb36-571"><a href="#cb36-571" aria-hidden="true" tabindex="-1"></a><span class="in"># Replace the first slice_sample() with slice_sample(n = 1, by = season),</span></span>
+<span id="cb36-572"><a href="#cb36-572" aria-hidden="true" tabindex="-1"></a><span class="in"># then add a second slice_sample(n = n) for the 20 players.</span></span>
+<span id="cb36-573"><a href="#cb36-573" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-574"><a href="#cb36-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-577"><a href="#cb36-577" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-578"><a href="#cb36-578" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_sim2</span></span>
+<span id="cb36-579"><a href="#cb36-579" aria-hidden="true" tabindex="-1"></a><span class="in">#| solution: true</span></span>
+<span id="cb36-580"><a href="#cb36-580" aria-hidden="true" tabindex="-1"></a><span class="in">sample_finalists_2 &lt;- function(n) {</span></span>
+<span id="cb36-581"><a href="#cb36-581" aria-hidden="true" tabindex="-1"></a><span class="in">  us_castaway_results |&gt;</span></span>
+<span id="cb36-582"><a href="#cb36-582" aria-hidden="true" tabindex="-1"></a><span class="in">    slice_sample(n = 1, by = season) |&gt;</span></span>
+<span id="cb36-583"><a href="#cb36-583" aria-hidden="true" tabindex="-1"></a><span class="in">    slice_sample(n = n) |&gt;</span></span>
+<span id="cb36-584"><a href="#cb36-584" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(finalist) |&gt;</span></span>
+<span id="cb36-585"><a href="#cb36-585" aria-hidden="true" tabindex="-1"></a><span class="in">    count() |&gt;</span></span>
+<span id="cb36-586"><a href="#cb36-586" aria-hidden="true" tabindex="-1"></a><span class="in">    pull(n)</span></span>
+<span id="cb36-587"><a href="#cb36-587" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-588"><a href="#cb36-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-589"><a href="#cb36-589" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(0217)</span></span>
+<span id="cb36-590"><a href="#cb36-590" aria-hidden="true" tabindex="-1"></a><span class="in">rep(20, 1000) |&gt;</span></span>
+<span id="cb36-591"><a href="#cb36-591" aria-hidden="true" tabindex="-1"></a><span class="in">  map_dbl(sample_finalists_2) |&gt;</span></span>
+<span id="cb36-592"><a href="#cb36-592" aria-hidden="true" tabindex="-1"></a><span class="in">  table() / 1000</span></span>
+<span id="cb36-593"><a href="#cb36-593" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-594"><a href="#cb36-594" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-595"><a href="#cb36-595" aria-hidden="true" tabindex="-1"></a>**Q5.** Why is sampling one player per season first a good idea? Did the results change much?</span>
+<span id="cb36-596"><a href="#cb36-596" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-597"><a href="#cb36-597" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 6: A permutation test</span></span>
+<span id="cb36-598"><a href="#cb36-598" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-599"><a href="#cb36-599" aria-hidden="true" tabindex="-1"></a>Recall the <span class="in">`unscaled_cancer`</span> data. One question we might ask: is the radius of malignant tumors noticeably different from the radius of benign tumors?</span>
+<span id="cb36-600"><a href="#cb36-600" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-603"><a href="#cb36-603" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-604"><a href="#cb36-604" aria-hidden="true" tabindex="-1"></a><span class="in">unscaled_cancer |&gt;</span></span>
+<span id="cb36-605"><a href="#cb36-605" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(Class) |&gt;</span></span>
+<span id="cb36-606"><a href="#cb36-606" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(mean = mean(Radius))</span></span>
+<span id="cb36-607"><a href="#cb36-607" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-608"><a href="#cb36-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-609"><a href="#cb36-609" aria-hidden="true" tabindex="-1"></a>This tells us the average difference *in this sample*, but we don't know whether that difference is "surprising."</span>
+<span id="cb36-610"><a href="#cb36-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-611"><a href="#cb36-611" aria-hidden="true" tabindex="-1"></a><span class="fu">## The idea</span></span>
+<span id="cb36-612"><a href="#cb36-612" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-613"><a href="#cb36-613" aria-hidden="true" tabindex="-1"></a>A **permutation test** asks: if there were *no* difference between the groups, how big of a difference would we see just by chance?</span>
+<span id="cb36-614"><a href="#cb36-614" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-615"><a href="#cb36-615" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Assume there is no difference between the groups</span>
+<span id="cb36-616"><a href="#cb36-616" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Shuffle the group labels (benign/malignant) at random</span>
+<span id="cb36-617"><a href="#cb36-617" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Compute the difference in the group means</span>
+<span id="cb36-618"><a href="#cb36-618" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Repeat a bunch of times</span>
+<span id="cb36-619"><a href="#cb36-619" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Compare the observed difference to the distribution of simulated differences</span>
+<span id="cb36-620"><a href="#cb36-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-621"><a href="#cb36-621" aria-hidden="true" tabindex="-1"></a>If the observed difference is much bigger than the simulated differences, we have evidence of a statistically significant result.</span>
+<span id="cb36-622"><a href="#cb36-622" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-625"><a href="#cb36-625" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-626"><a href="#cb36-626" aria-hidden="true" tabindex="-1"></a><span class="in"># The observed difference (malignant minus benign)</span></span>
+<span id="cb36-627"><a href="#cb36-627" aria-hidden="true" tabindex="-1"></a><span class="in">observed &lt;- mean(unscaled_cancer$Radius[unscaled_cancer$Class == "M"]) - mean(unscaled_cancer$Radius[unscaled_cancer$Class == "B"])</span></span>
+<span id="cb36-628"><a href="#cb36-628" aria-hidden="true" tabindex="-1"></a><span class="in">observed</span></span>
+<span id="cb36-629"><a href="#cb36-629" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-630"><a href="#cb36-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-631"><a href="#cb36-631" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your turn: run the experiment</span></span>
+<span id="cb36-632"><a href="#cb36-632" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-633"><a href="#cb36-633" aria-hidden="true" tabindex="-1"></a>**Exercise F.** Finish the function below. It should (1) create a new column <span class="in">`class_shuffled`</span> that is a random permutation of <span class="in">`Class`</span> (*hint:* see the <span class="in">`sample()`</span> function), (2) group by <span class="in">`class_shuffled`</span> and compute the group means, and (3) return the difference in the means. Right now <span class="in">`class_shuffled`</span> is just a copy of <span class="in">`Class`</span>, so the function returns the observed difference. Edit that line so the labels are shuffled.</span>
+<span id="cb36-634"><a href="#cb36-634" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-637"><a href="#cb36-637" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-638"><a href="#cb36-638" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_perm</span></span>
+<span id="cb36-639"><a href="#cb36-639" aria-hidden="true" tabindex="-1"></a><span class="in">permute_diff &lt;- function() {</span></span>
+<span id="cb36-640"><a href="#cb36-640" aria-hidden="true" tabindex="-1"></a><span class="in">  unscaled_cancer |&gt;</span></span>
+<span id="cb36-641"><a href="#cb36-641" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(class_shuffled = Class) |&gt;   # edit this line</span></span>
+<span id="cb36-642"><a href="#cb36-642" aria-hidden="true" tabindex="-1"></a><span class="in">    group_by(class_shuffled) |&gt;</span></span>
+<span id="cb36-643"><a href="#cb36-643" aria-hidden="true" tabindex="-1"></a><span class="in">    summarize(mean = mean(Radius)) |&gt;</span></span>
+<span id="cb36-644"><a href="#cb36-644" aria-hidden="true" tabindex="-1"></a><span class="in">    pull(mean) |&gt;</span></span>
+<span id="cb36-645"><a href="#cb36-645" aria-hidden="true" tabindex="-1"></a><span class="in">    diff()</span></span>
+<span id="cb36-646"><a href="#cb36-646" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-647"><a href="#cb36-647" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-648"><a href="#cb36-648" aria-hidden="true" tabindex="-1"></a><span class="in">permute_diff()</span></span>
+<span id="cb36-649"><a href="#cb36-649" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-650"><a href="#cb36-650" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-653"><a href="#cb36-653" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-654"><a href="#cb36-654" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_perm</span></span>
+<span id="cb36-655"><a href="#cb36-655" aria-hidden="true" tabindex="-1"></a><span class="in">#| hint: true</span></span>
+<span id="cb36-656"><a href="#cb36-656" aria-hidden="true" tabindex="-1"></a><span class="in"># sample(x) returns a random shuffle of the vector x. Which column do you want to shuffle?</span></span>
+<span id="cb36-657"><a href="#cb36-657" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-658"><a href="#cb36-658" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-661"><a href="#cb36-661" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-662"><a href="#cb36-662" aria-hidden="true" tabindex="-1"></a><span class="in">#| exercise: ex_perm</span></span>
+<span id="cb36-663"><a href="#cb36-663" aria-hidden="true" tabindex="-1"></a><span class="in">#| solution: true</span></span>
+<span id="cb36-664"><a href="#cb36-664" aria-hidden="true" tabindex="-1"></a><span class="in">permute_diff &lt;- function() {</span></span>
+<span id="cb36-665"><a href="#cb36-665" aria-hidden="true" tabindex="-1"></a><span class="in">  unscaled_cancer |&gt;</span></span>
+<span id="cb36-666"><a href="#cb36-666" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(class_shuffled = sample(Class)) |&gt;</span></span>
+<span id="cb36-667"><a href="#cb36-667" aria-hidden="true" tabindex="-1"></a><span class="in">    group_by(class_shuffled) |&gt;</span></span>
+<span id="cb36-668"><a href="#cb36-668" aria-hidden="true" tabindex="-1"></a><span class="in">    summarize(mean = mean(Radius)) |&gt;</span></span>
+<span id="cb36-669"><a href="#cb36-669" aria-hidden="true" tabindex="-1"></a><span class="in">    pull(mean) |&gt;</span></span>
+<span id="cb36-670"><a href="#cb36-670" aria-hidden="true" tabindex="-1"></a><span class="in">    diff()</span></span>
+<span id="cb36-671"><a href="#cb36-671" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-672"><a href="#cb36-672" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-673"><a href="#cb36-673" aria-hidden="true" tabindex="-1"></a><span class="in">permute_diff()</span></span>
+<span id="cb36-674"><a href="#cb36-674" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-675"><a href="#cb36-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-676"><a href="#cb36-676" aria-hidden="true" tabindex="-1"></a>Now we repeat the experiment 1,000 times, save the differences, and make a histogram. The red line is the difference we actually observed. (This takes a few seconds.)</span>
+<span id="cb36-677"><a href="#cb36-677" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-678"><a href="#cb36-678" aria-hidden="true" tabindex="-1"></a>Functions you define inside an exercise box aren't saved for the chunks that follow, so the chunk below starts with a complete version of <span class="in">`permute_diff()`</span>. Compare it with yours!</span>
+<span id="cb36-679"><a href="#cb36-679" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-682"><a href="#cb36-682" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb36-683"><a href="#cb36-683" aria-hidden="true" tabindex="-1"></a><span class="in">permute_diff &lt;- function() {</span></span>
+<span id="cb36-684"><a href="#cb36-684" aria-hidden="true" tabindex="-1"></a><span class="in">  unscaled_cancer |&gt;</span></span>
+<span id="cb36-685"><a href="#cb36-685" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(class_shuffled = sample(Class)) |&gt;</span></span>
+<span id="cb36-686"><a href="#cb36-686" aria-hidden="true" tabindex="-1"></a><span class="in">    group_by(class_shuffled) |&gt;</span></span>
+<span id="cb36-687"><a href="#cb36-687" aria-hidden="true" tabindex="-1"></a><span class="in">    summarize(mean = mean(Radius)) |&gt;</span></span>
+<span id="cb36-688"><a href="#cb36-688" aria-hidden="true" tabindex="-1"></a><span class="in">    pull(mean) |&gt;</span></span>
+<span id="cb36-689"><a href="#cb36-689" aria-hidden="true" tabindex="-1"></a><span class="in">    diff()</span></span>
+<span id="cb36-690"><a href="#cb36-690" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb36-691"><a href="#cb36-691" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-692"><a href="#cb36-692" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(0217)</span></span>
+<span id="cb36-693"><a href="#cb36-693" aria-hidden="true" tabindex="-1"></a><span class="in">diffs &lt;- map_dbl(1:1000, \(i) permute_diff())</span></span>
+<span id="cb36-694"><a href="#cb36-694" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-695"><a href="#cb36-695" aria-hidden="true" tabindex="-1"></a><span class="in">hist(diffs,</span></span>
+<span id="cb36-696"><a href="#cb36-696" aria-hidden="true" tabindex="-1"></a><span class="in">     breaks = 30,</span></span>
+<span id="cb36-697"><a href="#cb36-697" aria-hidden="true" tabindex="-1"></a><span class="in">     xlim = range(c(diffs, observed)),</span></span>
+<span id="cb36-698"><a href="#cb36-698" aria-hidden="true" tabindex="-1"></a><span class="in">     main = "Simulated differences in mean radius",</span></span>
+<span id="cb36-699"><a href="#cb36-699" aria-hidden="true" tabindex="-1"></a><span class="in">     xlab = "Difference in means (shuffled labels)")</span></span>
+<span id="cb36-700"><a href="#cb36-700" aria-hidden="true" tabindex="-1"></a><span class="in">abline(v = observed, col = "red", lwd = 3)</span></span>
+<span id="cb36-701"><a href="#cb36-701" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-702"><a href="#cb36-702" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(</span></span>
+<span id="cb36-703"><a href="#cb36-703" aria-hidden="true" tabindex="-1"></a><span class="in">  diffs = diffs</span></span>
+<span id="cb36-704"><a href="#cb36-704" aria-hidden="true" tabindex="-1"></a><span class="in">) |&gt;</span></span>
+<span id="cb36-705"><a href="#cb36-705" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = diffs)) + </span></span>
+<span id="cb36-706"><a href="#cb36-706" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(col = "white", bins = 25) + </span></span>
+<span id="cb36-707"><a href="#cb36-707" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_vline(xintercept = observed, col = "darkred", linetype = "dashed")</span></span>
+<span id="cb36-708"><a href="#cb36-708" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-709"><a href="#cb36-709" aria-hidden="true" tabindex="-1"></a><span class="in"># proportion of simulated differences at least as extreme as the observed one</span></span>
+<span id="cb36-710"><a href="#cb36-710" aria-hidden="true" tabindex="-1"></a><span class="in">mean(abs(diffs) &gt;= abs(observed))</span></span>
+<span id="cb36-711"><a href="#cb36-711" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-712"><a href="#cb36-712" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-713"><a href="#cb36-713" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb36-714"><a href="#cb36-714" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb36-715"><a href="#cb36-715" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 7&lt;/div&gt;</span></span>
+<span id="cb36-716"><a href="#cb36-716" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;The observed difference in mean radius is about 5.3, and the simulated differences are all close to 0. What does this tell us?&lt;/p&gt;</span></span>
+<span id="cb36-717"><a href="#cb36-717" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="It's the other way around: a difference as big as ours essentially &lt;em&gt;never&lt;/em&gt; shows up when the labels are shuffled."&gt;A. A difference this big happens often by chance&lt;/button&gt;</span></span>
+<span id="cb36-718"><a href="#cb36-718" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="If there were really no difference between benign and malignant tumors, shuffling the labels would almost never produce a difference as big as 5.3. That's strong evidence that malignant tumors have a larger mean radius."&gt;B. A difference this big would be extremely unlikely if there were no difference, so we have strong evidence of a real difference&lt;/button&gt;</span></span>
+<span id="cb36-719"><a href="#cb36-719" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="The permutation test can only tell us whether the difference is bigger than what chance alone produces. It says nothing about whether the model is a good one for other purposes."&gt;C. The test doesn't tell us anything&lt;/button&gt;</span></span>
+<span id="cb36-720"><a href="#cb36-720" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb36-721"><a href="#cb36-721" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb36-722"><a href="#cb36-722" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-723"><a href="#cb36-723" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-724"><a href="#cb36-724" aria-hidden="true" tabindex="-1"></a>**Q6.** In your own words, what is the proportion at the bottom of the output telling you? (Look back at step 5 of "The idea.")</span>
+<span id="cb36-725"><a href="#cb36-725" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-726"><a href="#cb36-726" aria-hidden="true" tabindex="-1"></a>**Q7.** In this simulation, what role did the function play, and what role did <span class="in">`map_dbl()`</span> play?</span>
+<span id="cb36-727"><a href="#cb36-727" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-728"><a href="#cb36-728" aria-hidden="true" tabindex="-1"></a><span class="fu"># Wrap up</span></span>
+<span id="cb36-729"><a href="#cb36-729" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-730"><a href="#cb36-730" aria-hidden="true" tabindex="-1"></a>If you got through everything, great! If not, that's OK. Finish the rest on your own or with your group, and bring your questions to the next class.</span>
+<span id="cb36-731"><a href="#cb36-731" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-732"><a href="#cb36-732" aria-hidden="true" tabindex="-1"></a>**Q8.** What questions do you have about <span class="in">`across()`</span>, <span class="in">`map()`</span>, or simulation? (Write them down! We'll talk about them next class.)</span>
+<span id="cb36-733"><a href="#cb36-733" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-734"><a href="#cb36-734" aria-hidden="true" tabindex="-1"></a>***</span>
+<span id="cb36-735"><a href="#cb36-735" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-736"><a href="#cb36-736" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
+<span id="cb36-737"><a href="#cb36-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-738"><a href="#cb36-738" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
+<span id="cb36-739"><a href="#cb36-739" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
+<span id="cb36-740"><a href="#cb36-740" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`map(.x, .f)`</span> <span class="pp">|</span> Apply <span class="in">`.f`</span> to each element of <span class="in">`.x`</span>; returns a list <span class="pp">|</span></span>
+<span id="cb36-741"><a href="#cb36-741" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`map_dbl()`</span>, <span class="in">`map_chr()`</span>, <span class="in">`map_lgl()`</span>, <span class="in">`map_int()`</span> <span class="pp">|</span> Same, but returns a vector of that type <span class="pp">|</span></span>
+<span id="cb36-742"><a href="#cb36-742" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`map_dfr()`</span> <span class="pp">|</span> Same, but row-binds the results into a data frame <span class="pp">|</span></span>
+<span id="cb36-743"><a href="#cb36-743" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`rep(20, 1000)`</span> <span class="pp">|</span> A vector with 1,000 copies of 20 (something to <span class="in">`map`</span> over) <span class="pp">|</span></span>
+<span id="cb36-744"><a href="#cb36-744" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`slice_sample(n = 20)`</span> <span class="pp">|</span> Randomly sample 20 rows <span class="pp">|</span></span>
+<span id="cb36-745"><a href="#cb36-745" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`slice_sample(n = 1, by = group)`</span> <span class="pp">|</span> Randomly sample 1 row per group <span class="pp">|</span></span>
+<span id="cb36-746"><a href="#cb36-746" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`set.seed(0217)`</span> <span class="pp">|</span> Make random results reproducible <span class="pp">|</span></span>
+<span id="cb36-747"><a href="#cb36-747" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`sample(x)`</span> <span class="pp">|</span> Randomly shuffle (permute) the vector <span class="in">`x`</span> <span class="pp">|</span></span>
+<span id="cb36-748"><a href="#cb36-748" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`table(x) / length(x)`</span> <span class="pp">|</span> Proportion of each value of <span class="in">`x`</span> <span class="pp">|</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Material 2026, Amanda Luby <br> Design by Mine Çetinkaya-Rundel</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This page is built with ☕️ and <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

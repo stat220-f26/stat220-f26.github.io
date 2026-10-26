@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -36,14 +36,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4a17e18fdf56099d4f6da1e105f33a53.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-259513009322ede1d75388ff598e6692.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dd8275f3e0234858d56979c52885b606.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -71,173 +69,13 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
 
 </head>
 
-<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
-    const toggleBodyColorMode = (bsSheetEl) => {
-      const mode = bsSheetEl.getAttribute("data-mode");
-      const bodyEl = window.document.querySelector("body");
-      if (mode === "dark") {
-        bodyEl.classList.add("quarto-dark");
-        bodyEl.classList.remove("quarto-light");
-      } else {
-        bodyEl.classList.add("quarto-light");
-        bodyEl.classList.remove("quarto-dark");
-      }
-    }
-    const toggleBodyColorPrimary = () => {
-      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
-      if (bsSheetEl) {
-        toggleBodyColorMode(bsSheetEl);
-      }
-    }
-    const setColorSchemeToggle = (alternate) => {
-      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-      for (let i=0; i < toggles.length; i++) {
-        const toggle = toggles[i];
-        if (toggle) {
-          if (alternate) {
-            toggle.classList.add("alternate");
-          } else {
-            toggle.classList.remove("alternate");
-          }
-        }
-      }
-    };
-    const toggleColorMode = (alternate) => {
-      // Switch the stylesheets
-      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
-      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-      manageTransitions('#quarto-margin-sidebar .nav-link', false);
-      if (alternate) {
-        // note: dark is layered on light, we don't disable primary!
-        enableStylesheet(alternateStylesheets);
-        for (const sheetNode of alternateStylesheets) {
-          if (sheetNode.id === "quarto-bootstrap") {
-            toggleBodyColorMode(sheetNode);
-          }
-        }
-      } else {
-        disableStylesheet(alternateStylesheets);
-        enableStylesheet(primaryStylesheets)
-        toggleBodyColorPrimary();
-      }
-      manageTransitions('#quarto-margin-sidebar .nav-link', true);
-      // Switch the toggles
-      setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
-      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-        manageTransitions("body", false);
-        window.scrollTo(0, 1);
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          manageTransitions("body", true);
-        }, 40);
-      }
-    }
-    const disableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        stylesheet.rel = 'disabled-stylesheet';
-      }
-    }
-    const enableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
-          stylesheet.rel = 'stylesheet';
-        }
-      }
-    }
-    const manageTransitions = (selector, allowTransitions) => {
-      const els = window.document.querySelectorAll(selector);
-      for (let i=0; i < els.length; i++) {
-        const el = els[i];
-        if (allowTransitions) {
-          el.classList.remove('notransition');
-        } else {
-          el.classList.add('notransition');
-        }
-      }
-    }
-    const isFileUrl = () => {
-      return window.location.protocol === 'file:';
-    }
-    const hasAlternateSentinel = () => {
-      let styleSentinel = getColorSchemeSentinel();
-      if (styleSentinel !== null) {
-        return styleSentinel === "alternate";
-      } else {
-        return false;
-      }
-    }
-    const setStyleSentinel = (alternate) => {
-      const value = alternate ? "alternate" : "default";
-      if (!isFileUrl()) {
-        window.localStorage.setItem("quarto-color-scheme", value);
-      } else {
-        localAlternateSentinel = value;
-      }
-    }
-    const getColorSchemeSentinel = () => {
-      if (!isFileUrl()) {
-        const storageValue = window.localStorage.getItem("quarto-color-scheme");
-        return storageValue != null ? storageValue : localAlternateSentinel;
-      } else {
-        return localAlternateSentinel;
-      }
-    }
-    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-      let newTheme = '';
-      if(authorPrefersDark) {
-        newTheme = isAlternate ? baseTheme : alternateTheme;
-      } else {
-        newTheme = isAlternate ? alternateTheme : baseTheme;
-      }
-      const changeGiscusTheme = () => {
-        // From: https://github.com/giscus/giscus/issues/336
-        const sendMessage = (message) => {
-          const iframe = document.querySelector('iframe.giscus-frame');
-          if (!iframe) return;
-          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
-        sendMessage({
-          setConfig: {
-            theme: newTheme
-          }
-        });
-      }
-      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-      if (isGiscussLoaded) {
-        changeGiscusTheme();
-      }
-    };
-    const authorPrefersDark = false;
-    const darkModeDefault = authorPrefersDark;
-      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-    // Dark / light mode switch
-    window.quartoToggleColorScheme = () => {
-      // Read the current dark / light value
-      let toAlternate = !hasAlternateSentinel();
-      toggleColorMode(toAlternate);
-      setStyleSentinel(toAlternate);
-      toggleGiscusIfUsed(toAlternate, darkModeDefault);
-      window.dispatchEvent(new Event('resize'));
-    };
-    // Switch to dark mode if need be
-    if (hasAlternateSentinel()) {
-      toggleColorMode(true);
-    } else {
-      toggleColorMode(false);
-    }
-  </script>
+<body class="nav-sidebar docked fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -268,7 +106,6 @@ ul.task-list li input[type="checkbox"] {
     <a href="https://github.com/stat220-f26" title="GitHub organization" class="quarto-navigation-tool px-1" aria-label="GitHub organization"><i class="bi bi-github"></i></a>
     <a href="https://maize.mathcs.carleton.edu/" title="RStudio Server" class="quarto-navigation-tool px-1" aria-label="RStudio Server"><i class="bi bi-code-square"></i></a>
     <a href="https://moodle.carleton.edu/course/view.php?id=50418" title="Moodle" class="quarto-navigation-tool px-1" aria-label="Moodle"><i class="bi bi-person-fill"></i></a>
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -353,36 +190,9 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#to-do-before-fall-2026-term-starts" id="toc-to-do-before-fall-2026-term-starts" class="nav-link active" data-scroll-target="#to-do-before-fall-2026-term-starts">To do before Fall 2026 term starts</a>
-  <ul class="collapse">
-  <li><a href="#environment-packages" id="toc-environment-packages" class="nav-link" data-scroll-target="#environment-packages">Environment / packages</a></li>
-  <li><a href="#deployment-repo" id="toc-deployment-repo" class="nav-link" data-scroll-target="#deployment-repo">Deployment / repo</a></li>
-  <li><a href="#general-software-setup" id="toc-general-software-setup" class="nav-link" data-scroll-target="#general-software-setup">General software setup</a></li>
-  <li><a href="#content-that-still-points-at-old-terms" id="toc-content-that-still-points-at-old-terms" class="nav-link" data-scroll-target="#content-that-still-points-at-old-terms">Content that still points at old terms</a></li>
-  <li><a href="#older-term-leftovers-pre-w26-copies" id="toc-older-term-leftovers-pre-w26-copies" class="nav-link" data-scroll-target="#older-term-leftovers-pre-w26-copies">Older-term leftovers (pre-W26 copies)</a></li>
-  <li><a href="#w26-named-files-rename-refresh-content" id="toc-w26-named-files-rename-refresh-content" class="nav-link" data-scroll-target="#w26-named-files-rename-refresh-content"><code>w26</code>-named files (rename + refresh content)</a></li>
-  <li><a href="#teaching-example-dates-years-no-render-impact-update-only-if-desired" id="toc-teaching-example-dates-years-no-render-impact-update-only-if-desired" class="nav-link" data-scroll-target="#teaching-example-dates-years-no-render-impact-update-only-if-desired">Teaching-example dates / years (no render impact — update only if desired)</a></li>
-  <li><a href="#syllabus-logistics-to-review" id="toc-syllabus-logistics-to-review" class="nav-link" data-scroll-target="#syllabus-logistics-to-review">Syllabus / logistics to review</a>
-  <ul class="collapse">
-  <li><a href="#portfolio-projects-4-3-grading-load" id="toc-portfolio-projects-4-3-grading-load" class="nav-link" data-scroll-target="#portfolio-projects-4-3-grading-load">Portfolio projects: 4 → 3 (grading load)</a></li>
-  <li><a href="#remove-compress-homework" id="toc-remove-compress-homework" class="nav-link" data-scroll-target="#remove-compress-homework">Remove / compress homework</a></li>
-  <li><a href="#downweight" id="toc-downweight" class="nav-link" data-scroll-target="#downweight">Downweight</a></li>
-  <li><a href="#upweight-add" id="toc-upweight-add" class="nav-link" data-scroll-target="#upweight-add">Upweight / add</a></li>
-  <li><a href="#same-topic-dated-function-low-effort" id="toc-same-topic-dated-function-low-effort" class="nav-link" data-scroll-target="#same-topic-dated-function-low-effort">Same topic, dated function (low effort)</a></li>
-  </ul></li>
-  <li><a href="#done-winter-2026---fall-2026-migration-initial-pass" id="toc-done-winter-2026---fall-2026-migration-initial-pass" class="nav-link" data-scroll-target="#done-winter-2026---fall-2026-migration-initial-pass">Done (Winter 2026 -&gt; Fall 2026 migration, initial pass)</a></li>
-  </ul></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
-
 
 
 
@@ -394,7 +204,10 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="environment-packages">Environment / packages</h2>
 <ul class="task-list">
 <li><label><input type="checkbox" checked="">Render <code>playground/package-check.qmd</code> <strong>on the Maize RStudio server</strong> after the update and review the availability table + functional checks. Also render it to PDF (<code>quarto render playground/package-check.qmd --to pdf</code>) to confirm the LaTeX toolchain.</label></li>
-<li><label><input type="checkbox">Known to watch: <code>gghighlight</code> breaks with newer <code>ggplot2</code> (fails on my laptop’s ggplot2). Confirm the server’s <code>ggplot2</code> / <code>gghighlight</code> combination works, since it’s used in the plotting slides.</label></li>
+<li><label><input type="checkbox">Known to watch: <code>gghighlight</code> breaks with newer <code>ggplot2</code> (fails on my laptop’s ggplot2). Confirm the server’s <code>ggplot2</code> / <code>gghighlight</code> combination works, since it’s used in the plotting slides.</label>
+<ul>
+<li><em>Note:</em> <code>slides/11</code> (which uses <code>gghighlight</code>) rendered without errors on the laptop on 10/7. The server still needs checking.</li>
+</ul></li>
 </ul>
 </section>
 <section id="deployment-repo" class="level2">
@@ -427,19 +240,22 @@ ul.task-list li input[type="checkbox"] {
 <section id="older-term-leftovers-pre-w26-copies" class="level2">
 <h2 class="anchored" data-anchor-id="older-term-leftovers-pre-w26-copies">Older-term leftovers (pre-W26 copies)</h2>
 <ul class="task-list">
-<li><label><input type="checkbox"><code>slides/02/slides02.qmd:169</code> — <code>stat220-s25.github.io</code></label></li>
-<li><label><input type="checkbox"><code>slides/04/slides04.qmd:107</code> — <code>stat220-w25.github.io</code></label></li>
+<li><label><input type="checkbox" checked=""><code>slides/02/slides02.qmd:169</code> — <code>stat220-s25.github.io</code></label></li>
+<li><label><input type="checkbox" checked=""><code>slides/04/slides04.qmd:107</code> — <code>stat220-w25.github.io</code></label></li>
 <li><label><input type="checkbox"><code>slides/slides-cheat-sheet.qmd:152</code> — <code>github.com/stat220-w25</code></label></li>
 <li><label><input type="checkbox"><code>activities/10-combining.qmd:10</code> — <code>github.com/stat220-w25/activities</code></label></li>
 <li><label><input type="checkbox"><code>activities/25-shiny-design.qmd:97</code> — <code>sta199-f25.github.io</code> image</label></li>
 <li><label><input type="checkbox"><code>files/23-app1-starter.R:12</code> — <code>stat220-s25.github.io/data/manager-survey.csv</code></label></li>
-<li><label><input type="checkbox"><code>lab-quiz/lab-quiz-02.qmd:212</code> — <code>stat220-s25.github.io/data/lq2_plot_data.csv</code></label></li>
+<li><label><input type="checkbox" checked=""><code>lab-quiz/lab-quiz-02.qmd:212</code> — <code>stat220-s25.github.io/data/lq2_plot_data.csv</code></label></li>
 </ul>
 </section>
 <section id="w26-named-files-rename-refresh-content" class="level2">
 <h2 class="anchored" data-anchor-id="w26-named-files-rename-refresh-content"><code>w26</code>-named files (rename + refresh content)</h2>
 <ul class="task-list">
-<li><label><input type="checkbox"><code>slides/img/w26-schedule.png</code> and duplicate <code>img/w26-schedule.png</code> — last term’s schedule screenshot; used by <code>slides/01/slides01.qmd:309</code> (<code>../img/w26-schedule.png</code>). Rename to <code>f26-schedule.png</code>, replace the image, update the reference.</label></li>
+<li><label><input type="checkbox" checked=""><code>slides/img/w26-schedule.png</code> and duplicate <code>img/w26-schedule.png</code> — last term’s schedule screenshot; used by <code>slides/01/slides01.qmd:309</code> (<code>../img/w26-schedule.png</code>). Rename to <code>f26-schedule.png</code>, replace the image, update the reference.</label>
+<ul>
+<li><em>Status:</em> <code>slides01.qmd</code> now uses <code>../img/amanda-schedule-f26.png</code>, and the duplicate in <code>img/</code> is gone. The orphan <code>slides/img/w26-schedule.png</code> can be deleted.</li>
+</ul></li>
 <li><label><input type="checkbox"><code>files/app-w26-sol.R</code></label></li>
 <li><label><input type="checkbox"><code>slides/23/manager-survey-app/app-w26.R</code></label></li>
 <li><label><input type="checkbox"><code>slides/23/manager-survey-app/app-w26-sol.R</code></label>
@@ -468,16 +284,28 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="portfolio-projects-4-3-grading-load">Portfolio projects: 4 → 3 (grading load)</h3>
 <p>New lineup: <strong>P1 (rewritten) → P3 (unchanged) → P4 (unchanged)</strong>. <strong>Cut P2</strong> (“Wrangling weather forecasts”). P3 covers functions/iteration, P4 covers interactivity — both kept as-is.</p>
 <ul class="task-list">
-<li><label><input type="checkbox"><strong>P1 rewrite — “Real or fake?”</strong> Draft is in <code>_playground/portfolio-1-draft.qmd</code> (data-forensics argument about a Kaggle dataset; replaces the old “pose two research questions” P1). Review, then move to <code>portfolio/portfolio-1.qmd</code>.</label></li>
-<li><label><input type="checkbox"><strong>Decide numbering.</strong> Either renumber P3→P2 and P4→P3, or keep the labels 1 / 3 / 4. Renumbering touches <code>portfolio/portfolio-*.qmd</code> filenames + titles, the sidebar in <code>_quarto.yml</code> (portfolio section isn’t currently listed there — check), the schedule sheet, and any cross-references in slides/activities.</label></li>
-<li><label><input type="checkbox"><strong>Delete <code>portfolio/portfolio-2.qmd</code></strong> and its data (<code>data/weather_forecasts.csv</code>, <code>forecast_cities.csv</code>, <code>outlook_meanings.csv</code>) once the cut is final. Check the schedule sheet and slides for links to it.</label></li>
+<li><label><input type="checkbox" checked=""><strong>P1 rewrite — “Real or fake?”</strong> Draft is in <code>_playground/portfolio-1-draft.qmd</code> (data-forensics argument about a Kaggle dataset; replaces the old “pose two research questions” P1). Review, then move to <code>portfolio/portfolio-1.qmd</code>.</label></li>
+<li><label><input type="checkbox"><strong>Decide numbering.</strong> Either renumber P3→P2 and P4→P3, or keep the labels 1 / 3 / 4. Renumbering touches <code>portfolio/portfolio-*.qmd</code> filenames + titles, the sidebar in <code>_quarto.yml</code> (portfolio section isn’t currently listed there — check), the schedule sheet, and any cross-references in slides/activities.</label>
+<ul>
+<li><em>Status:</em> files are renamed (<code>portfolio-2.qmd</code> = billion-dollar disasters, <code>portfolio-3.qmd</code> = interactivity), but <code>portfolio-3.qmd</code> still has the title “Portfolio Project 4” and says “fourth portfolio project”.</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Delete <code>portfolio/portfolio-2.qmd</code></strong> and its data (<code>data/weather_forecasts.csv</code>, <code>forecast_cities.csv</code>, <code>outlook_meanings.csv</code>) once the cut is final. Check the schedule sheet and slides for links to it.</label>
+<ul>
+<li><em>Status:</em> the data files are gone from <code>data/</code> and nothing else links to it, but the old prompt still exists as the untracked <code>portfolio/portfolio-2-old.qmd</code> (it will render and publish).</li>
+</ul></li>
 <li><label><input type="checkbox" checked=""><strong>“2 of 4 must be excellent for an A” → “2 of 3.”</strong> Appears in the <code>portfolio-2.qmd</code> callout (being deleted) and the new P1 draft; check <code>course-syllabus.qmd</code> and the schedule sheet too. Confirm 3 projects still leaves enough revision / token slack.</label></li>
-<li><label><input type="checkbox"><strong>Joins lose portfolio-level assessment</strong> with P2 gone. Add “combines data from more than one table or source” as an explicit <em>wrangle</em> criterion on <code>portfolio/final.qmd</code>’s rubric. (HW4–5 already cover joins heavily.)</label></li>
+<li><label><input type="checkbox"><strong>Joins lose portfolio-level assessment</strong> with P2 gone. Add “combines data from more than one table or source” as an explicit <em>wrangle</em> criterion on <code>portfolio/final.qmd</code>’s rubric. (HW4–5 already cover joins heavily.)</label>
+<ul>
+<li><em>Status:</em> <code>final.qmd:26</code> has “Demonstrate proficiency with <code>join</code>ing data”, but that line is unchanged since the initial f26 commit. Confirm it is what you wanted.</li>
+</ul></li>
 <li><label><input type="checkbox" checked=""><strong>Due date:</strong> move P1 a little later than the old P1 — aim week ~3–4 — so students have basic <code>dplyr</code> for summaries and cross-tabs. Keep ≥2 weeks between P1 and P3 so you’re not grading two portfolios back-to-back.</label></li>
-<li><label><input type="checkbox"><strong>Pairs?</strong> Old P1 was individual (good early diagnostic + low stakes). Allowing pairs on the new P1 would further cut submissions — decide.</label></li>
+<li><label><input type="checkbox" checked=""><strong>Pairs?</strong> Old P1 was individual (good early diagnostic + low stakes). Allowing pairs on the new P1 would further cut submissions — decide.</label>
+<ul>
+<li><em>Decided:</em> P1 can be done individually or in pairs; Portfolio 2 is a required pair project.</li>
+</ul></li>
 <li><label><input type="checkbox"><strong>Class scaffolding needed.</strong> The new P1 assumes a “tells” toolkit that isn’t currently a lecture: distribution smell tests, impossible/contradictory records, duplicates, round-number clustering, decimal precision, correlation structure, categorical balance, temporal regularity, Benford (optional), external benchmarks. Add an EDA / data-quality session near the ggplot weeks.</label></li>
 <li><label><input type="checkbox"><strong>Vet the Kaggle shortlist</strong> before publishing (see below) — confirm the slugs still resolve, the synthetic ones aren’t self-labeled “synthetic” on the data card, and the real ones still carry the messiness that makes them arguable. Rebalance the mix if needed.</label></li>
-<li><label><input type="checkbox"><strong>Pre-existing P1 bug:</strong> the current <code>portfolio/portfolio-1.qmd</code> Submission section says “two visualizations (replication and improvement)” — leftover from another project, contradicts the rest of P1. Gone in the rewrite; just noting it’s a known issue.</label></li>
+<li><label><input type="checkbox" checked=""><strong>Pre-existing P1 bug:</strong> the current <code>portfolio/portfolio-1.qmd</code> Submission section says “two visualizations (replication and improvement)” — leftover from another project, contradicts the rest of P1. Gone in the rewrite; just noting it’s a known issue.</label></li>
 <li><label><input type="checkbox"><strong>P4 revisit menu</strong> shrinks to P1(new) / P3. An interactive “data-forensics explorer” over the P1 dataset is a fine P4 base — no change needed, worth mentioning in P4.</label></li>
 </ul>
 </section>
@@ -485,9 +313,9 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="remove-compress-homework">Remove / compress homework</h3>
 <ul class="task-list">
 <li><label><input type="checkbox"><strong>HW7 P4 + P5</strong> — same “lm coefficients per season” problem done as a <code>for</code> loop <em>and</em> as <code>map</code>. Keep one (buys back room on the 9-pt assignment).</label></li>
-<li><label><input type="checkbox"><strong>HW6 P2–P4</strong> — three MAC-address string problems on one contrived example. Collapse to one or two; <code>separate_wider_regex()</code> now does most of it in one call.</label></li>
+<li><label><input type="checkbox" checked=""><strong>HW6 P2–P4</strong> — three MAC-address string problems on one contrived example. Collapse to one or two; <code>separate_wider_regex()</code> now does most of it in one call.</label></li>
 <li><label><input type="checkbox"><strong>HW8 P2 + P3 + P4</strong> (currently the S25 version) — pulls the same ACS data via <code>tidycensus</code>, then again via raw <code>httr2</code>, then wraps the raw version in a function. Cut to <code>tidycensus</code> once + one raw-API problem on a <em>different</em> endpoint.</label></li>
-<li><label><input type="checkbox"><strong>HW5 P10</strong> — trim regex gauntlet from 7 parts to ~5. Drop “3+ vowels in a row” and “same first/last letter” (backreference) — puzzle, not practice.</label></li>
+<li><label><input type="checkbox" checked=""><strong>HW5 P10</strong> — trim regex gauntlet from 7 parts to ~5. Drop “3+ vowels in a row” and “same first/last letter” (backreference) — puzzle, not practice.</label></li>
 <li><label><input type="checkbox"><strong>HW9 P7</strong> (WAI / <code>RMariaDB</code> to <code>scidb.smith.edu</code>) — replace with a DuckDB-backed problem (see Upweight). Depends on Smith keeping a MariaDB server reachable from Carleton; it will fail some semester.</label></li>
 </ul>
 </section>
@@ -531,25 +359,37 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
-    // Ensure there is a toggle, if there isn't float one in the top right
-    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-      const i = window.document.createElement("i");
-      i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
-    }
-    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -621,7 +461,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/stat220-f26\.github\.io\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
