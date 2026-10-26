@@ -367,7 +367,7 @@ document.addEventListener("click", function (e) {
 
 </div>
 <script type="webr-1-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGlicmFyeShkcGx5cilcbmxpYnJhcnkocHVycnIpXG5saWJyYXJ5KHN0cmluZ3IpXG5saWJyYXJ5KHBhbG1lcnBlbmd1aW5zKVxuXG5iYWtlb2ZmIDwtIHJlYWQuY3N2KFwiaHR0cHM6Ly9zdGF0MjIwLWYyNi5naXRodWIuaW8vZGF0YS9iYWtlb2ZmLWVwaXNvZGVzLmNzdlwiKSB8PlxuICBmaWx0ZXIoc2VyaWVzID09IDE0KVxudW5zY2FsZWRfY2FuY2VyIDwtIHJlYWQuY3N2KFwiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1VCQy1EU0NJL2ludHJvZHVjdGlvbi10by1kYXRhc2NpZW5jZS9yZWZzL2hlYWRzL21haW4vZGF0YS93ZGJjX3Vuc2NhbGVkLmNzdlwiKVxuIyB1c19jYXN0YXdheV9yZXN1bHRzIDwtIHJlYWQuY3N2KFwiaHR0cHM6Ly9zdGF0MjIwLWYyNi5naXRodWIuaW8vZGF0YS9zdXJ2aXZvci1jYXN0YXdheS1yZXN1bHRzLmNzdlwiKVxudXNfY2FzdGF3YXlfcmVzdWx0cyA8LSBoZXJlOjpoZXJlKFwiZGF0YS9zdXJ2aXZvci1jYXN0YXdheS1yZXN1bHRzLmNzdlwiKVxuXG5oZWFkKGJha2VvZmYsIDMpIn0=
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGlicmFyeShkcGx5cilcbmxpYnJhcnkocHVycnIpXG5saWJyYXJ5KHN0cmluZ3IpXG5saWJyYXJ5KHBhbG1lcnBlbmd1aW5zKVxubGlicmFyeShnZ3Bsb3QyKVxuXG5iYWtlb2ZmIDwtIHJlYWQuY3N2KFwiaHR0cHM6Ly9zdGF0MjIwLWYyNi5naXRodWIuaW8vZGF0YS9iYWtlb2ZmLWVwaXNvZGVzLmNzdlwiKSB8PlxuICBmaWx0ZXIoc2VyaWVzID09IDE0KVxudW5zY2FsZWRfY2FuY2VyIDwtIHJlYWQuY3N2KFwiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1VCQy1EU0NJL2ludHJvZHVjdGlvbi10by1kYXRhc2NpZW5jZS9yZWZzL2hlYWRzL21haW4vZGF0YS93ZGJjX3Vuc2NhbGVkLmNzdlwiKVxudXNfY2FzdGF3YXlfcmVzdWx0cyA8LSByZWFkLmNzdihcImh0dHBzOi8vc3RhdDIyMC1mMjYuZ2l0aHViLmlvL2RhdGEvc3Vydml2b3ItY2FzdGF3YXktcmVzdWx0cy5jc3ZcIilcblxuaGVhZChiYWtlb2ZmLCAzKSJ9
 </script>
 </div>
 </div>
@@ -377,6 +377,15 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGli
 <section id="a-for-loop-with-an-if" class="level2">
 <h2 class="anchored" data-anchor-id="a-for-loop-with-an-if">A <code>for</code> loop with an <code>if</code></h2>
 <p>Read the code below carefully <strong>before</strong> running it.</p>
+<p><strong>Q1.</strong> What do you think <code>results</code> will look like? What does the <code>else</code> branch handle?</p>
+<div class="mcq">
+  <div class="mcq-title">Check-in 1</div>
+  <p>What is stored in <code>results[k]</code>?</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="The code doesn't count anything. Look at what is assigned to <code>results[k]</code>: it's <code>eliminated$showstopper</code>, not <code>nrow(eliminated)</code>.">A. The number of bakers eliminated in episode k</button>
+  <button class="mcq-opt" data-correct="true" data-feedback="It stores the showstopper dish(es) of whoever was eliminated in episode k, separated by commas if there is more than one, or <code>&quot;none&quot;</code> if nobody was eliminated. <code>results</code> was pre-allocated with <code>character(10)</code>, one slot per episode.">B. The showstopper dish(es) of the baker(s) eliminated in episode k, or "none"</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="The code stores the <code>showstopper</code> column (the dish), not the baker's name.">C. The names of the bakers eliminated in episode k</button>
+  <div class="mcq-feedback"></div>
+</div>
 <div class="cell">
 <div>
 <div id="webr-2" class="exercise-cell">
@@ -386,15 +395,6 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGli
 eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicmVzdWx0cyA8LSBjaGFyYWN0ZXIoMTApXG5cbmZvciAoayBpbiAxOjEwKSB7XG4gIGVsaW1pbmF0ZWQgPC0gYmFrZW9mZiB8PlxuICAgIGZpbHRlcihlcGlzb2RlID09IGssIHN0cl9kZXRlY3QocmVzdWx0LCBcIkVsaW1pbmF0ZWRcIikpXG5cbiAgaWYgKG5yb3coZWxpbWluYXRlZCkgPT0gMSkge1xuICAgIHJlc3VsdHNba10gPC0gZWxpbWluYXRlZCRzaG93c3RvcHBlclxuICB9IGVsc2UgaWYgKG5yb3coZWxpbWluYXRlZCkgPiAxKSB7XG4gICAgcmVzdWx0c1trXSA8LSBzdHJfZmxhdHRlbihlbGltaW5hdGVkJHNob3dzdG9wcGVyLCBjb2xsYXBzZSA9IFwiLCBcIilcbiAgfSBlbHNlIHtcbiAgICByZXN1bHRzW2tdIDwtIFwibm9uZVwiXG4gIH1cbn1cblxucmVzdWx0cyJ9
 </script>
 </div>
-</div>
-<p><strong>Q1.</strong> Before you ran the chunk, what did you think <code>results</code> would look like? What does the <code>else</code> branch handle?</p>
-<div class="mcq">
-  <div class="mcq-title">Check-in 1</div>
-  <p>What is stored in <code>results[k]</code>?</p>
-  <button class="mcq-opt" data-correct="false" data-feedback="The code doesn't count anything. Look at what is assigned to <code>results[k]</code>: it's <code>eliminated$showstopper</code>, not <code>nrow(eliminated)</code>.">A. The number of bakers eliminated in episode k</button>
-  <button class="mcq-opt" data-correct="true" data-feedback="It stores the showstopper dish(es) of whoever was eliminated in episode k, separated by commas if there is more than one, or <code>&quot;none&quot;</code> if nobody was eliminated. <code>results</code> was pre-allocated with <code>character(10)</code>, one slot per episode.">B. The showstopper dish(es) of the baker(s) eliminated in episode k, or "none"</button>
-  <button class="mcq-opt" data-correct="false" data-feedback="The code stores the <code>showstopper</code> column (the dish), not the baker's name.">C. The names of the bakers eliminated in episode k</button>
-  <div class="mcq-feedback"></div>
 </div>
 </section>
 <section id="recap-across" class="level2">
@@ -564,7 +564,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbWFwX3N1bW1hcnki
 
 </div>
 <script type="webr-17-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZWxpbWluYXRlZF9zaG93c3RvcHBlciA8LSBmdW5jdGlvbihlcF9udW1iZXIpIHtcbiAgYmFrZW9mZiB8PlxuICAgIGZpbHRlcihlcGlzb2RlID09IGVwX251bWJlciwgc3RyX2RldGVjdChyZXN1bHQsIFwiRWxpbWluYXRlZFwiKSkgfD5cbiAgICBzdW1tYXJpemUoXG4gICAgICBuID0gbigpLFxuICAgICAgc2hvd3N0b3BwZXIgPSBpZl9lbHNlKG4gPiAwLCBzdHJfZmxhdHRlbihzaG93c3RvcHBlciwgY29sbGFwc2UgPSBcIixcIiksIFwibm9uZVwiKVxuICAgICkgfD5cbiAgICBwdWxsKHNob3dzdG9wcGVyKVxufVxuXG4jIGZvciBsb29wICsgZnVuY3Rpb25cbnJlc3VsdHNfbG9vcCA8LSBjaGFyYWN0ZXIoMTApXG5mb3IgKGsgaW4gMToxMCkge1xuICByZXN1bHRzX2xvb3Bba10gPC0gZWxpbWluYXRlZF9zaG93c3RvcHBlcihrKVxufVxuXG4jIG1hcCArIGZ1bmN0aW9uXG5yZXN1bHRzX21hcCA8LSBtYXBfY2hyKDE6MTAsIGVsaW1pbmF0ZWRfc2hvd3N0b3BwZXIpXG5cbnJlc3VsdHNfbWFwXG5pZGVudGljYWwocmVzdWx0c19sb29wLCByZXN1bHRzX21hcCkifQ==
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZWxpbWluYXRlZF9zaG93c3RvcHBlciA8LSBmdW5jdGlvbihlcF9udW1iZXIpIHtcbiAgYmFrZW9mZiB8PlxuICAgIGZpbHRlcihlcGlzb2RlID09IGVwX251bWJlciwgc3RyX2RldGVjdChyZXN1bHQsIFwiRWxpbWluYXRlZFwiKSkgfD5cbiAgICBzdW1tYXJpemUoXG4gICAgICBuID0gbigpLFxuICAgICAgc2hvd3N0b3BwZXIgPSBpZl9lbHNlKG4gPiAwLCBzdHJfZmxhdHRlbihzaG93c3RvcHBlciwgY29sbGFwc2UgPSBcIixcIiksIFwibm9uZVwiKVxuICAgICkgfD5cbiAgICBwdWxsKHNob3dzdG9wcGVyKVxufVxuXG4jIGZvciBsb29wICsgZnVuY3Rpb25cbnJlc3VsdHNfbG9vcCA8LSBjaGFyYWN0ZXIoMTApXG5mb3IgKGsgaW4gMToxMCkge1xuICByZXN1bHRzX2xvb3Bba10gPC0gZWxpbWluYXRlZF9zaG93c3RvcHBlcihrKVxufVxuXG4jIG1hcCArIGZ1bmN0aW9uXG5yZXN1bHRzX21hcCA8LSBtYXBfY2hyKDE6MTAsIGVsaW1pbmF0ZWRfc2hvd3N0b3BwZXIpXG5cbnJlc3VsdHNfbWFwIn0=
 </script>
 </div>
 </div>
@@ -954,7 +954,7 @@ permute_diff()</code>
 
 </div>
 <script type="webr-51-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicGVybXV0ZV9kaWZmIDwtIGZ1bmN0aW9uKCkge1xuICB1bnNjYWxlZF9jYW5jZXIgfD5cbiAgICBtdXRhdGUoY2xhc3Nfc2h1ZmZsZWQgPSBzYW1wbGUoQ2xhc3MpKSB8PlxuICAgIGdyb3VwX2J5KGNsYXNzX3NodWZmbGVkKSB8PlxuICAgIHN1bW1hcml6ZShtZWFuID0gbWVhbihSYWRpdXMpKSB8PlxuICAgIHB1bGwobWVhbikgfD5cbiAgICBkaWZmKClcbn1cblxuc2V0LnNlZWQoMDIxNylcbmRpZmZzIDwtIG1hcF9kYmwoMToxMDAwLCBcXChpKSBwZXJtdXRlX2RpZmYoKSlcblxuaGlzdChkaWZmcyxcbiAgICAgYnJlYWtzID0gMzAsXG4gICAgIHhsaW0gPSByYW5nZShjKGRpZmZzLCBvYnNlcnZlZCkpLFxuICAgICBtYWluID0gXCJTaW11bGF0ZWQgZGlmZmVyZW5jZXMgaW4gbWVhbiByYWRpdXNcIixcbiAgICAgeGxhYiA9IFwiRGlmZmVyZW5jZSBpbiBtZWFucyAoc2h1ZmZsZWQgbGFiZWxzKVwiKVxuYWJsaW5lKHYgPSBvYnNlcnZlZCwgY29sID0gXCJyZWRcIiwgbHdkID0gMylcblxudGliYmxlKFxuICBkaWZmcyA9IGRpZmZzXG4pIHw+XG4gIGdncGxvdChhZXMoeCA9IGRpZmZzKSkgKyBcbiAgZ2VvbV9oaXN0b2dyYW0oY29sID0gXCJ3aGl0ZVwiLCBiaW5zID0gMjUpICsgXG4gIGdlb21fdmxpbmUoeGludGVyY2VwdCA9IG9ic2VydmVkLCBjb2wgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiKVxuXG4jIHByb3BvcnRpb24gb2Ygc2ltdWxhdGVkIGRpZmZlcmVuY2VzIGF0IGxlYXN0IGFzIGV4dHJlbWUgYXMgdGhlIG9ic2VydmVkIG9uZVxubWVhbihhYnMoZGlmZnMpID49IGFicyhvYnNlcnZlZCkpIn0=
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicGVybXV0ZV9kaWZmIDwtIGZ1bmN0aW9uKCkge1xuICB1bnNjYWxlZF9jYW5jZXIgfD5cbiAgICBtdXRhdGUoY2xhc3Nfc2h1ZmZsZWQgPSBzYW1wbGUoQ2xhc3MpKSB8PlxuICAgIGdyb3VwX2J5KGNsYXNzX3NodWZmbGVkKSB8PlxuICAgIHN1bW1hcml6ZShtZWFuID0gbWVhbihSYWRpdXMpKSB8PlxuICAgIHB1bGwobWVhbikgfD5cbiAgICBkaWZmKClcbn1cblxuc2V0LnNlZWQoMDIxNylcbmRpZmZzIDwtIG1hcF9kYmwoMToxMDAwLCBcXChpKSBwZXJtdXRlX2RpZmYoKSlcblxudGliYmxlKFxuICBkaWZmcyA9IGRpZmZzXG4pIHw+XG4gIGdncGxvdChhZXMoeCA9IGRpZmZzKSkgKyBcbiAgZ2VvbV9oaXN0b2dyYW0oY29sID0gXCJ3aGl0ZVwiLCBiaW5zID0gMjUpICsgXG4gIGdlb21fdmxpbmUoeGludGVyY2VwdCA9IG9ic2VydmVkLCBjb2wgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiKVxuXG4jIHByb3BvcnRpb24gb2Ygc2ltdWxhdGVkIGRpZmZlcmVuY2VzIGF0IGxlYXN0IGFzIGV4dHJlbWUgYXMgdGhlIG9ic2VydmVkIG9uZVxubWVhbihhYnMoZGlmZnMpID49IGFicyhvYnNlcnZlZCkpIn0=
 </script>
 </div>
 </div>
@@ -1134,7 +1134,7 @@ window._ojs.runtime.interpretFromScriptTags();
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/stat220-f26\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
