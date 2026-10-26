@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Lab Quiz 03 Info – Stat 220</title>
 <style>
@@ -16,6 +16,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -32,9 +67,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6e03bc272f1cdef1d8296ac38e217ebd.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4a17e18fdf56099d4f6da1e105f33a53.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -336,8 +371,29 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#guidelines" id="toc-guidelines" class="nav-link active" data-scroll-target="#guidelines">Guidelines</a></li>
+  <li><a href="#format" id="toc-format" class="nav-link" data-scroll-target="#format">Format</a></li>
+  <li>
+<a href="#skills" id="toc-skills" class="nav-link" data-scroll-target="#skills">Skills</a>
+  <ul class="collapse">
+<li><a href="#strings" id="toc-strings" class="nav-link" data-scroll-target="#strings">Strings</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
+  <li><a href="#iteration" id="toc-iteration" class="nav-link" data-scroll-target="#iteration">Iteration</a></li>
+  </ul>
+</li>
+  <li><a href="#grading" id="toc-grading" class="nav-link" data-scroll-target="#grading">Grading</a></li>
+  <li>
+<a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
+  <ul class="collapse">
+<li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  </ul>
+</li>
+  </ul></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -355,24 +411,255 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header><p>Our third lab quiz is scheduled for <strong>Friday of Week 7</strong>.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+</header><p>Our third lab quiz is scheduled for <strong>Friday of Week 7</strong>. You will have 40 minutes for the lab quiz, and then we will have a short video or activity on web scraping afterwards.</p>
+<section id="guidelines" class="level1"><h1>Guidelines</h1>
+<p>This is a <em>closed note</em>, <em>closed internet resources</em>, <em>closed other people</em> lab quiz. I want to see what’s in your brain! You may use the cheat sheets provided by me, but otherwise you may not use any resources.</p>
+<p>The lab quizzes are not written to be tricky or very difficult. If you’ve been completing the in-class activities and the homework, and putting the time and effort in to understand them, you should do well on the lab quizzes.</p>
+</section><section id="format" class="level1"><h1>Format</h1>
+<p>The reason I give lab quizzes is because your life will be easier if you know how to do basic tasks in R “on the fly”. I also want to see what you <strong>know</strong> and not just what you can do with access to your resources. However, I also know this is not how data science works in the real world, and so you can also use a token to complete a retake.</p>
+<ol type="1">
+<li>The required in-class portion</li>
+</ol>
+<ul>
+<li>Pencil-and-paper questions</li>
+<li>Cheat sheets provided by me but no other resources</li>
+<li>Designed to assess what you know “on the fly” without access to resources</li>
+</ul>
+<ol start="2" type="1">
+<li>An R-based retake</li>
+</ol>
+<ul>
+<li>.qmd format similar to homework</li>
+<li>Allowed to use materials from class (slides, activities, notes, homework, etc.) but no out-of-class resources (google, textbooks, ChatGPT or other LLMs, StackOverflow, etc.)</li>
+<li>Designed to assess your coding skills and whether you can figure things out with access to class resources and R help pages</li>
+</ul></section><section id="skills" class="level1"><h1>Skills</h1>
+<p>The third quiz will assess your proficiency working with strings and with basic programming concepts in R (<code>functions</code>, <code>if</code> statements, <code>for</code> loops, <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code>, and <code>map</code>).</p>
+<section id="strings" class="level2"><h2 class="anchored" data-anchor-id="strings">Strings</h2>
+<ul>
+<li>Given a string, subset or detect some portion of it
+<ul>
+<li>
+<code>str_sub</code>, <code>str_subset</code>, <code>str_extract</code>, <code>str_detect</code>, etc.</li>
+</ul>
+</li>
+<li>Given two strings, use <code>str_c</code> to concatenate them</li>
+<li>Given a <em>simple</em> regular expression, state what will be matched
+<ul>
+<li>Literal characters, special characters (<code>\\d</code>, <code>\\w</code>, <code>[:alpha:]</code>, <code>\\n</code>, <code>\\</code>), anchors for start/end characters (<code>^</code> and <code>$</code>), quantifiers (<code>+</code>, <code>*</code>, <code>{n}</code>, <code>{n,}</code>, <code>{n,m}</code>)</li>
+</ul>
+</li>
+</ul></section><section id="functions" class="level2"><h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<ul>
+<li>(In-class) Read and explain what a function is doing / (Take-home) Use <code>function()</code> to build an R function</li>
+<li>Specify required arguments and default values</li>
+<li>Understand how to return a value or object</li>
+<li>Use a logical statement to control the flow of the function</li>
+</ul></section><section id="iteration" class="level2"><h2 class="anchored" data-anchor-id="iteration">Iteration</h2>
+<ul>
+<li>Be able to write a <code>for</code> loop to accomplish an iterative task
+<ul>
+<li>Preallocate storage</li>
+<li>Define an index to iterate through</li>
+</ul>
+</li>
+<li>Be able to read a <code>for</code> loop and determine what it’s doing</li>
+<li>Use <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> and <code><a href="https://tidyselect.r-lib.org/reference/where.html">where()</a></code> to apply {dplyr} functions to columns in a dataset</li>
+<li>Explain what a <code>map</code> command is doing</li>
+<li>Write a basic <code>map</code> command for group-wise data operations</li>
+</ul></section></section><section id="grading" class="level1"><h1>Grading</h1>
+<p>For the in-class portion, each question is worth 1 point unless it is marked otherwise (a few questions are worth 2 points). Each point is graded as “successful” (almost entirely correct), “not successful” (missing a key component), or “half credit” (mostly correct).</p>
+<p>For the out-of-class retake, each question is worth the same number of points, graded as “successful” (correct), “not successful” (missing a key component), or “half credit” (mostly correct). Since you will be able to run the code, you will only receive full credit for fully correct solutions.</p>
+</section><section id="practice-questions" class="level1"><h1>Practice Questions</h1>
+<section id="data" class="level2"><h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>The <code>nycflights23</code> package contains information about all flights that departed from NYC (e.g.&nbsp;EWR, JFK and LGA) in 2023. The main data is in the <code>flights</code> data frame, but there are additional data sets which may help understand what causes delays, specifically:</p>
+<ul>
+<li>
+<code>weather</code>: hourly meteorological data for each airport</li>
+<li>
+<code>planes</code>: construction information about each plane</li>
+<li>
+<code>airports</code>: airport names and locations</li>
+<li>
+<code>airlines</code>: translation between two letter carrier codes and names</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://moderndive.github.io/nycflights23/">nycflights23</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>In progress
+</section><section id="questions" class="level2"><h2 class="anchored" data-anchor-id="questions">Questions</h2>
+<p><strong>Given a string, subset some portion of it</strong></p>
+<p>One of the columns in the <code>airports</code> dataset is the <code>name</code> of the airport. Most airports with international flights have the word “International” (capital I) in them.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airports</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,251 × 8
+   faa   name                                 lat    lon   alt    tz dst   tzone
+   &lt;chr&gt; &lt;chr&gt;                              &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+ 1 AAF   Apalachicola Regional Airport       29.7  -85.0    20    -5 A     Amer…
+ 2 AAP   Andrau Airpark                      29.7  -95.6    79    -6 A     Amer…
+ 3 ABE   Lehigh Valley International Airpo…  40.7  -75.4   393    -5 A     Amer…
+ 4 ABI   Abilene Regional Airport            32.4  -99.7  1791    -6 A     Amer…
+ 5 ABL   Ambler Airport                      67.1 -158.    334    -9 A     Amer…
+ 6 ABQ   Albuquerque International Sunport   35.0 -107.   5355    -7 A     Amer…
+ 7 ABR   Aberdeen Regional Airport           45.4  -98.4  1302    -6 A     Amer…
+ 8 ABY   Southwest Georgia Regional Airport  31.5  -84.2   197    -5 A     Amer…
+ 9 ACK   Nantucket Memorial Airport          41.3  -70.1    47    -5 A     Amer…
+10 ACT   Waco Regional Airport               31.6  -97.2   516    -6 A     Amer…
+# ℹ 1,241 more rows</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>Check back soon for more details!</p>
+<p>Fill in the code to create a new logical column called <code>international</code> based on whether the <code>name</code> of the airport contains the word “International”.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>airports <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">international =</span> _______________________________________</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Given two strings, use <code>str_c</code> to concatenate them</strong></p>
+<p>The flights dataset contains a carrier column (e.g.&nbsp;“UA”) and a flight number column (e.g.&nbsp;1480). Fill in the code below to create a new column called flight_code that combines these two columns separated by a hyphen (e.g.&nbsp;“UA-1480”).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(carrier, flight) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">flight_code =</span> <span class="fu">______</span>(___________, ___________, <span class="at">sep =</span> ____)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Given a <em>simple</em> regular expression, state what will be matched</strong></p>
+<p>The following code creates a vector of all of the airport names. Explain what each of the following <code>str_subset</code> commands will return.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airport_names</span> <span class="op">&lt;-</span> <span class="va">airports</span><span class="op">$</span><span class="va">name</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="a">
+<li><p><code>str_subset(airport_names, "Z")</code></p></li>
+<li><p><code>str_subset(airport_names, "^Red")</code></p></li>
+<li><p><code>str_subset(airport_names, "\\.")</code></p></li>
+</ol>
+<p><strong>Read and explain what a function is doing</strong></p>
+<p>Give a 1 sentence description of what the following function does.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">flights</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dest</span> <span class="op">==</span> <span class="va">x</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Specify required arguments and default values</strong></p>
+<p>Edit <code>my_function</code> so that the default value of x is “MSP”.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">flights</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dest</span> <span class="op">==</span> <span class="va">x</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Understand how to return a value or object</strong></p>
+<p>Explain what the following <code>mystery_function</code> will return. How could you edit the code so it will return <code>mean(flights$dep_delay)</code>?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mystery_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">flights</span><span class="op">$</span><span class="va">dep_delay</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">flights</span><span class="op">$</span><span class="va">dep_delay</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">flights</span><span class="op">$</span><span class="va">dep_delay</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Use a logical statement to control the flow of the function</strong></p>
+<p>Complete the function below called summarize_delays. It takes a vector of numbers x and a string metric.</p>
+<ul>
+<li>If metric is equal to “mean”, return the mean of <code>x</code> (remove NAs).</li>
+<li>If metric is equal to “median”, return the median of <code>x</code> (remove NAs).</li>
+<li>Otherwise, return the string “Metric not supported”.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>summarize_delays <span class="ot">&lt;-</span> <span class="cf">function</span>(x, metric){</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(metric <span class="sc">==</span> <span class="st">"mean"</span>){</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    _______________________</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (___________) {</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    _______________________</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    _______________________</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Use across() and where() to apply {dplyr} functions to columns in a dataset</strong></p>
+<p>Write R code that uses <code>across</code> to find the minimum and maximum for each of the quantitative columns in <code>airports</code>.</p>
+<p><strong>Be able to read a for loop and determine what it’s doing</strong></p>
+<p>The following code chunk creates a vector of some airports in Minnesota.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mn_airports</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Bemidji Regional Airport"</span>, </span>
+<span>                <span class="st">"Brainerd Lakes Regional Airport"</span>, </span>
+<span>                <span class="st">"Duluth International Airport"</span>, </span>
+<span>                <span class="st">"Ely Municipal Airport"</span>, </span>
+<span>                <span class="st">"Redwood Falls Municipal Airport"</span>, </span>
+<span>                <span class="st">"Rochester International Airport"</span>, </span>
+<span>                <span class="st">"Thief River Falls Regional Airport"</span>,</span>
+<span>                <span class="st">"Minneapolis-St Paul International/Wold-Chamberlain Airport"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="a">
+<li>What is the purpose of <code>results = numeric(length(mn_airports))</code> in the code chunk below?</li>
+<li>What does <code>seq_along(mn_airports)</code> do?</li>
+<li>What is saved in the <code>x</code> object?</li>
+<li>What is saved in the <code>results</code> object?</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">results</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">mn_airports</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">k</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">mn_airports</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">airports</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">==</span> <span class="va">mn_airports</span><span class="op">[</span><span class="va">k</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">faa</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">results</span><span class="op">[</span><span class="va">k</span><span class="op">]</span> <span class="op">=</span> <span class="fu">my_function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">results</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]    0    0    0    0    0    0    0 5938</code></pre>
 </div>
 </div>
+<p><strong>Explain what a map command is doing</strong></p>
+<p>I’m attempting to use a <code>map</code> solution instead of my <code>for</code> loop above. Does the <code>map</code> code below accomplish the task? If yes, explain how you can tell. If no, explain what you think the issue is.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">mn_airports</span>, <span class="va">my_function</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 0
+
+[[2]]
+[1] 0
+
+[[3]]
+[1] 0
+
+[[4]]
+[1] 0
+
+[[5]]
+[1] 0
+
+[[6]]
+[1] 0
+
+[[7]]
+[1] 0
+
+[[8]]
+[1] 0</code></pre>
+</div>
+</div>
+<p>Now write a <code>map</code> command that returns the number of flights to each of the airports <code>"MSP"</code>, <code>"ORD"</code>, and <code>"SEA"</code>, using <code>my_function</code>. What type of object does it return?</p>
 
 
-
-</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
     if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
