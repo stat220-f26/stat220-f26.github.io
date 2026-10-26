@@ -1,0 +1,674 @@
+---
+title: "18: Iteration II"
+subtitle: "Self-paced tutorial"
+webr:
+  packages:
+    - dplyr
+    - purrr
+    - stringr
+    - palmerpenguins
+format:
+  live-html:
+    toc: true
+    output-file: "18-iteration-2-tutorial"
+engine: knitr
+editor: source
+editor_options:
+  chunk_output_type: console
+---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{=html}
+<style>
+.mcq { border: 1px solid #ccc; border-left: 6px solid #1B365D; border-radius: 6px; padding: 0.8em 1em; margin: 1.2em 0; background: #f6f8fb; }
+.mcq-title { font-weight: bold; color: #1B365D; margin-bottom: 0.4em; }
+.mcq-opt { display: block; width: 100%; text-align: left; margin: 0.35em 0; padding: 0.45em 0.7em; border: 1px solid #bbb; border-radius: 4px; background: white; cursor: pointer; font-size: 0.95em; }
+.mcq-opt:hover { background: #eef2f8; }
+.mcq-opt.right { background: #d9f2d9; border-color: #2e7d32; }
+.mcq-opt.wrong { background: #fde2dd; border-color: #f15a31; }
+.mcq-feedback { margin-top: 0.6em; font-size: 0.95em; }
+</style>
+<script>
+document.addEventListener("click", function (e) {
+  var btn = e.target.closest(".mcq-opt");
+  if (!btn) return;
+  var box = btn.closest(".mcq");
+  box.querySelectorAll(".mcq-opt").forEach(function (b) { b.classList.remove("right", "wrong"); });
+  var correct = btn.dataset.correct === "true";
+  btn.classList.add(correct ? "right" : "wrong");
+  box.querySelector(".mcq-feedback").innerHTML =
+    (correct ? "<strong>Correct!</strong> " : "<strong>Not quite.</strong> ") + btn.dataset.feedback;
+});
+</script>
+```
+
+::: callout-important
+## Today's plan
+
+I've lost my voice! Instead of a lecture, you'll work through this tutorial at your own pace (ideally with your portfolio 2 partner). It covers the same material as the [Day 18 slides](../slides/18/slides18.qmd) and the [Day 18 activity](18-iteration-2.qmd). It should take a little less time than the usual class period. 
+
+- **Code chunks:** click **Run Code** to run them. You can edit the code and run it again.
+- **"Your turn" exercises:** try them first. If you get stuck, click **Get Hint**, and as a last resort, **Show Solution**.
+- **Check-in questions:** click an answer to see whether you're right (and why). Try to answer *before* you click!
+- **Numbered questions (Q1, Q2, ...):** write your answers in your journal for today. 
+
+I will be wandering around to help in class! 
+:::
+
+# Part 0: Setup
+
+Run the chunk below to load the packages and the three datasets we'll use today. (Every chunk after this one needs them, so start here! It may take a few seconds to load.)
+
+- `bakeoff`: *The Great British Bake Off*, season 14 only (one row per baker per episode)
+- `unscaled_cancer`: measurements of breast tumor cells (`Class` is `B` for benign or `M` for malignant)
+- `us_castaway_results`: every player from the first 47 seasons of *Survivor* (`finalist` is `TRUE` if they made the final)
+- `penguins`: the palmerpenguins data (loaded with the package)
+
+```{webr}
+#| autorun: true
+library(dplyr)
+library(purrr)
+library(stringr)
+library(palmerpenguins)
+library(ggplot2)
+
+bakeoff <- read.csv("https://stat220-f26.github.io/data/bakeoff-episodes.csv") |>
+  filter(series == 14)
+unscaled_cancer <- read.csv("https://raw.githubusercontent.com/UBC-DSCI/introduction-to-datascience/refs/heads/main/data/wdbc_unscaled.csv")
+us_castaway_results <- read.csv("https://stat220-f26.github.io/data/survivor-castaway-results.csv")
+
+head(bakeoff, 3)
+```
+
+# Part 1: Warm up and recap
+
+## A `for` loop with an `if`
+
+Read the code below carefully **before** running it.
+
+**Q1.** What do you think `results` will look like? What does the `else` branch handle?
+
+```{=html}
+<div class="mcq">
+  <div class="mcq-title">Check-in 1</div>
+  <p>What is stored in <code>results[k]</code>?</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="The code doesn't count anything. Look at what is assigned to <code>results[k]</code>: it's <code>eliminated$showstopper</code>, not <code>nrow(eliminated)</code>.">A. The number of bakers eliminated in episode k</button>
+  <button class="mcq-opt" data-correct="true" data-feedback="It stores the showstopper dish(es) of whoever was eliminated in episode k, separated by commas if there is more than one, or <code>&quot;none&quot;</code> if nobody was eliminated. <code>results</code> was pre-allocated with <code>character(10)</code>, one slot per episode.">B. The showstopper dish(es) of the baker(s) eliminated in episode k, or "none"</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="The code stores the <code>showstopper</code> column (the dish), not the baker's name.">C. The names of the bakers eliminated in episode k</button>
+  <div class="mcq-feedback"></div>
+</div>
+```
+
+```{webr}
+results <- character(10)
+
+for (k in 1:10) {
+  eliminated <- bakeoff |>
+    filter(episode == k, str_detect(result, "Eliminated"))
+
+  if (nrow(eliminated) == 1) {
+    results[k] <- eliminated$showstopper
+  } else if (nrow(eliminated) > 1) {
+    results[k] <- str_flatten(eliminated$showstopper, collapse = ", ")
+  } else {
+    results[k] <- "none"
+  }
+}
+
+results
+```
+
+
+
+## Recap: `across()`
+
+Last time we saw that `across()` lets us do loop-type tasks inside {dplyr} pipelines. Suppose we want the *range* of every numeric column and the *number of levels* of every factor column in `penguins`. Here are both approaches. Run the chunk and check that they give the same answers.
+
+```{webr}
+# for loop
+output <- numeric(8)
+
+for (k in seq_along(penguins)) {
+  if (is.numeric(penguins[[k]])) {
+    output[k] <- max(penguins[[k]], na.rm = TRUE) - min(penguins[[k]], na.rm = TRUE)
+  }
+  if (is.factor(penguins[[k]])) {
+    output[k] <- length(levels(penguins[[k]]))
+  }
+}
+output
+
+# across
+penguins |>
+  summarize(
+    across(where(is.numeric), \(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE)),
+    across(where(is.factor), \(x) length(levels(x)))
+  )
+```
+
+```{=html}
+<div class="mcq">
+  <div class="mcq-title">Check-in 2</div>
+  <p>What is the limitation of <code>across()</code>?</p>
+  <button class="mcq-opt" data-correct="true" data-feedback="<code>across()</code> only works inside {dplyr} verbs like <code>mutate()</code> and <code>summarize()</code>. We'd like something more general-purpose: that's <code>map()</code>.">A. It only works inside {dplyr} functions like <code>mutate()</code> and <code>summarize()</code></button>
+  <button class="mcq-opt" data-correct="false" data-feedback="It can: the example above uses <code>where(is.numeric)</code> and <code>where(is.factor)</code> to pick columns by type.">B. It can't choose columns by their type</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="It's usually faster to write and easier to read than a <code>for</code> loop. The limitation is where you can use it.">C. It's much slower than a <code>for</code> loop</button>
+  <div class="mcq-feedback"></div>
+</div>
+```
+
+# Part 2: `map()`
+
+The purrr package (loaded with `library(tidyverse)`) gives us `map()`, which can replace many `for` loops.
+
+- `.x`: what to iterate over
+- `.f`: the function to apply to each element
+
+```r
+map(.x, .f, ...)
+```
+
+## How does mapping work?
+
+Suppose we have quiz 1 and quiz 2 scores for 4 students stored in a list, and we want the mean score on each quiz.
+
+```{webr}
+quiz_scores <- list(
+  quiz1 = c(80, 90, 70, 50),
+  quiz2 = c(85, 83, 45, 60)
+)
+
+map(quiz_scores, mean)
+```
+
+`map()` always returns a **list**. If we want the results as a numeric (double) vector instead, we use `map_dbl()`:
+
+```{webr}
+map_dbl(quiz_scores, mean)
+```
+
+What if we ask for a character vector? Run this one and read the error message.
+
+```{webr}
+map_chr(quiz_scores, mean)
+```
+
+**Q2.** Why does `map_chr(quiz_scores, mean)` fail?
+
+```{=html}
+<div class="mcq">
+  <div class="mcq-title">Check-in 3</div>
+  <p>Which function would you use to get the mean of each quiz as a <strong>numeric vector</strong>?</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="<code>map()</code> always returns a list.">A. <code>map()</code></button>
+  <button class="mcq-opt" data-correct="true" data-feedback="<code>map_dbl()</code> returns a double (numeric) vector. The part after <code>map_</code> tells you the type of the output.">B. <code>map_dbl()</code></button>
+  <button class="mcq-opt" data-correct="false" data-feedback="<code>map_chr()</code> returns a character vector, and it fails here because the means are numbers.">C. <code>map_chr()</code></button>
+  <button class="mcq-opt" data-correct="false" data-feedback="<code>map_lgl()</code> returns TRUE/FALSE values.">D. <code>map_lgl()</code></button>
+  <div class="mcq-feedback"></div>
+</div>
+```
+
+## The `map_*` family
+
+| Function | Returns |
+|:--|:--|
+| `map()` | a list |
+| `map_lgl()` | a logical vector |
+| `map_int()` | an integer vector |
+| `map_dbl()` | a double (numeric) vector |
+| `map_chr()` | a character vector |
+| `map_df()` / `map_dfr()` | a data frame (by row binding) |
+
+## Your turn: `map`
+
+**Exercise A.** Edit the code below so it (1) returns a numeric vector and (2) only maps over the numeric columns (columns 3 to 12) of `unscaled_cancer`.
+
+```{webr}
+#| exercise: ex_map_cancer
+map(unscaled_cancer, mean)
+```
+
+```{webr}
+#| exercise: ex_map_cancer
+#| hint: true
+# Two changes: use a different map_ function, and select columns 3 to 12
+# with square brackets, like unscaled_cancer[, 3:12]
+```
+
+```{webr}
+#| exercise: ex_map_cancer
+#| solution: true
+map_dbl(unscaled_cancer[, 3:12], mean)
+```
+
+**Exercise B.** `map` the `summary` function to all of the columns in `penguins`.
+
+```{webr}
+#| exercise: ex_map_summary
+# your code here
+```
+
+```{webr}
+#| exercise: ex_map_summary
+#| solution: true
+map(penguins, summary)
+```
+
+# Part 3: A `map` example with the bakeoff data
+
+Back to the warm up. Here's the same task done three ways. The function `eliminated_showstopper()` does the work for a single episode.
+
+```{webr}
+eliminated_showstopper <- function(ep_number) {
+  bakeoff |>
+    filter(episode == ep_number, str_detect(result, "Eliminated")) |>
+    summarize(
+      n = n(),
+      showstopper = if_else(n > 0, str_flatten(showstopper, collapse = ","), "none")
+    ) |>
+    pull(showstopper)
+}
+
+# for loop + function
+results_loop <- character(10)
+for (k in 1:10) {
+  results_loop[k] <- eliminated_showstopper(k)
+}
+
+# map + function
+results_map <- map_chr(1:10, eliminated_showstopper)
+
+results_map
+```
+
+```{=html}
+<div class="mcq">
+  <div class="mcq-title">Check-in 4</div>
+  <p>Compared to the <code>for</code> loop, what did we <em>not</em> have to do with <code>map_chr()</code>?</p>
+  <button class="mcq-opt" data-correct="true" data-feedback="With <code>map</code> there's no pre-allocated storage (<code>character(10)</code>) and no index variable (<code>k</code>). Fewer moving parts means fewer places to make mistakes.">A. Pre-allocate storage and define an index</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="We still needed the function. A common cost of <code>map</code> is that you often have to write a function first.">B. Write a function</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="We still chose the output type: <code>map_chr()</code> is the character version.">C. Decide what type of output we want</button>
+  <div class="mcq-feedback"></div>
+</div>
+```
+
+## `map` vs. `for` loops
+
+| `map` pros | `map` cons |
+|:--|:--|
+| Don't have to pre-allocate storage | Hard to get used to if you learned `for` loops first |
+| Don't have to define an index | Often need to define a function |
+| Less error-prone | Less fine-grained control |
+| Takes advantage of functional programming | |
+
+For this class, you'll learn the basics of both and practice them on homework. For projects, you can use whichever approach makes more sense to you.
+
+**Q3.** In Portfolio 2, you'll read in a different CSV file for each year of data. Would you use a `for` loop or `map` for that, and why? (There's no wrong answer, but give a reason!)
+
+# Part 4: More practice with `map`
+
+## `penguins` and a custom function
+
+**Exercise C.** Using the `penguins` data, use `map` to calculate the range of every numeric variable and the `table` of every factor variable. Your result should be a list of length 8.
+
+It may help to first write a custom function that does the right thing depending on the type of the input. (Remember `is.numeric()` and `is.factor()` from earlier.)
+
+```{webr}
+#| exercise: ex_penguins
+summarize_depends <- function(x) {
+  # your code here
+}
+
+map(penguins, summarize_depends)
+```
+
+```{webr}
+#| exercise: ex_penguins
+#| hint: true
+# Inside the function: if x is numeric, return max(x, na.rm = TRUE) - min(x, na.rm = TRUE).
+# If x is a factor, return table(x). Use two if() statements with return().
+```
+
+```{webr}
+#| exercise: ex_penguins
+#| solution: true
+summarize_depends <- function(x) {
+  if (is.numeric(x)) return(max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+  if (is.factor(x)) return(table(x))
+}
+
+map(penguins, summarize_depends)
+```
+
+## Survivor data
+
+Here are the first few rows of `us_castaway_results`, which has one row per player per season.
+
+```{webr}
+head(us_castaway_results)
+```
+
+**Exercise D.**
+
+1. Write a function called `finalists` that takes a season number (as a number) and returns a single string with the names of that season's finalists, separated by commas.
+2. Use `map_chr()` to return a character vector of the finalists for seasons 31 to 40.
+
+```{webr}
+#| exercise: ex_finalists
+finalists <- function(season_number) {
+  # your code here
+}
+
+map_chr(31:40, finalists)
+```
+
+```{webr}
+#| exercise: ex_finalists
+#| hint: true
+# Inside the function: filter() to the right season (season == season_number) and to
+# players with finalist == TRUE, then pull() the castaway column. To combine several
+# names into one string, use str_c(..., collapse = ", ").
+```
+
+```{webr}
+#| exercise: ex_finalists
+#| solution: true
+finalists <- function(season_number) {
+  us_castaway_results |>
+    filter(season == season_number, finalist) |>
+    pull(castaway) |>
+    str_c(collapse = ", ")
+}
+
+map_chr(31:40, finalists)
+```
+
+# Part 5: Simulation
+
+Iteration is especially useful for **simulation**. In statistics we often work with a random sample to learn about a population, and we care about the *uncertainty* in our results: did we find a real trend, or could it be due to sampling variability?
+
+## Example: Survivor finalists
+
+If we randomly choose 20 previous Survivor players to play on a new season, how likely are we to get zero finalists? First, here's one random sample of 20 players. Run it a few times:
+
+```{webr}
+us_castaway_results |>
+  slice_sample(n = 20) |>
+  filter(finalist) |>
+  count()
+```
+
+You get a different answer each time, because the sampling is random. To make results **reproducible**, we can set a seed. Run this chunk several times:
+
+```{webr}
+set.seed(0217)
+us_castaway_results |>
+  slice_sample(n = 20) |>
+  filter(finalist) |>
+  count()
+```
+
+```{=html}
+<div class="mcq">
+  <div class="mcq-title">Check-in 5</div>
+  <p>What does <code>set.seed(0217)</code> do?</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="The sample is still random. The seed just fixes <em>where the random number generator starts</em>.">A. It makes the sample less random</button>
+  <button class="mcq-opt" data-correct="true" data-feedback="Anything &quot;random&quot; in R relies on a pseudo-random number generator. Setting the seed starts it at the same value, so you (and anyone else) get the same results every time.">B. It makes the random number generator start at the same value, so the results are reproducible</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="It has nothing to do with the size of the sample. That's <code>n = 20</code> in <code>slice_sample()</code>.">C. It sets the number of players in the sample</button>
+  <div class="mcq-feedback"></div>
+</div>
+```
+
+## The plan
+
+A single sample doesn't tell us much. We'll:
+
+1. Write a **function** that runs our "experiment"
+2. Set up an **iteration** procedure to run our experiment a bunch of times
+3. **Analyze** the results
+
+### Step 1: a function that runs the experiment
+
+```{webr}
+sample_finalists <- function(n) {
+  us_castaway_results |>
+    slice_sample(n = n) |>
+    filter(finalist) |>
+    count() |>
+    pull(n)
+}
+
+sample_finalists(20)
+```
+
+### Step 2: iterate with a `for` loop
+
+Now we run the experiment 1,000 times. (This takes a few seconds in your browser.)
+
+```{webr}
+set.seed(0217)
+
+n_finalists <- integer(1000)
+
+for (k in 1:1000) {
+  n_finalists[k] <- sample_finalists(20)
+}
+
+table(n_finalists) / 1000
+```
+
+```{=html}
+<div class="mcq">
+  <div class="mcq-title">Check-in 6</div>
+  <p>About 14.5% of the players (126 out of 870) were finalists. About how many finalists would you <em>expect</em> in a random sample of 20 players? (Compare with your table above!)</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="That would be a sample with 45% finalists. The expected number is 20 &times; (126/870) &asymp; 2.9.">A. About 9</button>
+  <button class="mcq-opt" data-correct="true" data-feedback="20 &times; (126/870) &asymp; 2.9. The most common values in your table should be around 2 and 3.">B. About 3</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="That's the probability of <em>no</em> finalists, not the expected number. In this simulation it's small (around 4%).">C. About 0</button>
+  <div class="mcq-feedback"></div>
+</div>
+```
+
+**Q4.** According to your simulation, about how likely is it to get zero finalists in a random sample of 20 players? (Look at the `0` column of your table.)
+
+### Step 2 again: iterate with `map`
+
+The same simulation with `map_dbl()`. We need something to map over: here, 1,000 copies of the number 20.
+
+```{webr}
+rep(20, 5)
+```
+
+```{webr}
+set.seed(0217)
+
+rep(20, 1000) |>
+  map_dbl(sample_finalists) |>
+  table()
+```
+
+Each element of `rep(20, 1000)` is passed to `sample_finalists()` as `n`, so the function runs 1,000 times with `n = 20`.
+
+## Your turn: sample one player per season
+
+Some Survivor seasons only had 16 players, while others had 22. That could mean some seasons are slightly under- or over-represented in our sample.
+
+**Exercise E.** Edit the experiment to instead randomly sample **one** player from each season (this gives 47 players), and then sample 20 players from those 47. Then run it 1,000 times with `map_dbl()` and look at the results.
+
+*Hint:* look at the `by` argument in `slice_sample()`.
+
+```{webr}
+#| exercise: ex_sim2
+sample_finalists_2 <- function(n) {
+  us_castaway_results |>
+    slice_sample(n = n) |>
+    filter(finalist) |>
+    count() |>
+    pull(n)
+}
+
+set.seed(0217)
+rep(20, 1000) |>
+  map_dbl(sample_finalists_2) |>
+  table() / 1000
+```
+
+```{webr}
+#| exercise: ex_sim2
+#| hint: true
+# Replace the first slice_sample() with slice_sample(n = 1, by = season),
+# then add a second slice_sample(n = n) for the 20 players.
+```
+
+```{webr}
+#| exercise: ex_sim2
+#| solution: true
+sample_finalists_2 <- function(n) {
+  us_castaway_results |>
+    slice_sample(n = 1, by = season) |>
+    slice_sample(n = n) |>
+    filter(finalist) |>
+    count() |>
+    pull(n)
+}
+
+set.seed(0217)
+rep(20, 1000) |>
+  map_dbl(sample_finalists_2) |>
+  table() / 1000
+```
+
+**Q5.** Why is sampling one player per season first a good idea? Did the results change much?
+
+# Part 6: A permutation test
+
+Recall the `unscaled_cancer` data. One question we might ask: is the radius of malignant tumors noticeably different from the radius of benign tumors?
+
+```{webr}
+unscaled_cancer |>
+  group_by(Class) |>
+  summarize(mean = mean(Radius))
+```
+
+This tells us the average difference *in this sample*, but we don't know whether that difference is "surprising."
+
+## The idea
+
+A **permutation test** asks: if there were *no* difference between the groups, how big of a difference would we see just by chance?
+
+1. Assume there is no difference between the groups
+2. Shuffle the group labels (benign/malignant) at random
+3. Compute the difference in the group means
+4. Repeat a bunch of times
+5. Compare the observed difference to the distribution of simulated differences
+
+If the observed difference is much bigger than the simulated differences, we have evidence of a statistically significant result.
+
+```{webr}
+# The observed difference (malignant minus benign)
+observed <- mean(unscaled_cancer$Radius[unscaled_cancer$Class == "M"]) - mean(unscaled_cancer$Radius[unscaled_cancer$Class == "B"])
+observed
+```
+
+## Your turn: run the experiment
+
+**Exercise F.** Finish the function below. It should (1) create a new column `class_shuffled` that is a random permutation of `Class` (*hint:* see the `sample()` function), (2) group by `class_shuffled` and compute the group means, and (3) return the difference in the means. Right now `class_shuffled` is just a copy of `Class`, so the function returns the observed difference. Edit that line so the labels are shuffled.
+
+```{webr}
+#| exercise: ex_perm
+permute_diff <- function() {
+  unscaled_cancer |>
+    mutate(class_shuffled = Class) |>   # edit this line
+    group_by(class_shuffled) |>
+    summarize(mean = mean(Radius)) |>
+    pull(mean) |>
+    diff()
+}
+
+permute_diff()
+```
+
+```{webr}
+#| exercise: ex_perm
+#| hint: true
+# sample(x) returns a random shuffle of the vector x. Which column do you want to shuffle?
+```
+
+```{webr}
+#| exercise: ex_perm
+#| solution: true
+permute_diff <- function() {
+  unscaled_cancer |>
+    mutate(class_shuffled = sample(Class)) |>
+    group_by(class_shuffled) |>
+    summarize(mean = mean(Radius)) |>
+    pull(mean) |>
+    diff()
+}
+
+permute_diff()
+```
+
+Now we repeat the experiment 1,000 times, save the differences, and make a histogram. The red line is the difference we actually observed. (This takes a few seconds.)
+
+Functions you define inside an exercise box aren't saved for the chunks that follow, so the chunk below starts with a complete version of `permute_diff()`. Compare it with yours!
+
+```{webr}
+permute_diff <- function() {
+  unscaled_cancer |>
+    mutate(class_shuffled = sample(Class)) |>
+    group_by(class_shuffled) |>
+    summarize(mean = mean(Radius)) |>
+    pull(mean) |>
+    diff()
+}
+
+set.seed(0217)
+diffs <- map_dbl(1:1000, \(i) permute_diff())
+
+tibble(
+  diffs = diffs
+) |>
+  ggplot(aes(x = diffs)) + 
+  geom_histogram(col = "white", bins = 25) + 
+  geom_vline(xintercept = observed, col = "darkred", linetype = "dashed")
+
+# proportion of simulated differences at least as extreme as the observed one
+mean(abs(diffs) >= abs(observed))
+```
+
+```{=html}
+<div class="mcq">
+  <div class="mcq-title">Check-in 7</div>
+  <p>The observed difference in mean radius is about 5.3, and the simulated differences are all close to 0. What does this tell us?</p>
+  <button class="mcq-opt" data-correct="false" data-feedback="It's the other way around: a difference as big as ours essentially <em>never</em> shows up when the labels are shuffled.">A. A difference this big happens often by chance</button>
+  <button class="mcq-opt" data-correct="true" data-feedback="If there were really no difference between benign and malignant tumors, shuffling the labels would almost never produce a difference as big as 5.3. That's strong evidence that malignant tumors have a larger mean radius.">B. A difference this big would be extremely unlikely if there were no difference, so we have strong evidence of a real difference</button>
+  <button class="mcq-opt" data-correct="false" data-feedback="The permutation test can only tell us whether the difference is bigger than what chance alone produces. It says nothing about whether the model is a good one for other purposes.">C. The test doesn't tell us anything</button>
+  <div class="mcq-feedback"></div>
+</div>
+```
+
+**Q6.** In your own words, what is the proportion at the bottom of the output telling you? (Look back at step 5 of "The idea.")
+
+**Q7.** In this simulation, what role did the function play, and what role did `map_dbl()` play?
+
+# Wrap up
+
+If you got through everything, great! If not, that's OK. Finish the rest on your own or with your group, and bring your questions to the next class.
+
+**Q8.** What questions do you have about `across()`, `map()`, or simulation? (Write them down! We'll talk about them next class.)
+
+***
+
+## Function quick reference
+
+| Function | Purpose |
+|----|-----------|
+| `map(.x, .f)` | Apply `.f` to each element of `.x`; returns a list |
+| `map_dbl()`, `map_chr()`, `map_lgl()`, `map_int()` | Same, but returns a vector of that type |
+| `map_dfr()` | Same, but row-binds the results into a data frame |
+| `rep(20, 1000)` | A vector with 1,000 copies of 20 (something to `map` over) |
+| `slice_sample(n = 20)` | Randomly sample 20 rows |
+| `slice_sample(n = 1, by = group)` | Randomly sample 1 row per group |
+| `set.seed(0217)` | Make random results reproducible |
+| `sample(x)` | Randomly shuffle (permute) the vector `x` |
+| `table(x) / length(x)` | Proportion of each value of `x` |
