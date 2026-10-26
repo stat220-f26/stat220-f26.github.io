@@ -1,0 +1,871 @@
+castaway_id,castaway,season_name,season,place,jury,finalist
+US0001,Sonja,Survivor: Borneo,1,16,FALSE,FALSE
+US0002,B.B.,Survivor: Borneo,1,15,FALSE,FALSE
+US0003,Stacey,Survivor: Borneo,1,14,FALSE,FALSE
+US0004,Ramona,Survivor: Borneo,1,13,FALSE,FALSE
+US0005,Dirk,Survivor: Borneo,1,12,FALSE,FALSE
+US0006,Joel,Survivor: Borneo,1,11,FALSE,FALSE
+US0007,Gretchen,Survivor: Borneo,1,10,FALSE,FALSE
+US0008,Greg,Survivor: Borneo,1,9,TRUE,FALSE
+US0009,Jenna,Survivor: Borneo,1,8,TRUE,FALSE
+US0010,Gervase,Survivor: Borneo,1,7,TRUE,FALSE
+US0011,Colleen,Survivor: Borneo,1,6,TRUE,FALSE
+US0012,Sean,Survivor: Borneo,1,5,TRUE,FALSE
+US0013,Sue,Survivor: Borneo,1,4,TRUE,FALSE
+US0014,Rudy,Survivor: Borneo,1,3,TRUE,FALSE
+US0015,Kelly,Survivor: Borneo,1,2,FALSE,TRUE
+US0016,Richard,Survivor: Borneo,1,1,FALSE,TRUE
+US0017,Debb,Survivor: The Australian Outback,2,16,FALSE,FALSE
+US0018,Kel,Survivor: The Australian Outback,2,15,FALSE,FALSE
+US0019,Maralyn,Survivor: The Australian Outback,2,14,FALSE,FALSE
+US0020,Mitchell,Survivor: The Australian Outback,2,13,FALSE,FALSE
+US0021,Kimmi,Survivor: The Australian Outback,2,12,FALSE,FALSE
+US0022,Michael,Survivor: The Australian Outback,2,11,FALSE,FALSE
+US0023,Jeff,Survivor: The Australian Outback,2,10,FALSE,FALSE
+US0024,Alicia,Survivor: The Australian Outback,2,9,TRUE,FALSE
+US0025,Jerri,Survivor: The Australian Outback,2,8,TRUE,FALSE
+US0026,Nick,Survivor: The Australian Outback,2,7,TRUE,FALSE
+US0027,Amber,Survivor: The Australian Outback,2,6,TRUE,FALSE
+US0028,Rodger,Survivor: The Australian Outback,2,5,TRUE,FALSE
+US0029,Elisabeth,Survivor: The Australian Outback,2,4,TRUE,FALSE
+US0030,Keith,Survivor: The Australian Outback,2,3,TRUE,FALSE
+US0031,Colby,Survivor: The Australian Outback,2,2,FALSE,TRUE
+US0032,Tina,Survivor: The Australian Outback,2,1,FALSE,TRUE
+US0033,Diane,Survivor: Africa,3,16,FALSE,FALSE
+US0034,Jessie,Survivor: Africa,3,15,FALSE,FALSE
+US0035,Carl,Survivor: Africa,3,14,FALSE,FALSE
+US0036,Linda,Survivor: Africa,3,13,FALSE,FALSE
+US0037,Silas,Survivor: Africa,3,12,FALSE,FALSE
+US0038,Lindsey,Survivor: Africa,3,11,FALSE,FALSE
+US0039,Clarence,Survivor: Africa,3,10,FALSE,FALSE
+US0040,Kelly,Survivor: Africa,3,9,TRUE,FALSE
+US0041,Brandon,Survivor: Africa,3,8,TRUE,FALSE
+US0042,Frank,Survivor: Africa,3,7,TRUE,FALSE
+US0043,Kim P.,Survivor: Africa,3,6,TRUE,FALSE
+US0044,Teresa,Survivor: Africa,3,5,TRUE,FALSE
+US0045,Tom,Survivor: Africa,3,4,TRUE,FALSE
+US0046,Lex,Survivor: Africa,3,3,TRUE,FALSE
+US0047,Kim J.,Survivor: Africa,3,2,FALSE,TRUE
+US0048,Ethan,Survivor: Africa,3,1,FALSE,TRUE
+US0049,Peter,Survivor: Marquesas,4,16,FALSE,FALSE
+US0050,Patricia,Survivor: Marquesas,4,15,FALSE,FALSE
+US0051,Hunter,Survivor: Marquesas,4,14,FALSE,FALSE
+US0052,Sarah,Survivor: Marquesas,4,13,FALSE,FALSE
+US0053,Gabriel,Survivor: Marquesas,4,12,FALSE,FALSE
+US0054,Gina,Survivor: Marquesas,4,11,FALSE,FALSE
+US0055,Boston Rob,Survivor: Marquesas,4,10,FALSE,FALSE
+US0056,John,Survivor: Marquesas,4,9,TRUE,FALSE
+US0057,Zoe,Survivor: Marquesas,4,8,TRUE,FALSE
+US0058,Tammy,Survivor: Marquesas,4,7,TRUE,FALSE
+US0059,Robert,Survivor: Marquesas,4,6,TRUE,FALSE
+US0060,Sean,Survivor: Marquesas,4,5,TRUE,FALSE
+US0061,Paschal,Survivor: Marquesas,4,4,TRUE,FALSE
+US0062,Kathy,Survivor: Marquesas,4,3,TRUE,FALSE
+US0063,Neleh,Survivor: Marquesas,4,2,FALSE,TRUE
+US0064,Vecepia,Survivor: Marquesas,4,1,FALSE,TRUE
+US0065,John,Survivor: Thailand,5,16,FALSE,FALSE
+US0066,Tanya,Survivor: Thailand,5,15,FALSE,FALSE
+US0067,Jed,Survivor: Thailand,5,14,FALSE,FALSE
+US0068,Ghandia,Survivor: Thailand,5,13,FALSE,FALSE
+US0069,Stephanie,Survivor: Thailand,5,12,FALSE,FALSE
+US0070,Robb,Survivor: Thailand,5,11,FALSE,FALSE
+US0071,Shii Ann,Survivor: Thailand,5,10,FALSE,FALSE
+US0072,Erin,Survivor: Thailand,5,9,TRUE,FALSE
+US0073,Ken,Survivor: Thailand,5,8,TRUE,FALSE
+US0074,Penny,Survivor: Thailand,5,7,TRUE,FALSE
+US0075,Jake,Survivor: Thailand,5,6,TRUE,FALSE
+US0076,Ted,Survivor: Thailand,5,5,TRUE,FALSE
+US0077,Helen,Survivor: Thailand,5,4,TRUE,FALSE
+US0078,Jan,Survivor: Thailand,5,3,TRUE,FALSE
+US0079,Clay,Survivor: Thailand,5,2,FALSE,TRUE
+US0080,Brian,Survivor: Thailand,5,1,FALSE,TRUE
+US0081,Ryan,Survivor: The Amazon,6,16,FALSE,FALSE
+US0082,Janet,Survivor: The Amazon,6,15,FALSE,FALSE
+US0083,Daniel,Survivor: The Amazon,6,14,FALSE,FALSE
+US0084,JoAnna,Survivor: The Amazon,6,13,FALSE,FALSE
+US0085,Jeanne,Survivor: The Amazon,6,12,FALSE,FALSE
+US0086,Shawna,Survivor: The Amazon,6,11,FALSE,FALSE
+US0087,Roger,Survivor: The Amazon,6,10,FALSE,FALSE
+US0088,Dave,Survivor: The Amazon,6,9,TRUE,FALSE
+US0089,Deena,Survivor: The Amazon,6,8,TRUE,FALSE
+US0090,Alex,Survivor: The Amazon,6,7,TRUE,FALSE
+US0091,Christy,Survivor: The Amazon,6,6,TRUE,FALSE
+US0092,Heidi,Survivor: The Amazon,6,5,TRUE,FALSE
+US0093,Butch,Survivor: The Amazon,6,4,TRUE,FALSE
+US0094,Rob,Survivor: The Amazon,6,3,TRUE,FALSE
+US0095,Matthew,Survivor: The Amazon,6,2,FALSE,TRUE
+US0096,Jenna,Survivor: The Amazon,6,1,FALSE,TRUE
+US0097,Nicole,Survivor: Pearl Islands,7,16,FALSE,FALSE
+US0098,Ryan S.,Survivor: Pearl Islands,7,15,FALSE,FALSE
+US0099,Lillian,Survivor: Pearl Islands,7,NA,FALSE,FALSE
+US0100,Burton,Survivor: Pearl Islands,7,NA,FALSE,FALSE
+US0101,Michelle,Survivor: Pearl Islands,7,14,FALSE,FALSE
+US0102,Trish,Survivor: Pearl Islands,7,13,FALSE,FALSE
+US0103,Shawn,Survivor: Pearl Islands,7,12,FALSE,FALSE
+US0104,Osten,Survivor: Pearl Islands,7,11,FALSE,FALSE
+US0105,Andrew,Survivor: Pearl Islands,7,10,FALSE,FALSE
+US0106,Ryan O.,Survivor: Pearl Islands,7,9,TRUE,FALSE
+US0107,Rupert,Survivor: Pearl Islands,7,8,TRUE,FALSE
+US0108,Tijuana,Survivor: Pearl Islands,7,7,TRUE,FALSE
+US0109,Christa,Survivor: Pearl Islands,7,6,TRUE,FALSE
+US0100,Burton,Survivor: Pearl Islands,7,5,TRUE,FALSE
+US0110,Darrah,Survivor: Pearl Islands,7,4,TRUE,FALSE
+US0111,Jonny Fairplay,Survivor: Pearl Islands,7,3,TRUE,FALSE
+US0099,Lillian,Survivor: Pearl Islands,7,2,FALSE,TRUE
+US0112,Sandra,Survivor: Pearl Islands,7,1,FALSE,TRUE
+US0032,Tina,Survivor: All-Stars,8,18,FALSE,FALSE
+US0014,Rudy,Survivor: All-Stars,8,17,FALSE,FALSE
+US0096,Jenna M.,Survivor: All-Stars,8,16,FALSE,FALSE
+US0094,Rob C.,Survivor: All-Stars,8,15,FALSE,FALSE
+US0016,Richard,Survivor: All-Stars,8,14,FALSE,FALSE
+US0013,Sue,Survivor: All-Stars,8,13,FALSE,FALSE
+US0031,Colby,Survivor: All-Stars,8,12,FALSE,FALSE
+US0048,Ethan,Survivor: All-Stars,8,11,FALSE,FALSE
+US0025,Jerri,Survivor: All-Stars,8,10,FALSE,FALSE
+US0046,Lex,Survivor: All-Stars,8,9,TRUE,FALSE
+US0062,Kathy,Survivor: All-Stars,8,8,TRUE,FALSE
+US0024,Alicia,Survivor: All-Stars,8,7,TRUE,FALSE
+US0071,Shii Ann,Survivor: All-Stars,8,6,TRUE,FALSE
+US0045,Tom,Survivor: All-Stars,8,5,TRUE,FALSE
+US0107,Rupert,Survivor: All-Stars,8,4,TRUE,FALSE
+US0009,Jenna L.,Survivor: All-Stars,8,3,TRUE,FALSE
+US0055,Boston Rob,Survivor: All-Stars,8,2,FALSE,TRUE
+US0027,Amber,Survivor: All-Stars,8,1,FALSE,TRUE
+US0113,Brook,Survivor: Vanuatu,9,18,FALSE,FALSE
+US0114,Dolly,Survivor: Vanuatu,9,17,FALSE,FALSE
+US0115,John P.,Survivor: Vanuatu,9,16,FALSE,FALSE
+US0116,Mia,Survivor: Vanuatu,9,15,FALSE,FALSE
+US0117,Brady,Survivor: Vanuatu,9,14,FALSE,FALSE
+US0118,Travis,Survivor: Vanuatu,9,13,FALSE,FALSE
+US0119,Lisa,Survivor: Vanuatu,9,12,FALSE,FALSE
+US0120,John K.,Survivor: Vanuatu,9,11,FALSE,FALSE
+US0121,Rory,Survivor: Vanuatu,9,10,FALSE,FALSE
+US0122,Lea,Survivor: Vanuatu,9,9,TRUE,FALSE
+US0123,Chad,Survivor: Vanuatu,9,8,TRUE,FALSE
+US0124,Leann,Survivor: Vanuatu,9,7,TRUE,FALSE
+US0125,Ami,Survivor: Vanuatu,9,6,TRUE,FALSE
+US0126,Julie,Survivor: Vanuatu,9,5,TRUE,FALSE
+US0127,Eliza,Survivor: Vanuatu,9,4,TRUE,FALSE
+US0128,Scout,Survivor: Vanuatu,9,3,TRUE,FALSE
+US0129,Twila,Survivor: Vanuatu,9,2,FALSE,TRUE
+US0130,Chris,Survivor: Vanuatu,9,1,FALSE,TRUE
+US0131,Jonathan,Survivor: Palau,10,20,FALSE,FALSE
+US0132,Wanda,Survivor: Palau,10,19,FALSE,FALSE
+US0133,Jolanda,Survivor: Palau,10,18,FALSE,FALSE
+US0134,Ashlee,Survivor: Palau,10,17,FALSE,FALSE
+US0135,Jeff,Survivor: Palau,10,16,FALSE,FALSE
+US0136,Kim,Survivor: Palau,10,15,FALSE,FALSE
+US0137,Willard,Survivor: Palau,10,14,FALSE,FALSE
+US0138,Angie,Survivor: Palau,10,13,FALSE,FALSE
+US0139,James,Survivor: Palau,10,12,FALSE,FALSE
+US0140,Ibrehem,Survivor: Palau,10,11,FALSE,FALSE
+US0141,Bobby Jon,Survivor: Palau,10,10,FALSE,FALSE
+US0142,Coby,Survivor: Palau,10,9,TRUE,FALSE
+US0143,Janu,Survivor: Palau,10,8,TRUE,FALSE
+US0144,Stephenie,Survivor: Palau,10,7,TRUE,FALSE
+US0145,Gregg,Survivor: Palau,10,6,TRUE,FALSE
+US0146,Caryn,Survivor: Palau,10,5,TRUE,FALSE
+US0147,Jenn,Survivor: Palau,10,4,TRUE,FALSE
+US0148,Ian,Survivor: Palau,10,3,TRUE,FALSE
+US0149,Katie,Survivor: Palau,10,2,FALSE,TRUE
+US0150,Tom,Survivor: Palau,10,1,FALSE,TRUE
+US0151,Jim,Survivor: Guatemala,11,18,FALSE,FALSE
+US0152,Morgan,Survivor: Guatemala,11,17,FALSE,FALSE
+US0153,Brianna,Survivor: Guatemala,11,16,FALSE,FALSE
+US0154,Brooke,Survivor: Guatemala,11,15,FALSE,FALSE
+US0155,Blake,Survivor: Guatemala,11,14,FALSE,FALSE
+US0156,Margaret,Survivor: Guatemala,11,13,FALSE,FALSE
+US0157,Brian,Survivor: Guatemala,11,12,FALSE,FALSE
+US0158,Amy,Survivor: Guatemala,11,11,FALSE,FALSE
+US0159,Brandon,Survivor: Guatemala,11,10,FALSE,FALSE
+US0141,Bobby Jon,Survivor: Guatemala,11,9,TRUE,FALSE
+US0160,Jamie,Survivor: Guatemala,11,8,TRUE,FALSE
+US0161,Gary,Survivor: Guatemala,11,7,TRUE,FALSE
+US0162,Judd,Survivor: Guatemala,11,6,TRUE,FALSE
+US0163,Cindy,Survivor: Guatemala,11,5,TRUE,FALSE
+US0164,Lydia,Survivor: Guatemala,11,4,TRUE,FALSE
+US0165,Rafe,Survivor: Guatemala,11,3,TRUE,FALSE
+US0144,Stephenie,Survivor: Guatemala,11,2,FALSE,TRUE
+US0166,Danni,Survivor: Guatemala,11,1,FALSE,TRUE
+US0167,Tina,Survivor: Panama,12,16,FALSE,FALSE
+US0168,Melinda,Survivor: Panama,12,15,FALSE,FALSE
+US0169,Misty,Survivor: Panama,12,14,FALSE,FALSE
+US0170,Ruth Marie,Survivor: Panama,12,13,FALSE,FALSE
+US0171,Bobby,Survivor: Panama,12,12,FALSE,FALSE
+US0172,Dan,Survivor: Panama,12,11,FALSE,FALSE
+US0173,Nick,Survivor: Panama,12,10,FALSE,FALSE
+US0174,Austin,Survivor: Panama,12,9,TRUE,FALSE
+US0175,Sally,Survivor: Panama,12,8,TRUE,FALSE
+US0176,Bruce,Survivor: Panama,12,7,TRUE,FALSE
+US0177,Courtney,Survivor: Panama,12,6,TRUE,FALSE
+US0178,Shane,Survivor: Panama,12,5,TRUE,FALSE
+US0179,Cirie,Survivor: Panama,12,4,TRUE,FALSE
+US0180,Terry,Survivor: Panama,12,3,TRUE,FALSE
+US0181,Danielle,Survivor: Panama,12,2,FALSE,TRUE
+US0182,Aras,Survivor: Panama,12,1,FALSE,TRUE
+US0183,Sekou,Survivor: Cook Islands,13,20,FALSE,FALSE
+US0184,Billy,Survivor: Cook Islands,13,19,FALSE,FALSE
+US0185,Cecilia,Survivor: Cook Islands,13,18,FALSE,FALSE
+US0186,J.P.,Survivor: Cook Islands,13,17,FALSE,FALSE
+US0187,Stephannie,Survivor: Cook Islands,13,16,FALSE,FALSE
+US0188,Cao Boi,Survivor: Cook Islands,13,15,FALSE,FALSE
+US0189,Cristina,Survivor: Cook Islands,13,14,FALSE,FALSE
+US0190,Jessica,Survivor: Cook Islands,13,13,FALSE,FALSE
+US0191,Brad,Survivor: Cook Islands,13,12,TRUE,FALSE
+US0192,Rebecca,Survivor: Cook Islands,13,11,TRUE,FALSE
+US0193,Jenny,Survivor: Cook Islands,13,10,TRUE,FALSE
+US0194,Nate,Survivor: Cook Islands,13,9,TRUE,FALSE
+US0195,Candice,Survivor: Cook Islands,13,8,TRUE,FALSE
+US0196,Jonathan,Survivor: Cook Islands,13,7,TRUE,FALSE
+US0197,Parvati,Survivor: Cook Islands,13,6,TRUE,FALSE
+US0198,Adam,Survivor: Cook Islands,13,5,TRUE,FALSE
+US0199,Sundra,Survivor: Cook Islands,13,4,TRUE,FALSE
+US0200,Becky,Survivor: Cook Islands,13,3,FALSE,TRUE
+US0201,Ozzy,Survivor: Cook Islands,13,2,FALSE,TRUE
+US0202,Yul,Survivor: Cook Islands,13,1,FALSE,TRUE
+US0203,Jessica,Survivor: Fiji,14,19,FALSE,FALSE
+US0204,Erica,Survivor: Fiji,14,18,FALSE,FALSE
+US0205,Sylvia,Survivor: Fiji,14,17,FALSE,FALSE
+US0206,Gary,Survivor: Fiji,14,16,FALSE,FALSE
+US0207,Liliana,Survivor: Fiji,14,15,FALSE,FALSE
+US0208,Rita,Survivor: Fiji,14,14,FALSE,FALSE
+US0209,Anthony,Survivor: Fiji,14,13,FALSE,FALSE
+US0210,Rocky,Survivor: Fiji,14,12,TRUE,FALSE
+US0211,Lisi,Survivor: Fiji,14,11,TRUE,FALSE
+US0212,Michelle,Survivor: Fiji,14,10,TRUE,FALSE
+US0213,Edgardo,Survivor: Fiji,14,9,TRUE,FALSE
+US0214,Mookie,Survivor: Fiji,14,8,TRUE,FALSE
+US0215,Alex,Survivor: Fiji,14,7,TRUE,FALSE
+US0216,Stacy,Survivor: Fiji,14,6,TRUE,FALSE
+US0217,Boo,Survivor: Fiji,14,5,TRUE,FALSE
+US0218,Yau-Man,Survivor: Fiji,14,4,TRUE,FALSE
+US0219,Dreamz,Survivor: Fiji,14,3,FALSE,TRUE
+US0220,Cassandra,Survivor: Fiji,14,2,FALSE,TRUE
+US0221,Earl,Survivor: Fiji,14,1,FALSE,TRUE
+US0222,Chicken,Survivor: China,15,16,FALSE,FALSE
+US0223,Ashley,Survivor: China,15,15,FALSE,FALSE
+US0224,Leslie,Survivor: China,15,14,FALSE,FALSE
+US0225,Dave,Survivor: China,15,13,FALSE,FALSE
+US0226,Aaron,Survivor: China,15,12,FALSE,FALSE
+US0227,Sherea,Survivor: China,15,11,FALSE,FALSE
+US0228,Jaime,Survivor: China,15,10,TRUE,FALSE
+US0229,Jean-Robert,Survivor: China,15,9,TRUE,FALSE
+US0230,Frosti,Survivor: China,15,8,TRUE,FALSE
+US0231,James,Survivor: China,15,7,TRUE,FALSE
+US0232,Erik,Survivor: China,15,6,TRUE,FALSE
+US0233,Peih-Gee,Survivor: China,15,5,TRUE,FALSE
+US0234,Denise,Survivor: China,15,4,TRUE,FALSE
+US0235,Amanda,Survivor: China,15,3,FALSE,TRUE
+US0236,Courtney,Survivor: China,15,2,FALSE,TRUE
+US0237,Todd,Survivor: China,15,1,FALSE,TRUE
+US0111,Jonny Fairplay,Survivor: Micronesia,16,20,FALSE,FALSE
+US0238,Mary,Survivor: Micronesia,16,19,FALSE,FALSE
+US0218,Yau-Man,Survivor: Micronesia,16,18,FALSE,FALSE
+US0239,Mikey B,Survivor: Micronesia,16,17,FALSE,FALSE
+US0240,Joel,Survivor: Micronesia,16,16,FALSE,FALSE
+US0196,Jonathan,Survivor: Micronesia,16,15,FALSE,FALSE
+US0241,Chet,Survivor: Micronesia,16,14,FALSE,FALSE
+US0242,Kathy,Survivor: Micronesia,16,13,FALSE,FALSE
+US0243,Tracy,Survivor: Micronesia,16,12,FALSE,FALSE
+US0125,Ami,Survivor: Micronesia,16,11,FALSE,FALSE
+US0127,Eliza,Survivor: Micronesia,16,10,TRUE,FALSE
+US0201,Ozzy,Survivor: Micronesia,16,9,TRUE,FALSE
+US0244,Jason,Survivor: Micronesia,16,8,TRUE,FALSE
+US0231,James,Survivor: Micronesia,16,7,TRUE,FALSE
+US0245,Alexis,Survivor: Micronesia,16,6,TRUE,FALSE
+US0246,Erik,Survivor: Micronesia,16,5,TRUE,FALSE
+US0247,Natalie,Survivor: Micronesia,16,4,TRUE,FALSE
+US0179,Cirie,Survivor: Micronesia,16,3,TRUE,FALSE
+US0235,Amanda,Survivor: Micronesia,16,2,FALSE,TRUE
+US0197,Parvati,Survivor: Micronesia,16,1,FALSE,TRUE
+US0248,Michelle,Survivor: Gabon,17,18,FALSE,FALSE
+US0249,Gillian,Survivor: Gabon,17,17,FALSE,FALSE
+US0250,Paloma,Survivor: Gabon,17,16,FALSE,FALSE
+US0251,Jacquie,Survivor: Gabon,17,15,FALSE,FALSE
+US0252,GC,Survivor: Gabon,17,14,FALSE,FALSE
+US0253,Kelly,Survivor: Gabon,17,13,FALSE,FALSE
+US0254,Ace,Survivor: Gabon,17,12,FALSE,FALSE
+US0255,Dan,Survivor: Gabon,17,11,FALSE,FALSE
+US0256,Marcus,Survivor: Gabon,17,10,TRUE,FALSE
+US0257,Charlie,Survivor: Gabon,17,9,TRUE,FALSE
+US0258,Randy,Survivor: Gabon,17,8,TRUE,FALSE
+US0259,Corinne,Survivor: Gabon,17,7,TRUE,FALSE
+US0260,Crystal,Survivor: Gabon,17,6,TRUE,FALSE
+US0261,Ken,Survivor: Gabon,17,5,TRUE,FALSE
+US0262,Matty,Survivor: Gabon,17,4,TRUE,FALSE
+US0263,Sugar,Survivor: Gabon,17,3,FALSE,TRUE
+US0264,Susie,Survivor: Gabon,17,2,FALSE,TRUE
+US0265,Bob,Survivor: Gabon,17,1,FALSE,TRUE
+US0266,Carolina,Survivor: Tocantins,18,16,FALSE,FALSE
+US0267,Candace,Survivor: Tocantins,18,15,FALSE,FALSE
+US0268,Jerry,Survivor: Tocantins,18,14,FALSE,FALSE
+US0269,Sandy,Survivor: Tocantins,18,13,FALSE,FALSE
+US0270,Spencer,Survivor: Tocantins,18,12,FALSE,FALSE
+US0271,Sydney,Survivor: Tocantins,18,11,FALSE,FALSE
+US0272,Joe,Survivor: Tocantins,18,10,FALSE,FALSE
+US0273,Brendan,Survivor: Tocantins,18,9,TRUE,FALSE
+US0274,Tyson,Survivor: Tocantins,18,8,TRUE,FALSE
+US0275,Sierra,Survivor: Tocantins,18,7,TRUE,FALSE
+US0276,Debbie,Survivor: Tocantins,18,6,TRUE,FALSE
+US0277,Coach,Survivor: Tocantins,18,5,TRUE,FALSE
+US0278,Taj,Survivor: Tocantins,18,4,TRUE,FALSE
+US0279,Erinn,Survivor: Tocantins,18,3,TRUE,FALSE
+US0280,Stephen,Survivor: Tocantins,18,2,FALSE,TRUE
+US0281,J.T.,Survivor: Tocantins,18,1,FALSE,TRUE
+US0282,Marisa,Survivor: Samoa,19,20,FALSE,FALSE
+US0283,Mike,Survivor: Samoa,19,19,FALSE,FALSE
+US0284,Betsy,Survivor: Samoa,19,18,FALSE,FALSE
+US0285,Ben,Survivor: Samoa,19,17,FALSE,FALSE
+US0286,Yasmin,Survivor: Samoa,19,16,FALSE,FALSE
+US0287,Ashley,Survivor: Samoa,19,15,FALSE,FALSE
+US0288,Russell S.,Survivor: Samoa,19,14,FALSE,FALSE
+US0289,Liz,Survivor: Samoa,19,13,FALSE,FALSE
+US0290,Erik,Survivor: Samoa,19,12,TRUE,FALSE
+US0291,Kelly,Survivor: Samoa,19,11,TRUE,FALSE
+US0292,Laura,Survivor: Samoa,19,10,TRUE,FALSE
+US0293,John,Survivor: Samoa,19,9,TRUE,FALSE
+US0294,Dave,Survivor: Samoa,19,8,TRUE,FALSE
+US0295,Monica,Survivor: Samoa,19,7,TRUE,FALSE
+US0296,Shambo,Survivor: Samoa,19,6,TRUE,FALSE
+US0297,Jaison,Survivor: Samoa,19,5,TRUE,FALSE
+US0298,Brett,Survivor: Samoa,19,4,TRUE,FALSE
+US0299,Mick,Survivor: Samoa,19,3,FALSE,TRUE
+US0300,Russell H.,Survivor: Samoa,19,2,FALSE,TRUE
+US0301,Natalie,Survivor: Samoa,19,1,FALSE,TRUE
+US0263,Sugar,Survivor: Heroes vs. Villains,20,20,FALSE,FALSE
+US0144,Stephenie,Survivor: Heroes vs. Villains,20,19,FALSE,FALSE
+US0258,Randy,Survivor: Heroes vs. Villains,20,18,FALSE,FALSE
+US0179,Cirie,Survivor: Heroes vs. Villains,20,17,FALSE,FALSE
+US0150,Tom,Survivor: Heroes vs. Villains,20,16,FALSE,FALSE
+US0274,Tyson,Survivor: Heroes vs. Villains,20,15,FALSE,FALSE
+US0231,James,Survivor: Heroes vs. Villains,20,14,FALSE,FALSE
+US0055,Boston Rob,Survivor: Heroes vs. Villains,20,13,FALSE,FALSE
+US0277,Coach,Survivor: Heroes vs. Villains,20,12,TRUE,FALSE
+US0236,Courtney,Survivor: Heroes vs. Villains,20,11,TRUE,FALSE
+US0281,J.T.,Survivor: Heroes vs. Villains,20,10,TRUE,FALSE
+US0235,Amanda,Survivor: Heroes vs. Villains,20,9,TRUE,FALSE
+US0195,Candice,Survivor: Heroes vs. Villains,20,8,TRUE,FALSE
+US0181,Danielle,Survivor: Heroes vs. Villains,20,7,TRUE,FALSE
+US0107,Rupert,Survivor: Heroes vs. Villains,20,6,TRUE,FALSE
+US0031,Colby,Survivor: Heroes vs. Villains,20,5,TRUE,FALSE
+US0025,Jerri,Survivor: Heroes vs. Villains,20,4,TRUE,FALSE
+US0300,Russell,Survivor: Heroes vs. Villains,20,3,FALSE,TRUE
+US0197,Parvati,Survivor: Heroes vs. Villains,20,2,FALSE,TRUE
+US0112,Sandra,Survivor: Heroes vs. Villains,20,1,FALSE,TRUE
+US0302,Wendy,Survivor: Nicaragua,21,20,FALSE,FALSE
+US0303,Shannon,Survivor: Nicaragua,21,19,FALSE,FALSE
+US0304,Jimmy J.,Survivor: Nicaragua,21,18,FALSE,FALSE
+US0305,Jimmy T.,Survivor: Nicaragua,21,17,FALSE,FALSE
+US0306,Tyrone,Survivor: Nicaragua,21,16,FALSE,FALSE
+US0307,Kelly B.,Survivor: Nicaragua,21,15,FALSE,FALSE
+US0308,Yve,Survivor: Nicaragua,21,14,FALSE,FALSE
+US0309,Jill,Survivor: Nicaragua,21,13,FALSE,FALSE
+US0310,Alina,Survivor: Nicaragua,21,12,TRUE,FALSE
+US0311,Marty,Survivor: Nicaragua,21,11,TRUE,FALSE
+US0312,Brenda,Survivor: Nicaragua,21,10,TRUE,FALSE
+US0313,NaOnka,Survivor: Nicaragua,21,9,TRUE,FALSE
+US0314,Purple Kelly,Survivor: Nicaragua,21,8,TRUE,FALSE
+US0315,Benry,Survivor: Nicaragua,21,7,TRUE,FALSE
+US0316,Jane,Survivor: Nicaragua,21,6,TRUE,FALSE
+US0317,Dan,Survivor: Nicaragua,21,5,TRUE,FALSE
+US0318,Holly,Survivor: Nicaragua,21,4,TRUE,FALSE
+US0319,Sash,Survivor: Nicaragua,21,3,FALSE,TRUE
+US0320,Chase,Survivor: Nicaragua,21,2,FALSE,TRUE
+US0321,Fabio,Survivor: Nicaragua,21,1,FALSE,TRUE
+US0322,Francesca,Survivor: Redemption Island,22,18,FALSE,FALSE
+US0323,Matt,Survivor: Redemption Island,22,NA,FALSE,FALSE
+US0300,Russell,Survivor: Redemption Island,22,17,FALSE,FALSE
+US0324,Kristina,Survivor: Redemption Island,22,16,FALSE,FALSE
+US0325,Krista,Survivor: Redemption Island,22,15,FALSE,FALSE
+US0326,Stephanie,Survivor: Redemption Island,22,14,FALSE,FALSE
+US0327,Sarita,Survivor: Redemption Island,22,13,FALSE,FALSE
+US0323,Matt,Survivor: Redemption Island,22,12,TRUE,FALSE
+US0328,Mike,Survivor: Redemption Island,22,11,TRUE,FALSE
+US0329,David,Survivor: Redemption Island,22,10,TRUE,FALSE
+US0330,Julie,Survivor: Redemption Island,22,9,TRUE,FALSE
+US0331,Ralph,Survivor: Redemption Island,22,8,TRUE,FALSE
+US0332,Steve,Survivor: Redemption Island,22,7,TRUE,FALSE
+US0333,Andrea,Survivor: Redemption Island,22,NA,FALSE,FALSE
+US0334,Grant,Survivor: Redemption Island,22,6,TRUE,FALSE
+US0333,Andrea,Survivor: Redemption Island,22,5,TRUE,FALSE
+US0335,Ashley,Survivor: Redemption Island,22,4,TRUE,FALSE
+US0336,Natalie,Survivor: Redemption Island,22,3,FALSE,TRUE
+US0337,Phillip,Survivor: Redemption Island,22,2,FALSE,TRUE
+US0055,Boston Rob,Survivor: Redemption Island,22,1,FALSE,TRUE
+US0338,Semhar,Survivor: South Pacific,23,18,FALSE,FALSE
+US0339,Christine,Survivor: South Pacific,23,17,FALSE,FALSE
+US0340,Papa Bear,Survivor: South Pacific,23,16,FALSE,FALSE
+US0341,Stacey,Survivor: South Pacific,23,15,FALSE,FALSE
+US0342,Elyse,Survivor: South Pacific,23,14,FALSE,FALSE
+US0343,Mikayla,Survivor: South Pacific,23,13,FALSE,FALSE
+US0201,Ozzy,Survivor: South Pacific,23,NA,FALSE,FALSE
+US0344,Keith,Survivor: South Pacific,23,12,TRUE,FALSE
+US0201,Ozzy,Survivor: South Pacific,23,NA,FALSE,FALSE
+US0345,Jim,Survivor: South Pacific,23,11,TRUE,FALSE
+US0346,Dawn,Survivor: South Pacific,23,10,TRUE,FALSE
+US0347,Whitney,Survivor: South Pacific,23,9,TRUE,FALSE
+US0348,Cochran,Survivor: South Pacific,23,8,TRUE,FALSE
+US0349,Edna,Survivor: South Pacific,23,7,TRUE,FALSE
+US0350,Brandon,Survivor: South Pacific,23,6,TRUE,FALSE
+US0351,Rick,Survivor: South Pacific,23,5,TRUE,FALSE
+US0201,Ozzy,Survivor: South Pacific,23,4,TRUE,FALSE
+US0352,Albert,Survivor: South Pacific,23,3,FALSE,TRUE
+US0277,Coach,Survivor: South Pacific,23,2,FALSE,TRUE
+US0353,Sophie,Survivor: South Pacific,23,1,FALSE,TRUE
+US0354,Kourtney,Survivor: One World,24,18,FALSE,FALSE
+US0355,Nina,Survivor: One World,24,17,FALSE,FALSE
+US0356,Matt,Survivor: One World,24,16,FALSE,FALSE
+US0357,Bill,Survivor: One World,24,15,FALSE,FALSE
+US0358,Monica,Survivor: One World,24,14,FALSE,FALSE
+US0359,Colton,Survivor: One World,24,13,FALSE,FALSE
+US0360,Jonas,Survivor: One World,24,12,TRUE,FALSE
+US0361,Michael,Survivor: One World,24,11,TRUE,FALSE
+US0362,Jay,Survivor: One World,24,10,TRUE,FALSE
+US0363,Leif,Survivor: One World,24,9,TRUE,FALSE
+US0364,Troyzan,Survivor: One World,24,8,TRUE,FALSE
+US0365,Kat,Survivor: One World,24,7,TRUE,FALSE
+US0366,Tarzan,Survivor: One World,24,6,TRUE,FALSE
+US0367,Alicia,Survivor: One World,24,5,TRUE,FALSE
+US0368,Christina,Survivor: One World,24,4,TRUE,FALSE
+US0369,Chelsea,Survivor: One World,24,3,FALSE,TRUE
+US0370,Sabrina,Survivor: One World,24,2,FALSE,TRUE
+US0371,Kim,Survivor: One World,24,1,FALSE,TRUE
+US0372,Zane,Survivor: Philippines,25,18,FALSE,FALSE
+US0373,Roxy,Survivor: Philippines,25,17,FALSE,FALSE
+US0374,Angie,Survivor: Philippines,25,16,FALSE,FALSE
+US0288,Russell,Survivor: Philippines,25,15,FALSE,FALSE
+US0375,Dana,Survivor: Philippines,25,14,FALSE,FALSE
+US0376,Dawson,Survivor: Philippines,25,13,FALSE,FALSE
+US0377,Katie,Survivor: Philippines,25,12,FALSE,FALSE
+US0378,RC,Survivor: Philippines,25,11,TRUE,FALSE
+US0379,Jeff,Survivor: Philippines,25,10,TRUE,FALSE
+US0380,Artis,Survivor: Philippines,25,9,TRUE,FALSE
+US0381,Pete,Survivor: Philippines,25,8,TRUE,FALSE
+US0196,Jonathan,Survivor: Philippines,25,7,TRUE,FALSE
+US0382,Carter,Survivor: Philippines,25,6,TRUE,FALSE
+US0383,Abi-Maria,Survivor: Philippines,25,5,TRUE,FALSE
+US0384,Malcolm,Survivor: Philippines,25,4,TRUE,FALSE
+US0385,Lisa,Survivor: Philippines,25,3,FALSE,TRUE
+US0022,Michael,Survivor: Philippines,25,2,FALSE,TRUE
+US0386,Denise,Survivor: Philippines,25,1,FALSE,TRUE
+US0322,Francesca,Survivor: Caramoan,26,20,FALSE,FALSE
+US0387,Allie,Survivor: Caramoan,26,19,FALSE,FALSE
+US0388,Hope,Survivor: Caramoan,26,18,FALSE,FALSE
+US0389,Shamar,Survivor: Caramoan,26,17,FALSE,FALSE
+US0390,Laura,Survivor: Caramoan,26,16,FALSE,FALSE
+US0350,Brandon,Survivor: Caramoan,26,15,FALSE,FALSE
+US0391,Matt,Survivor: Caramoan,26,14,FALSE,FALSE
+US0392,Julia,Survivor: Caramoan,26,13,FALSE,FALSE
+US0259,Corinne,Survivor: Caramoan,26,12,FALSE,FALSE
+US0393,Michael,Survivor: Caramoan,26,11,TRUE,FALSE
+US0337,Phillip,Survivor: Caramoan,26,10,TRUE,FALSE
+US0384,Malcolm,Survivor: Caramoan,26,9,TRUE,FALSE
+US0394,Reynold,Survivor: Caramoan,26,8,TRUE,FALSE
+US0333,Andrea,Survivor: Caramoan,26,7,TRUE,FALSE
+US0312,Brenda,Survivor: Caramoan,26,6,TRUE,FALSE
+US0246,Erik,Survivor: Caramoan,26,5,TRUE,FALSE
+US0395,Eddie,Survivor: Caramoan,26,4,TRUE,FALSE
+US0396,Sherri,Survivor: Caramoan,26,3,FALSE,TRUE
+US0346,Dawn,Survivor: Caramoan,26,2,FALSE,TRUE
+US0348,Cochran,Survivor: Caramoan,26,1,FALSE,TRUE
+US0397,Laura B.,Survivor: Blood vs. Water,27,NA,FALSE,FALSE
+US0195,Candice,Survivor: Blood vs. Water,27,20,FALSE,FALSE
+US0107,Rupert,Survivor: Blood vs. Water,27,19,FALSE,FALSE
+US0398,Marissa,Survivor: Blood vs. Water,27,18,FALSE,FALSE
+US0399,Rachel,Survivor: Blood vs. Water,27,17,FALSE,FALSE
+US0359,Colton,Survivor: Blood vs. Water,27,16,FALSE,FALSE
+US0400,John,Survivor: Blood vs. Water,27,15,FALSE,FALSE
+US0401,Brad,Survivor: Blood vs. Water,27,14,FALSE,FALSE
+US0292,Laura M.,Survivor: Blood vs. Water,27,NA,FALSE,FALSE
+US0365,Kat,Survivor: Blood vs. Water,27,13,FALSE,FALSE
+US0397,Laura B.,Survivor: Blood vs. Water,27,12,FALSE,FALSE
+US0182,Aras,Survivor: Blood vs. Water,27,11,TRUE,FALSE
+US0402,Vytas,Survivor: Blood vs. Water,27,10,TRUE,FALSE
+US0032,Tina,Survivor: Blood vs. Water,27,NA,FALSE,FALSE
+US0292,Laura M.,Survivor: Blood vs. Water,27,9,TRUE,FALSE
+US0403,Caleb,Survivor: Blood vs. Water,27,8,TRUE,FALSE
+US0404,Katie,Survivor: Blood vs. Water,27,7,TRUE,FALSE
+US0405,Hayden,Survivor: Blood vs. Water,27,6,TRUE,FALSE
+US0406,Ciera,Survivor: Blood vs. Water,27,5,TRUE,FALSE
+US0032,Tina,Survivor: Blood vs. Water,27,4,TRUE,FALSE
+US0010,Gervase,Survivor: Blood vs. Water,27,3,FALSE,TRUE
+US0358,Monica,Survivor: Blood vs. Water,27,2,FALSE,TRUE
+US0274,Tyson,Survivor: Blood vs. Water,27,1,FALSE,TRUE
+US0407,David,Survivor: Cagayan,28,18,FALSE,FALSE
+US0408,Garrett,Survivor: Cagayan,28,17,FALSE,FALSE
+US0409,Brice,Survivor: Cagayan,28,16,FALSE,FALSE
+US0410,J'Tia,Survivor: Cagayan,28,15,FALSE,FALSE
+US0411,Cliff,Survivor: Cagayan,28,14,FALSE,FALSE
+US0412,Lindsey,Survivor: Cagayan,28,13,FALSE,FALSE
+US0413,Alexis,Survivor: Cagayan,28,12,FALSE,FALSE
+US0414,Sarah,Survivor: Cagayan,28,11,TRUE,FALSE
+US0415,Morgan,Survivor: Cagayan,28,10,TRUE,FALSE
+US0416,LJ,Survivor: Cagayan,28,9,TRUE,FALSE
+US0417,Jeremiah,Survivor: Cagayan,28,8,TRUE,FALSE
+US0418,Jefra,Survivor: Cagayan,28,7,TRUE,FALSE
+US0419,Tasha,Survivor: Cagayan,28,6,TRUE,FALSE
+US0420,Trish,Survivor: Cagayan,28,5,TRUE,FALSE
+US0421,Spencer,Survivor: Cagayan,28,4,TRUE,FALSE
+US0422,Kass,Survivor: Cagayan,28,3,TRUE,FALSE
+US0423,Woo,Survivor: Cagayan,28,2,FALSE,TRUE
+US0424,Tony,Survivor: Cagayan,28,1,FALSE,TRUE
+US0425,Nadiya,Survivor: San Juan del Sur,29,18,FALSE,FALSE
+US0426,Val,Survivor: San Juan del Sur,29,17,FALSE,FALSE
+US0427,John,Survivor: San Juan del Sur,29,16,FALSE,FALSE
+US0428,Drew,Survivor: San Juan del Sur,29,15,FALSE,FALSE
+US0429,Kelley,Survivor: San Juan del Sur,29,14,FALSE,FALSE
+US0430,Dale,Survivor: San Juan del Sur,29,13,FALSE,FALSE
+US0431,Julie,Survivor: San Juan del Sur,29,12,FALSE,FALSE
+US0432,Josh,Survivor: San Juan del Sur,29,11,TRUE,FALSE
+US0433,Jeremy,Survivor: San Juan del Sur,29,10,TRUE,FALSE
+US0434,Wes,Survivor: San Juan del Sur,29,9,TRUE,FALSE
+US0435,Reed,Survivor: San Juan del Sur,29,8,TRUE,FALSE
+US0436,Alec,Survivor: San Juan del Sur,29,7,TRUE,FALSE
+US0437,Jon,Survivor: San Juan del Sur,29,6,TRUE,FALSE
+US0438,Baylor,Survivor: San Juan del Sur,29,5,TRUE,FALSE
+US0439,Keith,Survivor: San Juan del Sur,29,4,TRUE,FALSE
+US0440,Missy,Survivor: San Juan del Sur,29,3,FALSE,TRUE
+US0441,Jaclyn,Survivor: San Juan del Sur,29,2,FALSE,TRUE
+US0442,Natalie,Survivor: San Juan del Sur,29,1,FALSE,TRUE
+US0443,So,Survivor: Worlds Apart,30,18,FALSE,FALSE
+US0444,Vince,Survivor: Worlds Apart,30,17,FALSE,FALSE
+US0445,Nina,Survivor: Worlds Apart,30,16,FALSE,FALSE
+US0446,Lindsey,Survivor: Worlds Apart,30,15,FALSE,FALSE
+US0447,Max,Survivor: Worlds Apart,30,14,FALSE,FALSE
+US0448,Joaquin,Survivor: Worlds Apart,30,13,FALSE,FALSE
+US0449,Kelly,Survivor: Worlds Apart,30,12,FALSE,FALSE
+US0450,Hali,Survivor: Worlds Apart,30,11,TRUE,FALSE
+US0451,Joe,Survivor: Worlds Apart,30,10,TRUE,FALSE
+US0452,Jenn,Survivor: Worlds Apart,30,9,TRUE,FALSE
+US0453,Shirin,Survivor: Worlds Apart,30,8,TRUE,FALSE
+US0454,Tyler,Survivor: Worlds Apart,30,7,TRUE,FALSE
+US0455,Dan,Survivor: Worlds Apart,30,6,TRUE,FALSE
+US0456,Sierra,Survivor: Worlds Apart,30,5,TRUE,FALSE
+US0457,Rodney,Survivor: Worlds Apart,30,4,TRUE,FALSE
+US0458,Will,Survivor: Worlds Apart,30,3,FALSE,TRUE
+US0459,Carolyn,Survivor: Worlds Apart,30,2,FALSE,TRUE
+US0460,Mike,Survivor: Worlds Apart,30,1,FALSE,TRUE
+US0402,Vytas,Survivor: Cambodia,31,20,FALSE,FALSE
+US0453,Shirin,Survivor: Cambodia,31,19,FALSE,FALSE
+US0233,Peih-Gee,Survivor: Cambodia,31,18,FALSE,FALSE
+US0023,Jeff,Survivor: Cambodia,31,17,FALSE,FALSE
+US0295,Monica,Survivor: Cambodia,31,16,FALSE,FALSE
+US0180,Terry,Survivor: Cambodia,31,15,FALSE,FALSE
+US0423,Woo,Survivor: Cambodia,31,14,FALSE,FALSE
+US0422,Kass,Survivor: Cambodia,31,13,TRUE,FALSE
+US0105,Andrew,Survivor: Cambodia,31,12,TRUE,FALSE
+US0015,Kelly,Survivor: Cambodia,31,11,TRUE,FALSE
+US0406,Ciera,Survivor: Cambodia,31,10,TRUE,FALSE
+US0280,Stephen,Survivor: Cambodia,31,9,TRUE,FALSE
+US0451,Joe,Survivor: Cambodia,31,8,TRUE,FALSE
+US0383,Abi-Maria,Survivor: Cambodia,31,7,TRUE,FALSE
+US0021,Kimmi,Survivor: Cambodia,31,6,TRUE,FALSE
+US0439,Keith,Survivor: Cambodia,31,5,TRUE,FALSE
+US0429,Kelley,Survivor: Cambodia,31,4,TRUE,FALSE
+US0421,Spencer,Survivor: Cambodia,31,3,FALSE,TRUE
+US0419,Tasha,Survivor: Cambodia,31,2,FALSE,TRUE
+US0433,Jeremy,Survivor: Cambodia,31,1,FALSE,TRUE
+US0461,Darnell,Survivor: Kaoh Rong,32,18,FALSE,FALSE
+US0462,Jennifer,Survivor: Kaoh Rong,32,17,FALSE,FALSE
+US0463,Liz,Survivor: Kaoh Rong,32,16,FALSE,FALSE
+US0464,Caleb,Survivor: Kaoh Rong,32,15,FALSE,FALSE
+US0465,Alecia,Survivor: Kaoh Rong,32,14,FALSE,FALSE
+US0466,Anna,Survivor: Kaoh Rong,32,13,FALSE,FALSE
+US0467,Peter,Survivor: Kaoh Rong,32,12,FALSE,FALSE
+US0468,Neal,Survivor: Kaoh Rong,32,11,FALSE,FALSE
+US0469,Nick,Survivor: Kaoh Rong,32,10,TRUE,FALSE
+US0470,Debbie,Survivor: Kaoh Rong,32,9,TRUE,FALSE
+US0471,Scot,Survivor: Kaoh Rong,32,8,TRUE,FALSE
+US0472,Julia,Survivor: Kaoh Rong,32,7,TRUE,FALSE
+US0473,Jason,Survivor: Kaoh Rong,32,6,TRUE,FALSE
+US0474,Joe,Survivor: Kaoh Rong,32,5,TRUE,FALSE
+US0475,Cydney,Survivor: Kaoh Rong,32,4,TRUE,FALSE
+US0476,Tai,Survivor: Kaoh Rong,32,3,FALSE,TRUE
+US0477,Aubry,Survivor: Kaoh Rong,32,2,FALSE,TRUE
+US0478,Michele,Survivor: Kaoh Rong,32,1,FALSE,TRUE
+US0479,Rachel,Survivor: Millennials vs. Gen X,33,20,FALSE,FALSE
+US0480,Mari,Survivor: Millennials vs. Gen X,33,19,FALSE,FALSE
+US0481,Paul,Survivor: Millennials vs. Gen X,33,18,FALSE,FALSE
+US0482,Lucy,Survivor: Millennials vs. Gen X,33,17,FALSE,FALSE
+US0483,CeCe,Survivor: Millennials vs. Gen X,33,16,FALSE,FALSE
+US0484,Figgy,Survivor: Millennials vs. Gen X,33,15,FALSE,FALSE
+US0485,Michaela,Survivor: Millennials vs. Gen X,33,14,FALSE,FALSE
+US0486,Michelle,Survivor: Millennials vs. Gen X,33,13,TRUE,FALSE
+US0487,Taylor,Survivor: Millennials vs. Gen X,33,12,TRUE,FALSE
+US0488,Chris,Survivor: Millennials vs. Gen X,33,11,TRUE,FALSE
+US0489,Jessica,Survivor: Millennials vs. Gen X,33,10,TRUE,FALSE
+US0490,Zeke,Survivor: Millennials vs. Gen X,33,9,TRUE,FALSE
+US0491,Will,Survivor: Millennials vs. Gen X,33,8,TRUE,FALSE
+US0492,Sunday,Survivor: Millennials vs. Gen X,33,7,TRUE,FALSE
+US0493,Jay,Survivor: Millennials vs. Gen X,33,6,TRUE,FALSE
+US0494,Bret,Survivor: Millennials vs. Gen X,33,5,TRUE,FALSE
+US0495,David,Survivor: Millennials vs. Gen X,33,4,TRUE,FALSE
+US0496,Hannah,Survivor: Millennials vs. Gen X,33,3,FALSE,TRUE
+US0497,Ken,Survivor: Millennials vs. Gen X,33,2,FALSE,TRUE
+US0498,Adam,Survivor: Millennials vs. Gen X,33,1,FALSE,TRUE
+US0406,Ciera,Survivor: Game Changers,34,20,FALSE,FALSE
+US0424,Tony,Survivor: Game Changers,34,19,FALSE,FALSE
+US0464,Caleb,Survivor: Game Changers,34,18,FALSE,FALSE
+US0384,Malcolm,Survivor: Game Changers,34,17,FALSE,FALSE
+US0281,J.T.,Survivor: Game Changers,34,16,FALSE,FALSE
+US0112,Sandra,Survivor: Game Changers,34,15,FALSE,FALSE
+US0023,Jeff,Survivor: Game Changers,34,14,FALSE,FALSE
+US0450,Hali,Survivor: Game Changers,34,13,TRUE,FALSE
+US0201,Ozzy,Survivor: Game Changers,34,12,TRUE,FALSE
+US0470,Debbie,Survivor: Game Changers,34,11,TRUE,FALSE
+US0490,Zeke,Survivor: Game Changers,34,10,TRUE,FALSE
+US0456,Sierra,Survivor: Game Changers,34,9,TRUE,FALSE
+US0333,Andrea,Survivor: Game Changers,34,8,TRUE,FALSE
+US0485,Michaela,Survivor: Game Changers,34,7,TRUE,FALSE
+US0179,Cirie,Survivor: Game Changers,34,6,TRUE,FALSE
+US0477,Aubry,Survivor: Game Changers,34,5,TRUE,FALSE
+US0476,Tai,Survivor: Game Changers,34,4,TRUE,FALSE
+US0364,Troyzan,Survivor: Game Changers,34,3,FALSE,TRUE
+US0401,Brad,Survivor: Game Changers,34,2,FALSE,TRUE
+US0414,Sarah,Survivor: Game Changers,34,1,FALSE,TRUE
+US0499,Katrina,Survivor: Heroes vs. Healers vs. Hustlers,35,18,FALSE,FALSE
+US0500,Simone,Survivor: Heroes vs. Healers vs. Hustlers,35,17,FALSE,FALSE
+US0501,Patrick,Survivor: Heroes vs. Healers vs. Hustlers,35,16,FALSE,FALSE
+US0502,Alan,Survivor: Heroes vs. Healers vs. Hustlers,35,15,FALSE,FALSE
+US0503,Roark,Survivor: Heroes vs. Healers vs. Hustlers,35,14,FALSE,FALSE
+US0504,Ali,Survivor: Heroes vs. Healers vs. Hustlers,35,13,FALSE,FALSE
+US0505,Jessica,Survivor: Heroes vs. Healers vs. Hustlers,35,12,FALSE,FALSE
+US0506,Desi,Survivor: Heroes vs. Healers vs. Hustlers,35,11,TRUE,FALSE
+US0507,Cole,Survivor: Heroes vs. Healers vs. Hustlers,35,10,TRUE,FALSE
+US0508,JP,Survivor: Heroes vs. Healers vs. Hustlers,35,9,TRUE,FALSE
+US0509,Joe,Survivor: Heroes vs. Healers vs. Hustlers,35,8,TRUE,FALSE
+US0510,Lauren,Survivor: Heroes vs. Healers vs. Hustlers,35,7,TRUE,FALSE
+US0511,Ashley,Survivor: Heroes vs. Healers vs. Hustlers,35,6,TRUE,FALSE
+US0512,Mike,Survivor: Heroes vs. Healers vs. Hustlers,35,5,TRUE,FALSE
+US0513,Devon,Survivor: Heroes vs. Healers vs. Hustlers,35,4,TRUE,FALSE
+US0514,Ryan,Survivor: Heroes vs. Healers vs. Hustlers,35,3,FALSE,TRUE
+US0515,Chrissy,Survivor: Heroes vs. Healers vs. Hustlers,35,2,FALSE,TRUE
+US0516,Ben,Survivor: Heroes vs. Healers vs. Hustlers,35,1,FALSE,TRUE
+US0517,Gonzalez,Survivor: Ghost Island,36,20,FALSE,FALSE
+US0518,Jacob,Survivor: Ghost Island,36,19,FALSE,FALSE
+US0519,Morgan,Survivor: Ghost Island,36,18,FALSE,FALSE
+US0520,Brendan,Survivor: Ghost Island,36,17,FALSE,FALSE
+US0521,Stephanie,Survivor: Ghost Island,36,16,FALSE,FALSE
+US0522,James,Survivor: Ghost Island,36,15,FALSE,FALSE
+US0523,Bradley,Survivor: Ghost Island,36,14,FALSE,FALSE
+US0524,Chris,Survivor: Ghost Island,36,13,TRUE,FALSE
+US0525,Libby,Survivor: Ghost Island,36,12,TRUE,FALSE
+US0526,Desiree,Survivor: Ghost Island,36,11,TRUE,FALSE
+US0527,Jenna,Survivor: Ghost Island,36,10,TRUE,FALSE
+US0528,Michael,Survivor: Ghost Island,36,9,TRUE,FALSE
+US0529,Chelsea,Survivor: Ghost Island,36,8,TRUE,FALSE
+US0530,Kellyn,Survivor: Ghost Island,36,7,TRUE,FALSE
+US0531,Sebastian,Survivor: Ghost Island,36,6,TRUE,FALSE
+US0532,Donathan,Survivor: Ghost Island,36,5,TRUE,FALSE
+US0533,Angela,Survivor: Ghost Island,36,4,TRUE,FALSE
+US0534,Laurel,Survivor: Ghost Island,36,3,TRUE,TRUE
+US0535,Domenick,Survivor: Ghost Island,36,2,FALSE,TRUE
+US0536,Wendell,Survivor: Ghost Island,36,1,FALSE,TRUE
+US0537,Pat,Survivor: David vs. Goliath,37,20,FALSE,FALSE
+US0538,Jessica,Survivor: David vs. Goliath,37,19,FALSE,FALSE
+US0539,Jeremy,Survivor: David vs. Goliath,37,18,FALSE,FALSE
+US0540,Bi,Survivor: David vs. Goliath,37,17,FALSE,FALSE
+US0541,Natalia,Survivor: David vs. Goliath,37,16,FALSE,FALSE
+US0542,Natalie,Survivor: David vs. Goliath,37,15,FALSE,FALSE
+US0543,Lyrsa,Survivor: David vs. Goliath,37,14,FALSE,FALSE
+US0544,Elizabeth,Survivor: David vs. Goliath,37,13,TRUE,FALSE
+US0545,John,Survivor: David vs. Goliath,37,12,TRUE,FALSE
+US0546,Dan,Survivor: David vs. Goliath,37,11,TRUE,FALSE
+US0547,Alec,Survivor: David vs. Goliath,37,10,TRUE,FALSE
+US0548,Carl,Survivor: David vs. Goliath,37,9,TRUE,FALSE
+US0549,Gabby,Survivor: David vs. Goliath,37,8,TRUE,FALSE
+US0550,Christian,Survivor: David vs. Goliath,37,7,TRUE,FALSE
+US0551,Davie,Survivor: David vs. Goliath,37,6,TRUE,FALSE
+US0552,Alison,Survivor: David vs. Goliath,37,5,TRUE,FALSE
+US0553,Kara,Survivor: David vs. Goliath,37,4,TRUE,FALSE
+US0554,Angelina,Survivor: David vs. Goliath,37,3,FALSE,TRUE
+US0555,Mike,Survivor: David vs. Goliath,37,2,FALSE,TRUE
+US0556,Nick,Survivor: David vs. Goliath,37,1,FALSE,TRUE
+US0557,Reem,Survivor: Edge of Extinction,38,18,TRUE,FALSE
+US0558,Keith,Survivor: Edge of Extinction,38,17,FALSE,FALSE
+US0559,Chris,Survivor: Edge of Extinction,38,NA,FALSE,FALSE
+US0560,Rick,Survivor: Edge of Extinction,38,NA,FALSE,FALSE
+US0477,Aubry,Survivor: Edge of Extinction,38,16,TRUE,FALSE
+US0561,Wendy,Survivor: Edge of Extinction,38,15,FALSE,FALSE
+US0451,Joe,Survivor: Edge of Extinction,38,14,TRUE,FALSE
+US0562,Eric,Survivor: Edge of Extinction,38,13,TRUE,FALSE
+US0563,Julia,Survivor: Edge of Extinction,38,12,TRUE,FALSE
+US0495,David,Survivor: Edge of Extinction,38,11,TRUE,FALSE
+US0429,Kelley,Survivor: Edge of Extinction,38,10,TRUE,FALSE
+US0564,Wardog,Survivor: Edge of Extinction,38,9,TRUE,FALSE
+US0565,Ron,Survivor: Edge of Extinction,38,8,TRUE,FALSE
+US0566,Aurora,Survivor: Edge of Extinction,38,7,TRUE,FALSE
+US0567,Victoria,Survivor: Edge of Extinction,38,6,TRUE,FALSE
+US0568,Lauren,Survivor: Edge of Extinction,38,5,TRUE,FALSE
+US0560,Rick,Survivor: Edge of Extinction,38,4,TRUE,FALSE
+US0569,Julie,Survivor: Edge of Extinction,38,3,FALSE,TRUE
+US0570,Gavin,Survivor: Edge of Extinction,38,2,FALSE,TRUE
+US0559,Chris,Survivor: Edge of Extinction,38,1,FALSE,TRUE
+US0571,Ronnie,Survivor: Island of the Idols,39,20,FALSE,FALSE
+US0572,Molly,Survivor: Island of the Idols,39,19,FALSE,FALSE
+US0573,Vince,Survivor: Island of the Idols,39,18,FALSE,FALSE
+US0574,Chelsea,Survivor: Island of the Idols,39,17,FALSE,FALSE
+US0575,Tom,Survivor: Island of the Idols,39,16,FALSE,FALSE
+US0576,Jason,Survivor: Island of the Idols,39,15,FALSE,FALSE
+US0577,Jack,Survivor: Island of the Idols,39,14,TRUE,FALSE
+US0578,Kellee,Survivor: Island of the Idols,39,13,TRUE,FALSE
+US0579,Jamal,Survivor: Island of the Idols,39,12,TRUE,FALSE
+US0580,Aaron,Survivor: Island of the Idols,39,11,TRUE,FALSE
+US0581,Missy,Survivor: Island of the Idols,39,10,TRUE,FALSE
+US0582,Elizabeth,Survivor: Island of the Idols,39,9,TRUE,FALSE
+US0583,Karishma,Survivor: Island of the Idols,39,8,TRUE,FALSE
+US0584,Elaine,Survivor: Island of the Idols,39,7,TRUE,FALSE
+US0585,Dan,Survivor: Island of the Idols,39,6,FALSE,FALSE
+US0586,Janet,Survivor: Island of the Idols,39,5,TRUE,FALSE
+US0587,Lauren,Survivor: Island of the Idols,39,4,TRUE,FALSE
+US0588,Noura,Survivor: Island of the Idols,39,3,FALSE,TRUE
+US0589,Dean,Survivor: Island of the Idols,39,2,FALSE,TRUE
+US0590,Tommy,Survivor: Island of the Idols,39,1,FALSE,TRUE
+US0442,Natalie,Survivor: Winners at War,40,NA,FALSE,FALSE
+US0027,Amber,Survivor: Winners at War,40,20,TRUE,FALSE
+US0166,Danni,Survivor: Winners at War,40,19,TRUE,FALSE
+US0048,Ethan,Survivor: Winners at War,40,18,TRUE,FALSE
+US0274,Tyson,Survivor: Winners at War,40,NA,FALSE,FALSE
+US0055,Boston Rob,Survivor: Winners at War,40,17,TRUE,FALSE
+US0197,Parvati,Survivor: Winners at War,40,16,TRUE,FALSE
+US0112,Sandra,Survivor: Winners at War,40,15,FALSE,FALSE
+US0202,Yul,Survivor: Winners at War,40,14,TRUE,FALSE
+US0536,Wendell,Survivor: Winners at War,40,13,TRUE,FALSE
+US0498,Adam,Survivor: Winners at War,40,12,TRUE,FALSE
+US0274,Tyson,Survivor: Winners at War,40,11,TRUE,FALSE
+US0353,Sophie,Survivor: Winners at War,40,10,TRUE,FALSE
+US0371,Kim,Survivor: Winners at War,40,9,TRUE,FALSE
+US0433,Jeremy,Survivor: Winners at War,40,8,TRUE,FALSE
+US0556,Nick,Survivor: Winners at War,40,7,TRUE,FALSE
+US0386,Denise,Survivor: Winners at War,40,6,TRUE,FALSE
+US0516,Ben,Survivor: Winners at War,40,5,TRUE,FALSE
+US0414,Sarah,Survivor: Winners at War,40,4,TRUE,FALSE
+US0478,Michele,Survivor: Winners at War,40,3,FALSE,TRUE
+US0442,Natalie,Survivor: Winners at War,40,2,FALSE,TRUE
+US0424,Tony,Survivor: Winners at War,40,1,FALSE,TRUE
+US0591,Abraham,Survivor: 41,41,18,FALSE,FALSE
+US0592,Sara,Survivor: 41,41,17,FALSE,FALSE
+US0607,Voce,Survivor: 41,41,16,FALSE,FALSE
+US0602,Brad,Survivor: 41,41,15,FALSE,FALSE
+US0603,JD,Survivor: 41,41,14,FALSE,FALSE
+US0595,Genie,Survivor: 41,41,13,FALSE,FALSE
+US0605,Sydney,Survivor: 41,41,12,FALSE,FALSE
+US0604,Tiffany,Survivor: 41,41,11,TRUE,FALSE
+US0600,Naseer,Survivor: 41,41,10,TRUE,FALSE
+US0598,Evvie,Survivor: 41,41,9,TRUE,FALSE
+US0606,Shan,Survivor: 41,41,8,TRUE,FALSE
+US0608,Liana,Survivor: 41,41,7,TRUE,FALSE
+US0599,Danny,Survivor: 41,41,6,TRUE,FALSE
+US0596,Ricard,Survivor: 41,41,5,TRUE,FALSE
+US0593,Heather,Survivor: 41,41,4,TRUE,FALSE
+US0597,Xander,Survivor: 41,41,3,FALSE,TRUE
+US0601,Deshawn,Survivor: 41,41,2,FALSE,TRUE
+US0594,Erika,Survivor: 41,41,1,FALSE,TRUE
+US0613,Jackson,Survivor: 42,42,18,FALSE,FALSE
+US0626,Zach,Survivor: 42,42,17,FALSE,FALSE
+US0618,Marya,Survivor: 42,42,16,FALSE,FALSE
+US0614,Jenny,Survivor: 42,42,15,FALSE,FALSE
+US0624,Swati,Survivor: 42,42,14,FALSE,FALSE
+US0610,Daniel,Survivor: 42,42,13,FALSE,FALSE
+US0617,Lydia,Survivor: 42,42,12,FALSE,FALSE
+US0609,Chanelle,Survivor: 42,42,11,TRUE,FALSE
+US0622,Rocksroy,Survivor: 42,42,10,TRUE,FALSE
+US0625,Tori,Survivor: 42,42,9,TRUE,FALSE
+US0612,Hai,Survivor: 42,42,8,TRUE,FALSE
+US0611,Drea,Survivor: 42,42,7,TRUE,FALSE
+US0621,Omar,Survivor: 42,42,6,TRUE,FALSE
+US0616,Lindsay,Survivor: 42,42,5,TRUE,FALSE
+US0615,Jonathan,Survivor: 42,42,4,TRUE,FALSE
+US0623,Romeo,Survivor: 42,42,3,FALSE,TRUE
+US0620,Mike,Survivor: 42,42,2,FALSE,TRUE
+US0619,Maryanne,Survivor: 42,42,1,FALSE,TRUE
+US0639,Morriah,Survivor: 43,43,18,FALSE,FALSE
+US0635,Justine,Survivor: 43,43,17,FALSE,FALSE
+US0640,Nneka,Survivor: 43,43,16,FALSE,FALSE
+US0637,Lindsay,Survivor: 43,43,15,FALSE,FALSE
+US0631,Geo,Survivor: 43,43,14,FALSE,FALSE
+US0630,Elie,Survivor: 43,43,13,FALSE,FALSE
+US0629,Dwight,Survivor: 43,43,12,FALSE,FALSE
+US0633,Jeanine,Survivor: 43,43,11,TRUE,FALSE
+US0632,James,Survivor: 43,43,10,TRUE,FALSE
+US0643,Ryan,Survivor: 43,43,9,TRUE,FALSE
+US0641,Noelle,Survivor: 43,43,8,TRUE,FALSE
+US0644,Sami,Survivor: 43,43,7,TRUE,FALSE
+US0628,Cody,Survivor: 43,43,6,TRUE,FALSE
+US0636,Karla,Survivor: 43,43,5,TRUE,FALSE
+US0634,Jesse,Survivor: 43,43,4,TRUE,FALSE
+US0642,Owen,Survivor: 43,43,3,FALSE,TRUE
+US0627,Cassidy,Survivor: 43,43,2,FALSE,TRUE
+US0638,Gabler,Survivor: 43,43,1,FALSE,TRUE
+US0657,Bruce,Survivor: 44,44,18,FALSE,FALSE
+US0649,Maddy,Survivor: 44,44,17,FALSE,FALSE
+US0660,Helen,Survivor: 44,44,16,FALSE,FALSE
+US0651,Claire,Survivor: 44,44,15,FALSE,FALSE
+US0661,Sarah,Survivor: 44,44,14,FALSE,FALSE
+US0650,Matthew,Survivor: 44,44,13,FALSE,FALSE
+US0655,Josh,Survivor: 44,44,12,FALSE,FALSE
+US0656,Matt,Survivor: 44,44,11,TRUE,FALSE
+US0645,Brandon,Survivor: 44,44,10,TRUE,FALSE
+US0647,Kane,Survivor: 44,44,9,TRUE,FALSE
+US0653,Frannie,Survivor: 44,44,8,TRUE,FALSE
+US0652,Danny,Survivor: 44,44,7,TRUE,FALSE
+US0646,Jaime,Survivor: 44,44,6,TRUE,FALSE
+US0648,Lauren,Survivor: 44,44,5,TRUE,FALSE
+US0659,Carson,Survivor: 44,44,4,TRUE,FALSE
+US0658,Carolyn,Survivor: 44,44,3,FALSE,TRUE
+US0654,Heidi,Survivor: 44,44,2,FALSE,TRUE
+US0662,Yam Yam,Survivor: 44,44,1,FALSE,TRUE
+US0669,Hannah,Survivor: 45,45,18,FALSE,FALSE
+US0665,Brandon,Survivor: 45,45,17,FALSE,FALSE
+US0677,Sabiyah,Survivor: 45,45,16,FALSE,FALSE
+US0678,Sean,Survivor: 45,45,15,FALSE,FALSE
+US0664,Brando,Survivor: 45,45,14,FALSE,FALSE
+US0670,J. Maya,Survivor: 45,45,13,FALSE,FALSE
+US0679,Sifu,Survivor: 45,45,12,FALSE,FALSE
+US0673,Kaleb,Survivor: 45,45,11,TRUE,FALSE
+US0675,Kellie,Survivor: 45,45,10,TRUE,FALSE
+US0676,Kendra,Survivor: 45,45,9,TRUE,FALSE
+US0657,Bruce,Survivor: 45,45,8,TRUE,FALSE
+US0668,Emily,Survivor: 45,45,7,TRUE,FALSE
+US0667,Drew,Survivor: 45,45,6,TRUE,FALSE
+US0672,Julie,Survivor: 45,45,5,TRUE,FALSE
+US0674,Katurah,Survivor: 45,45,4,TRUE,FALSE
+US0671,Jake,Survivor: 45,45,3,FALSE,TRUE
+US0663,Austin,Survivor: 45,45,2,FALSE,TRUE
+US0666,Dee,Survivor: 45,45,1,FALSE,TRUE
+US0683,Jelinsky,Survivor: 46,46,18,FALSE,FALSE
+US0686,Jess,Survivor: 46,46,17,FALSE,FALSE
+US0692,Randen,Survivor: 46,46,16,FALSE,FALSE
+US0681,Bhanu,Survivor: 46,46,15,FALSE,FALSE
+US0685,Jem,Survivor: 46,46,14,FALSE,FALSE
+US0690,Moriah,Survivor: 46,46,13,FALSE,FALSE
+US0696,Tim,Survivor: 46,46,12,FALSE,FALSE
+US0693,Soda,Survivor: 46,46,11,TRUE,FALSE
+US0694,Tevin,Survivor: 46,46,10,TRUE,FALSE
+US0684,Hunter,Survivor: 46,46,9,TRUE,FALSE
+US0695,Tiffany,Survivor: 46,46,8,TRUE,FALSE
+US0697,Venus,Survivor: 46,46,7,TRUE,FALSE
+US0691,Q,Survivor: 46,46,6,TRUE,FALSE
+US0689,Maria,Survivor: 46,46,5,TRUE,FALSE
+US0688,Liz,Survivor: 46,46,4,TRUE,FALSE
+US0680,Ben,Survivor: 46,46,3,FALSE,TRUE
+US0682,Charlie,Survivor: 46,46,2,FALSE,TRUE
+US0687,Kenzie,Survivor: 46,46,1,FALSE,TRUE
+US0704,Jon,Survivor: 47,47,18,FALSE,FALSE
+US0715,TK,Survivor: 47,47,17,FALSE,FALSE
+US0700,Aysha,Survivor: 47,47,16,FALSE,FALSE
+US0705,Kishan,Survivor: 47,47,15,FALSE,FALSE
+US0699,Anika,Survivor: 47,47,14,FALSE,FALSE
+US0708,Rome,Survivor: 47,47,13,FALSE,FALSE
+US0714,Tiyana,Survivor: 47,47,12,FALSE,FALSE
+US0710,Sierra,Survivor: 47,47,11,TRUE,FALSE
+US0711,Sol,Survivor: 47,47,10,TRUE,FALSE
+US0702,Gabe,Survivor: 47,47,9,TRUE,FALSE
+US0706,Kyle,Survivor: 47,47,8,TRUE,FALSE
+US0701,Caroline,Survivor: 47,47,7,TRUE,FALSE
+US0698,Andy,Survivor: 47,47,6,TRUE,FALSE
+US0703,Genevieve,Survivor: 47,47,5,TRUE,FALSE
+US0713,Teeny,Survivor: 47,47,4,TRUE,FALSE
+US0712,Sue,Survivor: 47,47,3,FALSE,TRUE
+US0709,Sam,Survivor: 47,47,2,FALSE,TRUE
+US0707,Rachel,Survivor: 47,47,1,FALSE,TRUE
