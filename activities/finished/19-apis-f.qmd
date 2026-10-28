@@ -1,0 +1,334 @@
+---
+title: "19: APIs (answer key)"
+---
+
+```{r}
+library(tidyverse)
+library(tidycensus)
+library(httr2)
+```
+
+::: callout-note
+## About this key
+
+Chunks that need a Census API key are shown but not run (`eval: false`). The outputs you see below come from saved copies of the results in `slides/19/`, so this document can be rendered without a key. Nothing here prints a key.
+:::
+
+# Our question
+
+*How many people work from home, and where?* We use ACS table `B08301`: `B08301_001` is total workers, and `B08301_021` is workers who **worked from home**. The share working from home is `B08301_021` / `B08301_001`.
+
+# Setup: store your API key (once)
+
+Run in the **Console**, not in a saved chunk:
+
+```{r}
+#| eval: false
+census_api_key("PASTE-YOUR-KEY-HERE", install = TRUE)
+```
+
+Restart R, then check that R can see the key without printing it (should say `TRUE`):
+
+```{r}
+#| eval: false
+nchar(Sys.getenv("CENSUS_API_KEY")) == 40
+```
+
+# Part 1: `tidycensus`
+
+## Get the data
+
+```{r}
+#| eval: false
+wfh_mn <- get_acs(
+  geography = "county",
+  state = "MN",
+  variables = "B08301_021",
+  summary_var = "B08301_001",
+  year = 2024,
+  survey = "acs5",
+  geometry = TRUE
+)
+```
+
+```{r}
+# saved copy of the result above
+wfh_mn <- readRDS("../../slides/19/wfh-mn-acs.rds")
+
+wfh_mn |>
+  select(NAME, estimate, moe, summary_est, summary_moe) |>
+  head(5)
+```
+
+`estimate` is the number of people who work from home, `moe` is the margin of error on that estimate, and `summary_est` is the total number of workers.
+
+## Map the share working from home
+
+```{r}
+wfh_mn |>
+  mutate(pct_wfh = estimate / summary_est) |>
+  ggplot(aes(fill = pct_wfh)) +
+  geom_sf() +
+  scale_fill_viridis_c(labels = scales::label_percent()) +
+  labs(fill = "Work from home") +
+  theme_void()
+```
+
+**Which counties have the highest share? Which have the lowest? Why might that be?**
+
+```{r}
+wfh_mn |>
+  sf::st_drop_geometry() |>
+  mutate(pct_wfh = estimate / summary_est) |>
+  arrange(desc(pct_wfh)) |>
+  select(NAME, estimate, summary_est, pct_wfh) |>
+  slice(c(1:5, (n() - 4):n()))
+```
+
+- **Highest:** Hennepin (about 25%), Washington (24%), Carver (24%), Dakota (21%) and Ramsey (20%) are all Twin Cities metro counties. Cook County is also high (22%).
+- **Lowest:** Lake of the Woods (5%), Norman (6%), Polk (6%), Nobles (6%) and Mahnomen (7%) are rural counties in the northwest and southwest.
+- **Possible reasons (these are hypotheses, not something the map proves):** the metro counties have many office and professional jobs that can be done remotely, while rural counties have more agriculture, manufacturing, and service jobs that need a worker on site.
+- **A caution:** Cook County has only about 2,900 workers, so its estimate has a large margin of error. Small counties are noisy, which is why `moe` matters.
+
+## How do we find the variable IDs?
+
+```{r}
+acs_vars <- load_variables(2024, "acs5", cache = TRUE)
+
+acs_vars |>
+  filter(str_detect(label, "Worked from home"), !str_detect(name, "PR")) |>
+  select(name, concept, label) |>
+  head(4)
+```
+
+The same label appears in several tables. The `concept` column tells you which one you want: `B08301` is "Means of Transportation to Work".
+
+## Your turn 1: a different way of getting to work
+
+Search for the other means of transportation in the same table:
+
+```{r}
+acs_vars |>
+  filter(concept == "Means of Transportation to Work") |>
+  select(name, label) |>
+  head(12)
+```
+
+Some IDs: `B08301_003` (drove alone), `B08301_010` (public transportation), `B08301_018` (bicycle), `B08301_019` (walked). Here is the solution for **public transportation**:
+
+```{r}
+#| eval: false
+transit_mn <- get_acs(
+  geography = "county",
+  state = "MN",
+  variables = "B08301_010",
+  summary_var = "B08301_001",
+  year = 2024,
+  survey = "acs5",
+  geometry = TRUE
+)
+
+transit_mn |>
+  mutate(pct_transit = estimate / summary_est) |>
+  ggplot(aes(fill = pct_transit)) +
+  geom_sf() +
+  scale_fill_viridis_c(labels = scales::label_percent()) +
+  labs(fill = "Public transportation") +
+  theme_void()
+```
+
+Only the variable (`B08301_010`) and the labels change: the rest of the code is the same. For a different state, change `state = "MN"` (for example `state = "WI"`). Expect the map to look different from the work-from-home map, since public transportation is mostly a Twin Cities metro commute. (I didn't run this one, since it needs a key, so check what you get.)
+
+# Part 2: What is `get_acs()` doing under the hood?
+
+`get_acs()` builds a URL like this one and requests it (add `show_call = TRUE` to see it, but don't leave that in a document you knit and push):
+
+```
+https://api.census.gov/data/2024/acs/acs5?get=NAME,B08301_001E,B08301_021E&for=county:*&in=state:27&key=YOUR_KEY
+```
+
+| Piece | Meaning |
+|:--|:--|
+| `https://api.census.gov/data` | The host |
+| `/2024` | The year |
+| `/acs/acs5` | The dataset (the 5-year ACS) |
+| `?get=` | The variables: `NAME`, `B08301_001E` (all workers), `B08301_021E` (worked from home) |
+| `&for=` | The geography: `county:*` means "all counties" |
+| `&in=` | ...in this state: `state:27` (27 is Minnesota's FIPS code) |
+| `&key=` | Who you are |
+
+**Try it in your browser:** with your key in place of `YOUR_KEY`, the browser shows rows of JSON, a list of lists. The first row is the column names, and each row after that is one county.
+
+# Part 3: Talking to the API directly with `httr2`
+
+## Step 1: build the request
+
+```{r}
+#| eval: false
+wfh_request <- request("https://api.census.gov/data") |>
+  req_url_path_append("2024") |>
+  req_url_path_append("acs") |>
+  req_url_path_append("acs5") |>
+  req_url_query(
+    get = c("NAME", "B08301_001E", "B08301_001M", "B08301_021E", "B08301_021M"),
+    `for` = I("county:*"),
+    `in` = I("state:27"),
+    key = Sys.getenv("CENSUS_API_KEY"),
+    .multi = "comma"
+  )
+```
+
+## Step 2: send it
+
+```{r}
+#| eval: false
+wfh_response <- req_perform(wfh_request)
+```
+
+If it worked, the response says `Status: 200 OK`.
+
+```{r}
+# a saved copy of the response *body* (data only: no key)
+wfh_response <- response(
+  status_code = 200,
+  headers = list("Content-Type" = "application/json"),
+  body = charToRaw(paste(readLines("../../slides/19/wfh-mn-county.json"), collapse = "\n"))
+)
+```
+
+## Step 3: get a tibble
+
+```{r}
+raw <- resp_body_json(wfh_response, simplifyVector = TRUE)
+class(raw)
+head(raw, 3)
+```
+
+The first row is the column names. Move it into the header, then make the numbers numeric:
+
+```{r}
+colnames(raw) <- raw[1, ]
+
+wfh_raw <- as_tibble(raw[-1, ]) |>
+  mutate(across(starts_with("B08301"), as.numeric),
+         pct_wfh = B08301_021E / B08301_001E)
+
+wfh_raw |> select(NAME, B08301_021E, B08301_001E, pct_wfh) |> head(5)
+```
+
+# Your turn 2: how has working from home changed in Minnesota?
+
+## 1. The 2024 1-year ACS for Minnesota
+
+Use `acs/acs1`, and for a single state use `` `for` = I("state:27") `` with no `in`:
+
+```{r}
+#| eval: false
+mn_2024_request <- request("https://api.census.gov/data") |>
+  req_url_path_append("2024") |>
+  req_url_path_append("acs") |>
+  req_url_path_append("acs1") |>
+  req_url_query(
+    get = c("NAME", "B08301_001E", "B08301_021E"),
+    `for` = I("state:27"),
+    key = Sys.getenv("CENSUS_API_KEY"),
+    .multi = "comma"
+  )
+
+raw_2024 <- req_perform(mn_2024_request) |>
+  resp_body_json(simplifyVector = TRUE)
+
+colnames(raw_2024) <- raw_2024[1, ]
+mn_2024 <- as_tibble(raw_2024[-1, ]) |>
+  mutate(across(starts_with("B08301"), as.numeric),
+         pct_wfh = B08301_021E / B08301_001E)
+```
+
+The check values: **3,009,002** total workers and **443,318** who worked from home, which is about **14.7%**.
+
+## 2. The same request for 2019
+
+Only the year in `req_url_path_append()` changes:
+
+```{r}
+#| eval: false
+mn_2019_request <- request("https://api.census.gov/data") |>
+  req_url_path_append("2019") |>
+  req_url_path_append("acs") |>
+  req_url_path_append("acs1") |>
+  req_url_query(
+    get = c("NAME", "B08301_001E", "B08301_021E"),
+    `for` = I("state:27"),
+    key = Sys.getenv("CENSUS_API_KEY"),
+    .multi = "comma"
+  )
+```
+
+```{r}
+# saved results for Minnesota, all years
+mn_years <- read_csv("../../slides/19/wfh-answer-key.csv")
+
+mn_years |>
+  filter(year %in% c(2019, 2024)) |>
+  select(year, B08301_001E, B08301_021E, pct_wfh)
+```
+
+**What changed?** In 2019 about 6.4% of Minnesota workers worked from home (190,795 of 2,958,990). By 2024 it was about 14.7% (443,318 of 3,009,002). The share more than doubled, even though the total number of workers barely changed.
+
+## 3. The 2020 request
+
+```{r}
+#| eval: false
+req_perform(mn_2020_request)   # same request, with the year changed to "2020"
+```
+
+This fails with an `HTTP 404 Not Found` error. The Census Bureau did not release the standard 2020 1-year ACS (data collection during the first year of COVID-19 was too disrupted), so that URL doesn't exist. The message comes from the website, not from a mistake in your code. The 5-year ACS does have 2020, using the dataset name `acs/acs5`.
+
+## If you have time: several years and a plot
+
+Write the request as a function of the year, then call it once per year (this is where iteration comes in). We skip 2020 since there is no 1-year file:
+
+```{r}
+#| eval: false
+get_mn_wfh <- function(year) {
+  raw <- request("https://api.census.gov/data") |>
+    req_url_path_append(year) |>
+    req_url_path_append("acs") |>
+    req_url_path_append("acs1") |>
+    req_url_query(
+      get = c("NAME", "B08301_001E", "B08301_021E"),
+      `for` = I("state:27"),
+      key = Sys.getenv("CENSUS_API_KEY"),
+      .multi = "comma"
+    ) |>
+    req_perform() |>
+    resp_body_json(simplifyVector = TRUE)
+
+  colnames(raw) <- raw[1, ]
+  as_tibble(raw[-1, ]) |>
+    mutate(across(starts_with("B08301"), as.numeric),
+           pct_wfh = B08301_021E / B08301_001E,
+           year = year)
+}
+
+mn_years <- c(2019, 2021:2024) |>
+  map(get_mn_wfh) |>
+  list_rbind()
+```
+
+```{r}
+mn_years |>
+  ggplot(aes(x = year, y = pct_wfh)) +
+  geom_line() +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = scales::label_percent(), limits = c(0, NA)) +
+  labs(
+    x = "Year",
+    y = "Share of workers who work from home",
+    title = "Working from home in Minnesota",
+    subtitle = "1-year ACS (no standard 2020 release)"
+  ) +
+  theme_minimal()
+```
+
+The share jumped from about 6% in 2019 to 21% in 2021, then fell back to about 15% by 2024. It is still more than twice its pre-pandemic level.

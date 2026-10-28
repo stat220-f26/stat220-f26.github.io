@@ -67,13 +67,14 @@ get_state_year <- function(year) {
     ) |>
     req_perform() |>
     resp_body_json(simplifyVector = TRUE) |>
-    (\(m) { colnames(m) <- m[1, ]; as_tibble(m[-1, ]) })() |>
+    janitor::row_to_names(1) |>
+    as_tibble() |>
     mutate(year = year,
            across(c(B08301_001E, B08301_021E), as.numeric),
            pct_wfh = B08301_021E / B08301_001E)
 }
 answer_key <- map(c(2019, 2021, 2022, 2023, 2024), get_state_year) |> list_rbind()
-write_csv(answer_key, "wfh-answer-key.csv")
+write_csv(answer_key, "slides/19/wfh-answer-key.csv")
 print(answer_key)
 
 message("Done. Wrote wfh-mn-acs.rds, wfh-show-call.txt, wfh-mn-county.json, wfh-answer-key.csv")

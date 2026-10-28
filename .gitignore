@@ -25,3 +25,5 @@ slides/*/slides*.html
 .Ruserdata
 
 /.luarc.json
+
+slides/19/census_api_key.txt
