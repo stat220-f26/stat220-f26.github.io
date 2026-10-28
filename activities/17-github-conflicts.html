@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Prof Amanda Luby">
 <title>17: Collaborating on GitHub – Stat 220</title>
@@ -68,9 +68,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4a17e18fdf56099d4f6da1e105f33a53.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6e03bc272f1cdef1d8296ac38e217ebd.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -503,7 +503,7 @@ See also [ggplot2 documentation](https://ggplot2.tidyverse.org/)
 <p>Everyone should have the repo cloned and open in RStudio and know which role number(s) they are.</p>
 </section><section id="role-1" class="level3"><h3 class="anchored" data-anchor-id="role-1">Role 1</h3>
 <ul>
-<li>Go to <code>writeup.qmd</code> in your project repo. Change the <code>[author]</code> in the header to your actual name (not your partner’s!)</li>
+<li>Go to <code>writeup.qmd</code> in your project repo. Change the <code>[authors]</code> to your actual name (not your partners!)</li>
 <li>Render, then stage and commit <strong>only</strong> <code>writeup.qmd</code>, and push. (You should be able to see your changes on github.com)</li>
 </ul>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -521,7 +521,7 @@ Important
 </div>
 </section><section id="role-2" class="level3"><h3 class="anchored" data-anchor-id="role-2">Role 2</h3>
 <ul>
-<li>Change the <code>[author]</code> in the header to be <em>your</em> name</li>
+<li>Change the <code>[authors]</code> to be <em>your</em> name</li>
 <li>Render, then stage and commit <strong>only</strong> <code>writeup.qmd</code>
 </li>
 <li>Now, try to push your changes. You should get an error.</li>
@@ -564,7 +564,7 @@ Important
 </div>
 </section><section id="role-1-again" class="level3"><h3 class="anchored" data-anchor-id="role-1-again">Role 1 (again)</h3>
 <ul>
-<li>In the body of the document (not in the header at the top), replace the <em>first</em> <code>[report goes here]</code> (under <code># Billion Dollar Disasters</code>) with a sentence of your own</li>
+<li>In the body of the document (not in the header at the top), change one sentence of the text</li>
 <li>Render, then stage and commit <strong>only</strong> <code>writeup.qmd</code>, and push. You should get an error.</li>
 <li>Pull. No merge conflicts should occur, but you should see a message about merging</li>
 <li>Now push.</li>
@@ -585,7 +585,7 @@ Important
 </section><section id="role-2-again" class="level3"><h3 class="anchored" data-anchor-id="role-2-again">Role 2 (again)</h3>
 <ul>
 <li>Pull all changes from the remote repo</li>
-<li>Replace the <em>second</em> <code>[report goes here]</code> (under <code># Reflection</code>) with a sentence of your own</li>
+<li>Change a <em>different</em> sentence in the body of the document (not the one Role 1 changed)</li>
 <li>Render, then stage and commit <strong>only</strong> <code>writeup.qmd</code>, and push. You should not get an error because you pulled first. This is “good” collaborative behavior: start with pulling before doing any work</li>
 </ul>
 <div class="callout callout-style-default callout-important callout-titled">

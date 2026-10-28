@@ -6,9 +6,9 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8f4e3aabaa80e3e650ae20f2c24f966b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8cab17c520dfb5fd83702a774e8ef3fe.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 <meta name="author" content="Prof Amanda Luby">
 <title>Stat 220 – APIs</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -214,455 +214,64 @@ Prof Amanda Luby
 </section><section id="what-is-an-api" class="slide level2"><h2>What is an API?</h2>
 <p>“API stands for <strong>A</strong>pplication <strong>P</strong>rogramming <strong>I</strong>nterface. It is a set of rules and protocols that lets different software applications communicate with each other.</p>
 <p>In this class, we’ll use APIs to allow R to communicate with websites. These APIs focus on transmitting raw data, rather than images, fonts, etc. that humans interact with when they visit the page.</p>
+<div class="fragment">
+<p>For us: an API is <strong>a URL that returns data</strong>, instead of a web page for humans.</p>
+<pre><code>https://api.census.gov/data/2024/acs/acs5?get=NAME,B08301_021E&amp;for=state:27&amp;key=YOUR_KEY</code></pre>
+</div>
+</section><section id="why-use-an-api" class="slide level2"><h2>Why use an API?</h2>
+<ul>
+<li class="fragment">
+<strong>Provenance:</strong> the data comes directly from the source</li>
+<li class="fragment">
+<strong>Reproducibility:</strong> others can re-run your code and get the same data (or updated data!)</li>
+<li class="fragment">
+<strong>Customizability:</strong> you can ask for exactly the variables, time period, places, etc. that you want</li>
+</ul></section><section id="keys-and-rate-limits" class="slide level2"><h2>Keys and rate limits</h2>
+<ul>
+<li class="fragment">Most APIs require a <strong>key</strong>: a long random string that identifies <em>you</em>
+</li>
+<li class="fragment">The website uses it to track who is making requests, and to enforce <strong>rate limits</strong>
+</li>
+<li class="fragment">Treat your key like a password</li>
+</ul>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Keep your key out of your .qmd and out of GitHub</strong></p>
+</div>
+<div class="callout-content">
+<p>Anything you push can be seen by anyone with access to your repo, and git remembers it forever, even if you delete the file later.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="storing-your-key-once" class="slide level2"><h2>Storing your key (once)</h2>
+<p>Store your key in a file that lives <em>outside</em> your project, using the <code>tidycensus</code> helper:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">census_api_key</span>(<span class="st">"PASTE-YOUR-KEY-HERE"</span>, <span class="at">install =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p>Then <strong>restart R</strong>. From now on, R can find the key whenever it needs it:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">nchar</span>(<span class="fu">Sys.getenv</span>(<span class="st">"CENSUS_API_KEY"</span>)) <span class="sc">==</span> <span class="dv">40</span>   <span class="co"># TRUE means R can see it (without printing it!)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li class="fragment">The key now lives in a file called <code>.Renviron</code> in your home folder, not in your repo</li>
+<li class="fragment">You never type the key into a document again</li>
+</ul>
+</div>
 </section><section id="how-do-we-use-them" class="slide level2 scrollable"><h2>How do we use them?</h2>
 <p>In this class, we’re going to cover two ways to access API’s:</p>
 <ol type="1">
 <li class="fragment">with a <em>wrapper</em> R package</li>
 <li class="fragment">directly with httr requests</li>
-</ol></section><section id="api-wrapper-packages" class="slide level2"><h2>API wrapper packages</h2>
-<ul>
-<li class="fragment">To find a wrapper package search for “R package”, plus the name of the website, plus “data”
-<ul>
-<li class="fragment">“R package nytimes data”</li>
-<li class="fragment">“R package reddit data”</li>
-<li class="fragment">“R package weather.com data”</li>
-</ul>
-</li>
-</ul></section><section id="example-nytimes-data" class="slide level2"><h2>Example: nytimes data</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="https://github.com/mkearney/nytimes/raw/master/man/figures/logo.png" style="width:70.0%"></p>
-</div><div class="column" style="width:50%;">
-<ul>
-<li><p>R functions for accessing New York Times’ APIs</p></li>
-<li><p>Functionality for “article search”, “most popular”, and “Times newswire” APIs.</p></li>
-</ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"mkearney/nytimes"</span>)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(nytimes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div></div>
-</section><section id="nyt_search" class="slide level2"><h2><code>nyt_search</code></h2>
-<p>Allows R to interact with the NY Times</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>mn_search <span class="ot">&lt;-</span> <span class="fu">nyt_search</span>(<span class="at">q =</span> <span class="st">"minnesota"</span>, </span>
-<span id="cb2-2"><a></a>                        <span class="at">n =</span> <span class="dv">50</span>, </span>
-<span id="cb2-3"><a></a>                        <span class="at">end_date =</span> <span class="st">"20240101"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div><div class="column" style="width:50%;">
-<ul>
-<li>
-<code>q</code>: search term</li>
-<li>
-<code>n</code>: number of articles to return</li>
-<li>
-<code>end_date</code>: which date to start searching <em>backwards</em> from</li>
-</ul>
-</div></div>
-</section><section id="output-is-designed-for-computers-to-read" class="slide level2"><h2>Output is designed for computers to read</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">str</span>(mn_search)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>List of 5
- $ :List of 10
-  ..$ url        : chr "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=minnesota&amp;sort=newest&amp;end_date=20240101&amp;api-key=5pk1D"| __truncated__
-  ..$ status_code: int 200
-  ..$ headers    :List of 14
-  .. ..$ date                         : chr "Wed, 19 Feb 2025 02:24:56 GMT"
-  .. ..$ content-type                 : chr "application/json"
-  .. ..$ content-length               : chr "227759"
-  .. ..$ connection                   : chr "keep-alive"
-  .. ..$ server                       : chr "nginx"
-  .. ..$ vary                         : chr "Origin"
-  .. ..$ vary                         : chr "Access-Control-Request-Method"
-  .. ..$ vary                         : chr "Access-Control-Request-Headers"
-  .. ..$ via                          : chr "1.1 google"
-  .. ..$ alt-svc                      : chr "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-  .. ..$ access-control-allow-headers : chr "Accept, Content-Type, Origin, X-Forwarded-For, X-Prototype-Version, X-Requested-With"
-  .. ..$ access-control-allow-methods : chr "GET, OPTIONS"
-  .. ..$ access-control-allow-origin  : chr "*"
-  .. ..$ access-control-expose-headers: chr "Content-Length, X-JSON"
-  .. ..- attr(*, "class")= chr [1:2] "insensitive" "list"
-  ..$ all_headers:List of 1
-  .. ..$ :List of 3
-  .. .. ..$ status : int 200
-  .. .. ..$ version: chr "HTTP/1.1"
-  .. .. ..$ headers:List of 14
-  .. .. .. ..$ date                         : chr "Wed, 19 Feb 2025 02:24:56 GMT"
-  .. .. .. ..$ content-type                 : chr "application/json"
-  .. .. .. ..$ content-length               : chr "227759"
-  .. .. .. ..$ connection                   : chr "keep-alive"
-  .. .. .. ..$ server                       : chr "nginx"
-  .. .. .. ..$ vary                         : chr "Origin"
-  .. .. .. ..$ vary                         : chr "Access-Control-Request-Method"
-  .. .. .. ..$ vary                         : chr "Access-Control-Request-Headers"
-  .. .. .. ..$ via                          : chr "1.1 google"
-  .. .. .. ..$ alt-svc                      : chr "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-  .. .. .. ..$ access-control-allow-headers : chr "Accept, Content-Type, Origin, X-Forwarded-For, X-Prototype-Version, X-Requested-With"
-  .. .. .. ..$ access-control-allow-methods : chr "GET, OPTIONS"
-  .. .. .. ..$ access-control-allow-origin  : chr "*"
-  .. .. .. ..$ access-control-expose-headers: chr "Content-Length, X-JSON"
-  .. .. .. ..- attr(*, "class")= chr [1:2] "insensitive" "list"
-  ..$ cookies    :'data.frame': 0 obs. of  7 variables:
-  .. ..$ domain    : logi(0) 
-  .. ..$ flag      : logi(0) 
-  .. ..$ path      : logi(0) 
-  .. ..$ secure    : logi(0) 
-  .. ..$ expiration: 'POSIXct' num(0) 
-  .. ..$ name      : logi(0) 
-  .. ..$ value     : logi(0) 
-  ..$ content    : raw [1:227759] 7b 22 73 74 ...
-  ..$ date       : POSIXct[1:1], format: "2025-02-19 02:24:56"
-  ..$ times      : Named num [1:6] 0 0.0263 0.0735 0.0735 0.7194 ...
-  .. ..- attr(*, "names")= chr [1:6] "redirect" "namelookup" "connect" "pretransfer" ...
-  ..$ request    :List of 7
-  .. ..$ method    : chr "GET"
-  .. ..$ url       : chr "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=minnesota&amp;sort=newest&amp;end_date=20240101&amp;api-key=5pk1D"| __truncated__
-  .. ..$ headers   : Named chr "application/json, text/xml, application/xml, */*"
-  .. .. ..- attr(*, "names")= chr "Accept"
-  .. ..$ fields    : NULL
-  .. ..$ options   :List of 2
-  .. .. ..$ useragent: chr "libcurl/8.11.1 r-curl/6.2.0 httr/1.4.7"
-  .. .. ..$ httpget  : logi TRUE
-  .. ..$ auth_token: NULL
-  .. ..$ output    : list()
-  .. .. ..- attr(*, "class")= chr [1:2] "write_memory" "write_function"
-  .. ..- attr(*, "class")= chr "request"
-  ..$ handle     :Class 'curl_handle' &lt;externalptr&gt; 
-  ..- attr(*, "class")= chr "response"
- $ :List of 10
-  ..$ url        : chr "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=minnesota&amp;page=1&amp;sort=newest&amp;end_date=20240101&amp;api-ke"| __truncated__
-  ..$ status_code: int 200
-  ..$ headers    :List of 14
-  .. ..$ date                         : chr "Wed, 19 Feb 2025 02:24:57 GMT"
-  .. ..$ content-type                 : chr "application/json"
-  .. ..$ content-length               : chr "221487"
-  .. ..$ connection                   : chr "keep-alive"
-  .. ..$ server                       : chr "nginx"
-  .. ..$ vary                         : chr "Origin"
-  .. ..$ vary                         : chr "Access-Control-Request-Method"
-  .. ..$ vary                         : chr "Access-Control-Request-Headers"
-  .. ..$ via                          : chr "1.1 google"
-  .. ..$ alt-svc                      : chr "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-  .. ..$ access-control-allow-headers : chr "Accept, Content-Type, Origin, X-Forwarded-For, X-Prototype-Version, X-Requested-With"
-  .. ..$ access-control-allow-methods : chr "GET, OPTIONS"
-  .. ..$ access-control-allow-origin  : chr "*"
-  .. ..$ access-control-expose-headers: chr "Content-Length, X-JSON"
-  .. ..- attr(*, "class")= chr [1:2] "insensitive" "list"
-  ..$ all_headers:List of 1
-  .. ..$ :List of 3
-  .. .. ..$ status : int 200
-  .. .. ..$ version: chr "HTTP/1.1"
-  .. .. ..$ headers:List of 14
-  .. .. .. ..$ date                         : chr "Wed, 19 Feb 2025 02:24:57 GMT"
-  .. .. .. ..$ content-type                 : chr "application/json"
-  .. .. .. ..$ content-length               : chr "221487"
-  .. .. .. ..$ connection                   : chr "keep-alive"
-  .. .. .. ..$ server                       : chr "nginx"
-  .. .. .. ..$ vary                         : chr "Origin"
-  .. .. .. ..$ vary                         : chr "Access-Control-Request-Method"
-  .. .. .. ..$ vary                         : chr "Access-Control-Request-Headers"
-  .. .. .. ..$ via                          : chr "1.1 google"
-  .. .. .. ..$ alt-svc                      : chr "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-  .. .. .. ..$ access-control-allow-headers : chr "Accept, Content-Type, Origin, X-Forwarded-For, X-Prototype-Version, X-Requested-With"
-  .. .. .. ..$ access-control-allow-methods : chr "GET, OPTIONS"
-  .. .. .. ..$ access-control-allow-origin  : chr "*"
-  .. .. .. ..$ access-control-expose-headers: chr "Content-Length, X-JSON"
-  .. .. .. ..- attr(*, "class")= chr [1:2] "insensitive" "list"
-  ..$ cookies    :'data.frame': 0 obs. of  7 variables:
-  .. ..$ domain    : logi(0) 
-  .. ..$ flag      : logi(0) 
-  .. ..$ path      : logi(0) 
-  .. ..$ secure    : logi(0) 
-  .. ..$ expiration: 'POSIXct' num(0) 
-  .. ..$ name      : logi(0) 
-  .. ..$ value     : logi(0) 
-  ..$ content    : raw [1:221487] 7b 22 73 74 ...
-  ..$ date       : POSIXct[1:1], format: "2025-02-19 02:24:57"
-  ..$ times      : Named num [1:6] 0 0.000179 0 0.00039 0.303562 ...
-  .. ..- attr(*, "names")= chr [1:6] "redirect" "namelookup" "connect" "pretransfer" ...
-  ..$ request    :List of 7
-  .. ..$ method    : chr "GET"
-  .. ..$ url       : chr "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=minnesota&amp;page=1&amp;sort=newest&amp;end_date=20240101&amp;api-ke"| __truncated__
-  .. ..$ headers   : Named chr "application/json, text/xml, application/xml, */*"
-  .. .. ..- attr(*, "names")= chr "Accept"
-  .. ..$ fields    : NULL
-  .. ..$ options   :List of 2
-  .. .. ..$ useragent: chr "libcurl/8.11.1 r-curl/6.2.0 httr/1.4.7"
-  .. .. ..$ httpget  : logi TRUE
-  .. ..$ auth_token: NULL
-  .. ..$ output    : list()
-  .. .. ..- attr(*, "class")= chr [1:2] "write_memory" "write_function"
-  .. ..- attr(*, "class")= chr "request"
-  ..$ handle     :Class 'curl_handle' &lt;externalptr&gt; 
-  ..- attr(*, "class")= chr "response"
- $ :List of 10
-  ..$ url        : chr "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=minnesota&amp;page=2&amp;sort=newest&amp;end_date=20240101&amp;api-ke"| __truncated__
-  ..$ status_code: int 200
-  ..$ headers    :List of 14
-  .. ..$ date                         : chr "Wed, 19 Feb 2025 02:24:59 GMT"
-  .. ..$ content-type                 : chr "application/json"
-  .. ..$ content-length               : chr "215044"
-  .. ..$ connection                   : chr "keep-alive"
-  .. ..$ server                       : chr "nginx"
-  .. ..$ vary                         : chr "Origin"
-  .. ..$ vary                         : chr "Access-Control-Request-Method"
-  .. ..$ vary                         : chr "Access-Control-Request-Headers"
-  .. ..$ via                          : chr "1.1 google"
-  .. ..$ alt-svc                      : chr "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-  .. ..$ access-control-allow-headers : chr "Accept, Content-Type, Origin, X-Forwarded-For, X-Prototype-Version, X-Requested-With"
-  .. ..$ access-control-allow-methods : chr "GET, OPTIONS"
-  .. ..$ access-control-allow-origin  : chr "*"
-  .. ..$ access-control-expose-headers: chr "Content-Length, X-JSON"
-  .. ..- attr(*, "class")= chr [1:2] "insensitive" "list"
-  ..$ all_headers:List of 1
-  .. ..$ :List of 3
-  .. .. ..$ status : int 200
-  .. .. ..$ version: chr "HTTP/1.1"
-  .. .. ..$ headers:List of 14
-  .. .. .. ..$ date                         : chr "Wed, 19 Feb 2025 02:24:59 GMT"
-  .. .. .. ..$ content-type                 : chr "application/json"
-  .. .. .. ..$ content-length               : chr "215044"
-  .. .. .. ..$ connection                   : chr "keep-alive"
-  .. .. .. ..$ server                       : chr "nginx"
-  .. .. .. ..$ vary                         : chr "Origin"
-  .. .. .. ..$ vary                         : chr "Access-Control-Request-Method"
-  .. .. .. ..$ vary                         : chr "Access-Control-Request-Headers"
-  .. .. .. ..$ via                          : chr "1.1 google"
-  .. .. .. ..$ alt-svc                      : chr "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-  .. .. .. ..$ access-control-allow-headers : chr "Accept, Content-Type, Origin, X-Forwarded-For, X-Prototype-Version, X-Requested-With"
-  .. .. .. ..$ access-control-allow-methods : chr "GET, OPTIONS"
-  .. .. .. ..$ access-control-allow-origin  : chr "*"
-  .. .. .. ..$ access-control-expose-headers: chr "Content-Length, X-JSON"
-  .. .. .. ..- attr(*, "class")= chr [1:2] "insensitive" "list"
-  ..$ cookies    :'data.frame': 0 obs. of  7 variables:
-  .. ..$ domain    : logi(0) 
-  .. ..$ flag      : logi(0) 
-  .. ..$ path      : logi(0) 
-  .. ..$ secure    : logi(0) 
-  .. ..$ expiration: 'POSIXct' num(0) 
-  .. ..$ name      : logi(0) 
-  .. ..$ value     : logi(0) 
-  ..$ content    : raw [1:215044] 7b 22 73 74 ...
-  ..$ date       : POSIXct[1:1], format: "2025-02-19 02:24:59"
-  ..$ times      : Named num [1:6] 0 0.000098 0 0.000211 0.336513 ...
-  .. ..- attr(*, "names")= chr [1:6] "redirect" "namelookup" "connect" "pretransfer" ...
-  ..$ request    :List of 7
-  .. ..$ method    : chr "GET"
-  .. ..$ url       : chr "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=minnesota&amp;page=2&amp;sort=newest&amp;end_date=20240101&amp;api-ke"| __truncated__
-  .. ..$ headers   : Named chr "application/json, text/xml, application/xml, */*"
-  .. .. ..- attr(*, "names")= chr "Accept"
-  .. ..$ fields    : NULL
-  .. ..$ options   :List of 2
-  .. .. ..$ useragent: chr "libcurl/8.11.1 r-curl/6.2.0 httr/1.4.7"
-  .. .. ..$ httpget  : logi TRUE
-  .. ..$ auth_token: NULL
-  .. ..$ output    : list()
-  .. .. ..- attr(*, "class")= chr [1:2] "write_memory" "write_function"
-  .. ..- attr(*, "class")= chr "request"
-  ..$ handle     :Class 'curl_handle' &lt;externalptr&gt; 
-  ..- attr(*, "class")= chr "response"
- $ :List of 10
-  ..$ url        : chr "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=minnesota&amp;page=3&amp;sort=newest&amp;end_date=20240101&amp;api-ke"| __truncated__
-  ..$ status_code: int 200
-  ..$ headers    :List of 14
-  .. ..$ date                         : chr "Wed, 19 Feb 2025 02:25:00 GMT"
-  .. ..$ content-type                 : chr "application/json"
-  .. ..$ content-length               : chr "219733"
-  .. ..$ connection                   : chr "keep-alive"
-  .. ..$ server                       : chr "nginx"
-  .. ..$ vary                         : chr "Origin"
-  .. ..$ vary                         : chr "Access-Control-Request-Method"
-  .. ..$ vary                         : chr "Access-Control-Request-Headers"
-  .. ..$ via                          : chr "1.1 google"
-  .. ..$ alt-svc                      : chr "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-  .. ..$ access-control-allow-headers : chr "Accept, Content-Type, Origin, X-Forwarded-For, X-Prototype-Version, X-Requested-With"
-  .. ..$ access-control-allow-methods : chr "GET, OPTIONS"
-  .. ..$ access-control-allow-origin  : chr "*"
-  .. ..$ access-control-expose-headers: chr "Content-Length, X-JSON"
-  .. ..- attr(*, "class")= chr [1:2] "insensitive" "list"
-  ..$ all_headers:List of 1
-  .. ..$ :List of 3
-  .. .. ..$ status : int 200
-  .. .. ..$ version: chr "HTTP/1.1"
-  .. .. ..$ headers:List of 14
-  .. .. .. ..$ date                         : chr "Wed, 19 Feb 2025 02:25:00 GMT"
-  .. .. .. ..$ content-type                 : chr "application/json"
-  .. .. .. ..$ content-length               : chr "219733"
-  .. .. .. ..$ connection                   : chr "keep-alive"
-  .. .. .. ..$ server                       : chr "nginx"
-  .. .. .. ..$ vary                         : chr "Origin"
-  .. .. .. ..$ vary                         : chr "Access-Control-Request-Method"
-  .. .. .. ..$ vary                         : chr "Access-Control-Request-Headers"
-  .. .. .. ..$ via                          : chr "1.1 google"
-  .. .. .. ..$ alt-svc                      : chr "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-  .. .. .. ..$ access-control-allow-headers : chr "Accept, Content-Type, Origin, X-Forwarded-For, X-Prototype-Version, X-Requested-With"
-  .. .. .. ..$ access-control-allow-methods : chr "GET, OPTIONS"
-  .. .. .. ..$ access-control-allow-origin  : chr "*"
-  .. .. .. ..$ access-control-expose-headers: chr "Content-Length, X-JSON"
-  .. .. .. ..- attr(*, "class")= chr [1:2] "insensitive" "list"
-  ..$ cookies    :'data.frame': 0 obs. of  7 variables:
-  .. ..$ domain    : logi(0) 
-  .. ..$ flag      : logi(0) 
-  .. ..$ path      : logi(0) 
-  .. ..$ secure    : logi(0) 
-  .. ..$ expiration: 'POSIXct' num(0) 
-  .. ..$ name      : logi(0) 
-  .. ..$ value     : logi(0) 
-  ..$ content    : raw [1:219733] 7b 22 73 74 ...
-  ..$ date       : POSIXct[1:1], format: "2025-02-19 02:25:00"
-  ..$ times      : Named num [1:6] 0 0.000084 0 0.000296 0.370724 ...
-  .. ..- attr(*, "names")= chr [1:6] "redirect" "namelookup" "connect" "pretransfer" ...
-  ..$ request    :List of 7
-  .. ..$ method    : chr "GET"
-  .. ..$ url       : chr "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=minnesota&amp;page=3&amp;sort=newest&amp;end_date=20240101&amp;api-ke"| __truncated__
-  .. ..$ headers   : Named chr "application/json, text/xml, application/xml, */*"
-  .. .. ..- attr(*, "names")= chr "Accept"
-  .. ..$ fields    : NULL
-  .. ..$ options   :List of 2
-  .. .. ..$ useragent: chr "libcurl/8.11.1 r-curl/6.2.0 httr/1.4.7"
-  .. .. ..$ httpget  : logi TRUE
-  .. ..$ auth_token: NULL
-  .. ..$ output    : list()
-  .. .. ..- attr(*, "class")= chr [1:2] "write_memory" "write_function"
-  .. ..- attr(*, "class")= chr "request"
-  ..$ handle     :Class 'curl_handle' &lt;externalptr&gt; 
-  ..- attr(*, "class")= chr "response"
- $ :List of 10
-  ..$ url        : chr "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=minnesota&amp;page=4&amp;sort=newest&amp;end_date=20240101&amp;api-ke"| __truncated__
-  ..$ status_code: int 200
-  ..$ headers    :List of 14
-  .. ..$ date                         : chr "Wed, 19 Feb 2025 02:25:01 GMT"
-  .. ..$ content-type                 : chr "application/json"
-  .. ..$ content-length               : chr "226154"
-  .. ..$ connection                   : chr "keep-alive"
-  .. ..$ server                       : chr "nginx"
-  .. ..$ vary                         : chr "Origin"
-  .. ..$ vary                         : chr "Access-Control-Request-Method"
-  .. ..$ vary                         : chr "Access-Control-Request-Headers"
-  .. ..$ via                          : chr "1.1 google"
-  .. ..$ alt-svc                      : chr "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-  .. ..$ access-control-allow-headers : chr "Accept, Content-Type, Origin, X-Forwarded-For, X-Prototype-Version, X-Requested-With"
-  .. ..$ access-control-allow-methods : chr "GET, OPTIONS"
-  .. ..$ access-control-allow-origin  : chr "*"
-  .. ..$ access-control-expose-headers: chr "Content-Length, X-JSON"
-  .. ..- attr(*, "class")= chr [1:2] "insensitive" "list"
-  ..$ all_headers:List of 1
-  .. ..$ :List of 3
-  .. .. ..$ status : int 200
-  .. .. ..$ version: chr "HTTP/1.1"
-  .. .. ..$ headers:List of 14
-  .. .. .. ..$ date                         : chr "Wed, 19 Feb 2025 02:25:01 GMT"
-  .. .. .. ..$ content-type                 : chr "application/json"
-  .. .. .. ..$ content-length               : chr "226154"
-  .. .. .. ..$ connection                   : chr "keep-alive"
-  .. .. .. ..$ server                       : chr "nginx"
-  .. .. .. ..$ vary                         : chr "Origin"
-  .. .. .. ..$ vary                         : chr "Access-Control-Request-Method"
-  .. .. .. ..$ vary                         : chr "Access-Control-Request-Headers"
-  .. .. .. ..$ via                          : chr "1.1 google"
-  .. .. .. ..$ alt-svc                      : chr "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-  .. .. .. ..$ access-control-allow-headers : chr "Accept, Content-Type, Origin, X-Forwarded-For, X-Prototype-Version, X-Requested-With"
-  .. .. .. ..$ access-control-allow-methods : chr "GET, OPTIONS"
-  .. .. .. ..$ access-control-allow-origin  : chr "*"
-  .. .. .. ..$ access-control-expose-headers: chr "Content-Length, X-JSON"
-  .. .. .. ..- attr(*, "class")= chr [1:2] "insensitive" "list"
-  ..$ cookies    :'data.frame': 0 obs. of  7 variables:
-  .. ..$ domain    : logi(0) 
-  .. ..$ flag      : logi(0) 
-  .. ..$ path      : logi(0) 
-  .. ..$ secure    : logi(0) 
-  .. ..$ expiration: 'POSIXct' num(0) 
-  .. ..$ name      : logi(0) 
-  .. ..$ value     : logi(0) 
-  ..$ content    : raw [1:226154] 7b 22 73 74 ...
-  ..$ date       : POSIXct[1:1], format: "2025-02-19 02:25:01"
-  ..$ times      : Named num [1:6] 0 0.000096 0 0.000301 0.321168 ...
-  .. ..- attr(*, "names")= chr [1:6] "redirect" "namelookup" "connect" "pretransfer" ...
-  ..$ request    :List of 7
-  .. ..$ method    : chr "GET"
-  .. ..$ url       : chr "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=minnesota&amp;page=4&amp;sort=newest&amp;end_date=20240101&amp;api-ke"| __truncated__
-  .. ..$ headers   : Named chr "application/json, text/xml, application/xml, */*"
-  .. .. ..- attr(*, "names")= chr "Accept"
-  .. ..$ fields    : NULL
-  .. ..$ options   :List of 2
-  .. .. ..$ useragent: chr "libcurl/8.11.1 r-curl/6.2.0 httr/1.4.7"
-  .. .. ..$ httpget  : logi TRUE
-  .. ..$ auth_token: NULL
-  .. ..$ output    : list()
-  .. .. ..- attr(*, "class")= chr [1:2] "write_memory" "write_function"
-  .. ..- attr(*, "class")= chr "request"
-  ..$ handle     :Class 'curl_handle' &lt;externalptr&gt; 
-  ..- attr(*, "class")= chr "response"
- - attr(*, "class")= chr "search"</code></pre>
-</div>
-</div>
-</section><section id="convert-response-to-tibble" class="slide level2"><h2>Convert response to tibble</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>mn_tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(mn_search)</span>
-<span id="cb5-2"><a></a>mn_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 50 × 19
-   id             abstract byline document_type headline keywords lead_paragraph
-   &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;         
- 1 nyt://article… This ye… By Ja… article       A New Y… New Yea… It’s the firs…
- 2 nyt://article… Many st… By Ad… article       New Sta… States … A spate of ne…
- 3 nyt://article… In Chil… By Ja… article       Cats Fi… Prisons… Some say they…
- 4 nyt://interac… Detaile… By Jo… multimedia    Week 17… Footbal… Detailed tabl…
- 5 nyt://article… Maine f… By Je… article       Maine J… Preside… Maine on Thur…
- 6 nyt://article… The Uni… By Ni… article       Univers… College… The chancello…
- 7 nyt://interac… Data sh… By El… multimedia    Where M… Immigra… Data shows wh…
- 8 nyt://article… Private… By Ha… article       They’re… Child L… One morning i…
- 9 nyt://article… The his… By Jo… article       The Vir… English… My partner an…
-10 nyt://article… Gator t… By Sc… article       ‘Fargo’… Televis… After eight e…
-# ℹ 40 more rows
-# ℹ 12 more variables: multimedia &lt;chr&gt;, news_desk &lt;chr&gt;, print_page &lt;chr&gt;,
-#   print_section &lt;chr&gt;, pub_date &lt;dttm&gt;, section_name &lt;chr&gt;, snippet &lt;chr&gt;,
-#   source &lt;chr&gt;, type_of_material &lt;chr&gt;, uri &lt;chr&gt;, web_url &lt;chr&gt;,
-#   word_count &lt;int&gt;</code></pre>
-</div>
-</div>
-</section><section id="lets-take-a-peek-at-a-couple-of-columns" class="slide level2"><h2>Let’s take a peek at a couple of columns:</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>mn_tbl <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a></a>  <span class="fu">select</span>(pub_date, headline, document_type, keywords)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 50 × 4
-   pub_date            headline                           document_type keywords
-   &lt;dttm&gt;              &lt;chr&gt;                              &lt;chr&gt;         &lt;chr&gt;   
- 1 2024-01-01 10:57:10 A New Year’s Energy Boost          article       New Yea…
- 2 2024-01-01 08:00:30 New State Laws on Hot-Button Issu… article       States …
- 3 2023-12-31 10:02:32 Cats Filled the Prison. Then the … article       Prisons…
- 4 2023-12-30 05:08:59 Week 17 N.F.L. Playoff Picture: A… multimedia    Footbal…
- 5 2023-12-29 00:01:11 Maine Joins Colorado in Finding T… article       Preside…
- 6 2023-12-28 23:46:06 University Chancellor Fired After… article       College…
- 7 2023-12-28 10:03:05 Where Migrant Children Are Living… multimedia    Immigra…
- 8 2023-12-28 10:02:51 They’re Paid Billions to Root Out… article       Child L…
- 9 2023-12-27 20:00:02 The Virtues of Inauthenticity      article       English…
-10 2023-12-27 04:00:07 ‘Fargo’ Season 5, Episode 7: Not … article       Televis…
-# ℹ 40 more rows</code></pre>
-</div>
-</div>
-</section><section id="pros-of-using-an-api" class="slide level2"><h2>Pros of using an API:</h2>
-<ul>
-<li class="fragment">Provenance: we’ve accessed our data directly from the source and didn’t have to save it in a file format or open it in a different program</li>
-<li class="fragment">Reproducibility: accessing data via code allows others to reproduce our work</li>
-<li class="fragment">Customizability: we can generate as specific (or broad) of a dataset as we would like</li>
-</ul></section><section id="but-ive-hidden-some-steps-from-you" class="slide level2"><h2>But, I’ve hidden some steps from you</h2>
-<ul>
-<li class="fragment">Most APIs require you to sign up for an <em>API key</em>
-</li>
-<li class="fragment">This allows the website to track who is accessing their data, how many requests they are making, how often they are making them, etc.</li>
-<li class="fragment">Most APIs (especially if they’re free) are <em>rate limited</em>
-<ul>
-<li class="fragment">The NYTimes API limits you to 500 requests per day and 5 requests per minute</li>
-<li class="fragment">This seems like a lot, but you can burn through them quickly when you’re not sure what you’re doing!</li>
-</ul>
-</li>
-<li class="fragment">In addition to signing up for a key, we need to make sure R knows how to find it</li>
-</ul></section><section id="census-data" class="slide level2"><h2>Census data</h2>
+</ol></section><section id="census-data" class="slide level2"><h2>Census data</h2>
 <ul>
 <li class="fragment">Every ten years, the US Census Bureau runs a census of the US population. The goal is to survey <em>everybody</em> in the country.</li>
 <li class="fragment">They also run the <em>American Community Survey</em>, which tracks demographic indicators among a random sample of people every 1, 3, or 5 years</li>
@@ -677,7 +286,22 @@ Prof Amanda Luby
 <div class="fragment">
 <p>Importantly, the data is paid for by the public (via taxes) and is available for use by the public</p>
 </div>
-</section><section id="section" class="slide level2 center"><h2></h2>
+</section><section id="our-question" class="slide level2"><h2>Our question</h2>
+<p>How many people work from home, and where?</p>
+<ul>
+<li>The American Community Survey (ACS) asks workers how they get to work</li>
+<li>Table <code>B08301</code>: <em>Means of transportation to work</em>
+<ul>
+<li>
+<code>B08301_001</code>: total workers (16 and over)</li>
+<li>
+<code>B08301_021</code>: <strong>worked from home</strong>
+</li>
+</ul>
+</li>
+<li>Share working from home = <code>B08301_021</code> / <code>B08301_001</code>
+</li>
+</ul></section><section id="section" class="slide level2 center"><h2></h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><img data-src="https://walker-data.com/tidycensus/logo.png" style="width:70.0%"></p>
@@ -688,175 +312,119 @@ Prof Amanda Luby
 <li><p>Designed to work within the tidyverse ecosystem</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">install.packages</span>(<span class="st">"tidycensus"</span>)</span>
-<span id="cb9-2"><a></a><span class="fu">library</span>(tidycensus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">install.packages</span>(<span class="st">"tidycensus"</span>)</span>
+<span id="cb4-2"><a></a><span class="fu">library</span>(tidycensus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
-</section><section id="example-call" class="slide level2"><h2>Example call</h2>
+</section><section id="get_acs" class="slide level2"><h2><code>get_acs()</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>acs_mn_2020 <span class="ot">&lt;-</span> tidycensus<span class="sc">::</span><span class="fu">get_acs</span>(</span>
-<span id="cb10-2"><a></a>    <span class="at">year =</span> <span class="dv">2020</span>,</span>
-<span id="cb10-3"><a></a>    <span class="at">state =</span> <span class="st">"MN"</span>,</span>
-<span id="cb10-4"><a></a>    <span class="at">geography =</span> <span class="st">"tract"</span>,</span>
-<span id="cb10-5"><a></a>    <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"B01003_001"</span>, <span class="st">"B19013_001"</span>),</span>
-<span id="cb10-6"><a></a>    <span class="at">output =</span> <span class="st">"wide"</span>,</span>
-<span id="cb10-7"><a></a>    <span class="at">geometry =</span> <span class="cn">TRUE</span></span>
-<span id="cb10-8"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>wfh_mn <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb5-2"><a></a>  <span class="at">geography =</span> <span class="st">"county"</span>,</span>
+<span id="cb5-3"><a></a>  <span class="at">state =</span> <span class="st">"MN"</span>,</span>
+<span id="cb5-4"><a></a>  <span class="at">variables =</span> <span class="st">"B08301_021"</span>,</span>
+<span id="cb5-5"><a></a>  <span class="at">summary_var =</span> <span class="st">"B08301_001"</span>,</span>
+<span id="cb5-6"><a></a>  <span class="at">year =</span> <span class="dv">2024</span>,</span>
+<span id="cb5-7"><a></a>  <span class="at">survey =</span> <span class="st">"acs5"</span>,</span>
+<span id="cb5-8"><a></a>  <span class="at">geometry =</span> <span class="cn">TRUE</span></span>
+<span id="cb5-9"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section><section id="storing-your-api-key" class="slide level2 scrollable"><h2>Storing your API key</h2>
-<ol type="1">
-<li>Create a new text file in the same folder as your .qmd</li>
-<li>Copy and paste your census key into the empty file, followed by an empty line</li>
-<li>Save the file as <code>census_api_key.txt</code>
-</li>
-</ol>
-<p>Read in the key with the following code:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>my_key <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"census_api_key.txt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>and tell <code>tidycensus</code> what your API key is with:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">census_api_key</span>(my_key)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><em>Do not commit and push <code>census_api_key.txt</code> to github</em></p>
-</section><section id="example-call-1" class="slide level2"><h2>Example call</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>acs_mn_2020 <span class="ot">&lt;-</span> tidycensus<span class="sc">::</span><span class="fu">get_acs</span>(</span>
-<span id="cb13-2"><a></a>    <span class="at">year =</span> <span class="dv">2020</span>,</span>
-<span id="cb13-3"><a></a>    <span class="at">state =</span> <span class="st">"MN"</span>,</span>
-<span id="cb13-4"><a></a>    <span class="at">geography =</span> <span class="st">"county"</span>,</span>
-<span id="cb13-5"><a></a>    <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"B01003_001"</span>, <span class="st">"B19013_001"</span>),</span>
-<span id="cb13-6"><a></a>    <span class="at">output =</span> <span class="st">"wide"</span>,</span>
-<span id="cb13-7"><a></a>    <span class="at">geometry =</span> <span class="cn">TRUE</span></span>
-<span id="cb13-8"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div><div class="column" style="width:50%;">
 <ul>
-<li>
-<code>geography = "county"</code>: What level of detail to get summary statistics. Other options include “state”, “tract”, “combined statistical area”, etc.</li>
-<li>
-<code>variables = c("B01003_001", "B19013_001")</code>: Which survey questions should we get responses to?</li>
-</ul>
-</div></div>
-</section><section id="example" class="slide level2"><h2>Example</h2>
-<pre><code>Simple feature collection with 87 features and 6 fields
+<li class="fragment">
+<code>geography</code>: the level of detail (also “state”, “tract”, …)</li>
+<li class="fragment">
+<code>variables</code>: which survey question(s) to get; each has an ID</li>
+<li class="fragment">
+<code>summary_var</code>: a total to put alongside each estimate (here, all workers)</li>
+<li class="fragment">
+<code>survey = "acs5"</code>: the 5-year ACS, which has data for <em>every</em> county</li>
+<li class="fragment">
+<code>geometry = TRUE</code>: also download the shapes, so we can map</li>
+</ul></section><section id="what-you-get" class="slide level2"><h2>What you get</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>wfh_mn <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"wfh-mn-acs.rds"</span>)</span>
+<span id="cb6-2"><a></a></span>
+<span id="cb6-3"><a></a>wfh_mn <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a></a>  <span class="fu">select</span>(NAME, estimate, moe, summary_est, summary_moe) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 5 features and 5 fields
 Geometry type: MULTIPOLYGON
 Dimension:     XY
-Bounding box:  xmin: -97.23921 ymin: 43.49937 xmax: -89.49398 ymax: 49.38436
+Bounding box:  xmin: -96.06762 ymin: 44.10772 xmax: -91.02074 ymax: 48.20582
 Geodetic CRS:  NAD83
-First 10 features:
-   GEOID                        NAME B01003_001E B01003_001M B19013_001E B19013_001M                       geometry
-1  27167    Wilkin County, Minnesota        6264          NA       56829        5145 MULTIPOLYGON (((-96.79109 4...
-2  27133      Rock County, Minnesota        9386          NA       65744        4462 MULTIPOLYGON (((-96.45341 4...
-3  27119      Polk County, Minnesota       31384          NA       58682        4958 MULTIPOLYGON (((-97.14638 4...
-4  27069   Kittson County, Minnesota        4272          NA       55410        2948 MULTIPOLYGON (((-97.23921 4...
-5  27125  Red Lake County, Minnesota        4005          NA       59698        9122 MULTIPOLYGON (((-96.48255 4...
-6  27023  Chippewa County, Minnesota       11876          NA       57301        4675 MULTIPOLYGON (((-96.0367 45...
-7  27075      Lake County, Minnesota       10571          NA       65201        3145 MULTIPOLYGON (((-91.55375 4...
-8  27137 St. Louis County, Minnesota      199499          NA       57480        1156 MULTIPOLYGON (((-93.09802 4...
-9  27061    Itasca County, Minnesota       45180          NA       55744        1908 MULTIPOLYGON (((-94.41896 4...
-10 27145   Stearns County, Minnesota      159788          NA       65244        1675 MULTIPOLYGON (((-95.13964 4...</code></pre>
-</section><section id="example-1" class="slide level2"><h2>Example</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>acs_mn_2020 <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb15-3"><a></a>    <span class="at">name =</span> <span class="fu">str_remove</span>(NAME, <span class="st">", Minnesota"</span>),</span>
-<span id="cb15-4"><a></a>    <span class="at">name =</span> <span class="fu">str_remove</span>(name, <span class="st">" County"</span>)</span>
-<span id="cb15-5"><a></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb15-6"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> B19013_001E, </span>
-<span id="cb15-7"><a></a>                          <span class="at">xmin =</span> B19013_001E <span class="sc">-</span> B19013_001M, </span>
-<span id="cb15-8"><a></a>                          <span class="at">xmax =</span> B19013_001E <span class="sc">+</span> B19013_001M, </span>
-<span id="cb15-9"><a></a>                          <span class="at">y =</span> <span class="fu">fct_reorder</span>(name, B19013_001E))) <span class="sc">+</span> </span>
-<span id="cb15-10"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb15-11"><a></a>  <span class="fu">geom_errorbarh</span>() <span class="sc">+</span> </span>
-<span id="cb15-12"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb15-13"><a></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
-<span id="cb15-14"><a></a>    <span class="at">y =</span> <span class="st">""</span></span>
-<span id="cb15-15"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section><section id="section-1" class="slide level2"><h2></h2>
-<p><img data-src="../img/acs-mn-county.png"></p>
-</section><section id="more-info-about-how-censusacs-data-is-reported" class="slide level2"><h2>More info about how census/ACS data is reported</h2>
-<p><a href="https://data.census.gov/" class="uri">https://data.census.gov/</a></p>
-<p><a href="https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/" class="uri">https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/</a></p>
-<p><strong>Example:</strong> Look at “income” topic</p>
-</section><section id="try-it" class="slide level2 task nonincremental"><h2>Try it</h2>
-<p>Add “educational attainment” to the topic filters and take a look at the first table. What is it showing you?</p>
-</section><section id="searching-for-variables" class="slide level2"><h2>Searching for variables</h2>
-<p>Getting variables from the Census or ACS requires knowing the variable ID - and there are thousands of these IDs across the different Census files. You can search for these online using <code>data.census.gov/table/</code> or with <code>load_variables</code> from the {tidycensus} package</p>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>acs_vars <span class="ot">&lt;-</span> <span class="fu">load_variables</span>(<span class="dv">2020</span>, <span class="st">"acs5"</span>, <span class="at">cache =</span> <span class="cn">TRUE</span>) </span>
-<span id="cb16-2"><a></a>acs_vars </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 27,850 × 4
-   name        label                                    concept        geography
-   &lt;chr&gt;       &lt;chr&gt;                                    &lt;chr&gt;          &lt;chr&gt;    
- 1 B01001A_001 Estimate!!Total:                         SEX BY AGE (W… tract    
- 2 B01001A_002 Estimate!!Total:!!Male:                  SEX BY AGE (W… tract    
- 3 B01001A_003 Estimate!!Total:!!Male:!!Under 5 years   SEX BY AGE (W… tract    
- 4 B01001A_004 Estimate!!Total:!!Male:!!5 to 9 years    SEX BY AGE (W… tract    
- 5 B01001A_005 Estimate!!Total:!!Male:!!10 to 14 years  SEX BY AGE (W… tract    
- 6 B01001A_006 Estimate!!Total:!!Male:!!15 to 17 years  SEX BY AGE (W… tract    
- 7 B01001A_007 Estimate!!Total:!!Male:!!18 and 19 years SEX BY AGE (W… tract    
- 8 B01001A_008 Estimate!!Total:!!Male:!!20 to 24 years  SEX BY AGE (W… tract    
- 9 B01001A_009 Estimate!!Total:!!Male:!!25 to 29 years  SEX BY AGE (W… tract    
-10 B01001A_010 Estimate!!Total:!!Male:!!30 to 34 years  SEX BY AGE (W… tract    
-# ℹ 27,840 more rows</code></pre>
+                          NAME estimate  moe summary_est summary_moe
+1   Mahnomen County, Minnesota      130   27        1961          81
+2   Hennepin County, Minnesota   173066 2954      686167        3633
+3       Lake County, Minnesota      626  124        4747         242
+4 Washington County, Minnesota    33344 1621      141463        1570
+5      Brown County, Minnesota      947  146       13023         330
+                        geometry
+1 MULTIPOLYGON (((-96.06762 4...
+2 MULTIPOLYGON (((-93.76804 4...
+3 MULTIPOLYGON (((-91.55375 4...
+4 MULTIPOLYGON (((-93.0214 44...
+5 MULTIPOLYGON (((-95.10878 4...</code></pre>
 </div>
 </div>
-</div>
-</section><section id="the-two-we-used-were" class="slide level2"><h2>The two we used were:</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>acs_vars <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a></a>  <span class="fu">filter</span>(name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"B01003_001"</span>, <span class="st">"B19013_001"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-  name       label                                             concept geography
-  &lt;chr&gt;      &lt;chr&gt;                                             &lt;chr&gt;   &lt;chr&gt;    
-1 B01003_001 Estimate!!Total                                   TOTAL … block gr…
-2 B19013_001 Estimate!!Median household income in the past 12… MEDIAN… block gr…</code></pre>
-</div>
-</div>
-</section><section id="but-we-could-search-for-other-variables-using-label" class="slide level2"><h2>But we could search for other variables using <code>label</code>
-</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>acs_vars <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(label, <span class="st">"degree"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 345 × 4
-   name         label                                          concept geography
-   &lt;chr&gt;        &lt;chr&gt;                                          &lt;chr&gt;   &lt;chr&gt;    
- 1 B06009PR_004 Estimate!!Total:!!Some college or associate's… PLACE … &lt;NA&gt;     
- 2 B06009PR_005 Estimate!!Total:!!Bachelor's degree            PLACE … &lt;NA&gt;     
- 3 B06009PR_006 Estimate!!Total:!!Graduate or professional de… PLACE … &lt;NA&gt;     
- 4 B06009PR_010 Estimate!!Total:!!Born in Puerto Rico:!!Some … PLACE … &lt;NA&gt;     
- 5 B06009PR_011 Estimate!!Total:!!Born in Puerto Rico:!!Bache… PLACE … &lt;NA&gt;     
- 6 B06009PR_012 Estimate!!Total:!!Born in Puerto Rico:!!Gradu… PLACE … &lt;NA&gt;     
- 7 B06009PR_016 Estimate!!Total:!!Born in the United States:!… PLACE … &lt;NA&gt;     
- 8 B06009PR_017 Estimate!!Total:!!Born in the United States:!… PLACE … &lt;NA&gt;     
- 9 B06009PR_018 Estimate!!Total:!!Born in the United States:!… PLACE … &lt;NA&gt;     
-10 B06009PR_022 Estimate!!Total:!!Native; born elsewhere:!!So… PLACE … &lt;NA&gt;     
-# ℹ 335 more rows</code></pre>
-</div>
-</div>
-</section><section id="your-turn" class="slide level2"><h2>Your turn</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>acs_vars <span class="ot">&lt;-</span> <span class="fu">load_variables</span>(<span class="dv">2020</span>, <span class="st">"acs5"</span>, <span class="at">cache =</span> <span class="cn">TRUE</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="task">
 <ul>
-<li>Search for the “Median earnings in the past 12 months by major” table that we looked at on the census website using <code>load_variables</code>
-</li>
-<li>Run another call to <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">tidycensus::get_acs</a></code> to access this variable</li>
-</ul>
+<li class="fragment">
+<code>estimate</code>: number of people who work from home; <code>moe</code>: the <strong>margin of error</strong> on that estimate</li>
+<li class="fragment">
+<code>summary_est</code>: total number of workers</li>
+</ul></section><section id="share-working-from-home" class="slide level2"><h2>Share working from home</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>wfh_mn <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">mutate</span>(<span class="at">pct_wfh =</span> estimate <span class="sc">/</span> summary_est) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> pct_wfh)) <span class="sc">+</span></span>
+<span id="cb8-4"><a></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb8-5"><a></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>()) <span class="sc">+</span></span>
+<span id="cb8-6"><a></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Work from home"</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a></a>  <span class="fu">theme_void</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+
+<p>Which counties have the highest share? Which have the lowest? Why might that be?</p>
+</section><section id="share-working-from-home-output" class="slide level2 output-location-slide"><h2>Share working from home</h2><div class="cell output-location-slide">
+<div class="cell-output-display">
+<div>
+<figure><p><img data-src="slides19_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="how-do-we-find-the-variable-ids" class="slide level2"><h2>How do we find the variable IDs?</h2>
+<p>There are thousands of IDs. Search the variable labels with <code>load_variables()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>acs_vars <span class="ot">&lt;-</span> <span class="fu">load_variables</span>(<span class="dv">2024</span>, <span class="st">"acs5"</span>, <span class="at">cache =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-2"><a></a></span>
+<span id="cb9-3"><a></a>acs_vars <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(label, <span class="st">"Worked from home"</span>), <span class="sc">!</span><span class="fu">str_detect</span>(name, <span class="st">"PR"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a></a>  <span class="fu">select</span>(name, concept, label) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a></a>  <span class="fu">head</span>(<span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  name       concept                                           label            
+  &lt;chr&gt;      &lt;chr&gt;                                             &lt;chr&gt;            
+1 B08006_017 Sex of Workers by Means of Transportation to Work Estimate!!Total:…
+2 B08006_034 Sex of Workers by Means of Transportation to Work Estimate!!Total:…
+3 B08006_051 Sex of Workers by Means of Transportation to Work Estimate!!Total:…
+4 B08101_049 Means of Transportation to Work by Age            Estimate!!Total:…</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>The same label shows up in several tables. The <code>concept</code> tells you which one you want.</p>
+</div>
+</section><section id="your-turn-1" class="slide level2 scrollable"><h2>Your turn 1</h2>
+<div class="task">
+<p>Make the same map for <strong>a different way of getting to work</strong>.</p>
+<ol type="1">
+<li>Search <code>acs_vars</code> for another means of transportation in the “Means of Transportation to Work” table (e.g., public transportation, walked, drove alone).</li>
+<li>Edit the <code>get_acs()</code> call to get that variable for Minnesota counties, and make the map.</li>
+<li>
+<em>If you have time:</em> try a different state.</li>
+</ol>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">countdown</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="countdown" id="timer_a05e2a49" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_f118c086" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -864,9 +432,12 @@ First 10 features:
 </div>
 </div>
 </div>
+</section><section id="more-info-about-how-censusacs-data-is-reported" class="slide level2"><h2>More info about how census/ACS data is reported</h2>
+<p><a href="https://data.census.gov/" class="uri">https://data.census.gov/</a></p>
+<p><a href="https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/" class="uri">https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/</a></p>
 </section><section id="what-is-get_acs-doing-underneath-the-hood" class="slide level2"><h2>What is <code>get_acs</code> doing underneath the hood?</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>get_acs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>get_acs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (geography, variables = NULL, table = NULL, cache_table = FALSE, 
     year = 2023, output = "tidy", state = NULL, county = NULL, 
@@ -1402,47 +973,57 @@ First 10 features:
         return(dat2)
     }
 }
-&lt;bytecode: 0x10cca2b48&gt;
+&lt;bytecode: 0x1257690b0&gt;
 &lt;environment: namespace:tidycensus&gt;</code></pre>
 </div>
 </div>
-</section><section id="section-2" class="slide level2"><h2></h2>
+</section><section id="section-1" class="slide level2"><h2></h2>
 <p>If we add <code>show_call = TRUE</code>, we obtain the following output:</p>
 <pre><code>Getting data from the 2016-2020 5-year ACS
 Downloading feature geometry from the Census website.  To cache shapefiles for use in future sessions, set `options(tigris_use_cache = TRUE)`.
 Using FIPS code '27' for state 'MN'
 Census API call: https://api.census.gov/data/2020/acs/acs5?get=B01003_001E%2CB01003_001M%2CB19013_001E%2CB19013_001M%2CNAME&amp;for=tract%3A%2A&amp;in=state%3A27</code></pre>
-</section><section id="whats-going-on-behind-the-scenes-with-get_acs" class="slide level2"><h2>What’s going on behind the scenes with <code>get_acs</code>?</h2>
-<p>Let’s take a peek at the <a href="https://www.census.gov/data/developers/guidance/api-user-guide.html">census API user guide</a>. There’s a menu option for “Example API Queries”. We’ll talk through the ACS Example.</p>
-<ul>
-<li class="fragment">“E” means Estimate, “M” means “Margin of Error”</li>
-<li class="fragment">“PE” means Percentage Estimate, “PM” means “Percentage Margin of Error”</li>
-</ul></section><section id="example-the-total-number-of-hmong-people-living-in-each-u.s.-state" class="slide level2"><h2>Example: the total number of Hmong people living in each U.S. state</h2>
-<p>API <em>Query</em>: <a href="https://api.census.gov/data/2019/acs/acs1?get=NAME,B02015_009E,B02015_009M%E2%80%8C&amp;for=state:*" class="uri">https://api.census.gov/data/2019/acs/acs1?get=NAME,B02015_009E,B02015_009M‌&amp;for=state:*</a></p>
-<p>This URL-looking-thing communicates to the Census API exactly the search terms we want in the data it returns to us</p>
-</section><section id="lets-break-it-down" class="slide level2 scrollable"><h2>Let’s break it down:</h2>
+</section><section id="anatomy-of-a-census-api-url" class="slide level2 scrollable"><h2>Anatomy of a Census API URL</h2>
+<p><a href="https://api.census.gov/data/2024/acs/acs5?get=NAME,B08301_001E,B08301_021E&amp;for=county:*&amp;in=state:27&amp;key=YOUR_KEY" class="uri">https://api.census.gov/data/2024/acs/acs5?get=NAME,B08301_001E,B08301_021E&amp;for=county:*&amp;in=state:27&amp;key=YOUR_KEY</a></p>
 <ol type="1">
-<li class="fragment">Host name: https://api.census.gov/data</li>
-<li class="fragment">Year: https://api.census.gov/data<strong><em>/2019</em></strong>
+<li class="fragment">
+<strong>Host:</strong> <code>https://api.census.gov/data</code>
 </li>
-<li class="fragment">Dataset name: https://api.census.gov/data/2019<strong><em>/acs/acs1</em></strong>
+<li class="fragment">
+<strong>Year:</strong> <code>/2024</code>
 </li>
-<li class="fragment">“get” https://api.census.gov/data/2019/acs/acs1<strong><em>?get=</em></strong>
-</li>
-<li class="fragment">Variables to get: https://api.census.gov/data/2019/acs/acs1?get=<strong><em>NAME,B02015_009E,B02015_009M</em></strong>
-<ul>
-<li class="fragment">Get variables that are NAMEd B02015_009E (total number of Hmong people) and B02015_009E (corresponding margin of error)</li>
-</ul>
-</li>
-<li class="fragment">Geographies to use: https://api.census.gov/data/2019/acs/acs1?get=NAME,B02015_009E,B02015_009M<strong><em>&amp;for=state:</em> </strong>*
-<ul>
-<li class="fragment">&amp; separates variables from geographies</li>
-<li class="fragment">state:* means “all states”</li>
-</ul>
-</li>
-</ol></section><section><section id="how-do-we-talk-to-the-api" class="title-slide slide level1 center"><h1>How do we talk to the API?</h1>
+<li class="fragment">
+<strong>Dataset:</strong> <code>/acs/acs5</code> (the 5-year ACS)</li>
+<li class="fragment">
+<strong><code>?get=</code></strong> the variables: <code>NAME</code>, <code>B08301_001E</code> (all workers), <code>B08301_021E</code> (worked from home)</li>
+<li class="fragment">
+<strong><code>&amp;for=</code></strong> the geography: <code>county:*</code> means “all counties”…</li>
+<li class="fragment">
+<strong><code>&amp;in=</code></strong> …<strong>in</strong> this state: <code>state:27</code> (27 is Minnesota’s FIPS code)</li>
+<li class="fragment">
+<strong><code>&amp;key=</code></strong> who you are</li>
+</ol>
+<div class="fragment">
+<p><code>E</code> = estimate, <code>M</code> = margin of error. (Add <code>B08301_021M</code> to <code>get=</code> to ask for it.)</p>
+</div>
+</section><section id="try-it-in-your-browser" class="slide level2"><h2>Try it in your browser</h2>
+<div class="task">
+<p>Paste the URL into your browser, replacing <code>YOUR_KEY</code> with your key.</p>
+<p>You should see rows of JSON: a list of lists, with the first row giving the column names.</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_2b5e59c9" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+</div>
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section><section><section id="how-do-we-talk-to-the-api-directly" class="title-slide slide level1 center"><h1>How do we talk to the API directly?</h1>
 
-</section><section id="section-3" class="slide level2 center"><h2></h2>
+</section><section id="section-2" class="slide level2 center"><h2></h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><img data-src="https://httr2.r-lib.org/logo.png"></p>
@@ -1452,116 +1033,147 @@ Census API call: https://api.census.gov/data/2020/acs/acs5?get=B01003_001E%2CB01
 <li>allows us to send “queries” to any API via R</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">install.packages</span>(<span class="st">"httr2"</span>)</span>
-<span id="cb27-2"><a></a><span class="fu">library</span>(httr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">install.packages</span>(<span class="st">"httr2"</span>)</span>
+<span id="cb14-2"><a></a><span class="fu">library</span>(httr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
-</section><section id="sending-our-census-query" class="slide level2"><h2>Sending our census query</h2>
+</section><section id="step-1-build-the-request" class="slide level2"><h2>Step 1: build the request</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>hmong_state_request <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://api.census.gov/data"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"2019"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-3"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"acs"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-4"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"acs1"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-5"><a></a>    <span class="fu">req_url_query</span>(<span class="at">get =</span> <span class="fu">c</span>(<span class="st">"NAME"</span>, <span class="st">"B02015_009E"</span>, <span class="st">"B02015_009M"</span>), <span class="st">`</span><span class="at">for</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">I</span>(<span class="st">"state:*"</span>), <span class="at">key =</span> my_key, <span class="at">.multi =</span> <span class="st">"comma"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>wfh_request <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://api.census.gov/data"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a></a>  <span class="fu">req_url_path_append</span>(<span class="st">"2024"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a></a>  <span class="fu">req_url_path_append</span>(<span class="st">"acs"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a></a>  <span class="fu">req_url_path_append</span>(<span class="st">"acs5"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-5"><a></a>  <span class="fu">req_url_query</span>(</span>
+<span id="cb15-6"><a></a>    <span class="at">get =</span> <span class="fu">c</span>(<span class="st">"NAME"</span>, <span class="st">"B08301_001E"</span>, <span class="st">"B08301_001M"</span>, <span class="st">"B08301_021E"</span>, <span class="st">"B08301_021M"</span>),</span>
+<span id="cb15-7"><a></a>    <span class="st">`</span><span class="at">for</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">I</span>(<span class="st">"county:*"</span>),</span>
+<span id="cb15-8"><a></a>    <span class="st">`</span><span class="at">in</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">I</span>(<span class="st">"state:27"</span>),</span>
+<span id="cb15-9"><a></a>    <span class="at">key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CENSUS_API_KEY"</span>),</span>
+<span id="cb15-10"><a></a>    <span class="at">.multi =</span> <span class="st">"comma"</span></span>
+<span id="cb15-11"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>request</code> sets the host name</p>
-</section><section id="sending-our-census-query-1" class="slide level2"><h2>Sending our census query</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" data-code-line-numbers="2-4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>hmong_state_request <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://api.census.gov/data"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"2019"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-3"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"acs"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-4"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"acs1"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-5"><a></a>    <span class="fu">req_url_query</span>(<span class="at">get =</span> <span class="fu">c</span>(<span class="st">"NAME"</span>, <span class="st">"B02015_009E"</span>, <span class="st">"B02015_009M"</span>), <span class="st">`</span><span class="at">for</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">I</span>(<span class="st">"state:*"</span>), <span class="at">key =</span> my_key, <span class="at">.multi =</span> <span class="st">"comma"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><code>req_url_path_append</code> adds the year and dataset that we are trying to access</p>
-</section><section id="sending-our-census-query-2" class="slide level2"><h2>Sending our census query</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30" data-code-line-numbers="5-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>hmong_state_request <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://api.census.gov/data"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"2019"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-3"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"acs"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-4"><a></a>    <span class="fu">req_url_path_append</span>(<span class="st">"acs1"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-5"><a></a>    <span class="fu">req_url_query</span>(<span class="at">get =</span> <span class="fu">c</span>(<span class="st">"NAME"</span>, <span class="st">"B02015_009E"</span>, <span class="st">"B02015_009M"</span>), </span>
-<span id="cb30-6"><a></a>                  <span class="st">`</span><span class="at">for</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">I</span>(<span class="st">"state:*"</span>), </span>
-<span id="cb30-7"><a></a>                  <span class="at">key =</span> my_key, </span>
-<span id="cb30-8"><a></a>                  <span class="at">.multi =</span> <span class="st">"comma"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><code>req_url_query</code> is where we specify what to return:</p>
+</section><section id="what-are-those-arguments" class="slide level2"><h2>What are those arguments?</h2>
 <ul>
-<li class="fragment">The <code>.multi</code> argument controls how multiple values for a given key are combined.</li>
-<li class="fragment">The <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code> function around <code>"state:*"</code> inhibits parsing of special characters like <code>:</code> and <code>*</code>. (It’s known as the “as-is” function.)</li>
-<li class="fragment">The backticks around <code>for</code> are needed because <code>for</code> is a reserved word in R (for for-loops). You’ll need backticks whenever the key name has special characters (like spaces, dashes).</li>
-<li class="fragment">We also tell the census what our API key is</li>
-</ul></section><section id="results-in-a-httr2_request" class="slide level2"><h2>Results in a <code>&lt;httr2_request&gt;</code>
-</h2>
+<li>
+<code>request()</code> sets the host name; <code>req_url_path_append()</code> adds the year and the dataset</li>
+<li>
+<code>req_url_query()</code> adds the <code>?get=...&amp;for=...&amp;in=...</code> part
+<ul>
+<li>
+<code>.multi = "comma"</code> joins several values with commas</li>
+<li>
+<code>I("county:*")</code> means “leave this exactly as is” (don’t escape the <code>:</code> and <code>*</code>)</li>
+<li>
+<code>`for`</code> and <code>`in`</code> need backticks because they are reserved words in R</li>
+</ul>
+</li>
+<li>
+<code>Sys.getenv("CENSUS_API_KEY")</code> reads your key from <code>.Renviron</code>, so it never appears in your document</li>
+</ul></section><section id="step-2-send-it" class="slide level2"><h2>Step 2: send it</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>hmong_state_request</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>wfh_response <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(wfh_request)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<pre><code>&lt;httr2_request&gt;
-GET
-https://api.census.gov/data/2019/acs/acs1?get=NAME,B02015_009E,B02015_009M&amp;for=state:*&amp;key=4a2344XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-Body: empty</code></pre>
+<pre><code>Status: 200 OK
+Content-Type: application/json
+Body: In memory (6011 bytes)</code></pre>
+<div class="fragment">
+<p>If it worked, <code>wfh_response</code> says <code>Status: 200 OK</code>.</p>
+</div>
+<div class="fragment">
+<p>(<code>404</code> = not found, <code>429</code> = too many requests. If you forget the key, you’ll get a “Missing Key” web page instead of data.)</p>
+</div>
+</section><section id="step-3-get-a-tibble" class="slide level2"><h2>Step 3: get a tibble</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>raw <span class="ot">&lt;-</span> <span class="fu">resp_body_json</span>(wfh_response, <span class="at">simplifyVector =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-2"><a></a><span class="fu">class</span>(raw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "matrix" "array" </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">head</span>(raw, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]                       [,2]          [,3]          [,4]         
+[1,] "NAME"                     "B08301_001E" "B08301_001M" "B08301_021E"
+[2,] "Aitkin County, Minnesota" "6132"        "187"         "777"        
+[3,] "Anoka County, Minnesota"  "191607"      "2070"        "32865"      
+     [,5]          [,6]    [,7]    
+[1,] "B08301_021M" "state" "county"
+[2,] "73"          "27"    "001"   
+[3,] "1497"        "27"    "003"   </code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>The first row is the column names. Move it into the header, then make the numbers numeric</p>
+</div>
+</section><section id="step-3-get-a-tibble-1" class="slide level2"><h2>Step 3: get a tibble</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">colnames</span>(raw) <span class="ot">&lt;-</span> raw[<span class="dv">1</span>, ]</span>
+<span id="cb22-2"><a></a></span>
+<span id="cb22-3"><a></a>wfh_raw <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(raw[<span class="sc">-</span><span class="dv">1</span>, ]) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"B08301"</span>), as.numeric),</span>
+<span id="cb22-5"><a></a>         <span class="at">pct_wfh =</span> B08301_021E <span class="sc">/</span> B08301_001E)</span>
+<span id="cb22-6"><a></a></span>
+<span id="cb22-7"><a></a>wfh_raw <span class="sc">|&gt;</span> <span class="fu">select</span>(NAME, B08301_021E, B08301_001E, pct_wfh) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  NAME                       B08301_021E B08301_001E pct_wfh
+  &lt;chr&gt;                            &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+1 Aitkin County, Minnesota           777        6132  0.127 
+2 Anoka County, Minnesota          32865      191607  0.172 
+3 Becker County, Minnesota          1723       16179  0.106 
+4 Beltrami County, Minnesota        1636       21221  0.0771
+5 Benton County, Minnesota          2098       22077  0.0950</code></pre>
+</div>
+</div>
 </section><section id="why-on-earth-would-we-do-this-instead-of-using-the-url" class="slide level2"><h2>Why on earth would we do this instead of using the URL</h2>
 <ul>
 <li class="fragment">To generalize the code with functions (this is what wrapper packages do!)</li>
 <li class="fragment">To handle special characters (URLs can’t contain spaces)</li>
 <li class="fragment">To iterate over multiple years, or multiple geometries, or ….</li>
-</ul></section><section id="actually-getting-the-data" class="slide level2"><h2>Actually getting the data</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>hmong_state_response <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(hmong_state_request)</span>
-<span id="cb33-2"><a></a>hmong_state_response</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<pre><code>&lt;httr2_response&gt;
-GET
-https://api.census.gov/data/2019/acs/acs1?get=NAME,B02015_009E,B02015_009M&amp;for=state:*&amp;key=4a2344XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-Status: 200 OK
-Content-Type: application/json
-Body: In memory (1691 bytes)</code></pre>
-</section><section id="actually-getting-the-data-in-the-form-we-can-work-with" class="slide level2"><h2>Actually getting the data in the form we can work with</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>hmong_state_tbl <span class="ot">&lt;-</span> hmong_state_response <span class="sc">%&gt;%</span></span>
-<span id="cb35-2"><a></a>  <span class="fu">resp_body_json</span>(<span class="at">simplifyVector =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb35-3"><a></a>  janitor<span class="sc">::</span><span class="fu">row_to_names</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb35-4"><a></a>  <span class="fu">as_tibble</span>()</span>
-<span id="cb35-5"><a></a></span>
-<span id="cb35-6"><a></a>hmong_state_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 52 × 4
-   NAME      B02015_009E B02015_009M state
-   &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;
- 1 Illinois  655         511         17   
- 2 Georgia   3162        1336        13   
- 3 Idaho     &lt;NA&gt;        &lt;NA&gt;        16   
- 4 Hawaii    56          92          15   
- 5 Indiana   1344        1198        18   
- 6 Iowa      685         705         19   
- 7 Kansas    2189        1177        20   
- 8 Kentucky  530         503         21   
- 9 Louisiana 0           224         22   
-10 Maine     &lt;NA&gt;        &lt;NA&gt;        23   
-# ℹ 42 more rows</code></pre>
-</div>
-</div>
-</section><section id="your-turn-1" class="slide level2"><h2>Your turn</h2>
+</ul></section><section id="printing-requests-prints-your-key" class="slide level2"><h2>⚠️ Printing requests prints your key</h2>
+<p>If you <code>print(request)</code> or <code>print(response)</code> in a document you knit and push, <strong>your key goes with it</strong>.</p>
+<ul>
+<li class="fragment">Don’t print the request or response in your final document</li>
+<li class="fragment">Never type the key into your code: use <code>Sys.getenv("CENSUS_API_KEY")</code>
+</li>
+<li class="fragment">If you slip up: get a new key, and ask for help removing the old one from your repo</li>
+</ul></section><section id="your-turn-2" class="slide level2 scrollable"><h2>Your turn 2</h2>
 <div class="task">
+<p><strong>How has working from home changed in Minnesota?</strong></p>
+<ol type="1">
+<li>Edit the <code>httr2</code> code to get <code>B08301_001E</code> and <code>B08301_021E</code> for <strong>Minnesota as a whole</strong> from the <strong>2024 1-year ACS</strong>.
 <ul>
-<li>Edit the <code>httr</code> code to access the <code>B15013_002E</code> variable from 2024 (median income for “computers, math, statistics” majors)
-<ul>
-<li>To get US level estimates, use <code>I("us:1")</code> in the <code>for</code> argument</li>
-<li>To check your answer, copy the URL into a browser and make sure you get <code>"102338"</code>
-</li>
+<li>Dataset: <code>acs/acs1</code>. For one state, use <code>`for` = I("state:27")</code> (and no <code>in</code>).</li>
 </ul>
 </li>
-<li>Make a <code>httr</code> request to access the 1-year ACS data from 2022 and 2023. Make sure to save your results from each call!</li>
-<li>Combine all years into a single dataset (you may need to create a column for <code>year</code>)</li>
-<li>Make a time series plot with your chosen variable on the <code>y-axis</code> and year on the <code>x-axis</code>
-<ul>
-<li>You will need to do some cleaning of the data</li>
-</ul>
-</li>
-<li>Brainstorm some ways to make the graph more interesting through gathering more data from the census API, and implement those ideas if you have time!</li>
-</ul>
+<li>Make the same request for <strong>2019</strong>. Compute the share working from home in each year. What changed?</li>
+<li>Now try <strong>2020</strong>. What happens? What does the error message say?</li>
+</ol>
 </div>
-</section><section id="neat-wrapper-packages-or-apis" class="slide level2"><h2>Neat Wrapper packages or APIs</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_f761b458" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+</div>
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section><section id="why-is-there-no-2020" class="slide level2"><h2>Why is there no 2020?</h2>
+<ul>
+<li>The Census Bureau did not release the standard 2020 1-year ACS: data collection during the first year of COVID-19 was too disrupted</li>
+<li>So a request for <code>2020/acs/acs1</code> fails with <code>404 Not Found</code>
+</li>
+<li>The <strong>5-year</strong> ACS does have 2020, and uses a different dataset name (<code>acs/acs5</code>)</li>
+</ul>
+<div class="fragment">
+<p>An API error is a message from the website, not (necessarily) a mistake in your code.</p>
+</div>
+</section><section id="next-up-hw-8" class="slide level2"><h2>Next up: HW 8</h2>
+<ul>
+<li class="fragment">Make requests for several years, and combine results</li>
+<li class="fragment">Wrap the request in a function, so that you can call it once per year without rewriting the {httr} request</li>
+<li class="fragment">Use what you know about iteration (!!) to call your function for each year</li>
+</ul></section><section id="neat-wrapper-packages-or-apis" class="slide level2"><h2>Neat Wrapper packages or APIs</h2>
 <ul>
 <li>
 <a href="https://www.sportsdataverse.org/">SportsDataverse</a> has a ton of R packages for accessing a variety of sports data</li>
