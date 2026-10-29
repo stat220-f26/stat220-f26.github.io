@@ -1,0 +1,162 @@
+---
+title: "21-scraping"
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(robotstxt)
+```
+
+# Check permission first
+
+```{r}
+paths_allowed("https://books.toscrape.com")
+paths_allowed("https://quotes.toscrape.com")
+paths_allowed("https://www.carleton.edu/catalog/current/search/")
+```
+
+# Part 1: Carleton course catalog
+
+<https://www.carleton.edu/catalog/current/search/?subject=STAT&term=26FA>
+
+The page address has two pieces that you can change: `subject=` (a department code, like `STAT`, `MATH`, `CS`, `ECON`) and `term=` (like `26FA` for fall 2026, `27WI` for winter 2027).
+
+## The STAT listings
+
+```{r}
+listings <- read_html("https://www.carleton.edu/catalog/current/search/?subject=STAT&term=26FA")
+```
+
+View the page source to find the html elements where each of these is located:
+
+- Course number
+- Course title
+- Credits
+- Prerequisites
+
+Then build a tibble called `stat_courses`, with one row per course, and the columns `course`, `title`, and `credits`. (*Hint:* the class names are `courseNumber`, `courseTitle`, and `credits`. Don't forget `html_text()` and `str_squish()`.)
+
+```{r}
+# your code here
+```
+
+## Missing values
+
+Some courses have no prerequisites. 
+
+1. How many elements does `html_elements(".courseMeta--preReqs")` return? How many courses are there?
+2. Select each course first (each one is an `<li>` inside `.courseSearchResults`), and then use `html_element()` to extract the prerequisites. How many courses have no prerequisites listed?
+3. Add `prereqs` to your `stat_courses` tibble.
+
+```{r}
+# your code here
+```
+
+## Your turn: another department
+
+Pick another department and scrape its course listings for a term of your choice. How many courses does it offer? Which has the most credits?
+
+```{r}
+# your code here
+```
+
+# Part 2: Books to Scrape
+
+<https://books.toscrape.com>
+
+A fake bookstore built for practicing web scraping. Use SelectorGadget (or view the page source) to explore the page.
+
+```{r}
+books_page <- read_html("https://books.toscrape.com/catalogue/page-1.html")
+```
+
+Each book is an `<article class="product_pod">`. Fill in the blanks to scrape the title, price, and rating:
+
+```{r}
+#| eval: false
+cards <- books_page |>
+  html_elements("article.product_pod")
+
+# the full title is in the `title` attribute of the link inside the <h3>
+_______ <- cards |>
+  html_element("h3 a") |>
+  html_attr("title")
+
+# the price is the text of an element with class `price_color`
+_______ <- cards |>
+  html_element(".price_color") |>
+  html_text()
+
+# the rating is stored in the *class* of the element with class `star-rating`
+_______ <- cards |>
+  html_element(".star-rating") |>
+  html_attr("class")
+
+books <- tibble(
+  
+)
+
+books
+```
+
+## Clean the data
+
+1. Convert `price` to a number. (*Hint:* `parse_number()`)
+2. The rating is stored as text like `"star-rating Three"`. Remove `"star-rating "`, then convert it to a **factor** with the levels in the right order (One, Two, Three, Four, Five).
+3. Make a plot or table of your choice. Are the more expensive books rated more highly?
+
+```{r}
+# your code here
+```
+
+## Many pages
+
+The URL for page `n` is `https://books.toscrape.com/catalogue/page-n.html`.
+
+1. Turn your code into a function called `scrape_books` that takes a page number and returns a tibble for that page. 
+2. Use `map()` and `list_rbind()` to scrape pages 1-3. Add `Sys.sleep(1)` so that you wait a second between requests.
+3. *Challenge:* how many books are there in total? What proportion are rated 5 stars?
+
+```{r}
+# your code here
+```
+
+# Part 3: Quotes to Scrape
+
+<https://quotes.toscrape.com>
+
+1. Scrape the first page into a tibble called `quotes` with the columns `text`, `author`, and `tags`. Each quote can have several tags, so combine them into a single string for each quote (e.g., `"change, deep-thoughts, thinking, world"`). (*Hint:* each quote is a `.quote` element; inside it, look for `.text`, `.author`, and `.tag`. Use `str_c(collapse = ", ")` to combine the tags.)
+2. Which author appears most often on the first page?
+3. *If you have time:* scrape pages 1-3. (*Hint:* the pages are at `https://quotes.toscrape.com/page/2/`, and so on.)
+
+```{r}
+# your code here
+```
+
+# Save your data
+
+For a bigger scraping project, you'd run the scraping code **once**, in an R script, and save the result so that you don't need to scrape again.
+
+Create a new R script called `scrape-books.R`. Put your `scrape_books` function and the code that scrapes pages 1-3 in it, and finish with:
+
+```{r}
+#| eval: false
+write_csv(books_1_to_3, "books.csv")
+```
+
+Then read `books.csv` back in here and make a graph.
+
+```{r}
+# your code here
+```
+
+# If a site doesn't allow scraping
+
+IMDb's Top 250 movies is a classic scraping example, but IMDb does not allow scraping:
+
+```{r}
+paths_allowed("https://www.imdb.com/chart/top")
+```
+
+What would you do if you wanted to analyze IMDb ratings? List at least two alternatives.

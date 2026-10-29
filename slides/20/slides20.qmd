@@ -86,19 +86,25 @@ Use `robotstxt::paths_allowed()` to see if you can scrape the web page.
 
 . . . 
 
-You can scrape Zillow
+Wikipedia, and a website built for practicing scraping, say yes:
+
 ```{r warning=FALSE}
 library(robotstxt)
-paths_allowed("http://www.zillow.com")
+paths_allowed("https://en.wikipedia.org")
+paths_allowed("https://books.toscrape.com")
 ```
 
 . . . 
 
-But not Facebook
+But not Facebook:
+
 ```{r warning=FALSE}
 paths_allowed("http://www.facebook.com")
 ```
 
+. . .
+
+`TRUE` isn't a guarantee, either: some sites allow it in `robots.txt` but block scripts and forbid scraping in their terms of use
 
 
 ## Hypertext Markup Language
@@ -163,6 +169,10 @@ library(rvest)
 ## Example: box office mojo
 
 <https://www.boxofficemojo.com/year/2024/>
+
+```{r warning=FALSE}
+paths_allowed("https://www.boxofficemojo.com/year/2024/")
+```
 
 ::::: columns
 ::: {.column .nonincremental width="50%"}
@@ -260,7 +270,7 @@ top2024 <- top2024 %>%
     Theaters = parse_number(Theaters),
     `Total Gross` = parse_number(`Total Gross`)
   ) %>%
-  separate(`Release Date`, into = c("Month", "Day"))
+  separate(`Release Date`, into = c("Weekday", "Month", "Day"), convert = TRUE)
 
 glimpse(top2024)
 ```
@@ -293,3 +303,14 @@ Source: [Playing the Whole Game](https://www.tandfonline.com/doi/full/10.1080/10
   - Example: [Carleton course search](https://www.carleton.edu/catalog/current/search/?term=25/WI&subject=STAT&number=220)
   
 - More next class! 
+
+## Getting an HTML table into R: the process {.smaller}
+
+| Step | Function | What you get | Example |
+|:-----|:---------|:-------------|:--------|
+| Read the page | `read_html()` | The whole page as an HTML document | `page <- read_html("saved-pages/boxofficemojo-2024.html")` |
+| Find the tables | `html_elements("table")` | A list of every `<table>` on the page | `tables <- page \|> html_elements("table")` |
+| Pick the right one | `tables[[n]]` | One table (still HTML, not a data frame) | `tables[[1]]` |
+| Parse it | `html_table()` | A tibble, with every column as text | `top2024 <- html_table(tables[[1]])` |
+| Clean it | `parse_number()`, `separate()`, ... | A tibble with the right column types | `mutate(Gross = parse_number(Gross))` |
+| Check it | `glimpse()`, `head()` | Make sure the result is what you expected | `glimpse(top2024)` |
