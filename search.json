@@ -8366,5 +8366,68 @@
     "title": "Lab Quiz 02 Practice Questions: Solutions",
     "section": "(b)",
     "text": "(b)\nThe order is day, month (abbreviated name), year, so use dmy():\n\ndmy(\"8 Feb 2023\")\n\n[1] \"2023-02-08\"\n\n\nBoth give \"2023-02-08\" (February 8th). Note that 2/8/2023 in part (a) is read as February 8th and not August 2nd, because we chose mdy()."
+  },
+  {
+    "objectID": "lab-quiz/lq03-practice-sols.html",
+    "href": "lab-quiz/lq03-practice-sols.html",
+    "title": "Lab Quiz 03 Practice Questions: Solutions",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(nycflights23)"
+  },
+  {
+    "objectID": "lab-quiz/lq03-practice-sols.html#a",
+    "href": "lab-quiz/lq03-practice-sols.html#a",
+    "title": "Lab Quiz 03 Practice Questions: Solutions",
+    "section": "(a)",
+    "text": "(a)\n\nstr_subset(airport_names, \"Z\")\n\n[1] \"Gladwin Zettel Memorial Airport\" \"Zamperini Field\"                \n[3] \"Zephyrhills Municipal Airport\"   \"Zanesville Municipal Airport\"   \n\n\nAll of the airport names that contain a capital letter Z, anywhere in the name. There are 4 of them (e.g. “Zamperini Field”). It doesn’t match lowercase “z”."
+  },
+  {
+    "objectID": "lab-quiz/lq03-practice-sols.html#b",
+    "href": "lab-quiz/lq03-practice-sols.html#b",
+    "title": "Lab Quiz 03 Practice Questions: Solutions",
+    "section": "(b)",
+    "text": "(b)\n\nstr_subset(airport_names, \"^Red\")\n\n[1] \"Redstone Army Air Field\"         \"Red Bluff Municipal Airport\"    \n[3] \"Red Dog Airport\"                 \"Redding Municipal Airport\"      \n[5] \"Redwood Falls Municipal Airport\"\n\n\nAll of the airport names that start with “Red” (the ^ anchors the match to the start of the string)."
+  },
+  {
+    "objectID": "lab-quiz/lq03-practice-sols.html#c",
+    "href": "lab-quiz/lq03-practice-sols.html#c",
+    "title": "Lab Quiz 03 Practice Questions: Solutions",
+    "section": "(c)",
+    "text": "(c)\n\nstr_subset(airport_names, \"\\\\.\")\n\n [1] \"Lakeland-Noble F. Lee Memorial field\"                   \n [2] \"Western Neb. Rgnl/William B. Heilig Airport\"            \n [3] \"Jim Hamilton L.B. Owens Airport\"                        \n [4] \"Coleman A. Young Municipal Airport\"                     \n [5] \"Edward G. Pitka Sr Airport\"                             \n [6] \"Gerald R. Ford International Airport\"                   \n [7] \"Tri-State/Milton J. Ferguson Field\"                     \n [8] \"West 30th St. Heliport\"                                 \n [9] \"William T. Piper Memorial Airport\"                      \n[10] \"Morgantown Municipal Walter L. Bill Hart Field\"         \n[11] \"Charles B. Wheeler Downtown Airport\"                    \n[12] \"Manassas Regional Airport/Harry P. Davis Field\"         \n[13] \"Kaneohe Bay MCAS (Marion E. Carl Field) Airport\"        \n[14] \"Naval Station Mayport (Admiral David L. Mcdonald Field)\"\n[15] \"General Wayne A. Downing Peoria International Airport\"  \n[16] \"Ernest A. Love Field\"                                   \n[17] \"Norman Y. Mineta San Jose International Airport\"        \n[18] \"Charles M. Schulz Sonoma County Airport\"                \n[19] \"Sioux Gateway Col. Bud Day Field\"                       \n[20] \"Waynesville-St. Robert Regional Forney field\"           \n[21] \"Toccoa Airport - R.G. Letourneau Field\"                 \n\n\nAll of the airport names that contain a literal period.\nWithout the escape, str_subset(airport_names, \".\") would match every name that has at least one character, so it returns all 1,251 airports."
+  },
+  {
+    "objectID": "lab-quiz/lq03-practice-sols.html#a-1",
+    "href": "lab-quiz/lq03-practice-sols.html#a-1",
+    "title": "Lab Quiz 03 Practice Questions: Solutions",
+    "section": "(a)",
+    "text": "(a)\nnumeric(length(mn_airports)) preallocates storage: it creates a numeric vector of zeros with one slot for each airport (8 zeros), so that the loop can fill in one result per airport. It’s more efficient than growing a vector one element at a time"
+  },
+  {
+    "objectID": "lab-quiz/lq03-practice-sols.html#b-1",
+    "href": "lab-quiz/lq03-practice-sols.html#b-1",
+    "title": "Lab Quiz 03 Practice Questions: Solutions",
+    "section": "(b)",
+    "text": "(b)\nseq_along(mn_airports) gives the indices of the vector: 1, 2, 3, 4, 5, 6, 7, 8. The loop index k takes each of those values in turn, so mn_airports[k] is the k-th airport name. (It’s safer than 1:length(mn_airports), which would be 1, 0 for an empty vector.)\n\nseq_along(mn_airports)\n\n[1] 1 2 3 4 5 6 7 8"
+  },
+  {
+    "objectID": "lab-quiz/lq03-practice-sols.html#c-1",
+    "href": "lab-quiz/lq03-practice-sols.html#c-1",
+    "title": "Lab Quiz 03 Practice Questions: Solutions",
+    "section": "(c)",
+    "text": "(c)\nEach time through the loop, x is the three-letter FAA code of the k-th airport: the loop filters airports to the row whose name is mn_airports[k], and pull(faa) takes the faa column out as a character string. For example, when k = 1, x is \"BJI\" (Bemidji). It gets overwritten on every pass through the loop. After the loop is finished, x is only the last one, \"MSP\"."
+  },
+  {
+    "objectID": "lab-quiz/lq03-practice-sols.html#d",
+    "href": "lab-quiz/lq03-practice-sols.html#d",
+    "title": "Lab Quiz 03 Practice Questions: Solutions",
+    "section": "(d)",
+    "text": "(d)\nresults holds the number of flights from NYC to each of the 8 airports, in the same order as mn_airports (my_function(x) is the number of flights to the airport with code x). Seven of them are 0, since there were no flights from NYC to those airports in 2023 (they are small regional airports), and the last one (MSP) is 5,938:\n\nresults\n\n[1]    0    0    0    0    0    0    0 5938"
+  },
+  {
+    "objectID": "lab-quiz/lq03-practice-sols.html#now-with-msp-ord-and-sea",
+    "href": "lab-quiz/lq03-practice-sols.html#now-with-msp-ord-and-sea",
+    "title": "Lab Quiz 03 Practice Questions: Solutions",
+    "section": "Now with \"MSP\", \"ORD\", and \"SEA\"\n",
+    "text": "Now with \"MSP\", \"ORD\", and \"SEA\"\n\n\nmap(c(\"MSP\", \"ORD\", \"SEA\"), my_function)\n\n[[1]]\n[1] 5938\n\n[[2]]\n[1] 18200\n\n[[3]]\n[1] 5229\n\n\nThis returns a list with 3 elements: one for each airport, in the order that we gave them (5,938 flights to MSP, 18,200 to ORD, and 5,229 to SEA). Every element is a single number, so we could use map_dbl() to get a numeric vector instead:\n\nmap_dbl(c(\"MSP\", \"ORD\", \"SEA\"), my_function)\n\n[1]  5938 18200  5229\n\n\nmap() always returns a list, map_dbl() returns a numeric (double) vector, map_chr() a character vector, and map_dfr()/list_rbind() can combine data frame results into one data frame."
   }
 ]
