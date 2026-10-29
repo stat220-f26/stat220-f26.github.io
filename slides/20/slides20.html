@@ -6,9 +6,9 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8cab17c520dfb5fd83702a774e8ef3fe.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8f4e3aabaa80e3e650ae20f2c24f966b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="author" content="Prof Amanda Luby">
 <title>Stat 220 – Intro to  Web Scraping</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -240,37 +240,44 @@ Prof Amanda Luby
 </ul></section><section id="checking-for-permission-to-scrape" class="slide level2"><h2>Checking for permission to scrape</h2>
 <p>Use <code><a href="https://docs.ropensci.org/robotstxt/reference/paths_allowed.html">robotstxt::paths_allowed()</a></code> to see if you can scrape the web page.</p>
 <div class="fragment">
-<p>You can scrape Zillow</p>
+<p>Wikipedia, and a website built for practicing scraping, say yes:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(robotstxt)</span>
-<span id="cb1-2"><a></a><span class="fu">paths_allowed</span>(<span class="st">"http://www.zillow.com"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a></a><span class="fu">paths_allowed</span>(<span class="st">"https://en.wikipedia.org"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">paths_allowed</span>(<span class="st">"https://books.toscrape.com"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 </div>
 <div class="fragment">
-<p>But not Facebook</p>
+<p>But not Facebook:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">paths_allowed</span>(<span class="st">"http://www.facebook.com"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">paths_allowed</span>(<span class="st">"http://www.facebook.com"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
+<p><code>TRUE</code> isn’t a guarantee, either: some sites allow it in <code>robots.txt</code> but block scripts and forbid scraping in their terms of use</p>
 </div>
 </section><section id="hypertext-markup-language" class="slide level2"><h2>Hypertext Markup Language</h2>
 <ul>
 <li><p>Lots of data on the web is still available as HTML</p></li>
 <li><p>It is structured (hierarchical / tree based), but it’s often not available in a form useful for analysis (flat / tidy).</p></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb5-1"><a></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
-<span id="cb5-2"><a></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb5-3"><a></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>This is a title<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
-<span id="cb5-4"><a></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb5-5"><a></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb5-6"><a></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> align</span><span class="op">=</span><span class="st">"center"</span><span class="dt">&gt;</span>Hello world!<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb5-7"><a></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb5-8"><a></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb7-1"><a></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb7-2"><a></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb7-3"><a></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>This is a title<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb7-4"><a></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb7-5"><a></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb7-6"><a></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> align</span><span class="op">=</span><span class="st">"center"</span><span class="dt">&gt;</span>Hello world!<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb7-7"><a></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb7-8"><a></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section><section id="html-tags" class="slide level2"><h2>HTML tags</h2>
 <p>HTML uses <strong>tags</strong> to describe different aspects of document content</p>
 <table class="caption-top">
@@ -311,11 +318,17 @@ Prof Amanda Luby
 <li><p><em>Installed</em> with the {tidyverse} but not <em>loaded</em> automatically</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">library</span>(rvest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">library</span>(rvest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
 </section><section id="example-box-office-mojo" class="slide level2"><h2>Example: box office mojo</h2>
 <p><a href="https://www.boxofficemojo.com/year/2024/" class="uri">https://www.boxofficemojo.com/year/2024/</a></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">paths_allowed</span>(<span class="st">"https://www.boxofficemojo.com/year/2024/"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -330,15 +343,15 @@ Prof Amanda Luby
 </div></div>
 </section><section id="read-html-into-r" class="slide level2"><h2>Read HTML into R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"https://www.boxofficemojo.com/year/2024/"</span>)</span>
-<span id="cb7-2"><a></a>page</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"https://www.boxofficemojo.com/year/2024/"</span>)</span>
+<span id="cb11-2"><a></a>page</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{html_document}
 &lt;html class="a-no-js" data-19ax5a9jf="dingo"&gt;
 [1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8 ...
-[2] &lt;body id="body" class="mojo-page-id-yld a-m-us a-aui_72554-c a-aui_killsw ...</code></pre>
+[2] &lt;body id="body" class="mojo-page-id-yld a-m-us a-aui_72554-c a-aui_templa ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">str</span>(page)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">str</span>(page)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 2
  $ node:&lt;externalptr&gt; 
@@ -363,8 +376,8 @@ Prof Amanda Luby
 </div></aside></section><section id="extract-tables" class="slide level2"><h2>Extract tables</h2>
 <p>Use <code>html_element()</code> or <code>html_elements()</code> to extract pieces out of HTML documents</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>tables <span class="ot">&lt;-</span> page <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">"table"</span>)</span>
-<span id="cb11-2"><a></a><span class="fu">str</span>(tables)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>tables <span class="ot">&lt;-</span> page <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">"table"</span>)</span>
+<span id="cb15-2"><a></a><span class="fu">str</span>(tables)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 1
  $ :List of 2
@@ -377,7 +390,7 @@ Prof Amanda Luby
 </section><section id="check-that-its-the-right-table" class="slide level2"><h2>Check that it’s the right table</h2>
 <p>It looks promising!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>tables</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>tables</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{xml_nodeset (1)}
 [1] &lt;table class="a-bordered a-horizontal-stripes a-size-base a-span12 mojo-b ...</code></pre>
@@ -386,7 +399,7 @@ Prof Amanda Luby
 <div class="fragment">
 <p>But we don’t have a data frame yet…</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>tables[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>tables[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{html_node}
 &lt;table class="a-bordered a-horizontal-stripes a-size-base a-span12 mojo-body-table mojo-table-annotated mojo-body-table-compact"&gt;
@@ -416,8 +429,8 @@ Prof Amanda Luby
 </div>
 </section><section id="parse-a-table-into-a-data-frame" class="slide level2"><h2>Parse a table into a data frame</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>top2024 <span class="ot">&lt;-</span> <span class="fu">html_table</span>(tables[[<span class="dv">1</span>]])</span>
-<span id="cb17-2"><a></a><span class="fu">glimpse</span>(top2024)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>top2024 <span class="ot">&lt;-</span> <span class="fu">html_table</span>(tables[[<span class="dv">1</span>]])</span>
+<span id="cb21-2"><a></a><span class="fu">glimpse</span>(top2024)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 200
 Columns: 11
@@ -429,7 +442,7 @@ $ `Running Time` &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "
 $ Gross          &lt;chr&gt; "$652,980,194", "$636,745,858", "$432,943,285", "$404,0…
 $ Theaters       &lt;chr&gt; "4,440", "4,330", "3,888", "4,200", "4,449", "4,575", "…
 $ `Total Gross`  &lt;chr&gt; "$652,980,194", "$636,745,858", "$474,983,975", "$460,4…
-$ `Release Date` &lt;chr&gt; "Jun 14", "Jul 26", "Nov 22", "Nov 27", "Jul 3", "Sep 6…
+$ `Release Date` &lt;chr&gt; "Fri Jun 14", "Fri Jul 26", "Fri Nov 22", "Wed Nov 27",…
 $ Distributor    &lt;chr&gt; "Walt Disney Studios Motion Pictures", "Walt Disney Stu…
 $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false", "…</code></pre>
 </div>
@@ -448,25 +461,25 @@ $ `Running Time` &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "
 $ Gross          &lt;chr&gt; "$652,980,194", "$636,745,858", "$432,943,285", "$404,0…
 $ Theaters       &lt;chr&gt; "4,440", "4,330", "3,888", "4,200", "4,449", "4,575", "…
 $ `Total Gross`  &lt;chr&gt; "$652,980,194", "$636,745,858", "$474,983,975", "$460,4…
-$ `Release Date` &lt;chr&gt; "Jun 14", "Jul 26", "Nov 22", "Nov 27", "Jul 3", "Sep 6…
+$ `Release Date` &lt;chr&gt; "Fri Jun 14", "Fri Jul 26", "Fri Nov 22", "Wed Nov 27",…
 $ Distributor    &lt;chr&gt; "Walt Disney Studios Motion Pictures", "Walt Disney Stu…
 $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false", "…</code></pre>
 </div>
 </div>
 </section><section id="scrape-then-wrangle-1" class="slide level2"><h2>Scrape then wrangle</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>top2024 <span class="ot">&lt;-</span> top2024 <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb20-3"><a></a>    <span class="at">Gross =</span> <span class="fu">parse_number</span>(Gross),</span>
-<span id="cb20-4"><a></a>    <span class="at">Theaters =</span> <span class="fu">parse_number</span>(Theaters),</span>
-<span id="cb20-5"><a></a>    <span class="st">`</span><span class="at">Total Gross</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">parse_number</span>(<span class="st">`</span><span class="at">Total Gross</span><span class="st">`</span>)</span>
-<span id="cb20-6"><a></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb20-7"><a></a>  <span class="fu">separate</span>(<span class="st">`</span><span class="at">Release Date</span><span class="st">`</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Month"</span>, <span class="st">"Day"</span>))</span>
-<span id="cb20-8"><a></a></span>
-<span id="cb20-9"><a></a><span class="fu">glimpse</span>(top2024)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>top2024 <span class="ot">&lt;-</span> top2024 <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-3"><a></a>    <span class="at">Gross =</span> <span class="fu">parse_number</span>(Gross),</span>
+<span id="cb24-4"><a></a>    <span class="at">Theaters =</span> <span class="fu">parse_number</span>(Theaters),</span>
+<span id="cb24-5"><a></a>    <span class="st">`</span><span class="at">Total Gross</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">parse_number</span>(<span class="st">`</span><span class="at">Total Gross</span><span class="st">`</span>)</span>
+<span id="cb24-6"><a></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb24-7"><a></a>  <span class="fu">separate</span>(<span class="st">`</span><span class="at">Release Date</span><span class="st">`</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Weekday"</span>, <span class="st">"Month"</span>, <span class="st">"Day"</span>), <span class="at">convert =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-8"><a></a></span>
+<span id="cb24-9"><a></a><span class="fu">glimpse</span>(top2024)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 200
-Columns: 12
+Columns: 13
 $ Rank           &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, …
 $ Release        &lt;chr&gt; "Inside Out 2", "Deadpool &amp; Wolverine", "Wicked", "Moan…
 $ Genre          &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
@@ -475,8 +488,9 @@ $ `Running Time` &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "
 $ Gross          &lt;dbl&gt; 652980194, 636745858, 432943285, 404017489, 361004205, …
 $ Theaters       &lt;dbl&gt; 4440, 4330, 3888, 4200, 4449, 4575, 4074, 4170, 3948, 4…
 $ `Total Gross`  &lt;dbl&gt; 652980194, 636745858, 474983975, 460405297, 361004205, …
+$ Weekday        &lt;chr&gt; "Fri", "Fri", "Fri", "Wed", "Wed", "Fri", "Fri", "Fri",…
 $ Month          &lt;chr&gt; "Jun", "Jul", "Nov", "Nov", "Jul", "Sep", "Mar", "Jul",…
-$ Day            &lt;chr&gt; "14", "26", "22", "27", "3", "6", "1", "19", "29", "8",…
+$ Day            &lt;int&gt; 14, 26, 22, 27, 3, 6, 1, 19, 29, 8, 7, 10, 22, 20, 9, 2…
 $ Distributor    &lt;chr&gt; "Walt Disney Studios Motion Pictures", "Walt Disney Stu…
 $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false", "…</code></pre>
 </div>
@@ -504,7 +518,62 @@ $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false
 </ul>
 </li>
 <li class="fragment"><p>More next class!</p></li>
-</ul>
+</ul></section><section id="getting-an-html-table-into-r-the-process" class="slide level2 smaller"><h2>Getting an HTML table into R: the process</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 25%">
+<col style="width: 35%">
+<col style="width: 23%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">What you get</th>
+<th style="text-align: left;">Example</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Read the page</td>
+<td style="text-align: left;"><code>read_html()</code></td>
+<td style="text-align: left;">The whole page as an HTML document</td>
+<td style="text-align: left;"><code>page &lt;- read_html("saved-pages/boxofficemojo-2024.html")</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Find the tables</td>
+<td style="text-align: left;"><code>html_elements("table")</code></td>
+<td style="text-align: left;">A list of every <code>&lt;table&gt;</code> on the page</td>
+<td style="text-align: left;"><code>tables &lt;- page \|&gt; html_elements("table")</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pick the right one</td>
+<td style="text-align: left;"><code>tables[[n]]</code></td>
+<td style="text-align: left;">One table (still HTML, not a data frame)</td>
+<td style="text-align: left;"><code>tables[[1]]</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Parse it</td>
+<td style="text-align: left;"><code>html_table()</code></td>
+<td style="text-align: left;">A tibble, with every column as text</td>
+<td style="text-align: left;"><code>top2024 &lt;- html_table(tables[[1]])</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Clean it</td>
+<td style="text-align: left;">
+<code>parse_number()</code>, <code>separate()</code>, …</td>
+<td style="text-align: left;">A tibble with the right column types</td>
+<td style="text-align: left;"><code>mutate(Gross = parse_number(Gross))</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Check it</td>
+<td style="text-align: left;">
+<code>glimpse()</code>, <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>
+</td>
+<td style="text-align: left;">Make sure the result is what you expected</td>
+<td style="text-align: left;"><code>glimpse(top2024)</code></td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
