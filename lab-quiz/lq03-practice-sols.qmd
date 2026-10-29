@@ -1,0 +1,292 @@
+---
+title: "Lab Quiz 03 Practice Questions: Solutions"
+format:
+  html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+
+```{r setup}
+library(tidyverse)
+library(nycflights23)
+```
+
+
+# Given a string, subset some portion of it
+
+```{r}
+airports |>
+  mutate(
+    international = str_detect(name, "International")
+  ) |>
+  count(international)
+```
+
+`str_detect()` returns `TRUE` for each name that contains the pattern "International" and `FALSE` otherwise. (`str_detect(name, "International")` is the only part that goes in the blank; the `count()` is only here to show the result) 
+
+`str_subset()` is a common wrong answer: it returns the *names* that match (a shorter character vector), not a `TRUE`/`FALSE` for every row.
+
+
+# Given two strings, use `str_c` to concatenate them
+
+```{r}
+flights |>
+  select(carrier, flight) |>
+  mutate(
+    flight_code = str_c(carrier, flight, sep = "-")
+  ) |>
+  head(3)
+```
+
+The blanks are `str_c`, `carrier`, `flight`, and `"-"`. The separator needs to be in quotes because it's a string and not a column name. `flight` is a number, but `str_c()` converts it to text.
+
+
+# Given a *simple* regular expression, state what will be matched
+
+```{r}
+airport_names <- airports$name
+```
+
+## (a)
+
+```{r}
+str_subset(airport_names, "Z")
+```
+
+All of the airport names that contain a capital letter Z, anywhere in the name. There are 4 of them (e.g. "Zamperini Field"). It doesn't match lowercase "z".
+
+## (b)
+
+```{r}
+str_subset(airport_names, "^Red")
+```
+
+All of the airport names that *start* with "Red" (the `^` anchors the match to the start of the string). 
+
+## (c)
+
+```{r}
+str_subset(airport_names, "\\.")
+```
+
+All of the airport names that contain a literal period. 
+
+Without the escape, `str_subset(airport_names, ".")` would match every name that has at least one character, so it returns all 1,251 airports.
+
+
+# Read and explain what a function is doing
+
+```{r}
+my_function = function(x){
+  flights |>
+    filter(dest == x) |>
+    count() |>
+    pull(n)
+}
+
+my_function("MSP")
+```
+
+The function takes an airport code `x` and returns the number of flights in `flights` whose destination (`dest`) is that airport. For example, `my_function("MSP")` is 5,938: there were 5,938 flights from NYC to Minneapolis-St Paul in 2023.
+
+Note the pieces: `filter()` keeps the flights to `x`, `count()` makes a one-row data frame with the number of rows in a column called `n`, and `pull(n)` takes that column out as a single number.
+
+
+# Specify required arguments and default values
+
+```{r}
+my_function = function(x = "MSP"){
+  flights |>
+    filter(dest == x) |>
+    count() |>
+    pull(n)
+}
+
+my_function()
+my_function("ORD")
+```
+
+A default value is set in the function's argument list with `=`, like `x = "MSP"`. Now `my_function()` with no argument uses "MSP", and `my_function("ORD")` overrides the default.
+
+
+# Understand how to return a value or object
+
+```{r}
+mystery_function = function(x){
+  mean(flights$dep_delay, na.rm = TRUE)
+  median(flights$dep_delay, na.rm = TRUE)
+  sd(flights$dep_delay, na.rm = TRUE)
+}
+
+mystery_function()
+```
+
+A function returns the value of the **last** expression that it evaluates, so `mystery_function` returns only `sd(flights$dep_delay, na.rm = TRUE)`. The `mean()` and `median()` are computed and then thrown away since they aren't saved or returned. 
+
+To return the mean, either put the mean on the last line, or use `return()`:
+
+```{r}
+mystery_function = function(x){
+  median(flights$dep_delay, na.rm = TRUE)
+  sd(flights$dep_delay, na.rm = TRUE)
+  mean(flights$dep_delay, na.rm = TRUE)
+}
+```
+
+```{r}
+mystery_function = function(x){
+  return(mean(flights$dep_delay, na.rm = TRUE))
+  median(flights$dep_delay, na.rm = TRUE)
+  sd(flights$dep_delay, na.rm = TRUE)
+}
+```
+
+Either one returns `mean(flights$dep_delay)`. In the second, the function stops at `return()` and never runs the lines below it. (Neither one is a very useful function: it doesn't use `x` at all! 
+
+
+# Use a logical statement to control the flow of the function
+
+```{r}
+summarize_delays <- function(x, metric){
+
+  if(metric == "mean"){
+
+    mean(x, na.rm = TRUE)
+
+  } else if (metric == "median") {
+
+    median(x, na.rm = TRUE)
+
+  } else {
+
+    "Metric not supported"
+
+  }
+}
+```
+
+The first blank is `mean(x, na.rm = TRUE)`, the second is the condition `metric == "median"` (two equals signs, since we are *testing* for equality and not assigning), then `median(x, na.rm = TRUE)`, and the last is the string `"Metric not supported"`. We can check each branch:
+
+```{r}
+summarize_delays(flights$dep_delay, "mean")
+summarize_delays(flights$dep_delay, "median")
+summarize_delays(flights$dep_delay, "max")
+```
+
+The value of the branch that runs is the value that the function returns, so we don't need `return()` here (though writing `return(mean(x, na.rm = TRUE))` is also fine).
+
+
+# Use `across()` and `where()` to apply {dplyr} functions to columns in a dataset
+
+```{r}
+airports |>
+  summarize(
+    across(
+      where(is.numeric),
+      list(min = \(x) min(x, na.rm = TRUE), max = \(x) max(x, na.rm = TRUE))
+    )
+  )
+```
+
+`where(is.numeric)` selects the quantitative columns and `across()` applies the list of functions to each of them: this gives 8 columns (a min and a max for each). The names of the output columns come from the column and the name in the list (`lat_min`, `lat_max`, ...).
+
+A shorter version that doesn't handle the `NA`s is also fine on paper:
+
+```{r}
+#| eval: false
+airports |>
+  summarize(across(where(is.numeric), list(min = min, max = max)))
+```
+
+Common errors: forgetting `where()` (`across(is.numeric, ...)` doesn't work); using `mutate()` instead of `summarize()`; and using `min` and `max` without parentheses *inside* a function call, e.g. `min(x)` instead of `min` or `\(x) min(x)`.
+
+
+# Be able to read a for loop and determine what it's doing
+
+```{r}
+mn_airports = c("Bemidji Regional Airport",
+                "Brainerd Lakes Regional Airport",
+                "Duluth International Airport",
+                "Ely Municipal Airport",
+                "Redwood Falls Municipal Airport",
+                "Rochester International Airport",
+                "Thief River Falls Regional Airport",
+                "Minneapolis-St Paul International/Wold-Chamberlain Airport")
+
+results = numeric(length(mn_airports))
+
+for(k in seq_along(mn_airports)){
+  x <- airports |>
+    filter(name == mn_airports[k]) |>
+    pull(faa)
+
+  results[k] = my_function(x)
+}
+
+results
+```
+
+## (a)
+
+`numeric(length(mn_airports))` **preallocates** storage: it creates a numeric vector of zeros with one slot for each airport (8 zeros), so that the loop can fill in one result per airport. It's more efficient than growing a vector one element at a time
+
+## (b)
+
+`seq_along(mn_airports)` gives the indices of the vector: `1, 2, 3, 4, 5, 6, 7, 8`. The loop index `k` takes each of those values in turn, so `mn_airports[k]` is the k-th airport name. (It's safer than `1:length(mn_airports)`, which would be `1, 0` for an empty vector.)
+
+```{r}
+seq_along(mn_airports)
+```
+
+## (c)
+
+Each time through the loop, `x` is the three-letter FAA code of the k-th airport: the loop filters `airports` to the row whose `name` is `mn_airports[k]`, and `pull(faa)` takes the `faa` column out as a character string. For example, when `k = 1`, `x` is `"BJI"` (Bemidji). It gets overwritten on every pass through the loop. After the loop is finished, `x` is only the *last* one, `"MSP"`.
+
+## (d)
+
+`results` holds the number of flights from NYC to each of the 8 airports, in the same order as `mn_airports` (`my_function(x)` is the number of flights to the airport with code `x`). Seven of them are `0`, since there were no flights from NYC to those airports in 2023 (they are small regional airports), and the last one (MSP) is 5,938:
+
+```{r}
+results
+```
+
+
+# Explain what a `map` command is doing
+
+```{r}
+map(mn_airports, my_function)
+```
+
+No. The code runs, but it doesn't do the same thing as the for loop. `map(mn_airports, my_function)` applies `my_function` to each element of `mn_airports`, and those elements are the airport *names* (like "Bemidji Regional Airport"). But `my_function` filters on `dest == x`, and `dest` holds the three-letter **FAA codes** (like "BJI"), so every flight is filtered out and every result is `0`, including the one for Minneapolis-St Paul. The for loop first converted each name to a code with `airports |> filter(name == ...) |> pull(faa)`; the `map` skips that step.
+
+(Also, `map()` returns a *list*, not a numeric vector like `results`, but this wouldn't be a problem by itself.)
+
+One way to fix it is to give the function the codes:
+
+```{r}
+mn_codes <- airports |>
+  filter(name %in% mn_airports) |>
+  pull(faa)
+
+map_dbl(mn_codes, my_function)
+```
+
+(The order of the codes here follows the order of `airports`, not `mn_airports`.)
+
+## Now with `"MSP"`, `"ORD"`, and `"SEA"`
+
+```{r}
+map(c("MSP", "ORD", "SEA"), my_function)
+```
+
+This returns a **list** with 3 elements: one for each airport, in the order that we gave them (5,938 flights to MSP, 18,200 to ORD, and 5,229 to SEA). Every element is a single number, so we could use `map_dbl()` to get a numeric vector instead:
+
+```{r}
+map_dbl(c("MSP", "ORD", "SEA"), my_function)
+```
+
+`map()` always returns a list, `map_dbl()` returns a numeric (double) vector, `map_chr()` a character vector, and `map_dfr()`/`list_rbind()` can combine data frame results into one data frame.
