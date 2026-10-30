@@ -70,6 +70,14 @@ ggplot(tibble(topic = factor(topics, levels = rev(topics))),
   theme(panel.grid.minor = element_blank())
 ```
 
-- Day14 | p19-20: Work on the text analysis activity on `coursera` reviews, and tell me what you did and what you learned (this could be a graph, number, sentence description, etc.)
+- Day14 | p20-21: Work on the text analysis activity on `coursera` reviews, and tell me what you did and what you learned (this could be a graph, number, sentence description, etc.)
 
 - Day15 | Quiz02! No journal entry
+
+- Day 16 | p22-23: what is something you've done in this class (or previously) where a function would have been useful? 
+
+- Day 17 | p24-25: Current confusion about collaborating on git/github
+
+- Day 18 | p26-27: questions from class?
+
+- Day 19 | p28-29: anything confusing or that sparked interest?
