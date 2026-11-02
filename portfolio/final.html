@@ -366,6 +366,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
 <li><a href="#can-i-work-with-someone" id="toc-can-i-work-with-someone" class="nav-link" data-scroll-target="#can-i-work-with-someone">Can I work with someone?</a></li>
   <li><a href="#what-if-im-assigned-a-group-member-who-does-not-do-their-fair-share-of-the-work" id="toc-what-if-im-assigned-a-group-member-who-does-not-do-their-fair-share-of-the-work" class="nav-link" data-scroll-target="#what-if-im-assigned-a-group-member-who-does-not-do-their-fair-share-of-the-work">What if I’m assigned a group member who does not do their fair share of the work?</a></li>
+  <li><a href="#can-i-use-ai-tools-chatgpt-etc.-for-this-project" id="toc-can-i-use-ai-tools-chatgpt-etc.-for-this-project" class="nav-link" data-scroll-target="#can-i-use-ai-tools-chatgpt-etc.-for-this-project">Can I use AI tools (ChatGPT, etc.) for this project?</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -398,13 +399,14 @@ ul.task-list li input[type="checkbox"] {
 <p>This project is intentionally open-ended. There is no limit on what tools or packages you may use, but you should demonstrate proficiency with the {tidyverse} tools that we’ve focused on in class. You should focus on data that was not accessible to you in previous stat classes.</p>
 <section id="acquire" class="level2"><h2 class="anchored" data-anchor-id="acquire">Acquire</h2>
 <ul>
-<li>Acquire data from at least 2 sources</li>
-<li>Acquire data using one of the advanced techniques discussed in class</li>
+<li>Acquire data from at least 2 distinct sources</li>
+<li>Acquire data using one of the advanced techniques discussed in class: calling an API, scraping a website, querying a database with SQL, or iterating over many files</li>
+<li>If you scrape a website or use an API, check that you have permission (the terms of use, <code>robots.txt</code>, rate limits) and be kind to the server</li>
 <li>Consider the who, what, when, why, and how of your datasets, with particular attention given to the ethical considerations</li>
 <li>Work with a type of data that was not accessible to you as a Stat120, 230, or 250 student (eg text, spatial, network, etc.)</li>
 </ul></section><section id="wrangle" class="level2"><h2 class="anchored" data-anchor-id="wrangle">Wrangle</h2>
 <ul>
-<li>Demonstrate proficiency with <code>join</code>ing data</li>
+<li>Demonstrate proficiency with <code>join</code>ing data (combining data from more than one table or source)</li>
 <li>Demonstrate proficiency with tidying data</li>
 <li>Demonstrate proficiency using non-numeric data types
 <ul>
@@ -417,6 +419,7 @@ ul.task-list li input[type="checkbox"] {
 </ul></section><section id="visualize" class="level2"><h2 class="anchored" data-anchor-id="visualize">Visualize</h2>
 <ul>
 <li>Create high-quality, customized graphics using R/ggplot</li>
+<li>Include interactive components (e.g.&nbsp;{plotly}, {leaflet}), or present your whole project as a {shiny} app</li>
 </ul></section><section id="communicate" class="level2"><h2 class="anchored" data-anchor-id="communicate">Communicate</h2>
 <p>You’ll communicate your findings through a final product produced in R:</p>
 <ul>
@@ -425,32 +428,33 @@ ul.task-list li input[type="checkbox"] {
 <li>Slideshow</li>
 <li>etc.</li>
 </ul>
-<p>Whatever product form you choose, I’ll be looking for a high degree of professionalism and polish.</p>
+<p>Your product should be published online (Quarto Pub or shinyapps.io) and written for a public audience, not just for me. Whatever product form you choose, I’ll be looking for a high degree of professionalism and polish.</p>
 </section><section id="document" class="level2"><h2 class="anchored" data-anchor-id="document">Document</h2>
 <ul>
 <li>All group members have a commit history on GitHub</li>
 <li>Code is well-documented and clean</li>
 <li>Project is organized and I can navigate your repo</li>
+<li>Your README tells me where to find everything (see below)</li>
 </ul></section></section><section id="rubric" class="level1"><h1>Rubric</h1>
 <div class="cell">
 <div class="cell-output-display">
-<div id="rfvzcdgtsz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rfvzcdgtsz table {
+<div id="xlirzspneb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xlirzspneb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rfvzcdgtsz thead, #rfvzcdgtsz tbody, #rfvzcdgtsz tfoot, #rfvzcdgtsz tr, #rfvzcdgtsz td, #rfvzcdgtsz th {
+#xlirzspneb thead, #xlirzspneb tbody, #xlirzspneb tfoot, #xlirzspneb tr, #xlirzspneb td, #xlirzspneb th {
   border-style: none;
 }
 
-#rfvzcdgtsz p {
+#xlirzspneb p {
   margin: 0;
   padding: 0;
 }
 
-#rfvzcdgtsz .gt_table {
+#xlirzspneb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -476,12 +480,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_caption {
+#xlirzspneb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rfvzcdgtsz .gt_title {
+#xlirzspneb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -493,7 +497,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#rfvzcdgtsz .gt_subtitle {
+#xlirzspneb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -505,7 +509,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#rfvzcdgtsz .gt_heading {
+#xlirzspneb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -517,13 +521,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_bottom_border {
+#xlirzspneb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_col_headings {
+#xlirzspneb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -538,7 +542,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_col_heading {
+#xlirzspneb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -558,7 +562,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#rfvzcdgtsz .gt_column_spanner_outer {
+#xlirzspneb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -570,15 +574,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#rfvzcdgtsz .gt_column_spanner_outer:first-child {
+#xlirzspneb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rfvzcdgtsz .gt_column_spanner_outer:last-child {
+#xlirzspneb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rfvzcdgtsz .gt_column_spanner {
+#xlirzspneb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -590,11 +594,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#rfvzcdgtsz .gt_spanner_row {
+#xlirzspneb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rfvzcdgtsz .gt_group_heading {
+#xlirzspneb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -620,7 +624,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#rfvzcdgtsz .gt_empty_group_heading {
+#xlirzspneb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -635,15 +639,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#rfvzcdgtsz .gt_from_md > :first-child {
+#xlirzspneb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rfvzcdgtsz .gt_from_md > :last-child {
+#xlirzspneb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rfvzcdgtsz .gt_row {
+#xlirzspneb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -662,7 +666,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#rfvzcdgtsz .gt_stub {
+#xlirzspneb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -675,7 +679,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#rfvzcdgtsz .gt_stub_row_group {
+#xlirzspneb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -689,15 +693,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#rfvzcdgtsz .gt_row_group_first td {
+#xlirzspneb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rfvzcdgtsz .gt_row_group_first th {
+#xlirzspneb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rfvzcdgtsz .gt_summary_row {
+#xlirzspneb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -707,16 +711,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#rfvzcdgtsz .gt_first_summary_row {
+#xlirzspneb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_first_summary_row.thick {
+#xlirzspneb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rfvzcdgtsz .gt_last_summary_row {
+#xlirzspneb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -726,7 +730,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_grand_summary_row {
+#xlirzspneb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -736,7 +740,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#rfvzcdgtsz .gt_first_grand_summary_row {
+#xlirzspneb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -746,7 +750,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_last_grand_summary_row_top {
+#xlirzspneb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -756,11 +760,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_striped {
+#xlirzspneb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rfvzcdgtsz .gt_table_body {
+#xlirzspneb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -769,7 +773,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_footnotes {
+#xlirzspneb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -783,7 +787,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_footnote {
+#xlirzspneb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -792,7 +796,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#rfvzcdgtsz .gt_sourcenotes {
+#xlirzspneb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -806,7 +810,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#rfvzcdgtsz .gt_sourcenote {
+#xlirzspneb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -814,72 +818,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#rfvzcdgtsz .gt_left {
+#xlirzspneb .gt_left {
   text-align: left;
 }
 
-#rfvzcdgtsz .gt_center {
+#xlirzspneb .gt_center {
   text-align: center;
 }
 
-#rfvzcdgtsz .gt_right {
+#xlirzspneb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rfvzcdgtsz .gt_font_normal {
+#xlirzspneb .gt_font_normal {
   font-weight: normal;
 }
 
-#rfvzcdgtsz .gt_font_bold {
+#xlirzspneb .gt_font_bold {
   font-weight: bold;
 }
 
-#rfvzcdgtsz .gt_font_italic {
+#xlirzspneb .gt_font_italic {
   font-style: italic;
 }
 
-#rfvzcdgtsz .gt_super {
+#xlirzspneb .gt_super {
   font-size: 65%;
 }
 
-#rfvzcdgtsz .gt_footnote_marks {
+#xlirzspneb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rfvzcdgtsz .gt_asterisk {
+#xlirzspneb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rfvzcdgtsz .gt_indent_1 {
+#xlirzspneb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rfvzcdgtsz .gt_indent_2 {
+#xlirzspneb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rfvzcdgtsz .gt_indent_3 {
+#xlirzspneb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rfvzcdgtsz .gt_indent_4 {
+#xlirzspneb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rfvzcdgtsz .gt_indent_5 {
+#xlirzspneb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rfvzcdgtsz .katex-display {
+#xlirzspneb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rfvzcdgtsz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xlirzspneb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1047,7 +1051,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section><section id="final-project-submission" class="level1"><h1>Final Project Submission</h1>
-<p>You should submit your final GitHub repo to gradescope by noon on the last day of the finals period. I will start by looking at your README.md, which should contain:</p>
+<p>You should submit your final GitHub repo to gradescope by <strong>noon on Monday, November 23</strong> (the last day of the finals period). I will start by looking at your README.md, which should contain:</p>
 <ol type="1">
 <li>A link to your published project (quarto pub or shinyapps)</li>
 <li>A technical overview of what you did for your project
@@ -1058,12 +1062,16 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </li>
 <li>How to navigate your repo (where is your data? where is your report file? do you have any other R scripts that you used?)</li>
-</ol></section><section id="milestones" class="level1"><h1>Milestones</h1>
+</ol>
+<p><em>Optional:</em> share a link to your finished product on the “Gallery” thread on Ed (1 bonus point).</p>
+</section><section id="milestones" class="level1"><h1>Milestones</h1>
 <ul>
-<li>Week 7 Friday: Submit final project idea form (individual or in pairs)</li>
-<li>Week 8 Monday: Submit final project ranking form (everyone should submit a form, but you can indicate a partner)</li>
-<li>Week 8 Wednesday: I will notify groups and create repos</li>
-<li>Week 9 Wednesday: “Sketch” drafts:
+<li>
+<del>Week 7 Friday</del> Week 8 Wed: Submit final project idea form (individual or in pairs)</li>
+<li>
+<del>Week 8 Monday</del> Week 8 Thurs: Submit final project ranking form (everyone should submit a form, but you can indicate a partner)</li>
+<li>Week 8 <del>Wednesday</del> Friday: I will notify groups and create repos</li>
+<li>Week 9 Wednesday (Nov 11): “Sketch” drafts and group contract:
 <ul>
 <li>This should be a .qmd file that:
 <ol type="1">
@@ -1074,7 +1082,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
 </ul>
 </li>
-<li>Week 10: Project progress demos and peer feedback
+<li>Week 10 Monday and Wednesday: Project progress demos and peer feedback
 <ul>
 <li>5-10 minute slideshow presentation</li>
 <li>Overview of data and research questions (these do not have to be the same as your sketch draft)</li>
@@ -1082,7 +1090,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Outline of interactive component or additional technical work to be done</li>
 </ul>
 </li>
-<li>Final project due: end of finals period</li>
+<li>Final project due: Monday, November 23 at noon</li>
 </ul>
 <p>Meeting these milestones will make up part of your final grade. If you do not fill out the google forms, I may or may not assign you to a group. If you are not assigned to a group, you won’t be able to demonstrate that you’re able to work collaboratively on GitHub, which will impact your final grade.</p>
 <section id="final-project-ideas-rankings" class="level2"><h2 class="anchored" data-anchor-id="final-project-ideas-rankings">Final Project Ideas + Rankings</h2>
@@ -1090,25 +1098,26 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>I’d like to do more with text analysis</li>
 <li>I am interested in exploring the relationships between mental health disorders and other factors such as treatments, substance abuse, societal factors, and other patient information. I was thinking of starting with this dataset found here: (URL), and maybe merging further datasets when found.</li>
-<li>I’m familiar with a twitter account that used to track when the NYT would have a new word included in an article for the first time. I’d be interested in either getting data directly from the NYT or twitter and exploring that somehow.</li>
+<li>I’m familiar with a website/social media account that tracks when the NYT uses a new word in an article for the first time. I’d be interested in getting data directly from the NYT (maybe through their API) and exploring that somehow.</li>
 <li>We want to explore D1 NCAA sports data, specifically comparisons between womens and mens sports. We’re interested in performance, coverage, funding, recruitment, etc.</li>
 <li>I really like the idea of using an interactive map that the user can change.</li>
 </ul>
 <p>Everybody should fill out the form individually, but you can prepare the idea with someone you’d like to work with and submit the same proposal. Just make sure to indicate that you plan to work together.</p>
-<p>I will post a new form on Monday of Week 8 that compiles all of the ideas and give you time in class to “rank” final project ideas and share partner/group preferences.</p>
-<p><em>Both</em> forms contribute to your final grade (~5%). Please make sure to fill them out on time.</p>
+<p>I will post a new form on Monday of Week 8 (November 2) that compiles all of the ideas and give you time in class to “rank” final project ideas and share partner/group preferences.</p>
+<p><em>Both</em> forms contribute to your final grade (3 points each on the rubric). Please make sure to fill them out on time.</p>
 </section><section id="sketch-draft" class="level2"><h2 class="anchored" data-anchor-id="sketch-draft">Sketch draft</h2>
-<p>In Week 9, you’ll submit a “sketch draft” to me on gradescope. This should include a .qmd and rendered .pdf with the following:</p>
+<p>On Wednesday of Week 9 (November 11), you’ll submit a “sketch draft” to me on gradescope. This should include a .qmd and rendered .pdf with the following:</p>
 <ul>
 <li>reads in at least one dataset</li>
 <li>includes 5 possible research questions</li>
 <li>includes at least one EDA graph</li>
 <li>outline of what you plan to do for the remainder of your project</li>
 </ul>
+<p>Your group should also submit a group contract with the sketch. <!-- TODO(Amanda): link or describe the group contract; the rubric has 4 pts for "Sketch + Contract" but nothing in the repo describes it. --></p>
 <p>I will give you feedback about whether your dataset(s) meets the expectations for the project and some feedback on your research questions.</p>
-<p>This sketch will make up ~5% of your final grade.</p>
+<p>The sketch and contract make up 4 points on the rubric.</p>
 </section><section id="project-progress-demos" class="level2"><h2 class="anchored" data-anchor-id="project-progress-demos">Project progress demos</h2>
-<p>You should prepare a 6 minute presentation of your progress so far on the final projects. This presentation will make up 15% of your final project grade. Please focus on:</p>
+<p>You should prepare a 6 minute presentation of your progress so far on the final projects. We’ll present on Monday and Wednesday of Week 10 (November 16 and 18). This presentation will make up 15 points on the rubric. Please focus on:</p>
 <ul>
 <li>The data you’ve gathered/will gather</li>
 <li>Your research questions</li>
@@ -1152,6 +1161,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Are you adding interactivity?</li>
 <li>Do you have additional data gathering to do?</li>
+<li>(If you plan to scrape or use an API: have you checked that you’re allowed to?)</li>
 </ul>
 </li>
 <li><label><input type="checkbox">Did all group members speak?</label></li>
@@ -1161,51 +1171,55 @@ ul.task-list li input[type="checkbox"] {
 <p>You are welcome to provide feedback to all of the groups, but are only required to complete the form for the groups presenting on your non-presentation day. I also expect everybody to ask at least one question during the Q&amp;A period over the two days. These aspects of participation will be a part of your final project grade.</p>
 </section><section id="project-demos-schedule" class="level2"><h2 class="anchored" data-anchor-id="project-demos-schedule">Project Demos schedule</h2>
 <p>If your group would like to switch with another group, just let me know. If your group <em>needs</em> to present on the other day but you do not have a group to switch with, let me know ASAP.</p>
-<p>Please upload your slides to <a href="https://drive.google.com/drive/folders/1Ew8ca5bk0crDUw68DfN8DS4-uq3oJdkA?usp=sharing">this folder</a> before your presentation!</p>
-<table class="caption-top table"><tbody>
+<p>Please upload your slides to <a href="https://drive.google.com/drive/folders/12i5Eqq6Azjye--cr9qRXdhjJXQAuCDUF?usp=drive_link">this folder</a> before your presentation!</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th></th>
+<th><strong>Monday (Nov 16)</strong></th>
+<th><strong>Wednesday (Nov 18)</strong></th>
+</tr></thead>
+<tbody>
 <tr class="odd">
-<td></td>
-<td><strong>Monday</strong></td>
-<td><strong>Wednesday</strong></td>
+<td><strong>9:50</strong></td>
+<td>tbd</td>
+<td>tbd</td>
 </tr>
 <tr class="even">
-<td><strong>11:15</strong></td>
-<td>national-parks</td>
-<td>birds-national-parks</td>
+<td><strong>10:00</strong></td>
+<td>tbd</td>
+<td>tbd</td>
 </tr>
 <tr class="odd">
-<td><strong>11:25</strong></td>
-<td>sports-performance</td>
-<td>health-insurance</td>
+<td><strong>10:10</strong></td>
+<td>tbd</td>
+<td>tbd</td>
 </tr>
 <tr class="even">
-<td><strong>11:35</strong></td>
-<td>people-and-sleep</td>
-<td>sports-group</td>
+<td><strong>10:20</strong></td>
+<td>tbd</td>
+<td>tbd</td>
 </tr>
 <tr class="odd">
-<td><strong>11:45</strong></td>
-<td>nfl-data</td>
-<td>social-media</td>
+<td><strong>10:30</strong></td>
+<td>tbd</td>
+<td>tbd</td>
 </tr>
 <tr class="even">
-<td><strong>11:55</strong></td>
-<td>storms-and-birds</td>
-<td>olympics</td>
+<td><strong>10:40</strong></td>
+<td>tbd</td>
+<td>tbd</td>
 </tr>
-<tr class="odd">
-<td><strong>12:05</strong></td>
-<td>premier-league</td>
-<td>census-data</td>
-</tr>
-</tbody></table>
-<p>(if you don’t remember what group name you are, see the <a href="https://docs.google.com/spreadsheets/d/18kTQEK5DF3lQ8VxrruIXmsKxL32VUXx13oLh2y3M740/edit?usp=sharing">assignment spreadsheet</a>)</p>
+</tbody>
+</table>
+<p><em>(The presentation order will be posted once groups are assigned. We will use the last few minutes of class for catch-up and for finishing the peer feedback form.)</em> <!-- TODO(Amanda): fill in group names + final slot count; also confirm the slides upload folder above is the F26 folder. --></p>
 </section></section><section id="faqs" class="level1"><h1>FAQs</h1>
 <section id="can-i-work-with-someone" class="level2"><h2 class="anchored" data-anchor-id="can-i-work-with-someone">Can I work with someone?</h2>
 <p>Yes! You will work in teams of 2-3 for this project. I will be forming groups, but you can sign up as an individual or a pair.</p>
 </section><section id="what-if-im-assigned-a-group-member-who-does-not-do-their-fair-share-of-the-work" class="level2"><h2 class="anchored" data-anchor-id="what-if-im-assigned-a-group-member-who-does-not-do-their-fair-share-of-the-work">What if I’m assigned a group member who does not do their fair share of the work?</h2>
 <p>If this becomes an issue early in the project period, I may remove individuals from group projects. If you are removed from a group, it means that you are responsible for submitting a complete project on your own. Since you will not be able to demonstrate key aspects of the project goals which require working in groups, your final grade will also be impacted.</p>
 <p>I will also ask everyone to complete a reflection form at the end of the project period. If a group member stops participating after the group presentations, their final grade will be impacted.</p>
+</section><section id="can-i-use-ai-tools-chatgpt-etc.-for-this-project" class="level2"><h2 class="anchored" data-anchor-id="can-i-use-ai-tools-chatgpt-etc.-for-this-project">Can I use AI tools (ChatGPT, etc.) for this project?</h2>
+<p>Only in the ways described in the syllabus: for coding or debugging help <em>after</em> you’ve attempted the code yourselves, and with any help acknowledged. Do not copy text or code out of a large-language model into your project. Because the project asks you to communicate your own findings, the writing, interpretations and design choices should be yours.</p>
 
 
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
@@ -1294,7 +1308,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/stat220-f26\.github\.io\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
