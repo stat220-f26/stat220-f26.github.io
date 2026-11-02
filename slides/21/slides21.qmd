@@ -44,99 +44,23 @@ theme_set(slides_theme)
 
 2. Screen scraping:<br> extract data from source code of website, with html parser (easy) or regular expression matching (less easy).
 
-
-## Check the terms of use/service first!
-
-- Can you query this webpage?
-
-- Are there restrictions on the use of the data?
-
-- How many requests can you make per minute?
-
-- ...and more...
-
-## Checking for permission to scrape
-
-
-Use `robotstxt::paths_allowed()` to see if you can scrape the web page.
-
-. . . 
-
-You can scrape Zillow
-```{r warning=FALSE}
-library(robotstxt)
-paths_allowed("http://www.zillow.com")
-```
-
-. . . 
-
-But not Facebook
-```{r warning=FALSE}
-paths_allowed("http://www.facebook.com")
-```
-
-. . . 
-
-::: {.task}
-What websites have data about *you*? Think of 1-2 and see if scraping is allowed on those sites.
-:::
-
-## Hypertext Markup Language
+## Today
 
 ::: {.nonincremental}
-
-- Lots of data on the web is still available as HTML
-
-- It is structured (hierarchical / tree based), but it's often not available in  a form useful for analysis (flat / tidy).
-
+- Scrape data that **isn't** in a table, using CSS selectors
+- Handle items with **missing** pieces
+- Scrape **many pages** politely
+- What to do when a website says no
 :::
 
-```html
-<html>
-  <head>
-    <title>This is a title</title>
-  </head>
-  <body>
-    <p align="center">Hello world!</p>
-  </body>
-</html>
-``` 
-
-## HTML tags
-
-HTML uses **tags** to describe different aspects of document content
-
-
-Tag         |  Example
-------------|---------------------------------------------------------------
-heading     | `<h1>My Title</h1>`
-paragraph   | `<p>A paragraph of content...</p>`
-table       | `<table> ... </table>`
-anchor (with attribute)     | `<a href="http://www.mysite.net">click here for link</a>`
-
-## {rvest}
-
-::::: columns
-::: {.column .nonincremental width="50%"}
-
-![](https://rvest.tidyverse.org/logo.png){width=70%}
-:::
-
-:::{.column .nonincremental width="50%"}
-
-- Pronounced like "harvest"
-
-- Processing and manipulation of HTML data
-
-- *Installed* with the {tidyverse} but not *loaded* automatically
-
+## Recap: check permission first
 
 ```{r}
-library(rvest)
+robotstxt::paths_allowed("https://books.toscrape.com")
+robotstxt::paths_allowed("https://www.imdb.com/chart/top")
 ```
 
-:::
-:::::
+- `robots.txt` isn't the whole story: also read the terms of use, and don't send requests faster than a person would
 
 ## Core `rvest` functions {.smaller}
 
@@ -151,114 +75,14 @@ Function       | Description
 `html_attrs`   | Extract all of each tag's attributes
 `html_attr`    | Extract tags' attribute value by name
 
-## Example: box office mojo
-
-<https://www.boxofficemojo.com/year/2026/>
-
-::::: columns
-::: {.column .nonincremental width="50%"}
-
-- Take a look at the web page **and** the html source code 
-
-    Chrome or Firefox: right click -> View page source
-
-- Look for the `"table"` div ID or tag
-
-:::
-
-:::{.column .nonincremental width="50%"}
-
-![](../img/scrape_boxoffice_mojo2022.png)
-
-:::
-:::::
-
-
-
-## Read HTML into R
-
-```{r}
-page <- read_html("https://www.boxofficemojo.com/year/2026/")
-page
-str(page)
-```
-
-## HTML elements
-
-There are over 100 HTML elements: 
-
-::: nonincremental
-  - Every HTML page must be in an `<html>` element, and it must have two children: `<head>` and `<body>`
-  - Block tags like `<h1>`, `<p>`, `<ol>` form the structure of the page
-  - Inline tags like `<b>`, `<i>`, and `<a>` format text inside block tags
-::: 
-
-We'll often work with `tables`. HTML tables are composed of four main elements `<table>`, `<tr>` (table row), `<th>` (table heading), and `<td>` (table data).
-  
-  
-::: aside
-If you run into one that you need to figure out, I recommend the [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML) for explanations and examples
-
-:::
-
-## Extract tables
-
-Use `html_element()` or `html_elements()` to extract pieces out of HTML documents
-
-```{r}
-tables <- page %>% html_elements("table")
-str(tables)
-```
-
-
-## Parse a table into a data frame/tibble
-
-```{r top2022-df}
-top2026 <- html_table(tables[[1]])
-glimpse(top2026)
-```
-
-
-
-## Scrape then wrangle
-
-```{r}
-top2026 <- top2026 %>%
-  mutate(
-    Gross = parse_number(Gross),
-    Theaters = parse_number(Theaters),
-    `Total Gross` = parse_number(`Total Gross`)
-  ) %>%
-  separate(`Release Date`, into = c("Month", "Day"))
-
-glimpse(top2026)
-```
-
-## Scraped data will almost always need wrangling/cleaning
-
-- Are numeric columns numeric?
-- Are date columns dates? 
-- Are factor and string columns treated correctly?
-
-## 
-
-![](../img/eighty-twenty-ruiz.png)
-
-. . . 
-
-![](../img/ninety-ten-drob.png)
-
-::: aside
-
-Source: [Playing the Whole Game](https://www.tandfonline.com/doi/full/10.1080/10691898.2020.1799728#abstract), Kim & Hardin
-
-:::
+# Part 1: Carleton course catalog {.maize}
 
 ## Data aren't always stored as tables
 
-<https://www.carleton.edu/catalog/current/search/?subject=STAT&term=26SP>
+<https://www.carleton.edu/catalog/current/search/?subject=STAT&term=26FA>
 
 ![](../img/stat220-catalog-listing.png)
+
 
 ## Where is the data stored?
 
@@ -270,7 +94,6 @@ View the page source to try to find the html elements where this data is located
 - Course description
 - Course meetings
 - Faculty
-- Course meetings
 
 :::
 ```{r}
@@ -281,7 +104,7 @@ countdown(3)
 ## 
 
 ```{r}
-listings = read_html("https://www.carleton.edu/catalog/current/search/?subject=STAT&term=26SP")
+listings = read_html("https://www.carleton.edu/catalog/current/search/?subject=STAT&term=26FA")
 ```
 
 ```{r}
@@ -308,7 +131,7 @@ listings |>
 
 # CSS selectors {.maize}
 
-## Selecting courseNumber class
+## Selecting the `courseNumber` class
 
 Course numbers are between `<span class="courseNumber"> ... </span>` tags
 
@@ -346,17 +169,69 @@ listings %>%
   str_squish()
 ```
 
-## 
+## Put the pieces together
 
 ```{r}
-stat_sp26 <- tibble(
-  course = listings %>% html_elements(".courseNumber") %>% html_text(),
-  title = listings %>% html_elements(".courseTitle") %>% html_text(),
-  credits = listings %>% html_elements(".credits") %>% html_text() %>% str_squish(),
-  description = listings %>% html_elements(".courseDetailWrapper") %>% html_text() %>% str_squish()
+stat_courses <- tibble(
+  course = listings |> html_elements(".courseNumber") |> html_text(),
+  title = listings |> html_elements(".courseTitle") |> html_text(),
+  credits = listings |> html_elements(".credits") |> html_text() |> str_squish(),
+  description = listings |> html_elements(".courseDetailWrapper") |> html_text() |> str_squish()
 )
 
-stat_sp26
+stat_courses |> mutate(description = str_trunc(description, 50))
+```
+
+
+## What if a piece is missing for some courses?
+
+Let's get the prerequisites:
+
+```{r}
+listings |>
+  html_elements(".courseMeta--preReqs") |>
+  html_text() |>
+  length()
+```
+
+. . .
+
+There are `r length(html_elements(listings, ".courseSearchResults > li"))` courses, but only `r length(html_elements(listings, ".courseMeta--preReqs"))` prerequisite lines, and we can't tell which ones are missing
+
+## Select each course first, *then* extract
+
+Each course is one `<li>` inside `.courseSearchResults`:
+
+```{r}
+courses <- listings |>
+  html_elements(".courseSearchResults > li")
+
+length(courses)
+```
+
+. . .
+
+`html_element()` (singular) returns exactly one result per item, and `NA` when it is missing:
+
+```{r}
+prereqs <- courses |>
+  html_element(".courseMeta--preReqs") |>
+  html_text() |>
+  str_squish()
+
+length(prereqs)
+sum(is.na(prereqs))
+```
+
+## Now it lines up
+
+```{r}
+tibble(
+  course = courses |> html_element(".courseNumber") |> html_text(),
+  prereqs = prereqs
+) |>
+  mutate(prereqs = str_trunc(prereqs, 60)) |>
+  head(6)
 ```
 
 ## What about sections?
@@ -377,6 +252,7 @@ listings %>%
   html_text() %>% 
   str_squish()
 ```
+
 
 ## selectorGadget
 
@@ -417,158 +293,209 @@ click on an unhighlighted element to add it to the selector
 :::::
 
 
+# Part 2: A site that *wants* to be scraped {.maize}
 
-## Try it 
+## Books to Scrape
+
+<https://books.toscrape.com>
+
+A fake bookstore built for practicing web scraping.
 
 ::: {.task .nonincremental}
-- Use the SelectorGadget to explore <http://www.imdb.com/chart/top>
-
-- What should the columns of our target dataset be? Do they correspond to any specific css selectors?
+- Use SelectorGadget to explore the page
+- What should the columns of our target dataset be? Do they correspond to specific CSS selectors?
 :::
 
 ```{r echo=FALSE}
 countdown(3)
 ```
 
-## Extract title
+## Each book is a "card"
 
 ```{r}
-#| error: true
+books_page <- read_html("https://books.toscrape.com/catalogue/page-1.html")
 
+cards <- books_page |>
+  html_elements("article.product_pod")
 
-imdb <- read_html("http://www.imdb.com/chart/top")
-titles <- imdb %>%
-  html_elements(".ipc-title-link-wrapper .ipc-title__text") %>%
-  html_text()
-
-head(titles)
-
+length(cards)
 ```
 
-## With local version of website
+. . .
+
+Just like the courses: **select the cards first, then extract from each one**.
+
+## The title is in an *attribute*
+
+The text on the page is cut off with "...", but the full title is in the link's `title` attribute:
 
 ```{r}
-imdb_local <- read_html("IMDb Top 250 Movies.html")
-titles <- imdb_local %>%
-  html_elements(".with-margin .ipc-title__text") %>%
-  html_text()
-
-
-titles
+cards |>
+  html_element("h3 a") |>
+  html_text() |>
+  head(3)
 ```
 
-## Extract year
+. . .
 
 ```{r}
-years <- imdb_local %>%
-  html_elements(".cli-title-metadata-item:nth-child(1)") %>%
-  html_text()
-
-head(years)
-
+cards |>
+  html_element("h3 a") |>
+  html_attr("title") |>
+  head(3)
 ```
 
-
-
-## Extract runtime
+## Price and rating
 
 ```{r}
-runtimes <- imdb_local %>%
-  html_elements(".cli-title-metadata-item:nth-child(2)") %>%
-  html_text()
-
-head(runtimes)
-
+cards |>
+  html_element(".price_color") |>
+  html_text() |>
+  head(3)
 ```
 
+. . .
 
-
-
-## Extract MPAA rating
-
+The rating is stored in the *class* of the star element (`<p class="star-rating Three">`):
 
 ```{r}
-mpaas <- imdb_local %>%
-  html_elements(".cli-title-metadata-item:nth-child(3)") %>%
-  html_text()
-
-head(mpaas)
-
+cards |>
+  html_element(".star-rating") |>
+  html_attr("class") |>
+  head(3)
 ```
-
 
 ## Put the pieces together
 
 ```{r}
-#| error: true
+books <- tibble(
+  title = cards |> html_element("h3 a") |> html_attr("title"),
+  price = cards |> html_element(".price_color") |> html_text() |> parse_number(),
+  rating = cards |> html_element(".star-rating") |> html_attr("class") |> str_remove("star-rating "),
+  in_stock = cards |> html_element(".availability") |> html_text() |> str_squish() == "In stock"
+) |>
+  mutate(rating = factor(rating, levels = c("One", "Two", "Three", "Four", "Five")))
 
+books
+```
 
-imdb_top_250 <- tibble(
-  title = titles, 
-  year = years, 
-  runtime = runtimes,
-  mpaa = mpaas
+## One page is only 20 books
+
+The URL changes with the page number:
+
+::: {.nonincremental}
+- `https://books.toscrape.com/catalogue/page-1.html`
+- `https://books.toscrape.com/catalogue/page-2.html`
+- ...
+- `https://books.toscrape.com/catalogue/page-50.html`
+:::
+
+. . .
+
+We know how to repeat things: **write a function, then `map` over the pages**
+
+## A scraping function
+
+```{r}
+#| eval: false
+scrape_books <- function(page) {
+  url <- paste0("https://books.toscrape.com/catalogue/page-", page, ".html")
+  cards <- read_html(url) |> html_elements("article.product_pod")
+
+  tibble(
+    title = cards |> html_element("h3 a") |> html_attr("title"),
+    price = cards |> html_element(".price_color") |> html_text() |> parse_number(),
+    rating = cards |> html_element(".star-rating") |> html_attr("class") |> str_remove("star-rating "),
+    in_stock = cards |> html_element(".availability") |> html_text() |> str_squish() == "In stock",
+    page = page
   )
-
-imdb_top_250
+}
 ```
 
-## Scraping `mpaas` directly doesn't catch the NA's
-
-There are 250 movies but only 245 MPAA ratings
+## Be polite: slow down
 
 ```{r}
-length(mpaas)
-length(titles)
+#| eval: false
+books_1_to_3 <- map(1:3, \(p) {
+  Sys.sleep(1)           # wait a second between requests
+  scrape_books(p)
+}) |>
+  list_rbind()
+
+books_1_to_3 |> count(rating)
 ```
 
-Solution: scrape movies first, and then extract elements: 
+```
+# A tibble: 5 x 2
+  rating     n
+  <fct>  <int>
+1 One       15
+2 Two        8
+3 Three     13
+4 Four      10
+5 Five      14
+```
+
+. . .
+
+- `Sys.sleep()` keeps you from hammering the website
+- Test on 2-3 pages **before** running all 50
+- Save the result with `write_csv()` so you only scrape once
+
+## Your turn: Quotes to Scrape
+
+<https://quotes.toscrape.com>
+
+::: {.task .nonincremental}
+1. Check that scraping is allowed with `paths_allowed()`.
+2. Scrape the **first page** into a tibble with the columns `text`, `author`, and `tags`.
+    - Each quote can have *several* tags. How could you keep them in a single column?
+3. *If you have time:* scrape pages 1-3. (*Hint:* look at how the URL changes on the "Next" button.)
+:::
+
+```{r echo=FALSE}
+countdown(8)
+```
+
+## What if scraping doesn't work?
+
+I used to use IMDb's Top 250 as an example, but now:
 
 ```{r}
-movies <- imdb_local |>
-  html_elements(".cli-children") 
-
-movies |>
-  html_element(".cli-title-metadata-item:nth-child(3)") |>
-  html_text() |>
-  length()
+#| error: true
+paths_allowed("https://www.imdb.com/chart/top")
+read_html("https://www.imdb.com/chart/top") |> html_elements(".ipc-title__text") |> length()
 ```
 
-## What do we do if scraping doesn't work? 
+## What if scraping doesn't work?
 
-1. Is there an API available? Can I access it as a student/researcher at no/low cost?
-   - IMDb: Yes, but cost prohibitive
+1. Is there an **API** available? Can I access it as a student/researcher at no/low cost?
+   - IMDb: yes, but cost prohibitive
+2. Is there a **different website** with the same information?
+   - [The Movie Database](https://www.themoviedb.org/) has an API
+3. Is there a different scraping tool?
+   - {RSelenium} drives a real browser, but it is beyond the scope of this course (and doesn't change the permission question!)
+4. Is the data **really** necessary?
 
-2. Is there a different scraping tool available? 
-   - Yes, {RSelenium} is one that might work, but beyond the scope of this course
-  
-3. Can I get the information I need from a different website?
-   - [The Movie Database](https://www.themoviedb.org/?language=en-US) might work
-
-4. If I download the page, is more information available? 
-   - In this case, yes, but might not always work
-
-# .qmd vs .R {.maize}
-
-## 
+## .qmd vs .R 
 
 ::::: columns
 ::: {.column .nonincremental width="50%"}
 
-**Rmarkdown**:
+**Quarto document**:
 
   - Integrate code, text, and graphs
   - Output is a "report"
-  - Code is run interactively (in chunks) and when knitting your final document
+  - Code is run interactively (in chunks) and when rendering your final document
 :::
 
 :::{.column .fragment .nonincremental width="50%"}
 
-**R script:** 
+**R script:**
 
-  - Think of it as a file that contains *only* R chunks
-  - No "knitting": all code must be run explicitly
-  - Useful for longer chunks of code 
+  - A file that contains *only* R code
+  - No "rendering": all code must be run explicitly
+  - Useful for longer chunks of code
       - `data-cleaning.R`
       - `fit-models.R`
       - `scrape-data.R`
@@ -576,39 +503,20 @@ movies |>
 :::
 :::::
 
-## For scraping: 
+## For scraping:
 
 - We don't want to scrape a website more than we need to
-- For HW, it's OK to continue to use .Rmd unless specified
+- For homework, it's OK to keep scraping inside your .qmd unless specified
 - For projects that involve intensive data-gathering:
     - use an R script to read in the "raw" data, clean it, and save it to a tidy csv
-    - Read your "clean" data to your .rmd and proceed as usual
+    - Read your "clean" data into your .qmd and proceed as usual
 
-# Example {.maize}
-
-## Your turn: 
-
-::: {.task .nonincremental}
-
-- In an R script:
-
-  - Scrape the names, scores, and years of most popular TV shows on IMDB:
-  [www.imdb.com/chart/tvmeter](http://www.imdb.com/chart/tvmeter)
-  
-  - Create a data frame called `tvshows` with the variables:
-    `rank`, `title`, `stars`, `year`, `episodes`, `n_ratings`
-    
-  - Wrangle your resulting data so that all variable types are imported correctly
-  
-  - Use `write_csv` to save your file. If time, read it into the `21-scraping.rmd` and make a graph
-:::
-
-## 
+##
 
 ::::: columns
 ::: {.column .nonincremental width="50%"}
 
-Dataset includes variables like: 
+Dataset includes variables like:
 
 - Political leanings
 - Religion
