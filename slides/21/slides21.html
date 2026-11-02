@@ -6,9 +6,9 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8f4e3aabaa80e3e650ae20f2c24f966b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8cab17c520dfb5fd83702a774e8ef3fe.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 <meta name="author" content="Prof Amanda Luby">
 <title>Stat 220 – Web Scraping</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -215,95 +215,27 @@ Prof Amanda Luby
 <ol type="1">
 <li class="fragment"><p>Web APIs (application programming interface): website offers a set of structured http requests that return JSON or XML files.</p></li>
 <li class="fragment"><p>Screen scraping:<br> extract data from source code of website, with html parser (easy) or regular expression matching (less easy).</p></li>
-</ol></section><section id="check-the-terms-of-useservice-first" class="slide level2"><h2>Check the terms of use/service first!</h2>
+</ol></section><section id="today" class="slide level2"><h2>Today</h2>
 <ul>
-<li class="fragment"><p>Can you query this webpage?</p></li>
-<li class="fragment"><p>Are there restrictions on the use of the data?</p></li>
-<li class="fragment"><p>How many requests can you make per minute?</p></li>
-<li class="fragment"><p>…and more…</p></li>
-</ul></section><section id="checking-for-permission-to-scrape" class="slide level2"><h2>Checking for permission to scrape</h2>
-<p>Use <code><a href="https://docs.ropensci.org/robotstxt/reference/paths_allowed.html">robotstxt::paths_allowed()</a></code> to see if you can scrape the web page.</p>
-<div class="fragment">
-<p>You can scrape Zillow</p>
+<li>Scrape data that <strong>isn’t</strong> in a table, using CSS selectors</li>
+<li>Handle items with <strong>missing</strong> pieces</li>
+<li>Scrape <strong>many pages</strong> politely</li>
+<li>What to do when a website says no</li>
+</ul></section><section id="recap-check-permission-first" class="slide level2"><h2>Recap: check permission first</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(robotstxt)</span>
-<span id="cb1-2"><a></a><span class="fu">paths_allowed</span>(<span class="st">"http://www.zillow.com"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>robotstxt<span class="sc">::</span><span class="fu">paths_allowed</span>(<span class="st">"https://books.toscrape.com"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-</div>
-</div>
-<div class="fragment">
-<p>But not Facebook</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">paths_allowed</span>(<span class="st">"http://www.facebook.com"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>robotstxt<span class="sc">::</span><span class="fu">paths_allowed</span>(<span class="st">"https://www.imdb.com/chart/top"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
-</div>
-<div class="fragment">
-<div class="task">
-<p>What websites have data about <em>you</em>? Think of 1-2 and see if scraping is allowed on those sites.</p>
-</div>
-</div>
-</section><section id="hypertext-markup-language" class="slide level2"><h2>Hypertext Markup Language</h2>
 <ul>
-<li><p>Lots of data on the web is still available as HTML</p></li>
-<li><p>It is structured (hierarchical / tree based), but it’s often not available in a form useful for analysis (flat / tidy).</p></li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb5-1"><a></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
-<span id="cb5-2"><a></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb5-3"><a></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>This is a title<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
-<span id="cb5-4"><a></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb5-5"><a></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb5-6"><a></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> align</span><span class="op">=</span><span class="st">"center"</span><span class="dt">&gt;</span>Hello world!<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb5-7"><a></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb5-8"><a></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section><section id="html-tags" class="slide level2"><h2>HTML tags</h2>
-<p>HTML uses <strong>tags</strong> to describe different aspects of document content</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 84%">
-</colgroup>
-<thead><tr class="header">
-<th>Tag</th>
-<th>Example</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>heading</td>
-<td><code>&lt;h1&gt;My Title&lt;/h1&gt;</code></td>
-</tr>
-<tr class="even">
-<td>paragraph</td>
-<td><code>&lt;p&gt;A paragraph of content...&lt;/p&gt;</code></td>
-</tr>
-<tr class="odd">
-<td>table</td>
-<td><code>&lt;table&gt; ... &lt;/table&gt;</code></td>
-</tr>
-<tr class="even">
-<td>anchor (with attribute)</td>
-<td><code>&lt;a href="http://www.mysite.net"&gt;click here for link&lt;/a&gt;</code></td>
-</tr>
-</tbody>
-</table></section><section id="rvest" class="slide level2"><h2>{rvest}</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="https://rvest.tidyverse.org/logo.png" style="width:70.0%"></p>
-</div><div class="column" style="width:50%;">
-<ul>
-<li><p>Pronounced like “harvest”</p></li>
-<li><p>Processing and manipulation of HTML data</p></li>
-<li><p><em>Installed</em> with the {tidyverse} but not <em>loaded</em> automatically</p></li>
-</ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">library</span>(rvest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div></div>
-</section><section id="core-rvest-functions" class="slide level2 smaller"><h2>Core <code>rvest</code> functions</h2>
+<li class="fragment">
+<code>robots.txt</code> isn’t the whole story: also read the terms of use, and don’t send requests faster than a person would</li>
+</ul></section><section id="core-rvest-functions" class="slide level2 smaller"><h2>Core <code>rvest</code> functions</h2>
 <table class="caption-top">
 <thead><tr class="header">
 <th>Function</th>
@@ -343,127 +275,10 @@ Prof Amanda Luby
 <td>Extract tags’ attribute value by name</td>
 </tr>
 </tbody>
-</table></section><section id="example-box-office-mojo" class="slide level2"><h2>Example: box office mojo</h2>
-<p><a href="https://www.boxofficemojo.com/year/2026/" class="uri">https://www.boxofficemojo.com/year/2026/</a></p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li>
-<p>Take a look at the web page <strong>and</strong> the html source code</p>
-<p>Chrome or Firefox: right click -&gt; View page source</p>
-</li>
-<li><p>Look for the <code>"table"</code> div ID or tag</p></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><img data-src="../img/scrape_boxoffice_mojo2022.png"></p>
-</div></div>
-</section><section id="read-html-into-r" class="slide level2"><h2>Read HTML into R</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"https://www.boxofficemojo.com/year/2026/"</span>)</span>
-<span id="cb7-2"><a></a>page</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>{html_document}
-&lt;html class="a-no-js" data-19ax5a9jf="dingo"&gt;
-[1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8 ...
-[2] &lt;body id="body" class="mojo-page-id-yld a-m-us a-aui_72554-c a-aui_templa ...</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">str</span>(page)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>List of 2
- $ node:&lt;externalptr&gt; 
- $ doc :&lt;externalptr&gt; 
- - attr(*, "class")= chr [1:2] "xml_document" "xml_node"</code></pre>
-</div>
-</div>
-</section><section id="html-elements" class="slide level2"><h2>HTML elements</h2>
-<p>There are over 100 HTML elements:</p>
-<ul>
-<li>Every HTML page must be in an <code>&lt;html&gt;</code> element, and it must have two children: <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code>
-</li>
-<li>Block tags like <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ol&gt;</code> form the structure of the page</li>
-<li>Inline tags like <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, and <code>&lt;a&gt;</code> format text inside block tags</li>
-</ul>
-<p>We’ll often work with <code>tables</code>. HTML tables are composed of four main elements <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code> (table row), <code>&lt;th&gt;</code> (table heading), and <code>&lt;td&gt;</code> (table data).</p>
+</table></section><section><section id="part-1-carleton-course-catalog" class="title-slide slide level1 maize center"><h1>Part 1: Carleton course catalog</h1>
 
-<aside><div>
-<p>If you run into one that you need to figure out, I recommend the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">MDN Web Docs</a> for explanations and examples</p>
-</div></aside></section><section id="extract-tables" class="slide level2"><h2>Extract tables</h2>
-<p>Use <code>html_element()</code> or <code>html_elements()</code> to extract pieces out of HTML documents</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>tables <span class="ot">&lt;-</span> page <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">"table"</span>)</span>
-<span id="cb11-2"><a></a><span class="fu">str</span>(tables)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>List of 1
- $ :List of 2
-  ..$ node:&lt;externalptr&gt; 
-  ..$ doc :&lt;externalptr&gt; 
-  ..- attr(*, "class")= chr "xml_node"
- - attr(*, "class")= chr "xml_nodeset"</code></pre>
-</div>
-</div>
-</section><section id="parse-a-table-into-a-data-frametibble" class="slide level2"><h2>Parse a table into a data frame/tibble</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>top2026 <span class="ot">&lt;-</span> <span class="fu">html_table</span>(tables[[<span class="dv">1</span>]])</span>
-<span id="cb13-2"><a></a><span class="fu">glimpse</span>(top2026)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 154
-Columns: 11
-$ Rank           &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, …
-$ Release        &lt;chr&gt; "Avatar: Fire and Ash", "Zootopia 2", "The Housemaid", …
-$ Genre          &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
-$ Budget         &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
-$ `Running Time` &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
-$ Gross          &lt;chr&gt; "$149,087,531", "$86,017,976", "$69,901,528", "$60,012,…
-$ Theaters       &lt;chr&gt; "3,835", "4,000", "3,123", "3,682", "3,863", "2,887", "…
-$ `Total Gross`  &lt;chr&gt; "$388,033,850", "$410,506,721", "$121,852,280", "$60,01…
-$ `Release Date` &lt;chr&gt; "Dec 19", "Nov 26", "Dec 19", "Feb 13", "Feb 13", "Dec …
-$ Distributor    &lt;chr&gt; "20th Century Studios", "Walt Disney Studios Motion Pic…
-$ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false", "…</code></pre>
-</div>
-</div>
-</section><section id="scrape-then-wrangle" class="slide level2"><h2>Scrape then wrangle</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>top2026 <span class="ot">&lt;-</span> top2026 <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb15-3"><a></a>    <span class="at">Gross =</span> <span class="fu">parse_number</span>(Gross),</span>
-<span id="cb15-4"><a></a>    <span class="at">Theaters =</span> <span class="fu">parse_number</span>(Theaters),</span>
-<span id="cb15-5"><a></a>    <span class="st">`</span><span class="at">Total Gross</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">parse_number</span>(<span class="st">`</span><span class="at">Total Gross</span><span class="st">`</span>)</span>
-<span id="cb15-6"><a></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb15-7"><a></a>  <span class="fu">separate</span>(<span class="st">`</span><span class="at">Release Date</span><span class="st">`</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Month"</span>, <span class="st">"Day"</span>))</span>
-<span id="cb15-8"><a></a></span>
-<span id="cb15-9"><a></a><span class="fu">glimpse</span>(top2026)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 154
-Columns: 12
-$ Rank           &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, …
-$ Release        &lt;chr&gt; "Avatar: Fire and Ash", "Zootopia 2", "The Housemaid", …
-$ Genre          &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
-$ Budget         &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
-$ `Running Time` &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
-$ Gross          &lt;dbl&gt; 149087531, 86017976, 69901528, 60012668, 58301328, 5602…
-$ Theaters       &lt;dbl&gt; 3835, 4000, 3123, 3682, 3863, 2887, 3475, 3509, 2964, 3…
-$ `Total Gross`  &lt;dbl&gt; 388033850, 410506721, 121852280, 60012668, 58301328, 95…
-$ Month          &lt;chr&gt; "Dec", "Nov", "Dec", "Feb", "Feb", "Dec", "Jan", "Dec",…
-$ Day            &lt;chr&gt; "19", "26", "19", "13", "13", "19", "30", "25", "9", "1…
-$ Distributor    &lt;chr&gt; "20th Century Studios", "Walt Disney Studios Motion Pic…
-$ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false", "…</code></pre>
-</div>
-</div>
-</section><section id="scraped-data-will-almost-always-need-wranglingcleaning" class="slide level2"><h2>Scraped data will almost always need wrangling/cleaning</h2>
-<ul>
-<li class="fragment">Are numeric columns numeric?</li>
-<li class="fragment">Are date columns dates?</li>
-<li class="fragment">Are factor and string columns treated correctly?</li>
-</ul></section><section id="section" class="slide level2"><h2></h2>
-<p><img data-src="../img/eighty-twenty-ruiz.png"></p>
-<div class="fragment">
-<p><img data-src="../img/ninety-ten-drob.png"></p>
-
-</div>
-<aside><div>
-<p>Source: <a href="https://www.tandfonline.com/doi/full/10.1080/10691898.2020.1799728#abstract">Playing the Whole Game</a>, Kim &amp; Hardin</p>
-</div></aside></section><section id="data-arent-always-stored-as-tables" class="slide level2"><h2>Data aren’t always stored as tables</h2>
-<p><a href="https://www.carleton.edu/catalog/current/search/?subject=STAT&amp;term=26SP" class="uri">https://www.carleton.edu/catalog/current/search/?subject=STAT&amp;term=26SP</a></p>
+</section><section id="data-arent-always-stored-as-tables" class="slide level2"><h2>Data aren’t always stored as tables</h2>
+<p><a href="https://www.carleton.edu/catalog/current/search/?subject=STAT&amp;term=26FA" class="uri">https://www.carleton.edu/catalog/current/search/?subject=STAT&amp;term=26FA</a></p>
 <p><img data-src="../img/stat220-catalog-listing.png"></p>
 </section><section id="where-is-the-data-stored" class="slide level2"><h2>Where is the data stored?</h2>
 <div class="task">
@@ -474,12 +289,11 @@ $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false
 <li>Course description</li>
 <li>Course meetings</li>
 <li>Faculty</li>
-<li>Course meetings</li>
 </ul>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_667f844f" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_b8f9c9cd" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -487,13 +301,13 @@ $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false
 </div>
 </div>
 </div>
-</section><section id="section-1" class="slide level2"><h2></h2>
+</section><section id="section" class="slide level2"><h2></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>listings <span class="ot">=</span> <span class="fu">read_html</span>(<span class="st">"https://www.carleton.edu/catalog/current/search/?subject=STAT&amp;term=26SP"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>listings <span class="ot">=</span> <span class="fu">read_html</span>(<span class="st">"https://www.carleton.edu/catalog/current/search/?subject=STAT&amp;term=26FA"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>listings <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">"h3"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>listings <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">"h3"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{xml_nodeset (19)}
  [1] &lt;h3 class="courseTitleBar"&gt;\n            &lt;span class="courseNumber" data ...
@@ -517,218 +331,299 @@ $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false
 [19] &lt;h3&gt;Other Course Tags&lt;/h3&gt;</code></pre>
 </div>
 </div>
-</section><section id="section-2" class="slide level2"><h2></h2>
+</section><section id="section-1" class="slide level2"><h2></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>listings <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">"h3"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a></a>  <span class="fu">html_text</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>listings <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">"h3"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">html_text</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "\n            STAT 120\n            Introduction to Statistics\n            \n                            6 credits\n                        \n        "                                   
  [2] "\n            STAT 220\n            Introduction to Data Science\n            \n                            6 credits\n                        \n        "                                 
  [3] "\n            STAT 230\n            Applied Regression Analysis\n            \n                            6 credits\n                        \n        "                                  
- [4] "\n            STAT 250\n            Introduction to Statistical Inference\n            \n                            6 credits\n                        \n        "                        
- [5] "\n            STAT 285\n            Statistical Consulting\n            \n                            2 credits\n                        \n        "                                       
+ [4] "\n            STAT 285\n            Statistical Consulting\n            \n                            2 credits\n                        \n        "                                       
+ [5] "\n            STAT 294\n            Directed Research in Statistics\n            \n                            1 – 6 credits\n                        \n        "                          
  [6] "\n            STAT 297\n            Assessment and Communication of External Statistical Activity\n            \n                            1 credits\n                        \n        "
- [7] "\n            STAT 330\n            Advanced Statistical Modeling\n            \n                            6 credits\n                        \n        "                                
- [8] "\n            STAT 400\n            Integrative Exercise\n            \n                            3 credits\n                        \n        "                                         
+ [7] "\n            STAT 394\n            Directed Research in Statistics\n            \n                            1 – 6 credits\n                        \n        "                          
+ [8] "\n            STAT 399\n            Senior Seminar\n            \n                            6 credits\n                        \n        "                                               
  [9] "Related Courses"                                                                                                                                                                           
 [10] "\n            CS 111\n            Introduction to Computer Science\n            \n                            6 credits\n                        \n        "                               
-[11] "\n            CS 314*\n            Data Visualization (*=Junior Seminar)\n            \n                            6 credits\n                        \n        "                         
-[12] "\n            CS 362\n            Computational Biology\n            \n                            6 credits\n                        \n        "                                          
+[11] "\n            MATH 101\n            Calculus with Problem Solving\n            \n                            6 credits\n                        \n        "                                
+[12] "\n            MATH 111\n            Introduction to Calculus\n            \n                            6 credits\n                        \n        "                                     
 [13] "\n            MATH 120\n            Calculus 2\n            \n                            6 credits\n                        \n        "                                                   
 [14] "\n            MATH 134\n            Linear Algebra with Applications\n            \n                            6 credits\n                        \n        "                             
-[15] "\n            MATH 210\n            Calculus 3\n            \n                            6 credits\n                        \n        "                                                   
+[15] "\n            MATH 211\n            Introduction to Multivariable Calculus\n            \n                            6 credits\n                        \n        "                       
 [16] "\n            MATH 232\n            Linear Algebra\n            \n                            6 credits\n                        \n        "                                               
-[17] "\n            MATH 271\n            Optimization\n            \n                            6 credits\n                        \n        "                                                 
+[17] "\n            MATH 240\n            Probability\n            \n                            6 credits\n                        \n        "                                                  
 [18] "Liberal Arts Requirements"                                                                                                                                                                 
 [19] "Other Course Tags"                                                                                                                                                                         </code></pre>
 </div>
 </div>
-</section><section id="section-3" class="slide level2"><h2></h2>
+</section><section id="section-2" class="slide level2"><h2></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>listings <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">"h3"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a></a>  <span class="fu">html_text</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb22-4"><a></a>  <span class="fu">str_squish</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>listings <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">"h3"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a></a>  <span class="fu">html_text</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb10-4"><a></a>  <span class="fu">str_squish</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "STAT 120 Introduction to Statistics 6 credits"                                   
  [2] "STAT 220 Introduction to Data Science 6 credits"                                 
  [3] "STAT 230 Applied Regression Analysis 6 credits"                                  
- [4] "STAT 250 Introduction to Statistical Inference 6 credits"                        
- [5] "STAT 285 Statistical Consulting 2 credits"                                       
+ [4] "STAT 285 Statistical Consulting 2 credits"                                       
+ [5] "STAT 294 Directed Research in Statistics 1 – 6 credits"                          
  [6] "STAT 297 Assessment and Communication of External Statistical Activity 1 credits"
- [7] "STAT 330 Advanced Statistical Modeling 6 credits"                                
- [8] "STAT 400 Integrative Exercise 3 credits"                                         
+ [7] "STAT 394 Directed Research in Statistics 1 – 6 credits"                          
+ [8] "STAT 399 Senior Seminar 6 credits"                                               
  [9] "Related Courses"                                                                 
 [10] "CS 111 Introduction to Computer Science 6 credits"                               
-[11] "CS 314* Data Visualization (*=Junior Seminar) 6 credits"                         
-[12] "CS 362 Computational Biology 6 credits"                                          
+[11] "MATH 101 Calculus with Problem Solving 6 credits"                                
+[12] "MATH 111 Introduction to Calculus 6 credits"                                     
 [13] "MATH 120 Calculus 2 6 credits"                                                   
 [14] "MATH 134 Linear Algebra with Applications 6 credits"                             
-[15] "MATH 210 Calculus 3 6 credits"                                                   
+[15] "MATH 211 Introduction to Multivariable Calculus 6 credits"                       
 [16] "MATH 232 Linear Algebra 6 credits"                                               
-[17] "MATH 271 Optimization 6 credits"                                                 
+[17] "MATH 240 Probability 6 credits"                                                  
 [18] "Liberal Arts Requirements"                                                       
 [19] "Other Course Tags"                                                               </code></pre>
 </div>
 </div>
-</section><section><section id="css-selectors" class="title-slide slide level1 maize center"><h1>CSS selectors</h1>
+</section></section><section><section id="css-selectors" class="title-slide slide level1 maize center"><h1>CSS selectors</h1>
 
-</section><section id="selecting-coursenumber-class" class="slide level2"><h2>Selecting courseNumber class</h2>
+</section><section id="selecting-the-coursenumber-class" class="slide level2"><h2>Selecting the <code>courseNumber</code> class</h2>
 <p>Course numbers are between <code>&lt;span class="courseNumber"&gt; ... &lt;/span&gt;</code> tags</p>
 <p>These tags can be selected using <code>.</code> followed by the name of the class</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
-<span id="cb24-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".courseNumber"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".courseNumber"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{xml_nodeset (16)}
- [1] &lt;span class="courseNumber" data-terms="26/SP"&gt;STAT 120&lt;/span&gt;
- [2] &lt;span class="courseNumber" data-terms="26/SP"&gt;STAT 220&lt;/span&gt;
- [3] &lt;span class="courseNumber" data-terms="26/SP"&gt;STAT 230&lt;/span&gt;
- [4] &lt;span class="courseNumber" data-terms="26/SP"&gt;STAT 250&lt;/span&gt;
- [5] &lt;span class="courseNumber" data-terms="26/SP"&gt;STAT 285&lt;/span&gt;
- [6] &lt;span class="courseNumber" data-terms="26/SP"&gt;STAT 297&lt;/span&gt;
- [7] &lt;span class="courseNumber" data-terms="26/SP"&gt;STAT 330&lt;/span&gt;
- [8] &lt;span class="courseNumber" data-terms="26/SP"&gt;STAT 400&lt;/span&gt;
- [9] &lt;span class="courseNumber" data-terms="26/SP"&gt;CS 111&lt;/span&gt;
-[10] &lt;span class="courseNumber" data-terms="26/SP"&gt;CS 314*&lt;/span&gt;
-[11] &lt;span class="courseNumber" data-terms="26/SP"&gt;CS 362&lt;/span&gt;
-[12] &lt;span class="courseNumber" data-terms="26/SP"&gt;MATH 120&lt;/span&gt;
-[13] &lt;span class="courseNumber" data-terms="26/SP"&gt;MATH 134&lt;/span&gt;
-[14] &lt;span class="courseNumber" data-terms="26/SP"&gt;MATH 210&lt;/span&gt;
-[15] &lt;span class="courseNumber" data-terms="26/SP"&gt;MATH 232&lt;/span&gt;
-[16] &lt;span class="courseNumber" data-terms="26/SP"&gt;MATH 271&lt;/span&gt;</code></pre>
+ [1] &lt;span class="courseNumber" data-terms="26/FA"&gt;STAT 120&lt;/span&gt;
+ [2] &lt;span class="courseNumber" data-terms="26/FA"&gt;STAT 220&lt;/span&gt;
+ [3] &lt;span class="courseNumber" data-terms="26/FA"&gt;STAT 230&lt;/span&gt;
+ [4] &lt;span class="courseNumber" data-terms="26/FA"&gt;STAT 285&lt;/span&gt;
+ [5] &lt;span class="courseNumber" data-terms="26/FA 26/FA2 27/WI 27/SP"&gt;STAT 29 ...
+ [6] &lt;span class="courseNumber" data-terms="26/FA"&gt;STAT 297&lt;/span&gt;
+ [7] &lt;span class="courseNumber" data-terms="26/FA 27/WI 27/SP"&gt;STAT 394&lt;/span&gt;
+ [8] &lt;span class="courseNumber" data-terms="26/FA"&gt;STAT 399&lt;/span&gt;
+ [9] &lt;span class="courseNumber" data-terms="26/FA"&gt;CS 111&lt;/span&gt;
+[10] &lt;span class="courseNumber" data-terms="26/FA"&gt;MATH 101&lt;/span&gt;
+[11] &lt;span class="courseNumber" data-terms="26/FA"&gt;MATH 111&lt;/span&gt;
+[12] &lt;span class="courseNumber" data-terms="26/FA"&gt;MATH 120&lt;/span&gt;
+[13] &lt;span class="courseNumber" data-terms="26/FA"&gt;MATH 134&lt;/span&gt;
+[14] &lt;span class="courseNumber" data-terms="26/FA"&gt;MATH 211&lt;/span&gt;
+[15] &lt;span class="courseNumber" data-terms="26/FA"&gt;MATH 232&lt;/span&gt;
+[16] &lt;span class="courseNumber" data-terms="26/FA"&gt;MATH 240&lt;/span&gt;</code></pre>
 </div>
 </div>
 </section><section id="scraping-coursenumbers" class="slide level2"><h2>Scraping courseNumbers</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".courseNumber"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb26-3"><a></a>  <span class="fu">html_text</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".courseNumber"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a></a>  <span class="fu">html_text</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "STAT 120" "STAT 220" "STAT 230" "STAT 250" "STAT 285" "STAT 297"
- [7] "STAT 330" "STAT 400" "CS 111"   "CS 314*"  "CS 362"   "MATH 120"
-[13] "MATH 134" "MATH 210" "MATH 232" "MATH 271"</code></pre>
+<pre><code> [1] "STAT 120" "STAT 220" "STAT 230" "STAT 285" "STAT 294" "STAT 297"
+ [7] "STAT 394" "STAT 399" "CS 111"   "MATH 101" "MATH 111" "MATH 120"
+[13] "MATH 134" "MATH 211" "MATH 232" "MATH 240"</code></pre>
 </div>
 </div>
 </section><section id="scraping-credits" class="slide level2"><h2>Scraping credits</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".credits"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-3"><a></a>  <span class="fu">html_text</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".credits"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a></a>  <span class="fu">html_text</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "\n                            6 credits\n                        "
- [2] "\n                            6 credits\n                        "
- [3] "\n                            6 credits\n                        "
- [4] "\n                            6 credits\n                        "
- [5] "\n                            2 credits\n                        "
- [6] "\n                            1 credits\n                        "
- [7] "\n                            6 credits\n                        "
- [8] "\n                            3 credits\n                        "
- [9] "\n                            6 credits\n                        "
-[10] "\n                            6 credits\n                        "
-[11] "\n                            6 credits\n                        "
-[12] "\n                            6 credits\n                        "
-[13] "\n                            6 credits\n                        "
-[14] "\n                            6 credits\n                        "
-[15] "\n                            6 credits\n                        "
-[16] "\n                            6 credits\n                        "</code></pre>
+<pre><code> [1] "\n                            6 credits\n                        "    
+ [2] "\n                            6 credits\n                        "    
+ [3] "\n                            6 credits\n                        "    
+ [4] "\n                            2 credits\n                        "    
+ [5] "\n                            1 – 6 credits\n                        "
+ [6] "\n                            1 credits\n                        "    
+ [7] "\n                            1 – 6 credits\n                        "
+ [8] "\n                            6 credits\n                        "    
+ [9] "\n                            6 credits\n                        "    
+[10] "\n                            6 credits\n                        "    
+[11] "\n                            6 credits\n                        "    
+[12] "\n                            6 credits\n                        "    
+[13] "\n                            6 credits\n                        "    
+[14] "\n                            6 credits\n                        "    
+[15] "\n                            6 credits\n                        "    
+[16] "\n                            6 credits\n                        "    </code></pre>
 </div>
 </div>
 </section><section id="scraping-credits-1" class="slide level2"><h2>Scraping credits</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".credits"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb30-3"><a></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb30-4"><a></a>  <span class="fu">str_squish</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".credits"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a></a>  <span class="fu">str_squish</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "6 credits" "6 credits" "6 credits" "6 credits" "2 credits" "1 credits"
- [7] "6 credits" "3 credits" "6 credits" "6 credits" "6 credits" "6 credits"
-[13] "6 credits" "6 credits" "6 credits" "6 credits"</code></pre>
+<pre><code> [1] "6 credits"     "6 credits"     "6 credits"     "2 credits"    
+ [5] "1 – 6 credits" "1 credits"     "1 – 6 credits" "6 credits"    
+ [9] "6 credits"     "6 credits"     "6 credits"     "6 credits"    
+[13] "6 credits"     "6 credits"     "6 credits"     "6 credits"    </code></pre>
 </div>
 </div>
-</section><section id="section-4" class="slide level2"><h2></h2>
+</section><section id="put-the-pieces-together" class="slide level2"><h2>Put the pieces together</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>stat_sp26 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb32-2"><a></a>  <span class="at">course =</span> listings <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">".courseNumber"</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>(),</span>
-<span id="cb32-3"><a></a>  <span class="at">title =</span> listings <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">".courseTitle"</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>(),</span>
-<span id="cb32-4"><a></a>  <span class="at">credits =</span> listings <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">".credits"</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> <span class="fu">str_squish</span>(),</span>
-<span id="cb32-5"><a></a>  <span class="at">description =</span> listings <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">".courseDetailWrapper"</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> <span class="fu">str_squish</span>()</span>
-<span id="cb32-6"><a></a>)</span>
-<span id="cb32-7"><a></a></span>
-<span id="cb32-8"><a></a>stat_sp26</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>stat_courses <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb20-2"><a></a>  <span class="at">course =</span> listings <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">".courseNumber"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text</span>(),</span>
+<span id="cb20-3"><a></a>  <span class="at">title =</span> listings <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">".courseTitle"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text</span>(),</span>
+<span id="cb20-4"><a></a>  <span class="at">credits =</span> listings <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">".credits"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text</span>() <span class="sc">|&gt;</span> <span class="fu">str_squish</span>(),</span>
+<span id="cb20-5"><a></a>  <span class="at">description =</span> listings <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">".courseDetailWrapper"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text</span>() <span class="sc">|&gt;</span> <span class="fu">str_squish</span>()</span>
+<span id="cb20-6"><a></a>)</span>
+<span id="cb20-7"><a></a></span>
+<span id="cb20-8"><a></a>stat_courses <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">description =</span> <span class="fu">str_trunc</span>(description, <span class="dv">50</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 4
    course   title                                            credits description
    &lt;chr&gt;    &lt;chr&gt;                                            &lt;chr&gt;   &lt;chr&gt;      
- 1 STAT 120 Introduction to Statistics                       6 cred… "Introduct…
- 2 STAT 220 Introduction to Data Science                     6 cred… "This cour…
- 3 STAT 230 Applied Regression Analysis                      6 cred… "A second …
- 4 STAT 250 Introduction to Statistical Inference            6 cred… "Introduct…
- 5 STAT 285 Statistical Consulting                           2 cred… "Students …
- 6 STAT 297 Assessment and Communication of External Statis… 1 cred… "An indepe…
- 7 STAT 330 Advanced Statistical Modeling                    6 cred… "Topics in…
- 8 STAT 400 Integrative Exercise                             3 cred… "A supervi…
- 9 CS 111   Introduction to Computer Science                 6 cred… "This cour…
-10 CS 314*  Data Visualization (*=Junior Seminar)            6 cred… "Though th…
-11 CS 362   Computational Biology                            6 cred… "Recent ad…
-12 MATH 120 Calculus 2                                       6 cred… "Inverse f…
-13 MATH 134 Linear Algebra with Applications                 6 cred… "Linear al…
-14 MATH 210 Calculus 3                                       6 cred… "Vectors, …
-15 MATH 232 Linear Algebra                                   6 cred… "Linear al…
-16 MATH 271 Optimization                                     6 cred… "Optimizat…</code></pre>
+ 1 STAT 120 Introduction to Statistics                       6 cred… Introducti…
+ 2 STAT 220 Introduction to Data Science                     6 cred… This cours…
+ 3 STAT 230 Applied Regression Analysis                      6 cred… A second c…
+ 4 STAT 285 Statistical Consulting                           2 cred… Students w…
+ 5 STAT 294 Directed Research in Statistics                  1 – 6 … Students w…
+ 6 STAT 297 Assessment and Communication of External Statis… 1 cred… An indepen…
+ 7 STAT 394 Directed Research in Statistics                  1 – 6 … Students w…
+ 8 STAT 399 Senior Seminar                                   6 cred… As part of…
+ 9 CS 111   Introduction to Computer Science                 6 cred… This cours…
+10 MATH 101 Calculus with Problem Solving                    6 cred… An introdu…
+11 MATH 111 Introduction to Calculus                         6 cred… An introdu…
+12 MATH 120 Calculus 2                                       6 cred… Inverse fu…
+13 MATH 134 Linear Algebra with Applications                 6 cred… Linear alg…
+14 MATH 211 Introduction to Multivariable Calculus           6 cred… Vectors, c…
+15 MATH 232 Linear Algebra                                   6 cred… Linear alg…
+16 MATH 240 Probability                                      6 cred… Introducti…</code></pre>
+</div>
+</div>
+</section><section id="what-if-a-piece-is-missing-for-some-courses" class="slide level2"><h2>What if a piece is missing for some courses?</h2>
+<p>Let’s get the prerequisites:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>listings <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".courseMeta--preReqs"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a></a>  <span class="fu">html_text</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a></a>  <span class="fu">length</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>There are 16 courses, but only 14 prerequisite lines, and we can’t tell which ones are missing</p>
+</div>
+</section><section id="select-each-course-first-then-extract" class="slide level2"><h2>Select each course first, <em>then</em> extract</h2>
+<p>Each course is one <code>&lt;li&gt;</code> inside <code>.courseSearchResults</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>courses <span class="ot">&lt;-</span> listings <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".courseSearchResults &gt; li"</span>)</span>
+<span id="cb24-3"><a></a></span>
+<span id="cb24-4"><a></a><span class="fu">length</span>(courses)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p><code>html_element()</code> (singular) returns exactly one result per item, and <code>NA</code> when it is missing:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>prereqs <span class="ot">&lt;-</span> courses <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a></a>  <span class="fu">html_element</span>(<span class="st">".courseMeta--preReqs"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a></a>  <span class="fu">html_text</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a></a>  <span class="fu">str_squish</span>()</span>
+<span id="cb26-5"><a></a></span>
+<span id="cb26-6"><a></a><span class="fu">length</span>(prereqs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">sum</span>(<span class="fu">is.na</span>(prereqs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</div>
+</section><section id="now-it-lines-up" class="slide level2"><h2>Now it lines up</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb30-2"><a></a>  <span class="at">course =</span> courses <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">".courseNumber"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text</span>(),</span>
+<span id="cb30-3"><a></a>  <span class="at">prereqs =</span> prereqs</span>
+<span id="cb30-4"><a></a>) <span class="sc">|&gt;</span></span>
+<span id="cb30-5"><a></a>  <span class="fu">mutate</span>(<span class="at">prereqs =</span> <span class="fu">str_trunc</span>(prereqs, <span class="dv">60</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb30-6"><a></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  course   prereqs                                                     
+  &lt;chr&gt;    &lt;chr&gt;                                                       
+1 STAT 120 Prerequisites: Not open to students that have taken PSYC ...
+2 STAT 220 Prerequisites: Student has completed any of the following...
+3 STAT 230 Prerequisites: Student has completed any of the following...
+4 STAT 285 Prerequisites: Student has completed the following course...
+5 STAT 294 &lt;NA&gt;                                                        
+6 STAT 297 Prerequisites: Student is a member of the STAT 297 01 coh...</code></pre>
 </div>
 </div>
 </section><section id="what-about-sections" class="slide level2"><h2>What about sections?</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
-<span id="cb34-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".course-section"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-3"><a></a>  <span class="fu">html_element</span>(<span class="st">".courseSectionNumber"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-4"><a></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb34-5"><a></a>  <span class="fu">str_squish</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".course-section"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a></a>  <span class="fu">html_element</span>(<span class="st">".courseSectionNumber"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-4"><a></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-5"><a></a>  <span class="fu">str_squish</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "STAT 120.01 Spring 2026" "STAT 120.02 Spring 2026"
- [3] "STAT 120.03 Spring 2026" "STAT 120.04 Spring 2026"
- [5] "STAT 220.01 Spring 2026" "STAT 230.01 Spring 2026"
- [7] "STAT 230.02 Spring 2026" "STAT 250.01 Spring 2026"
- [9] "STAT 285.01 Spring 2026" "STAT 297.01 Spring 2026"
-[11] "STAT 330.01 Spring 2026" "STAT 400.01 Spring 2026"
-[13] "CS 111.01 Spring 2026"   "CS 111.02 Spring 2026"  
-[15] "CS 314*.01 Spring 2026"  "CS 362.01 Spring 2026"  
-[17] "MATH 120.01 Spring 2026" "MATH 134.01 Spring 2026"
-[19] "MATH 210.01 Spring 2026" "MATH 232.01 Spring 2026"
-[21] "MATH 232.02 Spring 2026" "MATH 271.01 Spring 2026"</code></pre>
+<pre><code> [1] "STAT 120.01 Fall 2026"                   
+ [2] "STAT 120.02 Fall 2026"                   
+ [3] "STAT 120.03 Fall 2026"                   
+ [4] "STAT 220.01 Fall 2026"                   
+ [5] "STAT 230.01 Fall 2026"                   
+ [6] "STAT 285.01 Fall 2026"                   
+ [7] "STAT 294.11 Fall 2026"                   
+ [8] "STAT 294.12 Second Five Weeks, Fall 2026"
+ [9] "STAT 297.01 Fall 2026"                   
+[10] "STAT 394.11 Fall 2026"                   
+[11] "STAT 399.01 Fall 2026"                   
+[12] "CS 111.01 Fall 2026"                     
+[13] "CS 111.02 Fall 2026"                     
+[14] "MATH 101.01 Fall 2026"                   
+[15] "MATH 111.01 Fall 2026"                   
+[16] "MATH 111.02 Fall 2026"                   
+[17] "MATH 120.01 Fall 2026"                   
+[18] "MATH 120.02 Fall 2026"                   
+[19] "MATH 120.03 Fall 2026"                   
+[20] "MATH 134.01 Fall 2026"                   
+[21] "MATH 211.01 Fall 2026"                   
+[22] "MATH 211.02 Fall 2026"                   
+[23] "MATH 232.01 Fall 2026"                   
+[24] "MATH 240.01 Fall 2026"                   
+[25] "MATH 240.02 Fall 2026"                   </code></pre>
 </div>
 </div>
 </section><section id="sometimes-we-cant-get-around-regex" class="slide level2"><h2>Sometimes, we can’t get around regex :(</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
-<span id="cb36-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".classMeetings"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-3"><a></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb36-4"><a></a>  <span class="fu">str_squish</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>listings <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".classMeetings"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb34-4"><a></a>  <span class="fu">str_squish</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "STAT 120.01 Spring 2026 Faculty:Emily Kurtz 🏫 👤 Size:32 M, WCMC 102 9:50am-11:00am FCMC 102 9:40am-10:40am"                                                                                                                                                                                                                                                                                                                                                                   
- [2] "STAT 120.02 Spring 2026 Faculty:Amanda Luby 🏫 👤 Size:32 M, WCMC 102 11:10am-12:20pm FCMC 102 12:00pm-1:00pm Not open to students who have already received credit for Psychology 200/201, Sociology/Anthropology 239 or Statistics 250 Sophomore Priority"                                                                                                                                                                                                                    
- [3] "STAT 120.03 Spring 2026 Faculty:Andy Poppick 🏫 👤 Size:32 M, WCMC 306 12:30pm-1:40pm FCMC 306 1:10pm-2:10pm"                                                                                                                                                                                                                                                                                                                                                                   
- [4] "STAT 120.04 Spring 2026 Faculty:Adam Loy 🏫 👤 Size:32 M, WCMC 102 1:50pm-3:00pm FCMC 102 2:20pm-3:20pm Not open to students who have already received credit for Psychology 200/201, Sociology/Anthropology 239 or Statistics 250 Sophomore Priority"                                                                                                                                                                                                                          
- [5] "STAT 220.01 Spring 2026 Faculty:Emily Kurtz 🏫 👤 Size:30 M, WCMC 102 12:30pm-1:40pm FCMC 102 1:10pm-2:10pm"                                                                                                                                                                                                                                                                                                                                                                    
- [6] "STAT 230.01 Spring 2026 Faculty:Adam Loy 🏫 👤 Size:28 M, WCMC 306 11:10am-12:20pm FCMC 306 12:00pm-1:00pm"                                                                                                                                                                                                                                                                                                                                                                     
- [7] "STAT 230.02 Spring 2026 Faculty:Amanda Luby 🏫 👤 Size:28 M, WCMC 306 1:50pm-3:00pm FCMC 306 2:20pm-3:20pm Sophomore Priority"                                                                                                                                                                                                                                                                                                                                                  
- [8] "STAT 250.01 Spring 2026 Faculty:Andy Poppick 🏫 👤 Size:28 M, WCMC 306 9:50am-11:00am FCMC 306 9:40am-10:40am"                                                                                                                                                                                                                                                                                                                                                                  
- [9] "STAT 285.01 Spring 2026 Faculty:Andy Poppick 🏫 👤 Grading:S/CR/NC TCMC 304 10:10am-11:55am All interested students are encouraged to add to the waitlist and the instructor will reach out after registration. This course is repeatable, but if the instructor cannot admit every student on the waitlist, priority will be given first to Statistics majors who have not previously taken the course and then to other students who have not taken the course. Waitlist Only"
-[10] "STAT 297.01 Spring 2026 Faculty:Katie St. Clair 🏫 👤 · Rafe Jones 🏫 👤 Grading:S/CR/NC"                                                                                                                                                                                                                                                                                                                                                                                       
-[11] "STAT 330.01 Spring 2026 Faculty:Katie St. Clair 🏫 👤 Size:20 M, WCMC 319 9:50am-11:00am FCMC 319 9:40am-10:40am"                                                                                                                                                                                                                                                                                                                                                               
-[12] "STAT 400.01 Spring 2026 Faculty:Amanda Luby 🏫 👤 Size:9 Grading:S/NC This section is for the STAT Comps Group Project: STAT 399 (6 credits), then STAT 400 (3 credits)."                                                                                                                                                                                                                                                                                                       
-[13] "CS 111.01 Spring 2026 Faculty:Anna Meyer 🏫 👤 Size:48 M, WOlin 310 9:50am-11:00am FOlin 310 9:40am-10:40am Sophomore Priority"                                                                                                                                                                                                                                                                                                                                                 
-[14] "CS 111.02 Spring 2026 Faculty:Jean Salac 🏫 👤 Size:48 M, WOlin 310 12:30pm-1:40pm FOlin 310 1:10pm-2:10pm Sophomore Priority"                                                                                                                                                                                                                                                                                                                                                  
-[15] "CS 314*.01 Spring 2026 Faculty:Eric Alexander 🏫 👤 Size:16 M, WAnderson Hall 223 12:30pm-1:40pm FAnderson Hall 223 1:10pm-2:10pm 16 seats held for CS Match until the day after junior priority registration."                                                                                                                                                                                                                                                                 
-[16] "CS 362.01 Spring 2026 Faculty:Layla Oesper 🏫 👤 Size:28 M, WLeighton 305 11:10am-12:20pm FLeighton 305 12:00pm-1:00pm 16 seats held for CS Match until the day after sophomore only priority registration."                                                                                                                                                                                                                                                                    
-[17] "MATH 120.01 Spring 2026 Faculty:Deewang Bhamidipati 🏫 👤 Size:30 M, WCMC 206 9:50am-11:00am FCMC 206 9:40am-10:40am"                                                                                                                                                                                                                                                                                                                                                           
-[18] "MATH 134.01 Spring 2026 Faculty:Kate Meyer 🏫 👤 Size:30 M, WCMC 209 11:10am-12:20pm FCMC 209 12:00pm-1:00pm"                                                                                                                                                                                                                                                                                                                                                                   
-[19] "MATH 210.01 Spring 2026 Faculty:Deewang Bhamidipati 🏫 👤 Size:30 M, WCMC 209 12:30pm-1:40pm FCMC 209 1:10pm-2:10pm"                                                                                                                                                                                                                                                                                                                                                            
-[20] "MATH 232.01 Spring 2026 Faculty:Corey Brooke 🏫 👤 Size:30 M, WCMC 206 11:10am-12:20pm FCMC 206 12:00pm-1:00pm"                                                                                                                                                                                                                                                                                                                                                                 
-[21] "MATH 232.02 Spring 2026 Faculty:Corey Brooke 🏫 👤 Size:30 M, WCMC 206 1:50pm-3:00pm FCMC 206 2:20pm-3:20pm This course is not open to students who have received credit for MATH 134. Sophomore Priority"                                                                                                                                                                                                                                                                      
-[22] "MATH 271.01 Spring 2026 Faculty:Joseph Johnson 🏫 👤 Size:25 M, WCMC 206 12:30pm-1:40pm FCMC 206 1:10pm-2:10pm"                                                                                                                                                                                                                                                                                                                                                                 </code></pre>
+<pre><code> [1] "STAT 120.01 Fall 2026 Faculty: Marta Shore 🏫 👤 Size:32 M, WCMC 102 9:50am-11:00am FCMC 102 9:40am-10:40am"                                                                                                                                                                   
+ [2] "STAT 120.02 Fall 2026 Faculty: Claire Kelling 🏫 👤 Size:32 M, WCMC 102 11:10am-12:20pm FCMC 102 12:00pm-1:00pm"                                                                                                                                                               
+ [3] "STAT 120.03 Fall 2026 Faculty: Marta Shore 🏫 👤 Size:32 M, WCMC 102 1:50pm-3:00pm FCMC 102 2:20pm-3:20pm"                                                                                                                                                                     
+ [4] "STAT 220.01 Fall 2026 Faculty: Amanda Luby 🏫 👤 Size:30 M, WCMC 306 9:50am-11:00am FCMC 306 9:40am-10:40am"                                                                                                                                                                   
+ [5] "STAT 230.01 Fall 2026 Faculty: Amanda Luby 🏫 👤 Size:28 M, WCMC 306 12:30pm-1:40pm FCMC 306 1:10pm-2:10pm"                                                                                                                                                                    
+ [6] "STAT 285.01 Fall 2026 Faculty: Claire Kelling 🏫 👤 Size:12 Grading:S/CR/NC TCMC 304 10:10am-11:55am"                                                                                                                                                                          
+ [7] "STAT 294.11 Fall 2026 Faculty: Claire Kelling 🏫 👤 Grading:S/CR/NC Credits:1 – 3"                                                                                                                                                                                             
+ [8] "STAT 294.12 Second Five Weeks, Fall 2026 Faculty: Claire Kelling 🏫 👤 Grading:S/CR/NC Credits:1"                                                                                                                                                                              
+ [9] "STAT 297.01 Fall 2026 Faculty: Claire Kelling 🏫 👤 · Rob Thompson 🏫 👤 Size:1 Grading:S/CR/NC"                                                                                                                                                                               
+[10] "STAT 394.11 Fall 2026 Faculty: Claire Kelling 🏫 👤 Grading:S/CR/NC Credits:1 – 3"                                                                                                                                                                                             
+[11] "STAT 399.01 Fall 2026 Faculty: Claire Kelling 🏫 👤 Size:12 Grading:S/CR/NC T, THCMC 306 1:15pm-3:00pm"                                                                                                                                                                        
+[12] "CS 111.01 Fall 2026 Faculty: Chelsey Edge 🏫 👤 Size:48 M, WOlin 310 11:10am-12:20pm FOlin 310 12:00pm-1:00pm Sophomore Priority Anticipated prefect-supported section."                                                                                                       
+[13] "CS 111.02 Fall 2026 Faculty: Jean Salac 🏫 👤 Size:48 M, WOlin 310 9:50am-11:00am FOlin 310 9:40am-10:40am Sophomore Priority Anticipated prefect-supported section."                                                                                                          
+[14] "MATH 101.01 Fall 2026 Faculty: Alicia Prieto-Langarica 🏫 👤 Size:30 M, WCMC 210 11:10am-12:20pm FCMC 210 12:00pm-1:00pm"                                                                                                                                                      
+[15] "MATH 111.01 Fall 2026 Faculty: Joseph Johnson 🏫 👤 Size:30 M, WCMC 206 11:10am-12:20pm FCMC 206 12:00pm-1:00pm Not open to students who have received credit for MATH 101 Anticipated prefect-supported section."                                                             
+[16] "MATH 111.02 Fall 2026 Faculty: Joseph Johnson 🏫 👤 Size:30 M, WCMC 206 1:50pm-3:00pm FCMC 206 2:20pm-3:20pm Not open to students who have received credit for MATH 101 Anticipated prefect-supported section."                                                                
+[17] "MATH 120.01 Fall 2026 Faculty: Deewang Bhamidipati 🏫 👤 Size:30 M, WCMC 210 9:50am-11:00am FCMC 210 9:40am-10:40am"                                                                                                                                                           
+[18] "MATH 120.02 Fall 2026 Faculty: Claudio Gómez-Gonzáles 🏫 👤 Size:30 M, WCMC 209 9:50am-11:00am FCMC 209 9:40am-10:40am Not open to students who have received credit for MATH 211 or have a score of 4 or 5 on the AP Calculus BC exam. Anticipated prefect-supported section."
+[19] "MATH 120.03 Fall 2026 Faculty: Claudio Gómez-Gonzáles 🏫 👤 Size:30 M, WCMC 209 11:10am-12:20pm FCMC 209 12:00pm-1:00pm"                                                                                                                                                       
+[20] "MATH 134.01 Fall 2026 Faculty: MurphyKate Montee 🏫 👤 Size:30 M, WCMC 206 9:50am-11:00am FCMC 206 9:40am-10:40am"                                                                                                                                                             
+[21] "MATH 211.01 Fall 2026 Faculty: Sunrose Shrestha 🏫 👤 Size:30 M, WCMC 301 9:50am-11:00am FCMC 301 9:40am-10:40am"                                                                                                                                                              
+[22] "MATH 211.02 Fall 2026 Faculty: Sunrose Shrestha 🏫 👤 Size:30 M, WCMC 301 11:10am-12:20pm FCMC 301 12:00pm-1:00pm"                                                                                                                                                             
+[23] "MATH 232.01 Fall 2026 Faculty: Deewang Bhamidipati 🏫 👤 Size:30 M, WCMC 210 12:30pm-1:40pm FCMC 210 1:10pm-2:10pm"                                                                                                                                                            
+[24] "MATH 240.01 Fall 2026 Faculty: Adam Loy 🏫 👤 Size:30 M, WCMC 301 12:30pm-1:40pm FCMC 301 1:10pm-2:10pm"                                                                                                                                                                       
+[25] "MATH 240.02 Fall 2026 Faculty: Adam Loy 🏫 👤 Size:30 M, WCMC 301 1:50pm-3:00pm FCMC 301 2:20pm-3:20pm"                                                                                                                                                                        </code></pre>
 </div>
 </div>
 </section><section id="selectorgadget" class="slide level2"><h2>selectorGadget</h2>
@@ -754,16 +649,20 @@ $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false
 </div><div class="column" style="width:50%;">
 <p><img data-src="../img/selector-gadget.gif"></p>
 </div></div>
-</section><section id="try-it" class="slide level2"><h2>Try it</h2>
+</section></section><section><section id="part-2-a-site-that-wants-to-be-scraped" class="title-slide slide level1 maize center"><h1>Part 2: A site that <em>wants</em> to be scraped</h1>
+
+</section><section id="books-to-scrape" class="slide level2"><h2>Books to Scrape</h2>
+<p><a href="https://books.toscrape.com" class="uri">https://books.toscrape.com</a></p>
+<p>A fake bookstore built for practicing web scraping.</p>
 <div class="task">
 <ul>
-<li><p>Use the SelectorGadget to explore <a href="http://www.imdb.com/chart/top" class="uri">http://www.imdb.com/chart/top</a></p></li>
-<li><p>What should the columns of our target dataset be? Do they correspond to any specific css selectors?</p></li>
+<li>Use SelectorGadget to explore the page</li>
+<li>What should the columns of our target dataset be? Do they correspond to specific CSS selectors?</li>
 </ul>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_bf625dd7" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_74bc97a4" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -771,402 +670,226 @@ $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false
 </div>
 </div>
 </div>
-</section><section id="extract-title" class="slide level2"><h2>Extract title</h2>
+</section><section id="each-book-is-a-card" class="slide level2"><h2>Each book is a “card”</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>imdb <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"http://www.imdb.com/chart/top"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in read_xml.raw(raw, encoding = encoding, base_url = base_url, as_html = as_html, : Failed to parse text</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>titles <span class="ot">&lt;-</span> imdb <span class="sc">%&gt;%</span></span>
-<span id="cb40-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".ipc-title-link-wrapper .ipc-title__text"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb40-3"><a></a>  <span class="fu">html_text</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: object 'imdb' not found</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">head</span>(titles)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: object 'titles' not found</code></pre>
-</div>
-</div>
-</section><section id="with-local-version-of-website" class="slide level2"><h2>With local version of website</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>imdb_local <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"IMDb Top 250 Movies.html"</span>)</span>
-<span id="cb44-2"><a></a>titles <span class="ot">&lt;-</span> imdb_local <span class="sc">%&gt;%</span></span>
-<span id="cb44-3"><a></a>  <span class="fu">html_elements</span>(<span class="st">".with-margin .ipc-title__text"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb44-4"><a></a>  <span class="fu">html_text</span>()</span>
-<span id="cb44-5"><a></a></span>
-<span id="cb44-6"><a></a></span>
-<span id="cb44-7"><a></a>titles</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>books_page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"https://books.toscrape.com/catalogue/page-1.html"</span>)</span>
+<span id="cb36-2"><a></a></span>
+<span id="cb36-3"><a></a>cards <span class="ot">&lt;-</span> books_page <span class="sc">|&gt;</span></span>
+<span id="cb36-4"><a></a>  <span class="fu">html_elements</span>(<span class="st">"article.product_pod"</span>)</span>
+<span id="cb36-5"><a></a></span>
+<span id="cb36-6"><a></a><span class="fu">length</span>(cards)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1] "The Shawshank Redemption"                                            
-  [2] "The Godfather"                                                       
-  [3] "The Dark Knight"                                                     
-  [4] "The Godfather Part II"                                               
-  [5] "12 Angry Men"                                                        
-  [6] "The Lord of the Rings: The Return of the King"                       
-  [7] "Schindler's List"                                                    
-  [8] "The Lord of the Rings: The Fellowship of the Ring"                   
-  [9] "Pulp Fiction"                                                        
- [10] "The Good, the Bad and the Ugly"                                      
- [11] "The Lord of the Rings: The Two Towers"                               
- [12] "Forrest Gump"                                                        
- [13] "Fight Club"                                                          
- [14] "Inception"                                                           
- [15] "Star Wars: Episode V - The Empire Strikes Back"                      
- [16] "The Matrix"                                                          
- [17] "Goodfellas"                                                          
- [18] "Interstellar"                                                        
- [19] "One Flew Over the Cuckoo's Nest"                                     
- [20] "Se7en"                                                               
- [21] "It's a Wonderful Life"                                               
- [22] "The Silence of the Lambs"                                            
- [23] "Seven Samurai"                                                       
- [24] "Saving Private Ryan"                                                 
- [25] "The Green Mile"                                                      
- [26] "City of God"                                                         
- [27] "Life Is Beautiful"                                                   
- [28] "Terminator 2: Judgment Day"                                          
- [29] "Star Wars: Episode IV - A New Hope"                                  
- [30] "Back to the Future"                                                  
- [31] "Spirited Away"                                                       
- [32] "The Pianist"                                                         
- [33] "Gladiator"                                                           
- [34] "Parasite"                                                            
- [35] "Grave of the Fireflies"                                              
- [36] "Psycho"                                                              
- [37] "The Lion King"                                                       
- [38] "Harakiri"                                                            
- [39] "The Departed"                                                        
- [40] "Whiplash"                                                            
- [41] "The Prestige"                                                        
- [42] "American History X"                                                  
- [43] "Léon: The Professional"                                              
- [44] "Spider-Man: Across the Spider-Verse"                                 
- [45] "Cinema Paradiso"                                                     
- [46] "Kill Bill: The Whole Bloody Affair"                                  
- [47] "Casablanca"                                                          
- [48] "The Intouchables"                                                    
- [49] "The Usual Suspects"                                                  
- [50] "Alien"                                                               
- [51] "Django Unchained"                                                    
- [52] "Modern Times"                                                        
- [53] "Rear Window"                                                         
- [54] "Once Upon a Time in the West"                                        
- [55] "City Lights"                                                         
- [56] "Apocalypse Now"                                                      
- [57] "WALL·E"                                                              
- [58] "Memento"                                                             
- [59] "Dune: Part Two"                                                      
- [60] "Raiders of the Lost Ark"                                             
- [61] "Avengers: Infinity War"                                              
- [62] "The Lives of Others"                                                 
- [63] "Spider-Man: Into the Spider-Verse"                                   
- [64] "Sunset Boulevard"                                                    
- [65] "Witness for the Prosecution"                                         
- [66] "Paths of Glory"                                                      
- [67] "The Shining"                                                         
- [68] "The Great Dictator"                                                  
- [69] "Inglourious Basterds"                                                
- [70] "12th Fail"                                                           
- [71] "Aliens"                                                              
- [72] "High and Low"                                                        
- [73] "The Dark Knight Rises"                                               
- [74] "Avengers: Endgame"                                                   
- [75] "Good Will Hunting"                                                   
- [76] "Coco"                                                                
- [77] "Amadeus"                                                             
- [78] "Toy Story"                                                           
- [79] "Your Name."                                                          
- [80] "Das Boot"                                                            
- [81] "Oldboy"                                                              
- [82] "Braveheart"                                                          
- [83] "Princess Mononoke"                                                   
- [84] "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb"
- [85] "3 Idiots"                                                            
- [86] "American Beauty"                                                     
- [87] "Capernaum"                                                           
- [88] "Singin' in the Rain"                                                 
- [89] "Joker"                                                               
- [90] "Once Upon a Time in America"                                         
- [91] "Come and See"                                                        
- [92] "Star Wars: Episode VI - Return of the Jedi"                          
- [93] "Requiem for a Dream"                                                 
- [94] "Toy Story 3"                                                         
- [95] "Ikiru"                                                               
- [96] "The Hunt"                                                            
- [97] "Incendies"                                                           
- [98] "Eternal Sunshine of the Spotless Mind"                               
- [99] "The Apartment"                                                       
-[100] "Lawrence of Arabia"                                                  
-[101] "2001: A Space Odyssey"                                               
-[102] "Reservoir Dogs"                                                      
-[103] "Heat"                                                                
-[104] "Scarface"                                                            
-[105] "Double Indemnity"                                                    
-[106] "Up"                                                                  
-[107] "North by Northwest"                                                  
-[108] "Like Stars on Earth"                                                 
-[109] "Full Metal Jacket"                                                   
-[110] "M"                                                                   
-[111] "Citizen Kane"                                                        
-[112] "Amélie"                                                              
-[113] "Vertigo"                                                             
-[114] "A Separation"                                                        
-[115] "Die Hard"                                                            
-[116] "To Kill a Mockingbird"                                               
-[117] "The Sting"                                                           
-[118] "Indiana Jones and the Last Crusade"                                  
-[119] "A Clockwork Orange"                                                  
-[120] "Metropolis"                                                          
-[121] "1917"                                                                
-[122] "Snatch"                                                              
-[123] "L.A. Confidential"                                                   
-[124] "Downfall"                                                            
-[125] "The Wolf of Wall Street"                                             
-[126] "Dangal"                                                              
-[127] "Bicycle Thieves"                                                     
-[128] "The Truman Show"                                                     
-[129] "Oppenheimer"                                                         
-[130] "Green Book"                                                          
-[131] "Shutter Island"                                                      
-[132] "Judgment at Nuremberg"                                               
-[133] "Batman Begins"                                                       
-[134] "Hamilton"                                                            
-[135] "For a Few Dollars More"                                              
-[136] "Taxi Driver"                                                         
-[137] "Jurassic Park"                                                       
-[138] "Some Like It Hot"                                                    
-[139] "There Will Be Blood"                                                 
-[140] "The Kid"                                                             
-[141] "The Father"                                                          
-[142] "All About Eve"                                                       
-[143] "The Sixth Sense"                                                     
-[144] "Ran"                                                                 
-[145] "Casino"                                                              
-[146] "No Country for Old Men"                                              
-[147] "The Thing"                                                           
-[148] "Top Gun: Maverick"                                                   
-[149] "Prisoners"                                                           
-[150] "Kill Bill: Vol. 1"                                                   
-[151] "Pan's Labyrinth"                                                     
-[152] "Unforgiven"                                                          
-[153] "A Beautiful Mind"                                                    
-[154] "The Treasure of the Sierra Madre"                                    
-[155] "Howl's Moving Castle"                                                
-[156] "Finding Nemo"                                                        
-[157] "Yojimbo"                                                             
-[158] "Klaus"                                                               
-[159] "The Great Escape"                                                    
-[160] "The Elephant Man"                                                    
-[161] "Monty Python and the Holy Grail"                                     
-[162] "The Best of Youth"                                                   
-[163] "Dial M for Murder"                                                   
-[164] "Demon Slayer: Kimetsu no Yaiba Infinity Castle"                      
-[165] "The Secret in Their Eyes"                                            
-[166] "Gone with the Wind"                                                  
-[167] "Chinatown"                                                           
-[168] "Lock, Stock and Two Smoking Barrels"                                 
-[169] "V for Vendetta"                                                      
-[170] "Catch Me If You Can"                                                 
-[171] "Inside Out"                                                          
-[172] "Rashomon"                                                            
-[173] "The Chaos Class Failed the Class"                                    
-[174] "Three Billboards Outside Ebbing, Missouri"                           
-[175] "Trainspotting"                                                       
-[176] "The Bridge on the River Kwai"                                        
-[177] "Harry Potter and the Deathly Hallows: Part 2"                        
-[178] "Dead Poets Society"                                                  
-[179] "The Wild Robot"                                                      
-[180] "Warrior"                                                             
-[181] "Fargo"                                                               
-[182] "Barry Lyndon"                                                        
-[183] "Raging Bull"                                                         
-[184] "Ben-Hur"                                                             
-[185] "Million Dollar Baby"                                                 
-[186] "Mad Max: Fury Road"                                                  
-[187] "Children of Heaven"                                                  
-[188] "Hacksaw Ridge"                                                       
-[189] "Gran Torino"                                                         
-[190] "My Neighbor Totoro"                                                  
-[191] "12 Years a Slave"                                                    
-[192] "The Grand Budapest Hotel"                                            
-[193] "Ratatouille"                                                         
-[194] "Before Sunrise"                                                      
-[195] "Memories of Murder"                                                  
-[196] "Blade Runner"                                                        
-[197] "How to Train Your Dragon"                                            
-[198] "Spider-Man: No Way Home"                                             
-[199] "Gone Girl"                                                           
-[200] "Monsters, Inc."                                                      
-[201] "Jaws"                                                                
-[202] "In the Name of the Father"                                           
-[203] "Ford v Ferrari"                                                      
-[204] "Wild Tales"                                                          
-[205] "The Gold Rush"                                                       
-[206] "Mary and Max"                                                        
-[207] "Sherlock Jr."                                                        
-[208] "The Deer Hunter"                                                     
-[209] "The Wages of Fear"                                                   
-[210] "The General"                                                         
-[211] "Logan"                                                               
-[212] "Rocky"                                                               
-[213] "Mr. Smith Goes to Washington"                                        
-[214] "On the Waterfront"                                                   
-[215] "Tokyo Story"                                                         
-[216] "Pirates of the Caribbean: The Curse of the Black Pearl"              
-[217] "Wild Strawberries"                                                   
-[218] "Spotlight"                                                           
-[219] "La haine"                                                            
-[220] "A Silent Voice: The Movie"                                           
-[221] "The Terminator"                                                      
-[222] "The Third Man"                                                       
-[223] "Maharaja"                                                            
-[224] "The Sound of Music"                                                  
-[225] "Jai Bhim"                                                            
-[226] "The Big Lebowski"                                                    
-[227] "The Best Years of Our Lives"                                         
-[228] "The Seventh Seal"                                                    
-[229] "Room"                                                                
-[230] "Before Sunset"                                                       
-[231] "Hotel Rwanda"                                                        
-[232] "Platoon"                                                             
-[233] "The Incredibles"                                                     
-[234] "Chainsaw Man - The Movie: Reze Arc"                                  
-[235] "Hachi: A Dog's Tale"                                                 
-[236] "The Exorcist"                                                        
-[237] "Rush"                                                                
-[238] "The Wizard of Oz"                                                    
-[239] "Stand by Me"                                                         
-[240] "The Iron Giant"                                                      
-[241] "The Passion of Joan of Arc"                                          
-[242] "My Father and My Son"                                                
-[243] "The Battle of Algiers"                                               
-[244] "The Handmaiden"                                                      
-[245] "Network"                                                             
-[246] "To Be or Not to Be"                                                  
-[247] "Gangs of Wasseypur"                                                  
-[248] "The Grapes of Wrath"                                                 
-[249] "Drishyam"                                                            
-[250] "The Help"                                                            </code></pre>
+<pre><code>[1] 20</code></pre>
 </div>
 </div>
-</section><section id="extract-year" class="slide level2"><h2>Extract year</h2>
+<div class="fragment">
+<p>Just like the courses: <strong>select the cards first, then extract from each one</strong>.</p>
+</div>
+</section><section id="the-title-is-in-an-attribute" class="slide level2"><h2>The title is in an <em>attribute</em>
+</h2>
+<p>The text on the page is cut off with “…”, but the full title is in the link’s <code>title</code> attribute:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>years <span class="ot">&lt;-</span> imdb_local <span class="sc">%&gt;%</span></span>
-<span id="cb46-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".cli-title-metadata-item:nth-child(1)"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb46-3"><a></a>  <span class="fu">html_text</span>()</span>
-<span id="cb46-4"><a></a></span>
-<span id="cb46-5"><a></a><span class="fu">head</span>(years)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>cards <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a></a>  <span class="fu">html_element</span>(<span class="st">"h3 a"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a></a>  <span class="fu">html_text</span>() <span class="sc">|&gt;</span></span>
+<span id="cb38-4"><a></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "1994" "1972" "2008" "1974" "1957" "2003"</code></pre>
+<pre><code>[1] "A Light in the ..." "Tipping the Velvet" "Soumission"        </code></pre>
 </div>
 </div>
-</section><section id="extract-runtime" class="slide level2"><h2>Extract runtime</h2>
+<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>runtimes <span class="ot">&lt;-</span> imdb_local <span class="sc">%&gt;%</span></span>
-<span id="cb48-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".cli-title-metadata-item:nth-child(2)"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb48-3"><a></a>  <span class="fu">html_text</span>()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>cards <span class="sc">|&gt;</span></span>
+<span id="cb40-2"><a></a>  <span class="fu">html_element</span>(<span class="st">"h3 a"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb40-3"><a></a>  <span class="fu">html_attr</span>(<span class="st">"title"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb40-4"><a></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A Light in the Attic" "Tipping the Velvet"   "Soumission"          </code></pre>
+</div>
+</div>
+</div>
+</section><section id="price-and-rating" class="slide level2"><h2>Price and rating</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a>cards <span class="sc">|&gt;</span></span>
+<span id="cb42-2"><a></a>  <span class="fu">html_element</span>(<span class="st">".price_color"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb42-3"><a></a>  <span class="fu">html_text</span>() <span class="sc">|&gt;</span></span>
+<span id="cb42-4"><a></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "£51.77" "£53.74" "£50.10"</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>The rating is stored in the <em>class</em> of the star element (<code>&lt;p class="star-rating Three"&gt;</code>):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>cards <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a></a>  <span class="fu">html_element</span>(<span class="st">".star-rating"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a></a>  <span class="fu">html_attr</span>(<span class="st">"class"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-4"><a></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "star-rating Three" "star-rating One"   "star-rating One"  </code></pre>
+</div>
+</div>
+</div>
+</section><section id="put-the-pieces-together-1" class="slide level2"><h2>Put the pieces together</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>books <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb46-2"><a></a>  <span class="at">title =</span> cards <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">"h3 a"</span>) <span class="sc">|&gt;</span> <span class="fu">html_attr</span>(<span class="st">"title"</span>),</span>
+<span id="cb46-3"><a></a>  <span class="at">price =</span> cards <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">".price_color"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text</span>() <span class="sc">|&gt;</span> <span class="fu">parse_number</span>(),</span>
+<span id="cb46-4"><a></a>  <span class="at">rating =</span> cards <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">".star-rating"</span>) <span class="sc">|&gt;</span> <span class="fu">html_attr</span>(<span class="st">"class"</span>) <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">"star-rating "</span>),</span>
+<span id="cb46-5"><a></a>  <span class="at">in_stock =</span> cards <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">".availability"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text</span>() <span class="sc">|&gt;</span> <span class="fu">str_squish</span>() <span class="sc">==</span> <span class="st">"In stock"</span></span>
+<span id="cb46-6"><a></a>) <span class="sc">|&gt;</span></span>
+<span id="cb46-7"><a></a>  <span class="fu">mutate</span>(<span class="at">rating =</span> <span class="fu">factor</span>(rating, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"One"</span>, <span class="st">"Two"</span>, <span class="st">"Three"</span>, <span class="st">"Four"</span>, <span class="st">"Five"</span>)))</span>
+<span id="cb46-8"><a></a></span>
+<span id="cb46-9"><a></a>books</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 4
+   title                                                   price rating in_stock
+   &lt;chr&gt;                                                   &lt;dbl&gt; &lt;fct&gt;  &lt;lgl&gt;   
+ 1 A Light in the Attic                                     51.8 Three  TRUE    
+ 2 Tipping the Velvet                                       53.7 One    TRUE    
+ 3 Soumission                                               50.1 One    TRUE    
+ 4 Sharp Objects                                            47.8 Four   TRUE    
+ 5 Sapiens: A Brief History of Humankind                    54.2 Five   TRUE    
+ 6 The Requiem Red                                          22.7 One    TRUE    
+ 7 The Dirty Little Secrets of Getting Your Dream Job       33.3 Four   TRUE    
+ 8 The Coming Woman: A Novel Based on the Life of the Inf…  17.9 Three  TRUE    
+ 9 The Boys in the Boat: Nine Americans and Their Epic Qu…  22.6 Four   TRUE    
+10 The Black Maria                                          52.2 One    TRUE    
+11 Starving Hearts (Triangular Trade Trilogy, #1)           14.0 Two    TRUE    
+12 Shakespeare's Sonnets                                    20.7 Four   TRUE    
+13 Set Me Free                                              17.5 Five   TRUE    
+14 Scott Pilgrim's Precious Little Life (Scott Pilgrim #1)  52.3 Five   TRUE    
+15 Rip it Up and Start Again                                35.0 Five   TRUE    
+16 Our Band Could Be Your Life: Scenes from the American …  57.2 Three  TRUE    
+17 Olio                                                     23.9 One    TRUE    
+18 Mesaerion: The Best Science Fiction Stories 1800-1849    37.6 One    TRUE    
+19 Libertarianism for Beginners                             51.3 Two    TRUE    
+20 It's Only the Himalayas                                  45.2 Two    TRUE    </code></pre>
+</div>
+</div>
+</section><section id="one-page-is-only-20-books" class="slide level2"><h2>One page is only 20 books</h2>
+<p>The URL changes with the page number:</p>
+<ul>
+<li><code>https://books.toscrape.com/catalogue/page-1.html</code></li>
+<li><code>https://books.toscrape.com/catalogue/page-2.html</code></li>
+<li>…</li>
+<li><code>https://books.toscrape.com/catalogue/page-50.html</code></li>
+</ul>
+<div class="fragment">
+<p>We know how to repeat things: <strong>write a function, then <code>map</code> over the pages</strong></p>
+</div>
+</section><section id="a-scraping-function" class="slide level2"><h2>A scraping function</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>scrape_books <span class="ot">&lt;-</span> <span class="cf">function</span>(page) {</span>
+<span id="cb48-2"><a></a>  url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"https://books.toscrape.com/catalogue/page-"</span>, page, <span class="st">".html"</span>)</span>
+<span id="cb48-3"><a></a>  cards <span class="ot">&lt;-</span> <span class="fu">read_html</span>(url) <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">"article.product_pod"</span>)</span>
 <span id="cb48-4"><a></a></span>
-<span id="cb48-5"><a></a><span class="fu">head</span>(runtimes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2h 22m" "2h 55m" "2h 32m" "3h 22m" "1h 36m" "3h 21m"</code></pre>
+<span id="cb48-5"><a></a>  <span class="fu">tibble</span>(</span>
+<span id="cb48-6"><a></a>    <span class="at">title =</span> cards <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">"h3 a"</span>) <span class="sc">|&gt;</span> <span class="fu">html_attr</span>(<span class="st">"title"</span>),</span>
+<span id="cb48-7"><a></a>    <span class="at">price =</span> cards <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">".price_color"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text</span>() <span class="sc">|&gt;</span> <span class="fu">parse_number</span>(),</span>
+<span id="cb48-8"><a></a>    <span class="at">rating =</span> cards <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">".star-rating"</span>) <span class="sc">|&gt;</span> <span class="fu">html_attr</span>(<span class="st">"class"</span>) <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">"star-rating "</span>),</span>
+<span id="cb48-9"><a></a>    <span class="at">in_stock =</span> cards <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">".availability"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text</span>() <span class="sc">|&gt;</span> <span class="fu">str_squish</span>() <span class="sc">==</span> <span class="st">"In stock"</span>,</span>
+<span id="cb48-10"><a></a>    <span class="at">page =</span> page</span>
+<span id="cb48-11"><a></a>  )</span>
+<span id="cb48-12"><a></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-</section><section id="extract-mpaa-rating" class="slide level2"><h2>Extract MPAA rating</h2>
+</section><section id="be-polite-slow-down" class="slide level2"><h2>Be polite: slow down</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>mpaas <span class="ot">&lt;-</span> imdb_local <span class="sc">%&gt;%</span></span>
-<span id="cb50-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".cli-title-metadata-item:nth-child(3)"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-3"><a></a>  <span class="fu">html_text</span>()</span>
-<span id="cb50-4"><a></a></span>
-<span id="cb50-5"><a></a><span class="fu">head</span>(mpaas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "R"        "R"        "PG-13"    "R"        "Approved" "PG-13"   </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>books_1_to_3 <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, \(p) {</span>
+<span id="cb49-2"><a></a>  <span class="fu">Sys.sleep</span>(<span class="dv">1</span>)           <span class="co"># wait a second between requests</span></span>
+<span id="cb49-3"><a></a>  <span class="fu">scrape_books</span>(p)</span>
+<span id="cb49-4"><a></a>}) <span class="sc">|&gt;</span></span>
+<span id="cb49-5"><a></a>  <span class="fu">list_rbind</span>()</span>
+<span id="cb49-6"><a></a></span>
+<span id="cb49-7"><a></a>books_1_to_3 <span class="sc">|&gt;</span> <span class="fu">count</span>(rating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-</section><section id="put-the-pieces-together" class="slide level2"><h2>Put the pieces together</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a>imdb_top_250 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb52-2"><a></a>  <span class="at">title =</span> titles, </span>
-<span id="cb52-3"><a></a>  <span class="at">year =</span> years, </span>
-<span id="cb52-4"><a></a>  <span class="at">runtime =</span> runtimes,</span>
-<span id="cb52-5"><a></a>  <span class="at">mpaa =</span> mpaas</span>
-<span id="cb52-6"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `tibble()`:
-! Tibble columns must have compatible sizes.
-• Size 250: Existing data.
-• Size 245: Column `mpaa`.
-ℹ Only values of size one are recycled.</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>imdb_top_250</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: object 'imdb_top_250' not found</code></pre>
-</div>
-</div>
-</section><section id="scraping-mpaas-directly-doesnt-catch-the-nas" class="slide level2"><h2>Scraping <code>mpaas</code> directly doesn’t catch the NA’s</h2>
-<p>There are 250 movies but only 245 MPAA ratings</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a><span class="fu">length</span>(mpaas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 245</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a><span class="fu">length</span>(titles)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 250</code></pre>
-</div>
-</div>
-<p>Solution: scrape movies first, and then extract elements:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a>movies <span class="ot">&lt;-</span> imdb_local <span class="sc">|&gt;</span></span>
-<span id="cb60-2"><a></a>  <span class="fu">html_elements</span>(<span class="st">".cli-children"</span>) </span>
-<span id="cb60-3"><a></a></span>
-<span id="cb60-4"><a></a>movies <span class="sc">|&gt;</span></span>
-<span id="cb60-5"><a></a>  <span class="fu">html_element</span>(<span class="st">".cli-title-metadata-item:nth-child(3)"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb60-6"><a></a>  <span class="fu">html_text</span>() <span class="sc">|&gt;</span></span>
-<span id="cb60-7"><a></a>  <span class="fu">length</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 250</code></pre>
-</div>
-</div>
-</section><section id="what-do-we-do-if-scraping-doesnt-work" class="slide level2 scrollable"><h2>What do we do if scraping doesn’t work?</h2>
-<ol type="1">
-<li class="fragment">Is there an API available? Can I access it as a student/researcher at no/low cost?
-<ul>
-<li class="fragment">IMDb: Yes, but cost prohibitive</li>
-</ul>
-</li>
-<li class="fragment">Is there a different scraping tool available?
-<ul>
-<li class="fragment">Yes, {RSelenium} is one that might work, but beyond the scope of this course</li>
-</ul>
-</li>
-<li class="fragment">Can I get the information I need from a different website?
+<pre><code># A tibble: 5 x 2
+  rating     n
+  &lt;fct&gt;  &lt;int&gt;
+1 One       15
+2 Two        8
+3 Three     13
+4 Four      10
+5 Five      14</code></pre>
+<div class="fragment">
 <ul>
 <li class="fragment">
-<a href="https://www.themoviedb.org/?language=en-US">The Movie Database</a> might work</li>
+<code><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep()</a></code> keeps you from hammering the website</li>
+<li class="fragment">Test on 2-3 pages <strong>before</strong> running all 50</li>
+<li class="fragment">Save the result with <code>write_csv()</code> so you only scrape once</li>
 </ul>
-</li>
-<li class="fragment">If I download the page, is more information available?
+</div>
+</section><section id="your-turn-quotes-to-scrape" class="slide level2 scrollable"><h2>Your turn: Quotes to Scrape</h2>
+<p><a href="https://quotes.toscrape.com" class="uri">https://quotes.toscrape.com</a></p>
+<div class="task">
+<ol type="1">
+<li>Check that scraping is allowed with <code>paths_allowed()</code>.</li>
+<li>Scrape the <strong>first page</strong> into a tibble with the columns <code>text</code>, <code>author</code>, and <code>tags</code>.
 <ul>
-<li class="fragment">In this case, yes, but might not always work</li>
+<li>Each quote can have <em>several</em> tags. How could you keep them in a single column?</li>
 </ul>
 </li>
-</ol></section></section><section><section id="qmd-vs-.r" class="title-slide slide level1 maize center"><h1>.qmd vs .R</h1>
-
-</section><section id="section-5" class="slide level2"><h2></h2>
+<li>
+<em>If you have time:</em> scrape pages 1-3. (<em>Hint:</em> look at how the URL changes on the “Next” button.)</li>
+</ol>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_37716c92" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+</div>
+<code class="countdown-time"><span class="countdown-digits minutes">08</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section><section id="what-if-scraping-doesnt-work" class="slide level2"><h2>What if scraping doesn’t work?</h2>
+<p>I used to use IMDb’s Top 250 as an example, but now:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="fu">paths_allowed</span>(<span class="st">"https://www.imdb.com/chart/top"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `paths_allowed()`:
+! could not find function "paths_allowed"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">read_html</span>(<span class="st">"https://www.imdb.com/chart/top"</span>) <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">".ipc-title__text"</span>) <span class="sc">|&gt;</span> <span class="fu">length</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `read_xml.raw()`:
+! Failed to parse text</code></pre>
+</div>
+</div>
+</section><section id="what-if-scraping-doesnt-work-1" class="slide level2 scrollable"><h2>What if scraping doesn’t work?</h2>
+<ol type="1">
+<li class="fragment">Is there an <strong>API</strong> available? Can I access it as a student/researcher at no/low cost?
+<ul>
+<li class="fragment">IMDb: yes, but cost prohibitive</li>
+</ul>
+</li>
+<li class="fragment">Is there a <strong>different website</strong> with the same information?
+<ul>
+<li class="fragment">
+<a href="https://www.themoviedb.org/">The Movie Database</a> has an API</li>
+</ul>
+</li>
+<li class="fragment">Is there a different scraping tool?
+<ul>
+<li class="fragment">{RSelenium} drives a real browser, but it is beyond the scope of this course (and doesn’t change the permission question!)</li>
+</ul>
+</li>
+<li class="fragment">Is the data <strong>really</strong> necessary?</li>
+</ol></section><section id="qmd-vs-.r" class="slide level2"><h2>.qmd vs .R</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><strong>Rmarkdown</strong>:</p>
+<p><strong>Quarto document</strong>:</p>
 <ul>
 <li>Integrate code, text, and graphs</li>
 <li>Output is a “report”</li>
-<li>Code is run interactively (in chunks) and when knitting your final document</li>
+<li>Code is run interactively (in chunks) and when rendering your final document</li>
 </ul>
 </div><div class="column fragment" style="width:50%;">
 <p><strong>R script:</strong></p>
 <ul>
-<li>Think of it as a file that contains <em>only</em> R chunks</li>
-<li>No “knitting”: all code must be run explicitly</li>
+<li>A file that contains <em>only</em> R code</li>
+<li>No “rendering”: all code must be run explicitly</li>
 <li>Useful for longer chunks of code
 <ul>
 <li><code>data-cleaning.R</code></li>
@@ -1179,30 +902,14 @@ $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false
 </section><section id="for-scraping" class="slide level2"><h2>For scraping:</h2>
 <ul>
 <li class="fragment">We don’t want to scrape a website more than we need to</li>
-<li class="fragment">For HW, it’s OK to continue to use .Rmd unless specified</li>
+<li class="fragment">For homework, it’s OK to keep scraping inside your .qmd unless specified</li>
 <li class="fragment">For projects that involve intensive data-gathering:
 <ul>
 <li class="fragment">use an R script to read in the “raw” data, clean it, and save it to a tidy csv</li>
-<li class="fragment">Read your “clean” data to your .rmd and proceed as usual</li>
+<li class="fragment">Read your “clean” data into your .qmd and proceed as usual</li>
 </ul>
 </li>
-</ul></section></section><section><section id="example" class="title-slide slide level1 maize center"><h1>Example</h1>
-
-</section><section id="your-turn" class="slide level2"><h2>Your turn:</h2>
-<div class="task">
-<ul>
-<li>
-<p>In an R script:</p>
-<ul>
-<li><p>Scrape the names, scores, and years of most popular TV shows on IMDB: <a href="http://www.imdb.com/chart/tvmeter">www.imdb.com/chart/tvmeter</a></p></li>
-<li><p>Create a data frame called <code>tvshows</code> with the variables: <code>rank</code>, <code>title</code>, <code>stars</code>, <code>year</code>, <code>episodes</code>, <code>n_ratings</code></p></li>
-<li><p>Wrangle your resulting data so that all variable types are imported correctly</p></li>
-<li><p>Use <code>write_csv</code> to save your file. If time, read it into the <code>21-scraping.rmd</code> and make a graph</p></li>
-</ul>
-</li>
-</ul>
-</div>
-</section><section id="section-6" class="slide level2"><h2></h2>
+</ul></section><section id="section-3" class="slide level2"><h2></h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Dataset includes variables like:</p>
@@ -1217,7 +924,7 @@ $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false
 </div><div class="column" style="width:50%;">
 <p><img data-src="../img/okcupid-abstract.png"></p>
 </div></div>
-</section><section id="section-7" class="slide level2"><h2></h2>
+</section><section id="section-4" class="slide level2"><h2></h2>
 <p><img data-src="../img/okcupid-tweet.png"></p>
 </section><section id="follow-up-study-and-article-correction" class="slide level2"><h2>Follow-up study (and article correction)</h2>
 <p><a href="https://www.tandfonline.com/doi/abs/10.1080/10691898.2015.11889737" class="uri">https://www.tandfonline.com/doi/abs/10.1080/10691898.2015.11889737</a></p>
@@ -1423,6 +1130,41 @@ $ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false
           RevealZoom
         ]
       });
+    </script><script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
     </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
