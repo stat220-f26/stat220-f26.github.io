@@ -6,9 +6,9 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8cab17c520dfb5fd83702a774e8ef3fe.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8f4e3aabaa80e3e650ae20f2c24f966b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="author" content="Prof Amanda Luby">
 <title>Stat 220 – Web Scraping</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -293,7 +293,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_b8f9c9cd" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_5964dc65" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -662,7 +662,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_74bc97a4" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_57628bd6" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -795,13 +795,12 @@ Prof Amanda Luby
 </div>
 </section><section id="be-polite-slow-down" class="slide level2"><h2>Be polite: slow down</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>books_1_to_3 <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, \(p) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>books_1_to_3 <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, \(p) {</span>
 <span id="cb49-2"><a></a>  <span class="fu">Sys.sleep</span>(<span class="dv">1</span>)           <span class="co"># wait a second between requests</span></span>
 <span id="cb49-3"><a></a>  <span class="fu">scrape_books</span>(p)</span>
-<span id="cb49-4"><a></a>}) <span class="sc">|&gt;</span></span>
-<span id="cb49-5"><a></a>  <span class="fu">list_rbind</span>()</span>
-<span id="cb49-6"><a></a></span>
-<span id="cb49-7"><a></a>books_1_to_3 <span class="sc">|&gt;</span> <span class="fu">count</span>(rating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb49-4"><a></a>}) </span>
+<span id="cb49-5"><a></a></span>
+<span id="cb49-6"><a></a>books_1_to_3 <span class="sc">|&gt;</span> <span class="fu">count</span>(rating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code># A tibble: 5 x 2
   rating     n
@@ -835,7 +834,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_37716c92" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_defae900" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -848,13 +847,11 @@ Prof Amanda Luby
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="fu">paths_allowed</span>(<span class="st">"https://www.imdb.com/chart/top"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in `paths_allowed()`:
-! could not find function "paths_allowed"</code></pre>
+<pre><code>Error in paths_allowed("https://www.imdb.com/chart/top"): could not find function "paths_allowed"</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">read_html</span>(<span class="st">"https://www.imdb.com/chart/top"</span>) <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">".ipc-title__text"</span>) <span class="sc">|&gt;</span> <span class="fu">length</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in `read_xml.raw()`:
-! Failed to parse text</code></pre>
+<pre><code>Error in read_xml.raw(raw, encoding = encoding, base_url = base_url, as_html = as_html, : Failed to parse text</code></pre>
 </div>
 </div>
 </section><section id="what-if-scraping-doesnt-work-1" class="slide level2 scrollable"><h2>What if scraping doesn’t work?</h2>
