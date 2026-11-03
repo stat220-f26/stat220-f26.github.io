@@ -1,0 +1,124 @@
+---
+title: "Palmer Penguins"
+author: "Amanda Luby"
+format: 
+  dashboard:
+    orientation: columns
+    theme: yeti
+    logo: https://allisonhorst.github.io/palmerpenguins/logo.png
+    nav-buttons:
+      - text: "Data Source"
+        href: https://allisonhorst.github.io/palmerpenguins/
+---
+
+```{r setup, include=FALSE}
+library(palmerpenguins)
+library(ggthemes)
+library(tidyverse)
+library(plotly)
+library(DT)
+library(leaflet)
+```
+
+# Graphs
+
+## Column {width=65%}
+
+```{r}
+#| title: Graph 1
+p1 <- ggplot(
+  penguins,
+  aes(x = body_mass_g, y = flipper_length_mm, col = species,
+      text = paste0(species, ": ", body_mass_g, " g, ", flipper_length_mm, " mm"))
+) +
+  geom_point() +
+  scale_color_colorblind() +
+  labs(x = "Body mass (g)", y = "Flipper length (mm)", color = "Species")
+
+ggplotly(p1, tooltip = "text")
+```
+
+## Column {width=35%}
+
+```{r}
+#| title: Graph 2
+p2 <- ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
+  geom_histogram(col = "white") +
+  facet_wrap(vars(species)) +
+  scale_fill_colorblind() +
+  theme(legend.position = "none") +
+  labs(x = "Flipper length (mm)", y = "Count")
+
+ggplotly(p2)
+```
+
+```{r}
+#| title: Graph 3
+p3 <- ggplot(penguins, aes(x = body_mass_g, fill = species)) +
+  geom_histogram(col = "white") +
+  facet_wrap(vars(species)) +
+  scale_fill_colorblind() +
+  theme(legend.position = "none") +
+  labs(x = "Body mass (g)", y = "Count")
+
+ggplotly(p3)
+```
+
+# Map
+
+```{r}
+islands <- penguins |>
+  count(island) |>
+  left_join(
+    tibble(
+      island = c("Biscoe", "Dream", "Torgersen"),
+      lat = c(-64.80, -64.73, -64.77),
+      lng = c(-63.77, -64.23, -64.08)
+    ),
+    by = "island"
+  )
+```
+
+## Column {width=25%}
+
+```{r}
+#| content: valuebox
+#| title: "Biscoe"
+#| icon: "geo-alt"
+#| color: "primary"
+list(value = islands$n[islands$island == "Biscoe"])
+```
+
+```{r}
+#| content: valuebox
+#| title: "Dream"
+#| icon: "geo-alt"
+#| color: "info"
+list(value = islands$n[islands$island == "Dream"])
+```
+
+```{r}
+#| content: valuebox
+#| title: "Torgersen"
+#| icon: "geo-alt"
+#| color: "success"
+list(value = islands$n[islands$island == "Torgersen"])
+```
+
+## Column {width=75%}
+
+```{r}
+#| title: Where the penguins live
+leaflet(islands) |>
+  addTiles() |>
+  addMarkers(lng = ~lng, lat = ~lat, popup = ~paste0(island, ": ", n, " penguins"))
+```
+
+# Data
+
+Data were collected and made available by [Dr. Kristen Gorman](https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php) and the [Palmer Station, Antarctica LTER](https://pallter.marine.rutgers.edu), a member of the Long Term Ecological Research Network.
+
+```{r}
+datatable(penguins, rownames = FALSE, filter = "top") |>
+  formatStyle(columns = colnames(penguins), fontSize = "14pt")
+```

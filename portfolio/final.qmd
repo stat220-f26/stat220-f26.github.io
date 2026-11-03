@@ -16,14 +16,15 @@ This project is intentionally open-ended. There is no limit on what tools or pac
 
 ## Acquire
 
--   Acquire data from at least 2 sources
--   Acquire data using one of the advanced techniques discussed in class
+-   Acquire data from at least 2 distinct sources
+-   Acquire data using one of the advanced techniques discussed in class: calling an API, scraping a website, querying a database with SQL, or iterating over many files
+-   If you scrape a website or use an API, check that you have permission (the terms of use, `robots.txt`, rate limits) and be kind to the server
 -   Consider the who, what, when, why, and how of your datasets, with particular attention given to the ethical considerations
 -   Work with a type of data that was not accessible to you as a Stat120, 230, or 250 student (eg text, spatial, network, etc.)
 
 ## Wrangle
 
--   Demonstrate proficiency with `join`ing data
+-   Demonstrate proficiency with `join`ing data (combining data from more than one table or source)
 -   Demonstrate proficiency with tidying data
 -   Demonstrate proficiency using non-numeric data types
     -   Geospatial data
@@ -34,6 +35,7 @@ This project is intentionally open-ended. There is no limit on what tools or pac
 ## Visualize
 
 -   Create high-quality, customized graphics using R/ggplot
+-   Include interactive components (e.g. {plotly}, {leaflet}), or present your whole project as a {shiny} app
 
 ## Communicate
 
@@ -44,13 +46,14 @@ You'll communicate your findings through a final product produced in R:
 -   Slideshow
 -   etc.
 
-Whatever product form you choose, I'll be looking for a high degree of professionalism and polish.
+Your product should be published online (Quarto Pub or shinyapps.io) and written for a public audience, not just for me. Whatever product form you choose, I'll be looking for a high degree of professionalism and polish.
 
 ## Document
 
 -   All group members have a commit history on GitHub
 -   Code is well-documented and clean
 -   Project is organized and I can navigate your repo
+-   Your README tells me where to find everything (see below)
 
 # Rubric
 
@@ -100,7 +103,7 @@ d |>
 
 # Final Project Submission
 
-You should submit your final GitHub repo to gradescope by noon on the last day of the finals period. I will start by looking at your README.md, which should contain: 
+You should submit your final GitHub repo to gradescope by **noon on Monday, November 23** (the last day of the finals period). I will start by looking at your README.md, which should contain: 
 
 1. A link to your published project (quarto pub or shinyapps)
 2. A technical overview of what you did for your project
@@ -109,23 +112,25 @@ You should submit your final GitHub repo to gradescope by noon on the last day o
     - You can use the rubric for some ideas of what to mention
 3. How to navigate your repo (where is your data? where is your report file? do you have any other R scripts that you used?)
 
+*Optional:* share a link to your finished product on the "Gallery" thread on Ed (1 bonus point). 
+
 
 # Milestones
 
--   Week 7 Friday: Submit final project idea form (individual or in pairs)
--   Week 8 Monday: Submit final project ranking form (everyone should submit a form, but you can indicate a partner)
--   Week 8 Wednesday: I will notify groups and create repos
--   Week 9 Wednesday: "Sketch" drafts:
+-   ~~Week 7 Friday~~ Week 8 Wed: Submit final project idea form (individual or in pairs)
+-   ~~Week 8 Monday~~ Week 8 Thurs: Submit final project ranking form (everyone should submit a form, but you can indicate a partner)
+-   Week 8 ~~Wednesday~~ Friday: I will notify groups and create repos
+-   Week 9 Wednesday (Nov 11): "Sketch" drafts and group contract:
     -   This should be a .qmd file that:
         1.  Reads in at least one dataset
         2.  Makes at least one graph or summary table
         3.  Lists at least 5 research questions
--   Week 10: Project progress demos and peer feedback
+-   Week 10 Monday and Wednesday: Project progress demos and peer feedback
     -   5-10 minute slideshow presentation
     -   Overview of data and research questions (these do not have to be the same as your sketch draft)
     -   Approx. 4 static graphs or summary tables
     -   Outline of interactive component or additional technical work to be done
--   Final project due: end of finals period
+-   Final project due: Monday, November 23 at noon
 
 Meeting these milestones will make up part of your final grade. If you do not fill out the google forms, I may or may not assign you to a group. If you are not assigned to a group, you won't be able to demonstrate that you're able to work collaboratively on GitHub, which will impact your final grade.
 
@@ -135,33 +140,35 @@ By Friday of Week 7, submit a project idea via the google form linked on the sch
 
   - I'd like to do more with text analysis
   - I am interested in exploring the relationships between mental health disorders and other factors such as treatments, substance abuse, societal factors, and other patient information. I was thinking of starting with this dataset found here: (URL), and maybe merging further datasets when found.
-  - I'm familiar with a twitter account that used to track when the NYT would have a new word included in an article for the first time. I'd be interested in either getting data directly from the NYT or twitter and exploring that somehow.
+  - I'm familiar with a website/social media account that tracks when the NYT uses a new word in an article for the first time. I'd be interested in getting data directly from the NYT (maybe through their API) and exploring that somehow.
   - We want to explore D1 NCAA sports data, specifically comparisons between womens and mens sports. We're interested in performance, coverage, funding, recruitment, etc.
   - I really like the idea of using an interactive map that the user can change. 
   
 
 Everybody should fill out the form individually, but you can prepare the idea with someone you'd like to work with and submit the same proposal. Just make sure to indicate that you plan to work together. 
 
-I will post a new form on Monday of Week 8 that compiles all of the ideas and give you time in class to "rank" final project ideas and share partner/group preferences. 
+I will post a new form on Monday of Week 8 (November 2) that compiles all of the ideas and give you time in class to "rank" final project ideas and share partner/group preferences. 
 
-*Both* forms contribute to your final grade (~5%). Please make sure to fill them out on time. 
+*Both* forms contribute to your final grade (3 points each on the rubric). Please make sure to fill them out on time. 
 
 ## Sketch draft
 
-In Week 9, you'll submit a "sketch draft" to me on gradescope. This should include a .qmd and rendered .pdf with the following: 
+On Wednesday of Week 9 (November 11), you'll submit a "sketch draft" to me on gradescope. This should include a .qmd and rendered .pdf with the following: 
 
   - reads in at least one dataset
   - includes 5 possible research questions
   - includes at least one EDA graph
   - outline of what you plan to do for the remainder of your project
 
+Your group should also submit a group contract with the sketch. <!-- TODO(Amanda): link or describe the group contract; the rubric has 4 pts for "Sketch + Contract" but nothing in the repo describes it. -->
+
 I will give you feedback about whether your dataset(s) meets the expectations for the project and some feedback on your research questions. 
 
-This sketch will make up ~5% of your final grade. 
+The sketch and contract make up 4 points on the rubric. 
 
 ## Project progress demos
 
-You should prepare a 6 minute presentation of your progress so far on the final projects. This presentation will make up 15% of your final project grade. Please focus on:
+You should prepare a 6 minute presentation of your progress so far on the final projects. We'll present on Monday and Wednesday of Week 10 (November 16 and 18). This presentation will make up 15 points on the rubric. Please focus on:
 
 -   The data you've gathered/will gather
 -   Your research questions
@@ -187,6 +194,7 @@ Your presentation should include:
 -   [ ] End with a 1 slide overview of the additional work you plan to do
     -   Are you adding interactivity?
     -   Do you have additional data gathering to do?
+    -   (If you plan to scrape or use an API: have you checked that you're allowed to?)
 -   [ ] Did all group members speak?
 
 Each group has a 10 minute slot for the presentation (\~6 minutes) questions (\~2 minutes) and transitions (\~2 minutes). I will cut presentations off at 8 minutes, leaving less time for questions and feedback.
@@ -199,20 +207,18 @@ You are welcome to provide feedback to all of the groups, but are only required 
 
 If your group would like to switch with another group, just let me know. If your group *needs* to present on the other day but you do not have a group to switch with, let me know ASAP.
 
-Please upload your slides to [this folder](https://drive.google.com/drive/folders/1Ew8ca5bk0crDUw68DfN8DS4-uq3oJdkA?usp=sharing) before your presentation!
+Please upload your slides to [this folder](https://drive.google.com/drive/folders/12i5Eqq6Azjye--cr9qRXdhjJXQAuCDUF?usp=drive_link) before your presentation!
 
-|           |               |                    |
-|-----------|---------------|--------------------|
-|           | **Monday**    | **Wednesday**      |
-| **11:15** | national-parks    | birds-national-parks |
-| **11:25** | sports-performance   | health-insurance  |
-| **11:35** | people-and-sleep | sports-group   |
-| **11:45** | nfl-data | social-media   |
-| **11:55** | storms-and-birds | olympics  |
-| **12:05** | premier-league  |  census-data |
+|           | **Monday (Nov 16)** | **Wednesday (Nov 18)** |
+|-----------|---------------------|------------------------|
+| **9:50**  | tbd | tbd |
+| **10:00** | tbd | tbd |
+| **10:10** | tbd | tbd |
+| **10:20** | tbd | tbd |
+| **10:30** | tbd | tbd |
+| **10:40** | tbd | tbd |
 
-
-(if you don't remember what group name you are, see the [assignment spreadsheet](https://docs.google.com/spreadsheets/d/18kTQEK5DF3lQ8VxrruIXmsKxL32VUXx13oLh2y3M740/edit?usp=sharing))
+*(The presentation order will be posted once groups are assigned. We will use the last few minutes of class for catch-up and for finishing the peer feedback form.)* <!-- TODO(Amanda): fill in group names + final slot count; also confirm the slides upload folder above is the F26 folder. -->
 
 # FAQs
 
@@ -226,3 +232,6 @@ If this becomes an issue early in the project period, I may remove individuals f
 
 I will also ask everyone to complete a reflection form at the end of the project period. If a group member stops participating after the group presentations, their final grade will be impacted. 
 
+## Can I use AI tools (ChatGPT, etc.) for this project?
+
+Only in the ways described in the syllabus: for coding or debugging help *after* you've attempted the code yourselves, and with any help acknowledged. Do not copy text or code out of a large-language model into your project. Because the project asks you to communicate your own findings, the writing, interpretations and design choices should be yours.

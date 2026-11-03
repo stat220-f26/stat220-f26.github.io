@@ -1,0 +1,69 @@
+---
+title: "25: Shiny design"
+---
+
+# Warm up
+
+Open the following shinyapps and explore a little bit.
+
++ [Data Wrangling](https://psu-eberly.shinyapps.io/data_wrangling/)
++ [Biodiversity in NPS](https://abenedetti.shinyapps.io/bioNPS/)
++ [Hex Memory Game](https://dreamrs.shinyapps.io/memory-hex/)
++ [Lake Profile Dashboard](https://gallery.shinyapps.io/lake-profile-dashboard/)
+
+With the folks around you, discuss:
+
+1. Did any apps stand out as enjoyable or useful?
+2. What features or design choices make an app stand out?
+3. Are there any small tweaks that would make them more usable?
+
+# Improve the manager survey app
+
+Start from your deployed `v3` app, or use [`v3-reactive/app.R`](https://stat220-f26.github.io/files/shiny-apps/v3-reactive/app.R). The finished version for today is [`v4-polish`](https://stat220-f26.github.io/files/shiny-apps/v4-polish/app.R) (try to build it yourself first!).
+
+## Part 1: Layout
+
+- Move the inputs into a `sidebarPanel()` and the outputs into a `mainPanel()`
+- Put each plot, and the data table, on its own tab (`tabsetPanel()` and `tabPanel()`)
+- Add a fourth tab with a line plot of the *average* salary by `education`, with one line for each selected industry
+
+::: callout-tip
+## Hint
+
+`group_by(industry, education) |> summarize(mean_salary = mean(annual_salary))`, then `geom_line()` with `group = industry`. Don't forget to use `filtered()`!
+:::
+
+## Part 2: Theme
+
+- Add a theme: `fluidPage(theme = bslib::bs_theme(bootswatch = "flatly"), ...)`
+- Try `bslib::bs_themer()` in your server function to find colors and fonts that you like (remove it when you're done)
+- Add `thematic::thematic_shiny()` near the top of `app.R` so the plots match
+
+::: callout-warning
+## Package version
+
+`thematic_shiny()` needs `{thematic}` 0.1.8 or newer. If the app fails to start with an error about `ggplot_build.ggplot`, run `install.packages("thematic")`.
+:::
+
+## Part 3: Project structure
+
+- Move the data preparation (`select()`, `filter()`) into a script called `data-prep.R`
+- Write the cleaned data to `data/manager-survey.rds` with `write_rds()`, and read it in `app.R` with `read_rds("data/manager-survey.rds")`
+
+::: callout-important
+Use a **relative** path: `"data/manager-survey.rds"`. A path that starts with `/` points at the root of your computer.
+:::
+
+## Part 4: Re-deploy
+
+- Re-deploy your app to the same shinyapps.io name. Check that the data folder is included
+- Open the URL in a private window and test every input
+
+# Next steps
+
+- Final project **sketch** due today
+- **Portfolio 3** is due Friday: at least two interactive components. A shiny app published on shinyapps.io is the route to an "excellent"
+
+::: aside
+Credit: adapted from [Mine Çetinkaya-Rundel's](https://vizdata.org/) Ask a Manager application exercise
+:::

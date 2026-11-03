@@ -1,0 +1,64 @@
+---
+title: "22-interactivity"
+---
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(plotly)
+library(leaflet)
+library(DT)
+```
+
+# Plotly
+
+Make a scatterplot of `body_mass_g` vs. `flipper_length_mm` from the `penguins` data set. Use color and shape to specify the `species`.
+
+Once you have a static graphic you're happy with, convert it to an interactive graphic with `ggplotly()`.
+
+- What tooltips are included by default?
+- Change the default tooltip to include "Species"
+- (If time) use {stringr} so that the tooltip shows "Species: Adelie" instead of just "Adelie"
+
+Then discuss with your neighbor: would an interactive *bar chart* of `species` add anything? When is an interactive version *not* better?
+
+# Leaflet
+
+The three islands in `penguins` and their approximate locations:
+
+```{r}
+islands <- tibble(
+  island = c("Biscoe", "Dream", "Torgersen"),
+  lat = c(-64.80, -64.73, -64.77),
+  lng = c(-63.77, -64.23, -64.08)
+)
+```
+
+Create a leaflet map with a marker for each island and a popup with the island's name.
+
+::: callout-tip
+## Hint
+
+`leaflet(islands) |> addTiles() |> addMarkers(lng = ~lng, lat = ~lat, popup = ~island)`
+:::
+
+# DT Table
+
+- Create a {DT} table of the `penguins` data set
+- Add the option to filter, and make the font size 14pt
+
+# Putting it all together
+
+Download [`22-dashboard-example.qmd`](https://stat220-f26.github.io/files/22-dashboard-example.qmd) and render it (click **Render**; a dashboard opens in the viewer). Then improve the Penguins data explorer:
+
+1. Make all graphs plotly's with appropriate tooltips
+2. Replace the data output with your {DT} datatable
+3. Include your leaflet map on a new *page*
+4. Add [value boxes](https://quarto.org/docs/dashboards/data-display.html#value-boxes) on the same page as your map that show the number of penguins that live on each island
+5. Change the [theme](https://quarto.org/docs/dashboards/theming.html) of the dashboard
+
+(Items 1-3 are the priority. Items 4-5 are extra if you have time.)
+
+::: callout-note
+This is also a good starting point for **Portfolio 3**, which is due Friday, November 13.
+:::
