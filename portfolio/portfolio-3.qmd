@@ -1,11 +1,11 @@
 ---
-title: "Portfolio Project 4"
+title: "Portfolio Project 3"
 subtitle: "Incorporating Interactivity"
 ---
 
 # Overview
 
-For your fourth portfolio project, you'll apply what you've learned about interactivity and revisit a previous portfolio project. (If you'd prefer to revisit a homework problem, etc. that is also OK!) 
+For your third portfolio project, you'll apply what you've learned about interactivity and revisit a previous portfolio project. (If you'd prefer to revisit a homework problem, in-class activity, etc. that is also OK!) 
 
 Your task is to choose one of the previous portfolio projects that you've done, and add interactivity to it! 
 
@@ -32,7 +32,7 @@ A **successful** project will:
 -   [ ] Demonstrate a history of work in progress and revision through your git commit history
 - [ ] The .qmd (or .R) has all necessary and no unnecessary code
 - [ ] The output file is .html and published online. 
-    - I recommend using [quarto pub](https://quarto.org/docs/publishing/quarto-pub.html) as it's very easy to publish a standalone website through RStudio, but if you have a public-facing website, that's great too! Please include a URL in your README.md file so I can find your report when grading
+    - I recommend using [posit connect cloud](https://quarto.org/docs/publishing/posit-connect-cloud.html#publish-command) but you could also consider [github pages](https://quarto.org/docs/publishing/github-pages.html). If you have a personal website you want to publish to, that's great too! Please include a URL in your README.md file so I can find your report when grading
     -   There are lots of reasons you might not want the world to know that you are enrolled in this class, and this is one of your rights under FERPA. If you're not comfortable including your name, you don't have to! Your public document can be authored by "Student" (which has a [history](https://www.science.org/doi/10.1126/science.351.6280.1406) of being used in statistics).
 - [ ] There are at least two interactive components (a plotly counts as one; each distinct type of shiny input counts as one)
 - [ ] The README file includes (1) a link to your published report (2) an explanation of how to navigate your repo, (3) a paragraph explaining the interactivity that you've added and why it is an improvement over the original static version
@@ -44,7 +44,7 @@ A **successful** project will:
 
 An **excellent** project will meet all of the requirements for a successful project, plus
 
-- [ ] Include a shiny app published on shinyapps.io
+- [ ] Include a published shiny app 
     - [ ] The shiny app has at least two types of interactivity included, and the README includes a thoughtful discussion of why the interactivity helps 
 - [ ] Meet high submission quality standards
     - [ ] No grammatical mistakes, spelling mistakes, or typos
@@ -52,7 +52,7 @@ An **excellent** project will meet all of the requirements for a successful proj
 
 # Can I work with someone? 
 
-Yes! You can work individually or with a partner for this portfolio project. If you work with a partner, please let me know by the end of the day on Monday Week 9. 
+Yes! You can work individually or with a partner for this portfolio project. If you work with a partner, please let me know by the end of the day on Monday Week 9. (Keeping in mind that you cannot work with the same person on more than 2 projects) 
 
 # Are revisions allowed on this project? 
 

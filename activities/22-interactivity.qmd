@@ -11,44 +11,58 @@ library(flexdashboard)
 library(leaflet)
 ```
 
-# Plotly 1
 
-Load the palmerpenguins data set and create a scatterplot of body_mass_g vs. flipper_length_mm from the penguins data set. Use color and shape to specify the species.
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(plotly)
+library(leaflet)
+library(DT)
+```
 
-Once you have a static graphic you’re happy with, load plotly and convert it to an interactive graphic.
+# Plotly
 
-- What tools tips are included by default?
-- Change the default tooltip to include “Species”
-- (If time) use stringr so that the tooltip shows: “Species: Adelie” instead of just “Adelie”
+Make a scatterplot of `body_mass_g` vs. `flipper_length_mm` from the `penguins` data set. Use color and shape to specify the `species`.
 
-# Plotly 2
+Once you have a static graphic you're happy with, convert it to an interactive graphic with `ggplotly()`.
 
-Create a bar chart of species from the penguins data set, then convert it to an interactive bar chart.
+- What tooltips are included by default?
+- Change the default tooltip to include "Species"
+- (If time) use {stringr} so that the tooltip shows "Species: Adelie" instead of just "Adelie"
 
-- What tools tips are included by default?
-- What would you change?
+Then discuss with your neighbor: would an interactive *bar chart* of `species` add anything? When is an interactive version *not* better?
 
 # Leaflet
 
-- Find the names of the 3 islands in `penguins`
-- Find appropriate lat/long locations for each of the islands in `penguins` using the internet
-- Create a leaflet map with markers for each island (*Tip:* Start with the world map with no zoom)
-- Include a popup with the island name
+The three islands in `penguins` and their approximate locations:
 
+```{r}
+islands <- tibble(
+  island = c("Biscoe", "Dream", "Torgersen"),
+  lat = c(-64.80, -64.73, -64.77),
+  lng = c(-63.77, -64.23, -64.08)
+)
+```
+
+Create a leaflet map with a marker for each island and a popup with the island's name.
+
+::: callout-tip
+## Hint
+
+`leaflet(islands) |> addTiles() |> addMarkers(lng = ~lng, lat = ~lat, popup = ~island)`
+:::
 
 # DT Table
 
-- Create a {DT} table of the penguins dataset
+- Create a {DT} table of the `penguins` data set
 - Add the option to filter, and make the font size 14pt
 
-# Putting it all together 
+# Putting it all together
 
-Let's improve the `22-dashboard-example.qmd` Penguins data explorer:
+Download [`22-dashboard-example.qmd`](https://stat220-f26.github.io/files/22-dashboard-example.qmd) and render it (click **Render**; a dashboard opens in the viewer). Then improve the Penguins data explorer:
 
-  - Make all graphs plotly's with appropriate tooltips
-  - Replace the data output with your {DT} datatable
-  - Include your leaflet map on a new *page* 
-  - Add [value boxes](https://quarto.org/docs/dashboards/data-display.html#value-boxes) on the same page as your map that show the number of penguins that live on each island
-  - Change the [theme](https://quarto.org/docs/dashboards/theming.html) of the dashboard
-  
-
+1. Make all graphs plotly's with appropriate tooltips
+2. Replace the data output with your {DT} datatable
+3. Include your leaflet map on a new *page*
+4. (if time) Add [value boxes](https://quarto.org/docs/dashboards/data-display.html#value-boxes) on the same page as your map that show the number of penguins that live on each island
+5. (if time) Change the [theme](https://quarto.org/docs/dashboards/theming.html) of the dashboard

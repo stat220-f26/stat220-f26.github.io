@@ -49,259 +49,60 @@ gapminder2021 <- gapminder %>%
 
 ## Today
 
-- RMarkdown outputs
-- Dashboards
-- Intro to interactive toolkit
-
-## quarto outputs: pdf 
-
-::::: columns
-::: {.column .nonincremental width="50%"}
-```{r}
-#| eval: false
----
-title: "Example Document"
-author: "Amanda Luby"
-date: "2025-02-26"
-format:
-  pdf: default
----
-
-```
-
+::: {.nonincremental}
+1. *Why* add interactivity? 
+2. The toolkit: **plotly**, **leaflet**, **{DT}**
+3. Putting it together in a **dashboard** 
 :::
-
-:::{.column .nonincremental width="50%"}
-
-![](../img/rmd-pdf-example.png)
-
-:::
-:::::
-
-## quarto outputs: html 
-
-::::: columns
-::: {.column .nonincremental width="50%"}
-```{r}
-#| eval: false
----
-title: "Example Document"
-author: "Amanda Luby"
-date: "2025-02-26"
-format:
-  html: default
----
-
-```
-
-:::
-
-:::{.column  .nonincremental width="50%"}
-
-![](../img/rmd-html-example.png)
-:::
-:::::
-
-## quarto outputs: html, custom theme 
-
-::::: columns
-::: {.column .nonincremental width="50%"}
-```{r}
-#| eval: false
----
-title: "Example Document"
-author: "Amanda Luby"
-date: "2025-02-26"
-format:
-  html: 
-    theme: darkly
----
-
-```
-
-:::
-
-:::{.column  .nonincremental width="50%"}
-
-![](../img/rmd-darkly-example.png)
-:::
-:::::
-
-## quarto outputs: github-flavored markdown
-
-::::: columns
-::: {.column .nonincremental width="50%"}
-```{r}
-#| eval: false
----
-title: "Example Document"
-author: "Amanda Luby"
-date: "2025-02-26"
-format: gfm
----
-
-```
-
-:::
-
-:::{.column  .nonincremental width="50%"}
-
-![](../img/rmd-github-example.png)
-
-:::
-:::::
-
-
-## Dashboards
-
-::::: columns
-::: {.column .nonincremental width="50%"}
-```{r}
-library(flexdashboard)
-```
-```{r}
-#| eval: false
----
-title: "Recent Earthquakes in Aotearoa New Zealand"
-subtitle: "Of Weak Intensity or Greater"
-format: 
-  dashboard:
-    orientation: columns
-    theme: yeti
----
-```
-
-:::
-
-:::{.column  .nonincremental width="50%"}
-
-![](../img/earthquake-dashboard.png)
-
-:::
-:::::
-
-## Components of a dashboard
-
-1. Navigation Bar and Pages — Title and author along with links to sub-pages (if more than one page is defined).
-
-2. Sidebars, Rows & Columns, and Tabsets — Rows and columns using markdown heading (with optional attributes to control height, width, etc.). Sidebars for interactive inputs. Tabsets to further divide content.
-
-3. Sections -- Sections are containers for cell outputs and free form markdown text. The content of sections typically maps to cells in your notebook or source document.
-
-## Navigation bar and pages
-
-```
----
-title: "Palmer Penguins"
-author: "Amanda Luby"
-format: 
-  dashboard:
-    orientation: columns
-    logo: https://allisonhorst.github.io/palmerpenguins/logo.png
-    nav-buttons:
-      - text: "Data Source"
-        href: https://allisonhorst.github.io/palmerpenguins/
----
-
-```
-
-![](../img/dashboard-header.png)
-
-## Rows 
-
-```
----
-title: "Palmer Penguins"
-format: dashboard
----
-    
-## Row {height=70%}
-
-
-## Row {height=30%}
-
-
-```
-
-![](https://quarto.org/docs/dashboards/images/chart-focal-top.png)
-
-
-## Columns
-
-```
----
-title: "Palmer Penguins"
-format: 
-  dashboard:
-    orientation: columns
----
-    
-## Column {width=60%}
-
-
-## Column {width=40%}
-
-```
-
-![](https://quarto.org/docs/dashboards/images/chart-focal-left.png)
-
-
-# [html Widgets Showcase](https://testing-apps.shinyapps.io/flexdashboard-storyboard/)
-
-# [Earthquake Explorer](https://pub.demo.posit.team/public/nz-quakes/quakes.html) + [Source Code](https://github.com/cwickham/quakes/blob/main/quakes.qmd)
-
-# Interactive Graphics {.maize}
-
-## Features we'll focus on in this class: 
+## Features we'll focus on in this class
 
 - Hovering
   - Display additional information about an observation or group via cursor
 - Changing the representation of the data
   - User decides if they want to see the data in a table or a graph
-  - Option to select variables
-  - Option to select graph
-  - Option to tweak parameters of graphs
+  - Option to select variables, graph type, or tweak parameters
 - Filtering/subsetting
   - Allow user to control which subset of the data is shown
-  
+
 ## Workflow
 
 1. Start with a static graph, describe what insights it offers, *then* build up
-2. Demonstrate how the interactive features allow you to obtain additional insight *that you would not otherwise be able to*
+2. Show how the interactive features give you insight *that you would not otherwise be able to get*
     - Just because you *can* doesn't mean you *should*
-4. Document how to use the features ("click on the drop down menu to choose a variable") 
+3. Document how to use the features ("click on the drop down menu to choose a variable")
 
 ## Explanation $\to$ Exploration
 
-I like to think of interactive components as somewhere on the "Explanation/Exploration" spectrum
+Interactive components sit somewhere on an "explanation / exploration" spectrum
 
-- Exploration: Open-ended; the user decides what the story is
+- **Exploration:** open-ended; the user decides what the story is
   - [NCAA Swimming](https://gpilgrim.shinyapps.io/SwimmingProject-Click/) Data Explorer
   - [Economic Census Industry Data](https://www.census.gov/library/visualizations/interactive/economic-census-industry-data-by-geography.html)
-- Explanation: fully static; the story is the same regardless of what the user does
+- **Explanation:** the story is the same regardless of what the user does
   - [Shadow Peace](http://www.fallen.io/shadow-peace/1/)
   - [Euro Final](https://data-kicks.github.io/euro_final_scrollytelling_analysis/euro_final_scrollytelling_analysis.html)
-  
+
+. . .
+
+(You looked at the [NZ earthquake dashboard](https://pub.demo.posit.team/public/nz-quakes/quakes.html) and the [htmlwidgets showcase](https://testing-apps.shinyapps.io/flexdashboard-storyboard/) to prepare for today: which sat where?)
+
+# plotly {.maize}
 
 ## plotly
 
-* Visualization library for interactive and dynamic web-based graphics
+- A library for interactive, web-based graphics
+- Works in the viewer, in HTML documents, dashboards and shiny apps
+- The easy way in: take a ggplot you already have and wrap it in `ggplotly()`
 
-* Plots work in multiple formats 
-   * viewer windows
-   * R Markdown documents
-   * shiny apps
-
-## Static plot
+## A static plot
 
 ```{r static-plot}
 #| output-location: column
 
-
-gap2021 <- gapminder %>% 
+gap2021 <- gapminder %>%
   filter(year == 2021) %>%
   ggplot(aes(x = income, y = life, color = four_regions, size = population)) +
-    geom_point() +
+  geom_point() +
   labs(
     x = "GDP per capita",
     y = "Life expectancy",
@@ -313,9 +114,9 @@ gap2021 <- gapminder %>%
 gap2021
 ```
 
-## Static $\to$ interactive 
+## Static &rarr; interactive
 
-```{r plotyl1}
+```{r plotly1}
 library(plotly)
 ggplotly(gap2021)
 ```
@@ -355,177 +156,217 @@ ggplotly(gap2021)
 ggplotly(gap2021, tooltip = "text")
 ```
 
-## Your turn
+## Your turn: plotly
 
 ::: {.task .nonincremental}
-Load the `{palmerpenguins}` data set and create a scatterplot of body_mass_g vs. flipper_length_mm from the `penguins` data set. Use color and shape to specify the `species`.
+Make a scatterplot of `body_mass_g` vs. `flipper_length_mm` from `penguins`, with color and shape for `species`. Then convert it with `ggplotly()`.
 
-Once you have a static graphic you're happy with, load `{plotly}` and convert it to an interactive graphic.
+- What tooltips are included by default?
+- Change the tooltip to include "Species"
+- (If time) use `stringr` so the tooltip shows "Species: Adelie" instead of "Adelie"
 
-- What tools tips are included by default?
-- Change the default tooltip to include "Species" 
-- (If time) use `stringr` so that the tooltip shows: "Species: Adelie" instead of just "Adelie"
+Then discuss: what does this interactivity add? is it useful?
 :::
-
 
 ```{r}
 #| echo: false
+countdown(7)
+```
 
+# Leaflet {.maize}
+
+## Leaflet
+
+- A JavaScript library AND an R package for interactive maps
+- Open source
+- You build a map in layers with the pipe: `leaflet() |> addTiles() |> ...`
+
+. . . 
+
+```{r}
+library(leaflet)
+
+leaflet() |>
+  addTiles()
+```
+
+## Adding lat/long and a zoom (trial and error)
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  setView(lng = -93.1560, lat = 44.4614, zoom = 15)
+```
+
+## Markers and popups
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  setView(lng = -93.1560, lat = 44.4614, zoom = 15) |>
+  addMarkers(
+    lng = -93.153617, 
+    lat = 44.462511,
+    popup = "Here is the <b>Math & Stat Dept</b>"
+  )
+```
+
+## Your turn: leaflet
+
+::: {.task .nonincremental}
+The three islands in `penguins` and their (approximate) locations:
+
+```{r}
+islands <- tibble(
+  island = c("Biscoe", "Dream", "Torgersen"),
+  lat = c(-64.80, -64.73, -64.77),
+  lng = c(-63.77, -64.23, -64.08)
+)
+```
+
+Make a leaflet map with a marker for each island, and a popup with the island's name.
+
+(*Hint:* `addMarkers()` can take a data frame and formulas: `lng = ~lng, lat = ~lat, popup = ~island`. Start zoomed out.)
+:::
+
+```{r}
+#| echo: false
 countdown(5)
 ```
 
-## Your turn 2
+# Data tables {.maize}
+
+## {DT}: DataTables
+
+By default R prints a tibble like code. {DT} makes a table people can sort, search and page through:
+
+```{r}
+library(DT)
+datatable(gapminder2021, rownames = FALSE, filter = "top")
+```
+
+## Table options
+
+```{r}
+gapminder2021 |> 
+  select(country, four_regions, income, life, population) |>
+  datatable(
+    rownames = FALSE,
+    filter = "top",
+    options = list(pageLength = 5)
+  ) |>
+  formatStyle(columns = 1:5, fontSize = "12pt")
+```
+
+## Your turn: DT
 
 ::: {.task .nonincremental}
-Create a bar chart of `species` from the `penguins` data set, then convert it to an interactive bar chart.
-
-- What tools tips are included by default?
-- What would you change?
+Make a {DT} table of the `penguins` data. Add the filter option and make the text 14pt.
 :::
+
+```{r}
+#| echo: false
+countdown(3)
+```
+
+
+# Dashboards {.maize}
+
+## A dashboard puts the pieces on one page
+
+::::: columns
+::: {.column .nonincremental width="45%"}
+It is a Quarto document with a different `format`:
+
+```yaml
+---
+title: "Palmer Penguins"
+format:
+  dashboard:
+    orientation: columns
+    theme: yeti
+---
+```
+:::
+
+:::{.column .nonincremental width="55%"}
+
+![](../img/earthquake-dashboard.png)
+
+:::
+:::::
+
+## Layout: pages, rows and columns
+
+::::: columns
+::: {.column .nonincremental width="50%"}
+Markdown headings make the layout:
+
+- `#` starts a new **page** (navigation bar)
+- `##` starts a new **row** or **column** (depends on `orientation`)
+- Each code chunk is a **card**. Use `#| title:` to name it
+:::
+
+:::{.column .nonincremental width="50%"}
+```markdown
+# Graphs
+
+## Column {width=65%}
+
+(a plot chunk)
+
+## Column {width=35%}
+
+(two more chunks)
+```
+:::
+:::::
+
+## Value boxes and themes
+
+A chunk with `content: valuebox` makes a big number:
+
+````markdown
+```{{r}}
+#| content: valuebox
+#| title: "Penguins"
+#| icon: "bug"
+#| color: "primary"
+list(value = nrow(penguins))
+```
+````
+
+Change the look of the whole dashboard with `theme:` in the YAML. See the [Quarto dashboard docs](https://quarto.org/docs/dashboards/theming.html) for the options.
+
+## Putting it all together
+
+::: {.task .nonincremental}
+Download [`22-dashboard-example.qmd`](https://stat220-f26.github.io/files/22-dashboard-example.qmd) and render it. Then improve it:
+
+1. Make the graphs plotly's with good tooltips
+2. Replace the data output with your {DT} table
+3. Add a new *page* with your leaflet map
+4. (if time) Add a value box for each island (the number of penguins that live there) on the map page
+5. (if time) Change the theme
+
+:::
+
+```{r}
+#| echo: false
+countdown(15)
+```
+
+## For Friday
+
+::: {.nonincremental}
+- **Portfolio 3** (add interactivity to an earlier project or homework problem): at least two interactive components
+- Pick one: 📺 [Shiny basics playlist](https://carleton.hosted.panopto.com/Panopto/Pages/Viewer.aspx?pid=637ed93b-d906-4ed7-86d0-afac0023b3d7) or 📚 [Ch 1-2 of Mastering Shiny](https://mastering-shiny.org/basic-app.html)
+:::
+
+
 
 ```{r}
 #| echo: false
 
 countdown(3)
 ```
-
-# Leaflet
-
-## Leaflet
-
-- Leaflet is a javascript library AND an R package
-- Fully open source
-- Can make chloropleths (non-ggplot-syntax) or proportional symbol maps
-
-## Create a default leaflet map
-
-```{r}
-library(leaflet)
-m = leaflet() %>% 
-  addTiles()
-m  
-```
-
-
-
-## Zoom into a specific lat/long coordinate
-
-```{r}
-m = m %>% setView(-93.1560, 44.4614, zoom = 10)
-m
-```
-
-## Zoom into a specific lat/long coordinate
-
-```{r}
-m = m %>% setView(-93.1560, 44.4614, zoom = 16)
-m
-```
-
-## Annotate with markers 
-
-```{r}
-m %>% 
-  addMarkers(-93.153617, 
-            44.462511)
-```
-
-## Or add a popup
-
-```{r}
-m %>% 
-  addPopups(-93.153617, 
-            44.462511, 
-            'Here is the <b>Math & Stat Dept</b> <br>')
-```
-
-## Your turn
-
-::: {.task .nonincremental}
-  - Find the names of the 3 islands in `penguins`
-  - Find appropriate lat/long locations for each of the islands in `penguins` using the internet
-  - Create a leaflet map with markers for each island (*Tip:* Start with the world map with no zoom)
-  - Include a popup with the island name
-:::
-
-
-```{r}
-#| echo: false
-
-countdown(5)
-```
-
-# Data Tables
-
-## Printing tables {.smaller}
-
-By default, R prints the `tibble` using typical code formatting:
-
-```{r}
-gapminder2021
-```
-
-This is fine for people who are used to looking at R, but not great for public-facing work. 
-
-## {DT}: DataTables
-
-The R package {DT} provides an R interface to the JavaScript library DataTables. R data objects (matrices or data frames) can be displayed as tables on HTML pages, and DataTables provides filtering, pagination, sorting, and many other features in the tables.
-
-## {DT} Example {.smaller}
-
-```{r}
-library(DT)
-datatable(gapminder2021)
-```
-
-## Remove rownames  {.smaller}
-
-```{r}
-datatable(gapminder2021,
-          rownames = FALSE)
-```
-
-## Add option to filter  {.smaller}
-
-```{r}
-datatable(gapminder2021,
-          rownames = FALSE,
-          filter = "top")
-```
-
-## Change font size of text *within the table*  {.smaller}
-
-Otherwise, font options are passed from your html document settings
-
-```{r}
-datatable(gapminder2021,
-          rownames = FALSE,
-          filter = "top") %>%
-  formatStyle(columns = colnames(gapminder), fontSize = '12pt')
-```
-
-## Your turn
-
-::: {.task .nonincremental}
-  - Create a {DT} table of the penguins dataset
-  - Add the option to filter, and make the font size 14pt
-:::
-
-```{r}
-#| echo: false
-countdown(2)
-```
-
-## Putting it all together
-
-::: {.task .nonincremental}
-Let's improve the `22-dashboard-example.qmd` Penguins data explorer:
-
-  - Make all graphs plotly's with appropriate tooltips
-  - Replace the data output with your {DT} datatable
-  - Include your leaflet map on a new *page* 
-  - Add [value boxes](https://quarto.org/docs/dashboards/data-display.html#value-boxes) on the same page as your map that show the number of penguins that live on each island
-  - Change the [theme](https://quarto.org/docs/dashboards/theming.html) of the dashboard
-:::
-
-
