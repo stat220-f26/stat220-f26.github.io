@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Prof Amanda Luby">
 <title>22-interactivity – Stat 220</title>
@@ -68,9 +68,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4a17e18fdf56099d4f6da1e105f33a53.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6e03bc272f1cdef1d8296ac38e217ebd.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -376,8 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#plotly-1" id="toc-plotly-1" class="nav-link active" data-scroll-target="#plotly-1">Plotly 1</a></li>
-  <li><a href="#plotly-2" id="toc-plotly-2" class="nav-link" data-scroll-target="#plotly-2">Plotly 2</a></li>
+<li><a href="#plotly" id="toc-plotly" class="nav-link active" data-scroll-target="#plotly">Plotly</a></li>
   <li><a href="#leaflet" id="toc-leaflet" class="nav-link" data-scroll-target="#leaflet">Leaflet</a></li>
   <li><a href="#dt-table" id="toc-dt-table" class="nav-link" data-scroll-target="#dt-table">DT Table</a></li>
   <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together">Putting it all together</a></li>
@@ -420,39 +419,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://pkgs.rstudio.com/flexdashboard/">flexdashboard</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/">leaflet</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="plotly-1" class="level1"><h1>Plotly 1</h1>
-<p>Load the palmerpenguins data set and create a scatterplot of body_mass_g vs.&nbsp;flipper_length_mm from the penguins data set. Use color and shape to specify the species.</p>
-<p>Once you have a static graphic you’re happy with, load plotly and convert it to an interactive graphic.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://plotly-r.com">plotly</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/">leaflet</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/DT">DT</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="plotly" class="level1"><h1>Plotly</h1>
+<p>Make a scatterplot of <code>body_mass_g</code> vs.&nbsp;<code>flipper_length_mm</code> from the <code>penguins</code> data set. Use color and shape to specify the <code>species</code>.</p>
+<p>Once you have a static graphic you’re happy with, convert it to an interactive graphic with <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly()</a></code>.</p>
 <ul>
-<li>What tools tips are included by default?</li>
+<li>What tooltips are included by default?</li>
 <li>Change the default tooltip to include “Species”</li>
-<li>(If time) use stringr so that the tooltip shows: “Species: Adelie” instead of just “Adelie”</li>
-</ul></section><section id="plotly-2" class="level1"><h1>Plotly 2</h1>
-<p>Create a bar chart of species from the penguins data set, then convert it to an interactive bar chart.</p>
+<li>(If time) use {stringr} so that the tooltip shows “Species: Adelie” instead of just “Adelie”</li>
+</ul>
+<p>Then discuss with your neighbor: would an interactive <em>bar chart</em> of <code>species</code> add anything? When is an interactive version <em>not</em> better?</p>
+</section><section id="leaflet" class="level1"><h1>Leaflet</h1>
+<p>The three islands in <code>penguins</code> and their approximate locations:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">islands</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  island <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Biscoe"</span>, <span class="st">"Dream"</span>, <span class="st">"Torgersen"</span><span class="op">)</span>,</span>
+<span>  lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">64.80</span>, <span class="op">-</span><span class="fl">64.73</span>, <span class="op">-</span><span class="fl">64.77</span><span class="op">)</span>,</span>
+<span>  lng <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">63.77</span>, <span class="op">-</span><span class="fl">64.23</span>, <span class="op">-</span><span class="fl">64.08</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Create a leaflet map with a marker for each island and a popup with the island’s name.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>leaflet(islands) |&gt; addTiles() |&gt; addMarkers(lng = ~lng, lat = ~lat, popup = ~island)</code></p>
+</div>
+</div>
+</section><section id="dt-table" class="level1"><h1>DT Table</h1>
 <ul>
-<li>What tools tips are included by default?</li>
-<li>What would you change?</li>
-</ul></section><section id="leaflet" class="level1"><h1>Leaflet</h1>
-<ul>
-<li>Find the names of the 3 islands in <code>penguins</code>
-</li>
-<li>Find appropriate lat/long locations for each of the islands in <code>penguins</code> using the internet</li>
-<li>Create a leaflet map with markers for each island (<em>Tip:</em> Start with the world map with no zoom)</li>
-<li>Include a popup with the island name</li>
-</ul></section><section id="dt-table" class="level1"><h1>DT Table</h1>
-<ul>
-<li>Create a {DT} table of the penguins dataset</li>
+<li>Create a {DT} table of the <code>penguins</code> data set</li>
 <li>Add the option to filter, and make the font size 14pt</li>
 </ul></section><section id="putting-it-all-together" class="level1"><h1>Putting it all together</h1>
-<p>Let’s improve the <code>22-dashboard-example.qmd</code> Penguins data explorer:</p>
-<ul>
+<p>Download <a href="https://stat220-f26.github.io/files/22-dashboard-example.qmd"><code>22-dashboard-example.qmd</code></a> and render it (click <strong>Render</strong>; a dashboard opens in the viewer). Then improve the Penguins data explorer:</p>
+<ol type="1">
 <li>Make all graphs plotly’s with appropriate tooltips</li>
 <li>Replace the data output with your {DT} datatable</li>
 <li>Include your leaflet map on a new <em>page</em>
 </li>
-<li>Add <a href="https://quarto.org/docs/dashboards/data-display.html#value-boxes">value boxes</a> on the same page as your map that show the number of penguins that live on each island</li>
-<li>Change the <a href="https://quarto.org/docs/dashboards/theming.html">theme</a> of the dashboard</li>
-</ul>
+<li>(if time) Add <a href="https://quarto.org/docs/dashboards/data-display.html#value-boxes">value boxes</a> on the same page as your map that show the number of penguins that live on each island</li>
+<li>(if time) Change the <a href="https://quarto.org/docs/dashboards/theming.html">theme</a> of the dashboard</li>
+</ol>
 
 
 <!-- -->
@@ -921,59 +940,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "22-interactivity"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flexdashboard)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu"># Plotly 1</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>Load the palmerpenguins data set and create a scatterplot of body_mass_g vs. flipper_length_mm from the penguins data set. Use color and shape to specify the species.</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>Once you have a static graphic you’re happy with, load plotly and convert it to an interactive graphic.</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What tools tips are included by default?</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Change the default tooltip to include “Species”</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>(If time) use stringr so that the tooltip shows: “Species: Adelie” instead of just “Adelie”</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu"># Plotly 2</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>Create a bar chart of species from the penguins data set, then convert it to an interactive bar chart.</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What tools tips are included by default?</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What would you change?</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu"># Leaflet</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Find the names of the 3 islands in <span class="in">`penguins`</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Find appropriate lat/long locations for each of the islands in <span class="in">`penguins`</span> using the internet</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a leaflet map with markers for each island (*Tip:* Start with the world map with no zoom)</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include a popup with the island name</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu"># DT Table</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a {DT} table of the penguins dataset</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Add the option to filter, and make the font size 14pt</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="fu"># Putting it all together </span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>Let's improve the <span class="in">`22-dashboard-example.qmd`</span> Penguins data explorer:</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Make all graphs plotly's with appropriate tooltips</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Replace the data output with your {DT} datatable</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Include your leaflet map on a new *page* </span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Add <span class="co">[</span><span class="ot">value boxes</span><span class="co">](https://quarto.org/docs/dashboards/data-display.html#value-boxes)</span> on the same page as your map that show the number of penguins that live on each island</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Change the <span class="co">[</span><span class="ot">theme</span><span class="co">](https://quarto.org/docs/dashboards/theming.html)</span> of the dashboard</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "22-interactivity"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flexdashboard)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="fu"># Plotly</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>Make a scatterplot of <span class="in">`body_mass_g`</span> vs. <span class="in">`flipper_length_mm`</span> from the <span class="in">`penguins`</span> data set. Use color and shape to specify the <span class="in">`species`</span>.</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>Once you have a static graphic you're happy with, convert it to an interactive graphic with <span class="in">`ggplotly()`</span>.</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What tooltips are included by default?</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Change the default tooltip to include "Species"</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>(If time) use {stringr} so that the tooltip shows "Species: Adelie" instead of just "Adelie"</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>Then discuss with your neighbor: would an interactive *bar chart* of `species` add anything? When is an interactive version *not* better?</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="fu"># Leaflet</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>The three islands in <span class="in">`penguins`</span> and their approximate locations:</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>islands <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">island =</span> <span class="fu">c</span>(<span class="st">"Biscoe"</span>, <span class="st">"Dream"</span>, <span class="st">"Torgersen"</span>),</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">lat =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">64.80</span>, <span class="sc">-</span><span class="fl">64.73</span>, <span class="sc">-</span><span class="fl">64.77</span>),</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">lng =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">63.77</span>, <span class="sc">-</span><span class="fl">64.23</span>, <span class="sc">-</span><span class="fl">64.08</span>)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>Create a leaflet map with a marker for each island and a popup with the island's name.</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hint</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="in">`leaflet(islands) |&gt; addTiles() |&gt; addMarkers(lng = ~lng, lat = ~lat, popup = ~island)`</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="fu"># DT Table</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a {DT} table of the <span class="in">`penguins`</span> data set</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Add the option to filter, and make the font size 14pt</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="fu"># Putting it all together</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>Download <span class="co">[</span><span class="ot">`22-dashboard-example.qmd`</span><span class="co">](https://stat220-f26.github.io/files/22-dashboard-example.qmd)</span> and render it (click **Render**; a dashboard opens in the viewer). Then improve the Penguins data explorer:</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Make all graphs plotly's with appropriate tooltips</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Replace the data output with your {DT} datatable</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Include your leaflet map on a new *page*</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>(if time) Add <span class="co">[</span><span class="ot">value boxes</span><span class="co">](https://quarto.org/docs/dashboards/data-display.html#value-boxes)</span> on the same page as your map that show the number of penguins that live on each island</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>(if time) Change the <span class="co">[</span><span class="ot">theme</span><span class="co">](https://quarto.org/docs/dashboards/theming.html)</span> of the dashboard</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
