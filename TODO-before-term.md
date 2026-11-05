@@ -11,6 +11,7 @@ Running list of changes needed to move this site from the Winter 2026 copy to Fa
 - [ ] Known to watch: `gghighlight` breaks with newer `ggplot2` (fails on my
   laptop's ggplot2). Confirm the server's `ggplot2` / `gghighlight` combination
   works, since it's used in the plotting slides.
+  - *Note:* `slides/11` (which uses `gghighlight`) rendered without errors on the laptop on 10/7. The server still needs checking.
 
 ## Deployment / repo
 
@@ -37,17 +38,18 @@ Running list of changes needed to move this site from the Winter 2026 copy to Fa
 
 ## Older-term leftovers (pre-W26 copies)
 
-- [ ] `slides/02/slides02.qmd:169` — `stat220-s25.github.io`
-- [ ] `slides/04/slides04.qmd:107` — `stat220-w25.github.io`
+- [x] `slides/02/slides02.qmd:169` — `stat220-s25.github.io`
+- [x] `slides/04/slides04.qmd:107` — `stat220-w25.github.io`
 - [ ] `slides/slides-cheat-sheet.qmd:152` — `github.com/stat220-w25`
 - [ ] `activities/10-combining.qmd:10` — `github.com/stat220-w25/activities`
 - [ ] `activities/25-shiny-design.qmd:97` — `sta199-f25.github.io` image
 - [ ] `files/23-app1-starter.R:12` — `stat220-s25.github.io/data/manager-survey.csv`
-- [ ] `lab-quiz/lab-quiz-02.qmd:212` — `stat220-s25.github.io/data/lq2_plot_data.csv`
+- [x] `lab-quiz/lab-quiz-02.qmd:212` — `stat220-s25.github.io/data/lq2_plot_data.csv`
 
 ## `w26`-named files (rename + refresh content)
 
-- [ ] `slides/img/w26-schedule.png` and duplicate `img/w26-schedule.png` — last term's schedule screenshot; used by `slides/01/slides01.qmd:309` (`../img/w26-schedule.png`). Rename to `f26-schedule.png`, replace the image, update the reference.
+- [x] `slides/img/w26-schedule.png` and duplicate `img/w26-schedule.png` — last term's schedule screenshot; used by `slides/01/slides01.qmd:309` (`../img/w26-schedule.png`). Rename to `f26-schedule.png`, replace the image, update the reference.
+  - *Status:* `slides01.qmd` now uses `../img/amanda-schedule-f26.png`, and the duplicate in `img/` is gone. The orphan `slides/img/w26-schedule.png` can be deleted.
 - [ ] `files/app-w26-sol.R`
 - [ ] `slides/23/manager-survey-app/app-w26.R`
 - [ ] `slides/23/manager-survey-app/app-w26-sol.R`
@@ -73,7 +75,7 @@ New lineup: **P1 (rewritten) → P3 (unchanged) → P4 (unchanged)**. **Cut P2**
 ("Wrangling weather forecasts"). P3 covers functions/iteration, P4 covers
 interactivity — both kept as-is.
 
-- [ ] **P1 rewrite — "Real or fake?"** Draft is in
+- [x] **P1 rewrite — "Real or fake?"** Draft is in
   `_playground/portfolio-1-draft.qmd` (data-forensics argument about a Kaggle
   dataset; replaces the old "pose two research questions" P1). Review, then move
   to `portfolio/portfolio-1.qmd`.
@@ -81,9 +83,11 @@ interactivity — both kept as-is.
   1 / 3 / 4. Renumbering touches `portfolio/portfolio-*.qmd` filenames + titles,
   the sidebar in `_quarto.yml` (portfolio section isn't currently listed there —
   check), the schedule sheet, and any cross-references in slides/activities.
+  - *Status:* files are renamed (`portfolio-2.qmd` = billion-dollar disasters, `portfolio-3.qmd` = interactivity), but `portfolio-3.qmd` still has the title "Portfolio Project 4" and says "fourth portfolio project".
 - [ ] **Delete `portfolio/portfolio-2.qmd`** and its data (`data/weather_forecasts.csv`,
   `forecast_cities.csv`, `outlook_meanings.csv`) once the cut is final. Check the
   schedule sheet and slides for links to it.
+  - *Status:* the data files are gone from `data/` and nothing else links to it, but the old prompt still exists as the untracked `portfolio/portfolio-2-old.qmd` (it will render and publish).
 - [x] **"2 of 4 must be excellent for an A" → "2 of 3."** Appears in the
   `portfolio-2.qmd` callout (being deleted) and the new P1 draft; check
   `course-syllabus.qmd` and the schedule sheet too. Confirm 3 projects still
@@ -91,11 +95,13 @@ interactivity — both kept as-is.
 - [ ] **Joins lose portfolio-level assessment** with P2 gone. Add "combines data
   from more than one table or source" as an explicit *wrangle* criterion on
   `portfolio/final.qmd`'s rubric. (HW4–5 already cover joins heavily.)
+  - *Status:* `final.qmd:26` has "Demonstrate proficiency with `join`ing data", but that line is unchanged since the initial f26 commit. Confirm it is what you wanted.
 - [x] **Due date:** move P1 a little later than the old P1 — aim week ~3–4 — so
   students have basic `dplyr` for summaries and cross-tabs. Keep ≥2 weeks between
   P1 and P3 so you're not grading two portfolios back-to-back.
-- [ ] **Pairs?** Old P1 was individual (good early diagnostic + low stakes).
+- [x] **Pairs?** Old P1 was individual (good early diagnostic + low stakes).
   Allowing pairs on the new P1 would further cut submissions — decide.
+  - *Decided:* P1 can be done individually or in pairs; Portfolio 2 is a required pair project.
 - [ ] **Class scaffolding needed.** The new P1 assumes a "tells" toolkit that
   isn't currently a lecture: distribution smell tests, impossible/contradictory
   records, duplicates, round-number clustering, decimal precision, correlation
@@ -105,7 +111,7 @@ interactivity — both kept as-is.
   slugs still resolve, the synthetic ones aren't self-labeled "synthetic" on the
   data card, and the real ones still carry the messiness that makes them
   arguable. Rebalance the mix if needed.
-- [ ] **Pre-existing P1 bug:** the current `portfolio/portfolio-1.qmd` Submission
+- [x] **Pre-existing P1 bug:** the current `portfolio/portfolio-1.qmd` Submission
   section says "two visualizations (replication and improvement)" — leftover from
   another project, contradicts the rest of P1. Gone in the rewrite; just noting
   it's a known issue.
@@ -119,13 +125,13 @@ interactivity — both kept as-is.
 
 - [ ] **HW7 P4 + P5** — same "lm coefficients per season" problem done as a
   `for` loop *and* as `map`. Keep one (buys back room on the 9-pt assignment).
-- [ ] **HW6 P2–P4** — three MAC-address string problems on one contrived example.
+- [x] **HW6 P2–P4** — three MAC-address string problems on one contrived example.
   Collapse to one or two; `separate_wider_regex()` now does most of it in one call.
 - [ ] **HW8 P2 + P3 + P4** (currently the S25 version) — pulls the same ACS data
   via `tidycensus`, then again via raw `httr2`, then wraps the raw version in a
   function. Cut to `tidycensus` once + one raw-API problem on a *different*
   endpoint.
-- [ ] **HW5 P10** — trim regex gauntlet from 7 parts to ~5. Drop "3+ vowels in a
+- [x] **HW5 P10** — trim regex gauntlet from 7 parts to ~5. Drop "3+ vowels in a
   row" and "same first/last letter" (backreference) — puzzle, not practice.
 - [ ] **HW9 P7** (WAI / `RMariaDB` to `scidb.smith.edu`) — replace with a
   DuckDB-backed problem (see Upweight). Depends on Smith keeping a MariaDB server

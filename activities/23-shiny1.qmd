@@ -3,34 +3,77 @@ title: "23-shiny"
 ---
 
 
-# Editing a shiny app: Part 1
+# Building your first app
 
-[`app-w26.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/slides/23/manager-survey-app/app-w26.R) contains a starter shiny app. Your tasks for today are: 
+Today we start with a *tiny* app and add to it, in three steps. The code for each step is on GitHub (links below).
 
-1. Run the app! What does it show us?
+::: callout-note
+## How to get an app into RStudio
 
-2. Read the code: find the inputs and the outputs
+1. In RStudio, choose **File > New Project > New Directory > Shiny Application** (or **File > New File > Shiny Web App** and pick **Single File**) and give the folder a name, like `manager-app`. RStudio makes a file called `app.R`.
+2. On the GitHub page for the app (links in the table), click the **Copy raw file** button at the top right of the code.
+3. Back in RStudio, click in `app.R`, select all (**Cmd/Ctrl + A**), paste (**Cmd/Ctrl + V**) over the template, and save.
+4. You should now see a **Run App** button at the top of the editor. If you don't, check that the file is named exactly `app.R`.
 
-3. Adapt the app to allow the user to specify what variable maps to the point color in the scatterplot
+Each app needs to live in its own folder, and the folder name doesn't matter. You only need to do this once: for the later steps, edit your own `app.R` as you go. If yours stops working and you can't see why, paste in the next version from the table to catch up.
+:::
 
-4. Adapt the app to allow the user to filter the data by `annual_salary`. Allow values between the minimum and maximum `annual_salary` selected. 
+| Step | File | What it adds |
+|:-----|:-----|:-------------|
+| 1 | [`v0-hist/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v0-hist/app.R) | one input (a slider) and one output (a histogram) |
+| 2 | [`v1-xcol/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v1-xcol/app.R) | a second input (a drop-down) and a second output (a jittered plot) |
+| 3 | [`v2-filter/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v2-filter/app.R) | a filter (checkboxes) |
+
+The data are from the *Ask a Manager* salary survey: [Ask a Manager Survey](https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-05-18) via TidyTuesday. 
+
+::: callout-note
+This data does not reflect the general population; it reflects Ask a Manager readers who self-selected to respond, which is a very different group.
+:::
+
+# Step 1: one input, one output
+
+Paste [`v0-hist/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v0-hist/app.R) into a new `app.R` (see above) and click **Run App**.
+
+1. What happens when you move the slider?
+2. Find the input's **ID**. Where else does that name show up?
+3. Find the output's **ID**. Where else does that name show up?
+4. Change the slider so that it starts at 10 bins and can go up to 100.
+5. Add a `selectInput("fill", "Bar color", choices = c("gray", "steelblue", "tomato"))` and use it for the `fill` of the histogram bars.
+
+# Step 2: two inputs, two outputs
+
+Edit your app to match [`v1-xcol/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v1-xcol/app.R), or paste it in, and run it.
+
+6. Which input changes which output?
+7. Add `"industry"` as a fourth choice for `xcol`. Does it work? What do you think of the plot?
+8. Add a `checkboxInput("minimal", "White background", value = FALSE)` that switches the jitter plot to `theme_minimal()`.
 
 ::: callout-tip
 ## Hint
 
-use `sliderInput` and specify a vector of lenth 2 for `value`
+Save the plot as an object, and then use `if (input$minimal) { plot <- plot + theme_minimal() }` before the last line, `plot`, of the `renderPlot()`.
 :::
 
-5. Adapt the app to allow the user to select whether the plot should have a white background
+# Step 3: a filter
+
+Edit your app to match [`v2-filter/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v2-filter/app.R), or paste it in, and run it.
+
+9. Uncheck **every** industry. What happens, and why?
+10. Add a `sliderInput` with *two* handles that filters respondents to a salary range, and apply it to both plots.
 
 ::: callout-tip
 ## Hint
 
-use `checkBoxInput` for the user input and `theme_minimal()` with an `if` statement to control the theme of the plot
+`value = c(0, 200000)` gives a slider with two handles
 :::
 
-6. Create an interactive histogram that allows the user to select what quantitative variable should be displayed and what categorical variable should be used to fill the bars. Add any other interactive elements (e.g., binwidth adjustments) that you want to.
+11. How many places did you have to make that change? What would happen if the app had 5 plots?
+
+# Challenge
+
+12. Add a third plot: a bar chart of the number of respondents in each `education` level (using the filtered data).
+13. Add a `textOutput` that says how many respondents are selected: "Showing 7,003 respondents".
 
 ::: aside
-Credit: [Mine Çetinkaya-Rundel's](https://vizdata.org/) Ask a Manager application exercise
+Credit: adapted from [Mine Çetinkaya-Rundel's](https://vizdata.org/) Ask a Manager application exercise
 :::

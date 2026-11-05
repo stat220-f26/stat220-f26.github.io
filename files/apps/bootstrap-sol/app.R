@@ -1,13 +1,7 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+# Solution to the Day 24 warm-up: one reactive expression shared by both outputs
 
 # Load the necessary packages
+
 library(shiny)
 library(tidyverse)
 library(palmerpenguins)
@@ -63,35 +57,35 @@ ui <- fluidPage(
 )
 
 
-# Define server logic required to draw a histogram
-# and calculate a percentile interval
+# Define server logic ---------------------------------------------------------
 server <- function(input, output, session) {
+
+  # The expensive step happens ONCE per change to n_boot.
+  # Changing the number of bins or the confidence level does not resample.
+  boot <- reactive({
+    resample(obs_data, B = input$n_boot)
+  })
+
   output$histogram <- renderPlot({
-    boot <- resample(obs_data, B = input$n_boot)
-    
-    data.frame(means = boot) %>%
+    data.frame(means = boot()) %>%
       ggplot(aes(x = means)) +
       ggdist::stat_histinterval(breaks = input$nbins, .width = input$conf_level, size = 20) +
       theme_minimal() +
       labs(x = paste("Mean of flipper length")) +
       xlim(187.5, 192.5)
   })
-  
+
   output$ci <- renderTable({
-    boot <- resample(obs_data
-                     , B = input$n_boot)
-    
     alpha <- 1 - input$conf_level
-    quantiles <- quantile(boot, probs = c(alpha/2, 1 - alpha/2))
-    
+    quantiles <- quantile(boot(), probs = c(alpha/2, 1 - alpha/2))
+
     data.frame(
-      mean = mean(boot), 
-      lower = quantiles[1], 
+      mean = mean(boot()),
+      lower = quantiles[1],
       upper = quantiles[2]
     )
   })
 }
 
-
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)

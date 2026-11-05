@@ -142,7 +142,7 @@ mainPanel(
 ## Your turn: layout
 
 ::: {.task .nonincremental}
-Open your `v3` app (or [`v3-reactive/app.R`](https://stat220-f26.github.io/files/shiny-apps/v3-reactive/app.R)).
+Open your `v3` app (or paste in [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v3-reactive/app.R)).
 
 1. Move the inputs into a `sidebarPanel()`, and the outputs into a `mainPanel()`
 2. Put each plot, and the data table, on its own tab

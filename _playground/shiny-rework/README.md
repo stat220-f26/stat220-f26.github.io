@@ -10,7 +10,7 @@ One app, built up over three days, using the Ask-a-Manager data.
 
 ## To use these
 
-1. Move `apps/` to `files/shiny-apps/` (the slides and activities link to `https://stat220-f26.github.io/files/shiny-apps/<version>/app.R`).
+1. Move `apps/` to `files/shiny-apps/`. The slides and activities link to the GitHub blob pages (`https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/<version>/app.R`) and students copy the code with **Copy raw file** (the Pages URL downloads `.R` files instead of showing them). The links only work once the files are on `main`, so push `v0`-`v2` before Day 23, `v3-reactive` and `bootstrap-sol` only after Day 24 class (they are the answers to that day's puzzle), and `v4-polish` after Day 25 starts. Day 24's finished-version link and Day 25's `v3` fallback will 404 until then.
 2. The apps read `slides/23/manager-survey-app/manager-survey-processed.rds` from GitHub `main` (it is already in the repo); `v4-polish` reads `data/manager-survey.rds`, made by `data-prep.R`.
 3. Replace `slides/23`, `slides/24`, `slides/25` and the three activities, and update the Day 23-25 rows of the schedule sheet (prepare column: Day 23 = Mastering Shiny Ch 1-2 or basics playlist; Day 24 = reactivity playlist or Ch 3, **plus create a shinyapps.io account**).
 4. Clean up `slides/25/`: `slides25-home.qmd` and `slides25-work.qmd` are stale copies of the SQL deck (also in `slides/26`).

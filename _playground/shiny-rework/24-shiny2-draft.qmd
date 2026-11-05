@@ -36,14 +36,14 @@ Stop here and let Amanda know that you've finished. We'll regroup and discuss re
 
 # The manager survey app
 
-Return to the app from Friday: your own version, or [`v2-filter/app.R`](https://stat220-f26.github.io/files/shiny-apps/v2-filter/app.R).
+Return to the app from Friday: your own version, or paste in [`v2-filter/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v2-filter/app.R) (**Copy raw file**, then paste over your `app.R`).
 
 9. The `filter(industry %in% input$industry)` code is written twice. Create a reactive expression called `filtered()` and use it in both plots.
 10. Add `req(input$industry)` as the first line of `filtered()`. Uncheck every industry. What changed?
 11. Add a `textOutput("n_respondents")` that says "Showing 7,003 respondents", using `filtered()`. (Hint: `paste("Showing", scales::comma(nrow(filtered())), "respondents")`.)
 12. Add a table of the filtered data: `DT::dataTableOutput("data")` in the UI and `DT::renderDataTable({ filtered() })` in the server.
 
-The finished version is [`v3-reactive/app.R`](https://stat220-f26.github.io/files/shiny-apps/v3-reactive/app.R).
+The finished version is [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v3-reactive/app.R).
 
 # Put it online
 
