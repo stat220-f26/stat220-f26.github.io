@@ -394,7 +394,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#editing-a-shiny-app-part-1" id="toc-editing-a-shiny-app-part-1" class="nav-link active" data-scroll-target="#editing-a-shiny-app-part-1">Editing a shiny app: Part 1</a></li>
+  <li><a href="#building-your-first-app" id="toc-building-your-first-app" class="nav-link active" data-scroll-target="#building-your-first-app">Building your first app</a></li>
+  <li><a href="#step-1-one-input-one-output" id="toc-step-1-one-input-one-output" class="nav-link" data-scroll-target="#step-1-one-input-one-output">Step 1: one input, one output</a></li>
+  <li><a href="#step-2-two-inputs-two-outputs" id="toc-step-2-two-inputs-two-outputs" class="nav-link" data-scroll-target="#step-2-two-inputs-two-outputs">Step 2: two inputs, two outputs</a></li>
+  <li><a href="#step-3-a-filter" id="toc-step-3-a-filter" class="nav-link" data-scroll-target="#step-3-a-filter">Step 3: a filter</a></li>
+  <li><a href="#challenge" id="toc-challenge" class="nav-link" data-scroll-target="#challenge">Challenge</a></li>
   </ul>
 </nav>
     </div>
@@ -434,46 +438,131 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="editing-a-shiny-app-part-1" class="level1 page-columns page-full">
-<h1>Editing a shiny app: Part 1</h1>
-<p><a href="https://github.com/stat220-f26/stat220-f26.github.io/blob/main/slides/23/manager-survey-app/app-w26.R"><code>app-w26.R</code></a> contains a starter shiny app. Your tasks for today are:</p>
+<section id="building-your-first-app" class="level1">
+<h1>Building your first app</h1>
+<p>Today we start with a <em>tiny</em> app and add to it, in three steps. The code for each step is on GitHub (links below).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How to get an app into RStudio
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
-<li><p>Run the app! What does it show us?</p></li>
-<li><p>Read the code: find the inputs and the outputs</p></li>
-<li><p>Adapt the app to allow the user to specify what variable maps to the point color in the scatterplot</p></li>
-<li><p>Adapt the app to allow the user to filter the data by <code>annual_salary</code>. Allow values between the minimum and maximum <code>annual_salary</code> selected.</p></li>
+<li>In RStudio, choose <strong>File &gt; New Project &gt; New Directory &gt; Shiny Application</strong> (or <strong>File &gt; New File &gt; Shiny Web App</strong> and pick <strong>Single File</strong>) and give the folder a name, like <code>manager-app</code>. RStudio makes a file called <code>app.R</code>.</li>
+<li>On the GitHub page for the app (links in the table), click the <strong>Copy raw file</strong> button at the top right of the code.</li>
+<li>Back in RStudio, click in <code>app.R</code>, select all (<strong>Cmd/Ctrl + A</strong>), paste (<strong>Cmd/Ctrl + V</strong>) over the template, and save.</li>
+<li>You should now see a <strong>Run App</strong> button at the top of the editor. If you don’t, check that the file is named exactly <code>app.R</code>.</li>
 </ol>
-<div class="callout callout-style-default callout-tip callout-titled">
+<p>Each app needs to live in its own folder, and the folder name doesn’t matter. You only need to do this once: for the later steps, edit your own <code>app.R</code> as you go. If yours stops working and you can’t see why, paste in the next version from the table to catch up.</p>
+</div>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">What it adds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><a href="https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v0-hist/app.R"><code>v0-hist/app.R</code></a></td>
+<td style="text-align: left;">one input (a slider) and one output (a histogram)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><a href="https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v1-xcol/app.R"><code>v1-xcol/app.R</code></a></td>
+<td style="text-align: left;">a second input (a drop-down) and a second output (a jittered plot)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><a href="https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v2-filter/app.R"><code>v2-filter/app.R</code></a></td>
+<td style="text-align: left;">a filter (checkboxes)</td>
+</tr>
+</tbody>
+</table>
+<p>The data are from the <em>Ask a Manager</em> salary survey: <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-05-18">Ask a Manager Survey</a> via TidyTuesday.</p>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Hint
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>use <code>sliderInput</code> and specify a vector of lenth 2 for <code>value</code></p>
+<p>This data does not reflect the general population; it reflects Ask a Manager readers who self-selected to respond, which is a very different group.</p>
 </div>
 </div>
-<ol start="5" type="1">
-<li>Adapt the app to allow the user to select whether the plot should have a white background</li>
+</section>
+<section id="step-1-one-input-one-output" class="level1">
+<h1>Step 1: one input, one output</h1>
+<p>Paste <a href="https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v0-hist/app.R"><code>v0-hist/app.R</code></a> into a new <code>app.R</code> (see above) and click <strong>Run App</strong>.</p>
+<ol type="1">
+<li>What happens when you move the slider?</li>
+<li>Find the input’s <strong>ID</strong>. Where else does that name show up?</li>
+<li>Find the output’s <strong>ID</strong>. Where else does that name show up?</li>
+<li>Change the slider so that it starts at 10 bins and can go up to 100.</li>
+<li>Add a <code>selectInput("fill", "Bar color", choices = c("gray", "steelblue", "tomato"))</code> and use it for the <code>fill</code> of the histogram bars.</li>
 </ol>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Hint
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>use <code>checkBoxInput</code> for the user input and <code>theme_minimal()</code> with an <code>if</code> statement to control the theme of the plot</p>
-</div>
-</div>
+</section>
+<section id="step-2-two-inputs-two-outputs" class="level1">
+<h1>Step 2: two inputs, two outputs</h1>
+<p>Edit your app to match <a href="https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v1-xcol/app.R"><code>v1-xcol/app.R</code></a>, or paste it in, and run it.</p>
 <ol start="6" type="1">
-<li>Create an interactive histogram that allows the user to select what quantitative variable should be displayed and what categorical variable should be used to fill the bars. Add any other interactive elements (e.g., binwidth adjustments) that you want to.</li>
+<li>Which input changes which output?</li>
+<li>Add <code>"industry"</code> as a fourth choice for <code>xcol</code>. Does it work? What do you think of the plot?</li>
+<li>Add a <code>checkboxInput("minimal", "White background", value = FALSE)</code> that switches the jitter plot to <code>theme_minimal()</code>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Save the plot as an object, and then use <code>if (input$minimal) { plot &lt;- plot + theme_minimal() }</code> before the last line, <code>plot</code>, of the <code>renderPlot()</code>.</p>
+</div>
+</div>
+</section>
+<section id="step-3-a-filter" class="level1">
+<h1>Step 3: a filter</h1>
+<p>Edit your app to match <a href="https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v2-filter/app.R"><code>v2-filter/app.R</code></a>, or paste it in, and run it.</p>
+<ol start="9" type="1">
+<li>Uncheck <strong>every</strong> industry. What happens, and why?</li>
+<li>Add a <code>sliderInput</code> with <em>two</em> handles that filters respondents to a salary range, and apply it to both plots.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>value = c(0, 200000)</code> gives a slider with two handles</p>
+</div>
+</div>
+<ol start="11" type="1">
+<li>How many places did you have to make that change? What would happen if the app had 5 plots?</li>
+</ol>
+</section>
+<section id="challenge" class="level1 page-columns page-full">
+<h1>Challenge</h1>
+<ol start="12" type="1">
+<li>Add a third plot: a bar chart of the number of respondents in each <code>education</code> level (using the filtered data).</li>
+<li>Add a <code>textOutput</code> that says how many respondents are selected: “Showing 7,003 respondents”.</li>
 </ol>
 
 
@@ -481,7 +570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- -->
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p>Credit: <a href="https://vizdata.org/">Mine Çetinkaya-Rundel’s</a> Ask a Manager application exercise</p>
+<p>Credit: adapted from <a href="https://vizdata.org/">Mine Çetinkaya-Rundel’s</a> Ask a Manager application exercise</p>
 </div></div></section>
 
 </main> <!-- /main -->
@@ -954,37 +1043,80 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Editing a shiny app: Part 1</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Building your first app</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">`app-w26.R`</span><span class="co">](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/slides/23/manager-survey-app/app-w26.R)</span> contains a starter shiny app. Your tasks for today are: </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Today we start with a *tiny* app and add to it, in three steps. The code for each step is on GitHub (links below).</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Run the app! What does it show us?</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Read the code: find the inputs and the outputs</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Adapt the app to allow the user to specify what variable maps to the point color in the scatterplot</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Adapt the app to allow the user to filter the data by <span class="in">`annual_salary`</span>. Allow values between the minimum and maximum <span class="in">`annual_salary`</span> selected. </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to get an app into RStudio</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In RStudio, choose **File &gt; New Project &gt; New Directory &gt; Shiny Application** (or **File &gt; New File &gt; Shiny Web App** and pick **Single File**) and give the folder a name, like <span class="in">`manager-app`</span>. RStudio makes a file called <span class="in">`app.R`</span>.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>On the GitHub page for the app (links in the table), click the **Copy raw file** button at the top right of the code.</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Back in RStudio, click in <span class="in">`app.R`</span>, select all (**Cmd/Ctrl + A**), paste (**Cmd/Ctrl + V**) over the template, and save.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>You should now see a **Run App** button at the top of the editor. If you don't, check that the file is named exactly <span class="in">`app.R`</span>.</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hint</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Each app needs to live in its own folder, and the folder name doesn't matter. You only need to do this once: for the later steps, edit your own <span class="in">`app.R`</span> as you go. If yours stops working and you can't see why, paste in the next version from the table to catch up.</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>use <span class="in">`sliderInput`</span> and specify a vector of lenth 2 for <span class="in">`value`</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Adapt the app to allow the user to select whether the plot should have a white background</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hint</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Step <span class="pp">|</span> File <span class="pp">|</span> What it adds <span class="pp">|</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-----|:-----|:-------------|</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> <span class="co">[</span><span class="ot">`v0-hist/app.R`</span><span class="co">](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v0-hist/app.R)</span> <span class="pp">|</span> one input (a slider) and one output (a histogram) <span class="pp">|</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> <span class="co">[</span><span class="ot">`v1-xcol/app.R`</span><span class="co">](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v1-xcol/app.R)</span> <span class="pp">|</span> a second input (a drop-down) and a second output (a jittered plot) <span class="pp">|</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> <span class="co">[</span><span class="ot">`v2-filter/app.R`</span><span class="co">](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v2-filter/app.R)</span> <span class="pp">|</span> a filter (checkboxes) <span class="pp">|</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>The data are from the *Ask a Manager* salary survey: <span class="co">[</span><span class="ot">Ask a Manager Survey</span><span class="co">](https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-05-18)</span> via TidyTuesday. </span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>use <span class="in">`checkBoxInput`</span> for the user input and <span class="in">`theme_minimal()`</span> with an <span class="in">`if`</span> statement to control the theme of the plot</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Create an interactive histogram that allows the user to select what quantitative variable should be displayed and what categorical variable should be used to fill the bars. Add any other interactive elements (e.g., binwidth adjustments) that you want to.</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>::: aside</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>Credit: <span class="co">[</span><span class="ot">Mine Çetinkaya-Rundel's</span><span class="co">](https://vizdata.org/)</span> Ask a Manager application exercise</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>This data does not reflect the general population; it reflects Ask a Manager readers who self-selected to respond, which is a very different group.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu"># Step 1: one input, one output</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>Paste <span class="co">[</span><span class="ot">`v0-hist/app.R`</span><span class="co">](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v0-hist/app.R)</span> into a new <span class="in">`app.R`</span> (see above) and click **Run App**.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>What happens when you move the slider?</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Find the input's **ID**. Where else does that name show up?</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Find the output's **ID**. Where else does that name show up?</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Change the slider so that it starts at 10 bins and can go up to 100.</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Add a <span class="in">`selectInput("fill", "Bar color", choices = c("gray", "steelblue", "tomato"))`</span> and use it for the <span class="in">`fill`</span> of the histogram bars.</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu"># Step 2: two inputs, two outputs</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>Edit your app to match <span class="co">[</span><span class="ot">`v1-xcol/app.R`</span><span class="co">](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v1-xcol/app.R)</span>, or paste it in, and run it.</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Which input changes which output?</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Add <span class="in">`"industry"`</span> as a fourth choice for <span class="in">`xcol`</span>. Does it work? What do you think of the plot?</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>Add a <span class="in">`checkboxInput("minimal", "White background", value = FALSE)`</span> that switches the jitter plot to <span class="in">`theme_minimal()`</span>.</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hint</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>Save the plot as an object, and then use <span class="in">`if (input$minimal) { plot &lt;- plot + theme_minimal() }`</span> before the last line, <span class="in">`plot`</span>, of the <span class="in">`renderPlot()`</span>.</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu"># Step 3: a filter</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>Edit your app to match <span class="co">[</span><span class="ot">`v2-filter/app.R`</span><span class="co">](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v2-filter/app.R)</span>, or paste it in, and run it.</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="ss">9. </span>Uncheck **every** industry. What happens, and why?</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ss">10. </span>Add a <span class="in">`sliderInput`</span> with *two* handles that filters respondents to a salary range, and apply it to both plots.</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hint</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="in">`value = c(0, 200000)`</span> gives a slider with two handles</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">11. </span>How many places did you have to make that change? What would happen if the app had 5 plots?</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="fu"># Challenge</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">12. </span>Add a third plot: a bar chart of the number of respondents in each <span class="in">`education`</span> level (using the filtered data).</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="ss">13. </span>Add a <span class="in">`textOutput`</span> that says how many respondents are selected: "Showing 7,003 respondents".</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>::: aside</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>Credit: adapted from <span class="co">[</span><span class="ot">Mine Çetinkaya-Rundel's</span><span class="co">](https://vizdata.org/)</span> Ask a Manager application exercise</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
