@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Lab Quiz 03 Practice Questions: Solutions – Stat 220</title>
 <style>
@@ -67,9 +67,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6e03bc272f1cdef1d8296ac38e217ebd.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-04c7ee197ec4d7edf3c29ccb71f7023e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4a17e18fdf56099d4f6da1e105f33a53.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-eecf1fbfc817078eed7cb568f09af49d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -438,8 +438,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 2 × 2
   international     n
   &lt;lgl&gt;         &lt;int&gt;
-1 FALSE          1085
-2 TRUE            170</code></pre>
+1 FALSE          1082
+2 TRUE            169</code></pre>
 </div>
 </div>
 <p><code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> returns <code>TRUE</code> for each name that contains the pattern “International” and <code>FALSE</code> otherwise. (<code>str_detect(name, "International")</code> is the only part that goes in the blank; the <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> is only here to show the result)</p>
@@ -507,10 +507,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [16] "Ernest A. Love Field"                                   
 [17] "Norman Y. Mineta San Jose International Airport"        
 [18] "Charles M. Schulz Sonoma County Airport"                
-[19] "Cyril E. King Airport"                                  
-[20] "Sioux Gateway Col. Bud Day Field"                       
-[21] "Waynesville-St. Robert Regional Forney field"           
-[22] "Toccoa Airport - R.G. Letourneau Field"                 </code></pre>
+[19] "Sioux Gateway Col. Bud Day Field"                       
+[20] "Waynesville-St. Robert Regional Forney field"           
+[21] "Toccoa Airport - R.G. Letourneau Field"                 </code></pre>
 </div>
 </div>
 <p>All of the airport names that contain a literal period.</p>
@@ -628,7 +627,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 1 × 8
   lat_min lat_max lon_min lon_max alt_min alt_max tz_min tz_max
     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1    18.0    71.3   -177.    174.    -115    9070    -10      8</code></pre>
+1    19.7    71.3   -177.    174.    -115    9070    -10      8</code></pre>
 </div>
 </div>
 <p><code>where(is.numeric)</code> selects the quantitative columns and <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> applies the list of functions to each of them: this gives 8 columns (a min and a max for each). The names of the output columns come from the column and the name in the list (<code>lat_min</code>, <code>lat_max</code>, …).</p>
