@@ -1,5 +1,5 @@
 ---
-title: "Reactivity"
+title: "Reactivity and <br>UI Design"
 subtitle: Day 24
 institute: "Carleton College <br> Stat 220 - Fall 2026"
 author: "Prof Amanda Luby"
@@ -34,11 +34,10 @@ library(tidyverse)
 ## Today
 
 ::: {.nonincremental}
-1. **Warm-up:** something strange in a bootstrap app (15 min)
-2. **Reactivity** in 10 minutes
-3. **Fix the bootstrap app** with a reactive expression (15 min)
-4. **Fix our manager app** the same way: `v2` $\to$ `v3` (15 min)
-5. **Put it online** (10 min)
+1. **Warm-up:** something strange in a bootstrap app (9 min)
+2. **Reactivity** (8 min) and fixing the bootstrap app (10 min)
+3. **Fix our manager app** the same way: `v2` $\to$ `v3` (12 min)
+4. **UI design:** what makes an app good, and how to lay it out: `v3` $\to$ `v4` (28 min)
 :::
 
 ## Warm Up: on your own
@@ -151,73 +150,6 @@ server <- function(input, output, session) {
 
 ```{r}
 #| echo: false
-countdown(12)
-```
-
-## Back to the manager app: `v2` $\to$ `v3`
-
-Open your own version from Friday, or paste in [`v2-filter/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v2-filter/app.R). The filter appears **twice**:
-
-```{r eval=FALSE}
-output$salary_hist <- renderPlot({
-  manager_survey |>
-    filter(industry %in% input$industry) |> ...
-})
-output$salary_jitter <- renderPlot({
-  manager_survey |>
-    filter(industry %in% input$industry) |> ...
-})
-```
-
-::: {.task .nonincremental}
-8. Create a reactive expression called `filtered()` and use it in both plots
-9. Add a third output that uses `filtered()`: `textOutput("n_respondents")` that says "Showing 7,003 respondents"
-10. Add `req(input$industry)` as the first line of `filtered()`. Uncheck everything. What changed?
-11. Add a `DT::dataTableOutput("data")` that shows the filtered data
-:::
-
-```{r}
-#| echo: false
-countdown(15)
-```
-
-## `req()` and `validate()`
-
-```{r eval=FALSE}
-filtered <- reactive({
-  req(input$industry)          # stop quietly until something is checked
-  manager_survey |>
-    filter(industry %in% input$industry)
-})
-```
-
-- `req()` silently stops the app from running the rest of the code if the input is empty (no angry red error)
-- `validate(need(..., "message"))` is the version that shows the user a message
-
-## Putting your app online
-
-::: {.nonincremental}
-1. Put your app in its **own folder**: `app.R` and nothing else
-2. In RStudio, open `app.R` and click the **Publish** button (blue icon) at the top right of the editor, then choose shinyapps.io
-3. Pick a name, click *Publish*, wait ~1-2 minutes
-4. Copy the URL and *test it* in a private window
-:::
-
-. . .
-
-::: {.callout-warning}
-A deployed app needs **all** its files in the folder (data, scripts), and the data must be read with a **relative** path (`"data/file.rds"`, not `"/Users/..."` or `"/data/..."`). We'll set that up on Wednesday.
-:::
-
-```{r}
-#| echo: false
 countdown(10)
 ```
 
-## For Wednesday
-
-::: {.nonincremental}
-- Final project **sketch** is due Wednesday (see the [final project page](https://stat220-f26.github.io/portfolio/final.html))
-- Keep your deployed `v3` app. On Wednesday we'll change its layout and theme
-- (Optional) Skim [Chapter 6 of Mastering Shiny](https://mastering-shiny.org/action-layout.html) for layout options
-:::

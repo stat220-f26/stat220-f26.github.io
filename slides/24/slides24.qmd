@@ -243,10 +243,15 @@ server <- function(input, output, session) {
 }
 ```
 
-## Your turn
+## Back to the manager app: `v2` $\to$ `v3`
 
-::: task
-Complete tasks 6-9 in groups of ~3.
+Open your own version from Friday, or paste in [`v2-filter/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v2-filter/app.R). The filter appears **twice**:
+
+::: {.task .nonincremental}
+8. Create a reactive expression called `filtered()` and use it in both plots
+9. Add a third output that uses `filtered()`: `textOutput("n_respondents")` that says "Showing 7,003 respondents"
+10. Add `req(input$industry)` as the first line of `filtered()`. Uncheck everything. What changed?
+11. Add a `DT::dataTableOutput("data")` that shows the filtered data
 :::
 
 ```{r}
@@ -254,13 +259,125 @@ Complete tasks 6-9 in groups of ~3.
 countdown(10)
 ```
 
+## `req()` and `validate()`
 
-## Final details
+```{r eval=FALSE}
+filtered <- reactive({
+  req(input$industry)          # stop quietly until something is checked
+  manager_survey |>
+    filter(industry %in% input$industry)
+})
+```
 
-- Shiny apps need to be "connected" to RStudio or a remote RStudio server
+- `req()` silently stops the app from running the rest of the code if the input is empty (no angry red error)
+- `validate(need(..., "message"))` is the version that shows the user a message
 
-- You can deploy shiny apps online
-    + using Posit's cloud server (free/fee) - https://www.shinyapps.io/
-    + creating a shiny server
+# UI design {.maize}
 
-- Make sure that your app lives in its own **folder** and there are no other .R/.qmd/.rmd files in that folder. The folder is what gets "deployed"
+## Some basic design principles
+
+::: {.nonincremental}
+- **Group related inputs** and put them where people expect them (usually a sidebar)
+- **One idea per output:** put separate views on separate tabs instead of one very long page
+- **Say what the user is looking at:** titles, axis labels, and "Showing 7,003 respondents"
+- **Sensible defaults:** the first thing the user sees should already show something interesting
+- **Fewer choices are better:** 25 checkboxes is a lot. Would a drop-down be better?
+- **Label inputs in plain words** (not `xcol`)
+:::
+
+## Where we are
+
+Our `v3` app is a single long column: every input, then every output.
+
+. . .
+
+Today we reorganize it into the `v4` layout:
+
+::: {.nonincremental}
+- inputs in a **sidebar**
+- each output on its own **tab**
+:::
+
+## Page with sidebar
+
+:::: {.columns}
+
+::: {.column width="45%"}
+```{r}
+#| eval: false
+
+fluidPage(
+  titlePanel("title"),
+  sidebarLayout(
+    sidebarPanel(
+      # inputs
+    ),
+    mainPanel(
+      # outputs
+    )
+  )
+)
+```
+:::
+
+::: {.column width="55%"}
+![](../../slides/img/shiny-sidebar.png)
+:::
+::::
+
+## Tabs: `tabsetPanel()`
+
+:::: {.columns}
+
+::: {.column width="55%"}
+```{r}
+#| eval: false
+
+mainPanel(
+  tabsetPanel(
+    tabPanel("Distribution", 
+             plotOutput("salary_hist")),
+    tabPanel("Individual salaries", 
+             plotOutput("salary_jitter")),
+    tabPanel("Data", 
+             DT::dataTableOutput("data"))
+  )
+)
+```
+:::
+
+::: {.column width="45%"}
+![](../../slides/img/shiny-tabset-input-1.png)
+:::
+::::
+
+## Other layouts (for your projects)
+
+::: {.nonincremental}
+- `fluidRow()` and `column()` for grids
+- `navlistPanel()` and `navbarPage()` for multi-page apps
+- See [Mastering Shiny, Chapter 6](https://mastering-shiny.org/action-layout.html)
+:::
+
+## Your turn: layout
+
+::: {.task .nonincremental}
+Open your `v3` app (or [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R)).
+
+1. Move the inputs into a `sidebarPanel()`, and the outputs into a `mainPanel()`
+2. Put each plot, and the data table, on its own tab
+3. Give each input a plain-language label, and add axis labels to the plots
+4. Add a fourth tab: a line plot of the *average* salary for each education level, with one line per selected industry (hint: `group_by(industry, education)`, `summarize()`, `geom_line()`, and use `filtered()`)
+:::
+
+```{r}
+#| echo: false
+countdown(10)
+```
+
+## For Wednesday
+
+::: {.nonincremental}
+- **Wednesday we make it look good and put it online.** Please create a (free) account at [posit connect cloud](https://connect.posit.cloud/) and bring your login info to class
+- Final project **sketch** is due Wednesday (see the [final project page](https://stat220-f26.github.io/portfolio/final.html))
+:::

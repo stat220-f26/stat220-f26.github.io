@@ -1,5 +1,5 @@
 ---
-title: "Shiny Design"
+title: "Theming and <br>Deploying"
 subtitle: Day 25
 institute: "Carleton College <br> Stat 220 - Fall 2026"
 author: "Prof Amanda Luby"
@@ -34,125 +34,15 @@ library(tidyverse)
 ## Today
 
 ::: {.nonincremental}
-1. What makes an app *good*? (6 min)
-2. **Layout:** sidebar and tabs (15 min)
-3. **Theme:** make it yours (10 min)
-4. **Project structure** and re-deploying (15 min)
-5. Work time: **sketch due today**, Portfolio 3 due Friday (rest of class)
+1. **Theming:** make it yours (15 min)
+2. **Project structure:** an app that can be deployed (10 min)
+3. **Deploying** to shinyapps.io (15 min)
+4. Work time: **sketch due today**, Portfolio 3 due Friday (rest of class)
 :::
-
-## Shiny: warm-up {.smaller}
-
-::: {.task .nonincremental}
-Open the following shinyapps and explore a little bit.
-
-+ [Data Wrangling](https://psu-eberly.shinyapps.io/data_wrangling/)
-+ [Biodiversity in NPS](https://abenedetti.shinyapps.io/bioNPS/)
-+ [Hex Memory Game](https://dreamrs.shinyapps.io/memory-hex/)
-+ [Lake Profile Dashboard](https://gallery.shinyapps.io/lake-profile-dashboard/)
-
-With the folks around you, discuss:
-
-1. Did any apps stand out as enjoyable or useful?
-2. What features or design choices make an app stand out?
-3. Are there any small tweaks that would make them more usable?
-:::
-
-```{r}
-#| echo: false
-countdown(6)
-```
-
-# Layout {.maize}
-
-## Where we are
-
-Our `v3` app is a single long column: every input, then every output. 
 
 . . .
 
-Today we reorganize it into the `v4` layout:
-
-::: {.nonincremental}
-- inputs in a **sidebar**
-- each output on its own **tab**
-:::
-
-## Page with sidebar
-
-:::: {.columns}
-
-::: {.column width="45%"}
-```{r}
-#| eval: false
-
-fluidPage(
-  titlePanel("title"),
-  sidebarLayout(
-    sidebarPanel(
-      # inputs
-    ),
-    mainPanel(
-      # outputs
-    )
-  )
-)
-```
-:::
-
-::: {.column width="55%"}
-![](../../slides/img/shiny-sidebar.png)
-:::
-::::
-
-## Tabs: `tabsetPanel()`
-
-:::: {.columns}
-
-::: {.column width="55%"}
-```{r}
-#| eval: false
-
-mainPanel(
-  tabsetPanel(
-    tabPanel("Distribution", 
-             plotOutput("salary_hist")),
-    tabPanel("Individual salaries", 
-             plotOutput("salary_jitter")),
-    tabPanel("Data", 
-             DT::dataTableOutput("data"))
-  )
-)
-```
-:::
-
-::: {.column width="45%"}
-![](../../slides/img/shiny-tabset-input-1.png)
-:::
-::::
-
-## Other layouts (for your projects)
-
-::: {.nonincremental}
-- `fluidRow()` and `column()` for grids
-- `navlistPanel()` and `navbarPage()` for multi-page apps
-- See [Mastering Shiny, Chapter 6](https://mastering-shiny.org/action-layout.html)
-:::
-
-## Your turn: layout
-
-::: {.task .nonincremental}
-Open your `v3` app (or paste in [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v3-reactive/app.R)).
-
-1. Move the inputs into a `sidebarPanel()`, and the outputs into a `mainPanel()`
-2. Put each plot, and the data table, on its own tab
-3. Add a fourth tab: a line plot of the *average* salary for each education level (hint: `group_by(industry, education)`, `summarize()`, `geom_line()`)
-:::
-
-```{r}
-#| echo: false
-countdown(12)
-```
+Start from your `v4` app (or [`v4-layout/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v4-layout/app.R)): inputs in a sidebar, outputs on tabs.
 
 # Theming {.maize}
 
@@ -184,6 +74,24 @@ server <- function(input, output, session) {
 
 ![](../../slides/img/bslib-themer.gif){width="50%" fig-align="center"}
 
+## Customizing the theme
+
+```{r}
+#| eval: false
+
+fluidPage(
+  theme = bslib::bs_theme(
+    bg = "#003069",
+    fg = "#ffd24f",
+    base_font = "Montserrat",
+    heading_font = "Playfair Display SemiBold"
+  ),
+  ...
+)
+```
+
+![](../../slides/img/shiny-theme-carleton.png){width="45%" fig-align="center"}
+
 ## Make the plots match
 
 ```{r}
@@ -192,20 +100,30 @@ server <- function(input, output, session) {
 thematic::thematic_shiny()   # put this near the top of app.R
 ```
 
+![](../../slides/img/carleton-graph-theme.png){width="45%" fig-align="center"}
+
 - Plots drawn with `ggplot` then pick up the colors and fonts of the app theme
 - Needs `{thematic}` 0.1.8 or newer (with ggplot2 4.0, older versions fail to start the app). Update with `install.packages("thematic")`
+
+## Theming and accessibility
+
+::: {.nonincremental}
+- Is there enough **contrast** between text and background? (Light text on a light background is the most common problem.)
+- Don't rely on color alone to carry meaning (use labels, shapes, or a colorblind-friendly palette)
+- Is the font big enough to read from a projector?
+:::
 
 ## Your turn: theme
 
 ::: {.task .nonincremental}
-1. Pick a `bootswatch` theme, or customize with `bs_themer()`
+1. Add a `bootswatch` theme to your app, or customize with `bs_themer()`
 2. Add `thematic::thematic_shiny()` and check that the plots match
-3. Does the theme make the app easier or harder to read? (Check the contrast!)
+3. Check the contrast and the font sizes. Would someone with low vision be able to read your app?
 :::
 
 ```{r}
 #| echo: false
-countdown(8)
+countdown(10)
 ```
 
 # Project structure {.maize}
@@ -219,8 +137,8 @@ my-app/
     manager-survey.rds
 ```
 
-- The **whole folder** is deployed, so all files the app needs must be in it
-- No other `.R` or `.qmd` files with `ui`/`server` in it. Only one `app.R`
+- The **whole folder** is deployed, so every file the app needs must be in it
+- Only one `app.R`, and no other `.R` or `.qmd` files with a `ui` and `server`
 - **Prepare your data separately** (`data-prep.R`), save it to `data/`, and read it in the app with a **relative path**
 
 ## Data prep script
@@ -248,20 +166,80 @@ manager_survey <- read_rds("data/manager-survey.rds")   # relative path!
 
 . . .
 
-`"/data/manager-survey.rds"` (with the leading `/`) means the *root of your computer* and will fail.
+`"/data/manager-survey.rds"` (with the leading `/`) means the *root of your computer*, and will fail.
 
-## Your turn: restructure and re-deploy
+## The same idea for your whole project repo
+
+The final project rubric grades **project organization** and your **README**. A repo that someone else can navigate looks like:
+
+```
+my-project/
+  README.md          <- link to the published project, what's where
+  data-prep.R        <- gets/cleans the data (scripts, in order)
+  data/              <- the cleaned data
+  app/               <- the shiny app (a deployable folder)
+    app.R
+    data/
+  report.qmd         <- the written report, if you have one
+```
+
+- Clear file names ("analysis-final-v2-REAL.R" is not one)
+- No leftover files; the README says which file to open first
+
+## Your turn: restructure
 
 ::: {.task .nonincremental}
-1. Move the data-preparation code into `data-prep.R` and write `data/manager-survey.rds`
-2. Read the saved data in `app.R`
-3. Re-deploy your app (same name, so the URL stays the same)
-4. Test the new version in a private window
+1. Make a new folder for the app, with a copy of your `app.R`
+2. Move the data-preparation code into `data-prep.R` (in the folder), run it, and check that `data/manager-survey.rds` exists
+3. Read the saved data in `app.R` with a relative path
+4. Run the app from this folder. Does it still work?
 :::
 
 ```{r}
 #| echo: false
-countdown(10)
+countdown(7)
+```
+
+# Deploying {.maize}
+
+## Where can an app live?
+
+- A Shiny app needs **R running behind it**, so it can't be a static website (unlike a Quarto page)
+- **shinyapps.io**: Posit's hosting. A free account gives you 5 apps and a limited number of active hours per month
+- Connect Cloud (deploy straight from GitHub) is another option
+- Your app is **public**. Don't deploy anything with data that you don't have permission to share
+
+## Publishing from RStudio
+
+::: {.nonincremental}
+1. Open `app.R` and click the blue **Publish** button at the top right of the editor
+2. Choose **shinyapps.io**. (First time? Connect your account with the ["Getting started"](https://docs.posit.co/shinyapps.io/guide/getting_started/) guide)
+3. Check that `app.R` **and** `data/manager-survey.rds` are ticked, and give the app a title
+4. Click **Publish** and wait a minute or two
+5. Copy the URL and test it in a **private window**
+:::
+
+## When it fails
+
+::: {.nonincremental}
+- Read the **deployment log** (the Deploy tab in RStudio) from the bottom up
+- *"file not found"*: the data file is not in the folder, or the path is wrong (leading `/`, or absolute like `/Users/...`)
+- *"there is no package called..."*: the app uses a package that is only loaded in your session. Put every `library()` call in `app.R`
+- Works on your laptop but not online? Use a relative path, and don't read from your Desktop or Downloads folder
+- The app takes a while to wake up the first time (and "sleeps" when no one has used it for a bit)
+:::
+
+## Your turn: deploy
+
+::: {.task .nonincremental}
+1. Deploy your app to shinyapps.io
+2. Open the URL in a private window and test every input and tab
+3. Add the URL to your README (and share it with someone near you to test!)
+:::
+
+```{r}
+#| echo: false
+countdown(15)
 ```
 
 ## Rest of class: work time

@@ -1,7 +1,7 @@
 ---
-title: "24-shiny2"
+title: "24-shiny2: reactivity and UI design"
 ---
-
+ 
 # Understanding reactivity
 
 Your task today is to improve two Shiny apps with *reactive expressions*.
@@ -45,13 +45,43 @@ Return to the app from Friday: your own version, or paste in [`v2-filter/app.R`]
 
 The finished version is [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v3-reactive/app.R).
 
-# Put it online
+# UI design
 
-13. Make a folder with a copy of your app named `app.R` (and nothing else in the folder).
-14. Click **Publish** at the top right of the editor, choose shinyapps.io, and publish.
-15. Open your app's URL in a private window and test every input.
+## Warm up: what makes an app good?
 
-(Before class: create a [shinyapps.io](https://www.shinyapps.io/) account and connect RStudio, using the ["Getting started"](https://docs.posit.co/shinyapps.io/guide/getting_started/) guide. There is also an option to deploy from GitHub using Connect Cloud.)
+Open the following shinyapps and explore a little bit.
+
++ [Data Wrangling](https://psu-eberly.shinyapps.io/data_wrangling/)
++ [Biodiversity in NPS](https://abenedetti.shinyapps.io/bioNPS/)
++ [Hex Memory Game](https://dreamrs.shinyapps.io/memory-hex/)
++ [Lake Profile Dashboard](https://gallery.shinyapps.io/lake-profile-dashboard/)
+
+With the folks around you, discuss:
+
+1. Did any apps stand out as enjoyable or useful?
+2. What features or design choices make an app stand out?
+3. Are there any small tweaks that would make them more usable?
+
+## Reorganize the manager survey app
+
+Start from your `v3` app, or [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v3-reactive/app.R). The finished version for today is [`v4-layout/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/shiny-apps/v4-layout/app.R) (try to build it yourself first!).
+
+13. Move the inputs into a `sidebarPanel()` and the outputs into a `mainPanel()`, inside `sidebarLayout()`.
+14. Put each plot, and the data table, on its own tab (`tabsetPanel()` and `tabPanel()`).
+15. Give every input a plain-language label (not `xcol`!), and add axis labels and titles to the plots.
+16. Add a fourth tab with a line plot of the *average* salary by `education`, with one line for each selected industry.
+
+::: callout-tip
+## Hint
+
+`group_by(industry, education) |> summarize(mean_salary = mean(annual_salary))`, then `geom_line()` with `group = industry`. Don't forget to use `filtered()`!
+:::
+
+17. (If time) 25 checkboxes make the sidebar very long. Can you replace them with a `selectInput(..., multiple = TRUE)`?
+
+# For Wednesday
+
+Create a [shinyapps.io](https://www.shinyapps.io/) account and connect RStudio, using the ["Getting started"](https://docs.posit.co/shinyapps.io/guide/getting_started/) guide, **before class**. Wednesday we'll theme the app and put it online.
 
 ::: aside
 Credit: reactivity activity adapted from Mine Çetinkaya-Rundel's and Colin Rundel's courses

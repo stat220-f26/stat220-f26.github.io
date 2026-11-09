@@ -54,4 +54,35 @@ Stop here and let Amanda know that you've finished.
 
 # `manager-survey` app
 
-Return to the `manager_survey` app from last time (you can either continue to work on yours or [download](/files/app-w26-sol.R) a version with the tweaks added already). Add a reactive expression to `filter()` the dataset and create the outputs. 
+Return to the app from Friday: your own version, or paste in [`v2-filter/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v2-filter/app.R) (**Copy raw file**, then paste over your `app.R`).
+
+9. The `filter(industry %in% input$industry)` code is written twice. Create a reactive expression called `filtered()` and use it in both plots.
+10. Add `req(input$industry)` as the first line of `filtered()`. Uncheck every industry. What changed?
+11. Add a `textOutput("n_respondents")` that says "Showing 7,003 respondents", using `filtered()`. (Hint: `paste("Showing", scales::comma(nrow(filtered())), "respondents")`.)
+12. Add a table of the filtered data: `DT::dataTableOutput("data")` in the UI and `DT::renderDataTable({ filtered() })` in the server.
+
+The finished version is [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R).
+
+# UI design
+
+## Reorganize the manager survey app
+
+Start from your `v3` app, or [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R). The finished version for today is [`v4-layout/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v4-layout/app.R) (try to build it yourself first!).
+
+13. Move the inputs into a `sidebarPanel()` and the outputs into a `mainPanel()`, inside `sidebarLayout()`.
+14. Put each plot, and the data table, on its own tab (`tabsetPanel()` and `tabPanel()`).
+15. Give every input a plain-language label (not `xcol`!), and add axis labels and titles to the plots.
+16. Add a fourth tab with a line plot of the *average* salary by `education`, with one line for each selected industry.
+
+::: callout-tip
+## Hint
+
+`group_by(industry, education) |> summarize(mean_salary = mean(annual_salary))`, then `geom_line()` with `group = industry`. Don't forget to use `filtered()`!
+:::
+
+17. (If time) 25 checkboxes make the sidebar very long. Can you replace them with a `selectInput(..., multiple = TRUE)`?
+
+# For Wednesday
+
+- **Wednesday we make it look good and put it online.** Please create a (free) account at [posit connect cloud](https://connect.posit.cloud/) and bring your login info to class
+- Final project **sketch** is due Wednesday (see the [final project page](https://stat220-f26.github.io/portfolio/final.html))
