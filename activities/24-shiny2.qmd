@@ -67,7 +67,7 @@ The finished version is [`v3-reactive/app.R`](https://github.com/stat220-f26/sta
 
 ## Reorganize the manager survey app
 
-Start from your `v3` app, or [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R). The finished version for today is [`v4-layout/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v4-layout/app.R) (try to build it yourself first!).
+Start from your `v3` app, or [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R). 
 
 14. Move the inputs into a `sidebarPanel()` and the outputs into a `mainPanel()`, inside `sidebarLayout()`.
 15. Put each plot, and the data table, on its own tab (`tabsetPanel()` and `tabPanel()`).
