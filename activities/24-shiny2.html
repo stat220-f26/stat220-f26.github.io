@@ -523,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>UI design</h1>
 <section id="reorganize-the-manager-survey-app" class="level2">
 <h2 class="anchored" data-anchor-id="reorganize-the-manager-survey-app">Reorganize the manager survey app</h2>
-<p>Start from your <code>v3</code> app, or <a href="https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R"><code>v3-reactive/app.R</code></a>. The finished version for today is <a href="https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v4-layout/app.R"><code>v4-layout/app.R</code></a> (try to build it yourself first!).</p>
+<p>Start from your <code>v3</code> app, or <a href="https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R"><code>v3-reactive/app.R</code></a>.</p>
 <ol start="14" type="1">
 <li>Move the inputs into a <code>sidebarPanel()</code> and the outputs into a <code>mainPanel()</code>, inside <code>sidebarLayout()</code>.</li>
 <li>Put each plot, and the data table, on its own tab (<code>tabsetPanel()</code> and <code>tabPanel()</code>).</li>
@@ -698,7 +698,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/stat220-f26\.github\.io\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1094,7 +1094,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reorganize the manager survey app</span></span>
 <span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>Start from your <span class="in">`v3`</span> app, or <span class="co">[</span><span class="ot">`v3-reactive/app.R`</span><span class="co">](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R)</span>. The finished version for today is <span class="co">[</span><span class="ot">`v4-layout/app.R`</span><span class="co">](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v4-layout/app.R)</span> (try to build it yourself first!).</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>Start from your <span class="in">`v3`</span> app, or <span class="co">[</span><span class="ot">`v3-reactive/app.R`</span><span class="co">](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R)</span>. </span>
 <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="ss">14. </span>Move the inputs into a <span class="in">`sidebarPanel()`</span> and the outputs into a <span class="in">`mainPanel()`</span>, inside <span class="in">`sidebarLayout()`</span>.</span>
 <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="ss">15. </span>Put each plot, and the data table, on its own tab (<span class="in">`tabsetPanel()`</span> and <span class="in">`tabPanel()`</span>).</span>
