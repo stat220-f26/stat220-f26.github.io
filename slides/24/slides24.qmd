@@ -42,7 +42,7 @@ theme_set(slides_theme)
 ## Warm Up: on your own
 
 ::: {.task .nonincremental}
-Start by opening [`24-reactivity.R`](https://stat220-f26.github.io/files/24-reactivity.R)
+Start by opening [`bootstrap-start/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/bootstrap-start/app.R) (click **Copy raw file**, then paste it into a new `app.R`)
 
 1.  To begin, you need to understand what the Shiny app is doing. Run the Shiny app. What output changes when you change...
 
@@ -65,7 +65,7 @@ countdown(3)
 ::: {.task .nonincremental}
 3.  Discuss your answers to Part 1 with your group and be ready to report back.
 
-4.  Read through the code in the `renderPlot()` and `renderPrint()` reactive expressions. Note the key tasks executed within each.
+4.  Read through the code in the `renderPlot()` and `renderTable()` expressions. Note the key tasks executed within each.
 
 5.  Based on your answers to #4, Is there any replication? That is, are any key tasks executed multiple times? Record your group's answers and be ready to report back.
 :::
@@ -243,15 +243,29 @@ server <- function(input, output, session) {
 }
 ```
 
+## Your turn: fix the bootstrap app
+
+::: {.task .nonincremental}
+6. Which task is *repeated* in both `render` functions? Which outputs need it?
+7. Create a `reactive()` that holds the bootstrap resamples (put it **above** the `render` functions), and use it in both
+8. Run the app. Now what happens when you change the number of bins? The confidence level? The number of resamples? Do the plot and the table agree?
+9. Compare the new code with the original: what is easier to read?
+:::
+
+```{r}
+#| echo: false
+countdown(10)
+```
+
 ## Back to the manager app: `v2` $\to$ `v3`
 
 Open your own version from Friday, or paste in [`v2-filter/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v2-filter/app.R). The filter appears **twice**:
 
 ::: {.task .nonincremental}
-8. Create a reactive expression called `filtered()` and use it in both plots
-9. Add a third output that uses `filtered()`: `textOutput("n_respondents")` that says "Showing 7,003 respondents"
-10. Add `req(input$industry)` as the first line of `filtered()`. Uncheck everything. What changed?
-11. Add a `DT::dataTableOutput("data")` that shows the filtered data
+10. Create a reactive expression called `filtered()` and use it in both plots
+11. Add `req(input$industry)` as the first line of `filtered()`. Uncheck everything. What changed?
+12. Add a third output that uses `filtered()`: `textOutput("n_respondents")` that says "Showing 7,003 respondents"
+13. Add a `DT::dataTableOutput("data")` that shows the filtered data
 :::
 
 ```{r}

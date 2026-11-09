@@ -1,4 +1,4 @@
-# v4: layout (tabs), theme, and a data/ folder -------------------------------
+# v5: theme + a data/ folder, ready to deploy ---------------------------------
 # Run data-prep.R first. Keep app.R, data/ and nothing else in this folder:
 # the whole folder is what gets deployed.
 

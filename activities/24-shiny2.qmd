@@ -10,7 +10,7 @@ This activity will guide your through the adaptation of this Shiny app.
 
 ## Part 1: on your own
 
-Start by downloading [`24-reactivity.R`](https://stat220-f26.github.io/files/24-reactivity.R) (clicking the link will download the .R file)
+Start with [`bootstrap-start/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/bootstrap-start/app.R): click **Copy raw file**, then paste it into a new `app.R` file in RStudio.
 
 1.  To begin, you need to understand what the Shiny app is doing. Run the Shiny app. What output changes when you change...
 
@@ -26,7 +26,7 @@ Start by downloading [`24-reactivity.R`](https://stat220-f26.github.io/files/24-
 
 3.  Discuss your answers to Part 1 with your group and be ready to report back.
 
-4.  Read through the code in the `renderPlot()` and `renderPrint()` reactive expressions. Note the key tasks executed within each.
+4.  Read through the code in the `renderPlot()` and `renderTable()` expressions. Note the key tasks executed within each.
 
 5.  Based on your answers to #4, Is there any replication? That is, are any key tasks executed multiple times? Record your group's answers and be ready to report back.
 
@@ -42,7 +42,7 @@ Stop here and let Amanda know that you've finished. We'll regroup and discuss re
 
 7.  For each reactive expression you identify in step #6, identify which output (the histogram or the confidence interval) should *observe* that expression and update when it is changed?
 
-8.  Use your answers to steps #6-7 to reorganize the server-side code for this Shiny app. (You don't need to change the inputs!) To do this, first create any reactive expressions. Next, adapt the `renderPlot()` and `renderPrint()` chunks to use your reactive expressions. Remember to run your app regularly to help pinpoint bugs.
+8.  Use your answers to steps #6-7 to reorganize the server-side code for this Shiny app. (You don't need to change the inputs!) To do this, first create any reactive expressions. Next, adapt the `renderPlot()` and `renderTable()` chunks to use your reactive expressions. Remember to run your app regularly to help pinpoint bugs.
 
 9.  Compare and contrast the performance and readability of the revised app's code to the original "non-modularized" version.
 
@@ -56,10 +56,10 @@ Stop here and let Amanda know that you've finished.
 
 Return to the app from Friday: your own version, or paste in [`v2-filter/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v2-filter/app.R) (**Copy raw file**, then paste over your `app.R`).
 
-9. The `filter(industry %in% input$industry)` code is written twice. Create a reactive expression called `filtered()` and use it in both plots.
-10. Add `req(input$industry)` as the first line of `filtered()`. Uncheck every industry. What changed?
-11. Add a `textOutput("n_respondents")` that says "Showing 7,003 respondents", using `filtered()`. (Hint: `paste("Showing", scales::comma(nrow(filtered())), "respondents")`.)
-12. Add a table of the filtered data: `DT::dataTableOutput("data")` in the UI and `DT::renderDataTable({ filtered() })` in the server.
+10. The `filter(industry %in% input$industry)` code is written twice. Create a reactive expression called `filtered()` and use it in both plots.
+11. Add `req(input$industry)` as the first line of `filtered()`. Uncheck every industry. What changed?
+12. Add a `textOutput("n_respondents")` that says "Showing 7,003 respondents", using `filtered()`. (Hint: `paste("Showing", scales::comma(nrow(filtered())), "respondents")`.)
+13. Add a table of the filtered data: `DT::dataTableOutput("data")` in the UI and `DT::renderDataTable({ filtered() })` in the server.
 
 The finished version is [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R).
 
@@ -69,10 +69,10 @@ The finished version is [`v3-reactive/app.R`](https://github.com/stat220-f26/sta
 
 Start from your `v3` app, or [`v3-reactive/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v3-reactive/app.R). The finished version for today is [`v4-layout/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v4-layout/app.R) (try to build it yourself first!).
 
-13. Move the inputs into a `sidebarPanel()` and the outputs into a `mainPanel()`, inside `sidebarLayout()`.
-14. Put each plot, and the data table, on its own tab (`tabsetPanel()` and `tabPanel()`).
-15. Give every input a plain-language label (not `xcol`!), and add axis labels and titles to the plots.
-16. Add a fourth tab with a line plot of the *average* salary by `education`, with one line for each selected industry.
+14. Move the inputs into a `sidebarPanel()` and the outputs into a `mainPanel()`, inside `sidebarLayout()`.
+15. Put each plot, and the data table, on its own tab (`tabsetPanel()` and `tabPanel()`).
+16. Give every input a plain-language label (not `xcol`!), and add axis labels and titles to the plots.
+17. Add a fourth tab with a line plot of the *average* salary by `education`, with one line for each selected industry.
 
 ::: callout-tip
 ## Hint
@@ -80,7 +80,7 @@ Start from your `v3` app, or [`v3-reactive/app.R`](https://github.com/stat220-f2
 `group_by(industry, education) |> summarize(mean_salary = mean(annual_salary))`, then `geom_line()` with `group = industry`. Don't forget to use `filtered()`!
 :::
 
-17. (If time) 25 checkboxes make the sidebar very long. Can you replace them with a `selectInput(..., multiple = TRUE)`?
+18. (If time) 25 checkboxes make the sidebar very long. Can you replace them with a `selectInput(..., multiple = TRUE)`?
 
 # For Wednesday
 

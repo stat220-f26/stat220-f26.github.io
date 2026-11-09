@@ -1,21 +1,24 @@
-# v4: layout (tabs), theme, and a data/ folder -------------------------------
-# Run data-prep.R first. Keep app.R, data/ and nothing else in this folder:
-# the whole folder is what gets deployed.
+# v4: layout (sidebar + tabs) ---------------------------------------------------
 
 library(shiny)
 library(tidyverse)
 
-manager_survey <- read_rds("data/manager-survey.rds")
+manager_survey <- read_rds("https://github.com/stat220-f26/stat220-f26.github.io/raw/refs/heads/main/slides/23/manager-survey-app/manager-survey-processed.rds") |>
+  select(
+    age = how_old_are_you,
+    industry = industry_other,
+    education = highest_level_of_education_completed,
+    gender,
+    annual_salary
+  ) |>
+  filter(annual_salary < 500000)
 
 industry_choices <- manager_survey |>
   distinct(industry) |>
   arrange(industry) |>
   pull(industry)
 
-thematic::thematic_shiny()   # make the plots match the app theme
-
 ui <- fluidPage(
-  theme = bslib::bs_theme(bootswatch = "flatly"),
   titlePanel("Ask a Manager"),
   sidebarLayout(
     sidebarPanel(
