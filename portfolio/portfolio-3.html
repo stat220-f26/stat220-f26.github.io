@@ -431,13 +431,12 @@ ul.task-list li input[type="checkbox"] {
 <ul class="task-list">
 <li><label><input type="checkbox">Include a published URL</label>
 <ul>
-<li><label><input type="checkbox">The shiny app has at least two types of interactivity included, and the README includes a thoughtful discussion of why the interactivity helps</label></li>
 <li>I recommend using <a href="https://quarto.org/docs/publishing/posit-connect-cloud.html#publish-command">posit connect cloud</a> but you could also consider <a href="https://quarto.org/docs/publishing/github-pages.html">github pages</a>. If you have a personal website you want to publish to, that’s great too! Please include a URL in your README.md file so I can find your report when grading</li>
 <li>There are lots of reasons you might not want the world to know that you are enrolled in this class, and this is one of your rights under FERPA. If you’re not comfortable including your name, you don’t have to! Your public document can be authored by “Student” (which has a <a href="https://www.science.org/doi/10.1126/science.351.6280.1406">history</a> of being used in statistics).</li>
 </ul></li>
-<li><label><input type="checkbox">High degree of technical</label>
+<li><label><input type="checkbox">High degree of technical proficiency. The README includes a thoughtful discussion of why the interactivity helps</label>
 <ul class="task-list">
-<li><label><input type="checkbox">Is a shiny app with at least two interactive components</label></li>
+<li><label><input type="checkbox">Is a shiny app with at least two distinct interactive components</label></li>
 <li><label><input type="checkbox">If not shiny, goes substantially beyond the plotly/leaflet/DT that we covered in class</label></li>
 </ul></li>
 <li><label><input type="checkbox">Meet high submission quality standards</label>
@@ -549,7 +548,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/stat220-f26\.github\.io\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
