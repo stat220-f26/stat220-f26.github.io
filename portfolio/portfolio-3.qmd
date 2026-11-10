@@ -42,12 +42,12 @@ A **successful** project will:
 
 An **excellent** project will meet all of the requirements for a successful project, plus
 
+
 - [ ] Include a published URL
-    - [ ] The shiny app has at least two types of interactivity included, and the README includes a thoughtful discussion of why the interactivity helps 
     - I recommend using [posit connect cloud](https://quarto.org/docs/publishing/posit-connect-cloud.html#publish-command) but you could also consider [github pages](https://quarto.org/docs/publishing/github-pages.html). If you have a personal website you want to publish to, that's great too! Please include a URL in your README.md file so I can find your report when grading
     -   There are lots of reasons you might not want the world to know that you are enrolled in this class, and this is one of your rights under FERPA. If you're not comfortable including your name, you don't have to! Your public document can be authored by "Student" (which has a [history](https://www.science.org/doi/10.1126/science.351.6280.1406) of being used in statistics).
-- [ ] High degree of technical
-    - [ ] Is a shiny app with at least two interactive components
+- [ ] High degree of technical proficiency. The README includes a thoughtful discussion of why the interactivity helps 
+    - [ ] Is a shiny app with at least two distinct interactive components
     - [ ] If not shiny, goes substantially beyond the plotly/leaflet/DT that we covered in class
 - [ ] Meet high submission quality standards
     - [ ] No grammatical mistakes, spelling mistakes, or typos
