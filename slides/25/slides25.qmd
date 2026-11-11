@@ -1,5 +1,5 @@
 ---
-title: "Collaborating on <br>GitHub + <br>Shiny Design"
+title: "Shiny: Theming + Deploying"
 subtitle: Day 25
 title-slide-attributes:
   data-background-image: ../img/shiny-logo.png
@@ -39,62 +39,13 @@ slides_theme = theme_minimal(
 theme_set(slides_theme)
 ```
 
-## GitHub collaboration activity
+## Group Contract
 
-When you and your teammates work on the lines of code within a document and both try to push your changes, you will run into issues.
+```{r}
+#| echo: false
 
-Merge conflicts happen when you merge branches that have competing changes, and Git needs your help to decide which changes to incorporate in the final merge.
-
-Our first task today is to walk you through a merge conflict!
-
-## Git review
-
--   Pushing to a repo replaces the code on GitHub with the code you have on your computer.
--   If a collaborator has made a change to your repo and pushed it to your collaborative GitHub repository, GitHub will stop you from pushing your changes to the repo because this could overwrite your collaborator's work!
--   So you need to explicitly "merge" your collaborator's work before you can **push**.
--   If your and your collaborator's changes are in different files or in different parts of the same file, git merges the work for you automatically when you **pull**.
--   If you both changed the same part of a file, git will produce a **merge conflict** because it doesn't know how which change you want to keep and which change you want to overwrite.
-
-## Merge conflicts {.smaller}
-
-::::: {.columns}
-
-::: {.column width="50%"}
-
-```text
-<<<<<<< HEAD 
-
-See also: [dplyr documentation](https://dplyr.tidyverse.org/)   
-
-======= 
-
-See also [ggplot2 documentation](https://ggplot2.tidyverse.org/)  
-
->>>>>>> some1alpha2numeric3string4
+countdown::countdown(6)
 ```
-
-:::
-
-::: {.column width="50%" .nonincremental}
-
-- The `===` separate *your* changes (top) from *their* changes (bottom).
-- Note that on top you see the word `HEAD`, which indicates that these are your changes.
-- And at the bottom you see `some1alpha2numeric3string4`. This is the **hash** (a unique identifier) of the commit your collaborator made with the conflicting change.
-- Your job is to *reconcile* the changes: edit the file so that it incorporates the best of both versions and delete the `<<<`, `===`, and `>>>` lines.
-- Then you can stage and commit the result.
-
-:::
-
-:::::
-
-## Setup
-
-::: {.task .nonincremental}
-- Clone the `day25-yourgroup` repo and open `app.R`
-- Assign the numbers 1, 2, and 3 to each team member. If your team has fewer than 3 people, some will need to have multiple numbers
-- If your partner(s) aren't here and you are currently a group of 1, join up with a group of 2 (Amanda will add you to their repo)
-- Then, follow the instructions in the activity file to cause and then resolve merge conflicts
-:::
 
 ## Shiny: warm-up {.smaller}
 
@@ -120,195 +71,19 @@ With the folks around you, discuss:
 countdown::countdown(6)
 ```
 
-## Your turn
+## Today
 
-::: {.task .nonincremental}
-Choose one person to do the following in your repo: 
-
-- Move the initial data preparation code to an R **script** called `data-prep.R` in the home folder
-- Write the cleaned dataset to a CSV or .Rds file in a `data/` folder within the `app` folder
-    + `write_rds(manager_survey, "/data/manager-survey.rds")`
-- In the `app.R` file, load the data with `read_csv`
-    + `manager_survey <- read_rds("data/manager-survey.rds")`
+::: {.nonincremental}
+1. **Theming:** make it yours 
+2. **Project structure:** an app that can be deployed 
+3. **Deploying** to shinyapps.io 
+4. Work time: **sketch due today**, Portfolio 3 due Friday
 :::
 
-```{r}
-#| echo: false
-countdown::countdown(5)
-```
+. . .
 
-# Layouts {.maize}
+Start from your `v4` app (or [`v4-layout/app.R`](https://github.com/stat220-f26/stat220-f26.github.io/blob/main/files/apps/v4-layout/app.R)) 
 
-## Page with sidebar
-
-:::: {.columns}
-
-::: {.column width="40%"}
-```{r}
-#| eval: false
-
-fluidPage(
-  titlePanel(
-    # app title/description
-  ),
-  sidebarLayout(
-    sidebarPanel(
-      # inputs
-    ),
-    mainPanel(
-      # outputs
-    )
-  )
-)
-```
-:::
-
-
-::: {.column width="60%"}
-![](../img/shiny-sidebar.png)
-:::
-::::
-
-## Multi-row
-
-:::: {.columns}
-
-::: {.column width="40%"}
-```{r}
-#| eval: false
-
-fluidPage(
-  fluidRow(
-    column(4, 
-      ...
-    ),
-    column(8, 
-      ...
-    )
-  ),
-  fluidRow(
-    column(6, 
-      ...
-    ),
-    column(6, 
-      ...
-    )
-  )
-)
-```
-:::
-
-
-::: {.column width="60%"}
-![](../img/shiny-multirow.png)
-:::
-::::
-
-## Multi-page: Tabsets
-
-:::: {.columns}
-
-::: {.column width="60%"}
-```{r}
-#| eval: false
-
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      textOutput("panel")
-    ),
-    mainPanel(
-      tabsetPanel(
-        id = "tabset",
-        tabPanel("panel 1", "one"),
-        tabPanel("panel 2", "two"),
-        tabPanel("panel 3", "three")
-      )
-    )
-  )
-)
-server <- function(input, output, session) {
-  output$panel <- renderText({
-    paste("Current panel: ", input$tabset)
-  })
-}
-```
-:::
-
-
-::: {.column width="40%"}
-![](../img/shiny-tabset-input-1.png)
-:::
-::::
-
-
-## Multi-page: nav list
-
-:::: {.columns}
-
-::: {.column width="50%"}
-```{r}
-#| eval: false
-
-ui <- fluidPage(
-  navlistPanel(
-    id = "tabset",
-    "Heading 1",
-    tabPanel("panel 1", "Panel one contents"),
-    "Heading 2",
-    tabPanel("panel 2", "Panel two contents"),
-    tabPanel("panel 3", "Panel three contents")
-  )
-)
-```
-:::
-
-
-::: {.column width="50%"}
-![](../img/shiny-navlistPanel.png)
-:::
-::::
-
-
-## Multi-page: nav bar
-
-:::: {.columns}
-
-::: {.column width="50%"}
-```{r}
-#| eval: false
-
-ui <- navbarPage(
-  "Page title",   
-  tabPanel("panel 1", "one"),
-  tabPanel("panel 2", "two"),
-  tabPanel("panel 3", "three"),
-  navbarMenu("subpanels", 
-    tabPanel("panel 4a", "four-a"),
-    tabPanel("panel 4b", "four-b"),
-    tabPanel("panel 4c", "four-c")
-  )
-)
-```
-:::
-
-
-::: {.column width="50%"}
-![](../img/shiny-navbarPage.png)
-:::
-::::
-
-## Your turn
-
-::: {.task .nonincremental}
-(1 per group) Reorganize the app so that the two graphs show up on different panels, tabsets, or pages in a navlist. Commit and push the changes so everybody has the new version.
-:::
-
-```{r}
-#| echo: false
-
-countdown::countdown(5)
-```
 
 # Theming {.maize}
 
@@ -319,7 +94,8 @@ countdown::countdown(5)
 
 
 fluidPage(
-  theme = bslib::bs_theme(...)
+  theme = bslib::bs_theme(bootswatch = "flatly"),
+  ...
 )
 ```
 
@@ -366,32 +142,145 @@ Add `theme = bslib::bs_theme()` to your `ui()` function, and `bslib::bs_themer()
 
 ![](../img/bslib-themer.gif)
 
-## Your turn
+## Theming and accessibility
+
+::: {.nonincremental}
+- Is there enough **contrast** between text and background? (Light text on a light background is the most common problem.)
+- Don't rely on color alone to carry meaning (use labels, shapes, or a colorblind-friendly palette)
+- Is the font big enough to read from a projector?
+:::
+
+## Your turn: theme
 
 ::: {.task .nonincremental}
-One person per group should: 
-
-- Add a custom theme to the AskAManager app
-- Update the ggplot themes to match
-
-Run the app, commit, and push so everybody has the updated version.
+1. Add a `bootswatch` theme to your app, or customize with `bs_themer()`
+2. Add `thematic::thematic_shiny()` and check that the plots match
+3. Check the contrast and the font sizes. Would someone with low vision be able to read your app?
 :::
 
 ```{r}
 #| echo: false
-countdown::countdown(4)
+countdown(10)
 ```
 
-## Deploying an app {.smaller}
+
+# Project structure {.maize}
+
+## A deployable app lives in a folder
+
+```
+my-app/
+  app.R            <- the app
+  data/
+    manager-survey.rds
+```
+
+- The **whole folder** is deployed, so every file the app needs must be in it
+- Only one `app.R`, and no other `.R` or `.qmd` files with a `ui` and `server`
+- **Prepare your data separately** (`data-prep.R`), save it to `data/`, and read it in the app with a **relative path**
+
+## Data prep script
+
+```{r}
+#| eval: false
+
+# data-prep.R: run this once, NOT inside the app
+library(tidyverse)
+
+manager_survey <- read_rds("https://.../manager-survey-processed.rds") |>
+  select(...) |>
+  filter(annual_salary < 500000)
+
+write_rds(manager_survey, "data/manager-survey.rds")
+```
+
+```{r}
+#| eval: false
+
+# app.R
+manager_survey <- read_rds("data/manager-survey.rds")   # relative path!
+```
+
+`"/data/manager-survey.rds"` (with the leading `/`) means the *root of your computer*, and will fail.
+
+## The same idea for your whole project repo
+
+A repo that someone else can navigate looks like:
+
+```
+my-project/
+  README.md          <- link to the published project, what's where
+  data-prep.R        <- gets/cleans the data (scripts, in order)
+  data/              <- the cleaned data
+  app/               <- the shiny app (a deployable folder)
+    app.R
+    data/
+  report.qmd         <- the written report, if you have one
+```
+
+- Clear file names ("analysis-final-v2-REAL.R" is not one)
+- No leftover files; the README says which file to open first
+
+## Your turn: restructure
+
+::: {.task .nonincremental}
+1. Make a new folder for the app, with a copy of your `app.R`
+2. Move the data-preparation code into `data-prep.R` (in the folder), run it, and check that `data/manager-survey.rds` exists
+3. Read the saved data in `app.R` with a relative path
+4. Run the app from this folder. Does it still work?
+:::
+
+```{r}
+#| echo: false
+countdown(5)
+```
+
+# Deploying {.maize}
+
+## Where can an app live?
+
+- A Shiny app needs **R running behind it**, so it can't be a static website (unlike a Quarto page)
+- Posit connect cloud: A free account gives you 5 apps and a limited number of active hours per month
+- Your app is **public**. Don't deploy anything with data that you don't have permission to share
+
+## Publishing from RStudio
 
 ::: {.nonincremental}
-- Shiny apps need to be "connected" to RStudio or a remote RStudio server
+1. Open `app.R` and click the blue **Publish** button at the top right of the editor
+2. It might prompt you to connect a publishing account. Click **posit connect cloud**. 
+    - Otherwise, click "add new account"
+3. Check that `app.R` **and** `data/manager-survey.rds` are ticked, and give the app a title
+4. Click **Publish** and wait 
+5. Copy the URL and test it in a **private window**
+:::
 
-- You can deploy shiny apps online
-    + using Posit's cloud server (free/fee) - https://www.shinyapps.io/
-        - ["Getting started"](https://docs.posit.co/shinyapps.io/guide/getting_started/) guide will walk you through connecting RStudio to your shinyapps.io account
-        - note: there is also now an option to deploy via Connect Cloud from your github. Feel free to try it!
-    + creating a shiny server
+## When it fails
 
-- Your app and files should be in their own **folder** and the entire folder is what you "deploy". You do *not* want multiple `app.R` or `.Rmd` files in that folder! 
+::: {.nonincremental}
+- Read the **deployment log** (the Deploy tab in RStudio) from the bottom up
+- *"file not found"*: the data file is not in the folder, or the path is wrong (leading `/`, or absolute like `/Users/...`)
+- *"there is no package called..."*: the app uses a package that is only loaded in your session. Put every `library()` call in `app.R`
+- Works on your laptop but not online? Use a relative path, and don't read from your Desktop or Downloads folder
+- The app takes a while to wake up the first time (and "sleeps" when no one has used it for a bit)
+:::
+
+## Your turn: deploy
+
+::: {.task .nonincremental}
+1. Deploy your app to posit connect cloud
+2. Open the URL in a private window and test every input and tab
+3. Add the URL to your README (and share it with someone near you to test!)
+:::
+
+```{r}
+#| echo: false
+countdown(15)
+```
+
+## Rest of class: work time
+
+::: {.nonincremental}
+- **Final project sketch** due today: see the [final project page](https://stat220-f26.github.io/portfolio/final.html)
+- **Portfolio 3** (add interactivity to an earlier project) is due Friday. It needs *at least two* interactive components, and a published shiny app on shinyapps.io is the way to an "excellent"
+- Ask for help with deployment now, not Thursday night!
 :::
