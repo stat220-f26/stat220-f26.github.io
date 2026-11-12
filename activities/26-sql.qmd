@@ -8,16 +8,20 @@ library(mdsr) # for connecting to database
 library(DBI) # database tools
 ```
 
-# Warm Up 
+# Warm Up
 
-Using `nycflights23::flights`, answer the following using {dplyr} code: 
+Using `nycflights23::flights`, answer the following using {dplyr} code:
 
-- How many flights are in this dataset? 
+- How many flights are in this dataset?
 - How many flights flew to MSP from JFK in 2023?
 - What was the average flight delay for MSP flights in Sept 2023?
 
 ```{r}
 nycflights23::flights
+```
+
+```{r}
+# your code here
 ```
 
 # Intro to SQL
@@ -31,19 +35,27 @@ db <- dbConnect_scidb(dbname = "imdb")
 
 ```{r}
 #| eval: false
-db %>%
-  dbGetQuery("SELECT * FROM kind_type
-             LIMIT 0,10;")
+dbGetQuery(db, "SELECT * FROM kind_type
+                LIMIT 0,10;")
 ```
 
 What `kind_type` corresponds to movies?
 
+::: callout-note
+## Be kind to the server
+
+This is a shared server that everyone in class is using. Always include a `LIMIT` while you are exploring, and never run `SELECT * FROM` a big table without one.
+:::
 
 ## Your turn: simple queries
 
-1.  Find your favorite movie in the `title` table
-2. Find [Viola Davis](https://www.imdb.com/name/nm0205626/?ref_=nv_sr_1) in the `name` table 
-3.  Make note of Viola Davis's `person_id` 
+1. Find your favorite movie in the `title` table
+2. Find [Viola Davis](https://www.imdb.com/name/nm0205626/?ref_=nv_sr_1) in the `name` table (names are stored as "Last, First")
+3. Make note of Viola Davis's `id`. You may find more than one row: write down all of them
+
+```{r}
+# your code here
+```
 
 ## Your turn: finding data info
 
@@ -55,12 +67,71 @@ dbListTables(db)
 dbListFields(db, "title")
 ```
 
+```{r}
+# your code here
+```
+
 ## Your turn: `JOIN`ing Viola Davis
 
-1. Find all the rows in `cast_info` that correspond to Viola Davis as an actress
+1. Look in `cast_info` for each of the Viola Davis `id`s you found (in `cast_info` the column is called `person_id`). Which `id` has rows?
 
-2. Add the names of the characters she played by `JOIN`ing the `char_name` table
+2. Keep only her rows as an actress: `role_id = 2`. (`role_type` is the lookup table for `role_id`, like `kind_type` is for `kind_id`.)
 
-## Your turn: full filmography
+3. Add the names of the characters she played by `JOIN`ing the `char_name` table (`person_role_id` in `cast_info` matches `id` in `char_name`)
 
-Find Viola Davis’s full filmography, in chronological order. Include each movie’s `title`, `production_year`, and the `name` of the character that she played.
+```{r}
+# your code here
+```
+
+## SQL chunks
+
+You can also write SQL in its own chunk, instead of in `dbGetQuery()`. The chunk needs to know which connection to use, and options in a SQL chunk start with `--|`:
+
+````markdown
+```{{sql}}
+--| connection: db
+SELECT * FROM kind_type LIMIT 0,3;
+```
+````
+
+Write your filmography query in a SQL chunk. (Add `--| output.var: filmography` if you want the result as an R data frame.)
+
+::: callout-tip
+## Hint
+
+Copy the SQL chunk above into your document, delete the `SELECT` line, and write your query in its place. The chunk only runs after `db` exists, so run your connection chunk first.
+:::
+
+# `COUNT` and `GROUP BY`
+
+`COUNT(*)` counts rows, and `GROUP BY` gives one row per group (like `group_by()` + `summarize()`):
+
+```{r}
+#| eval: false
+dbGetQuery(db,
+"SELECT production_year, COUNT(*) AS n_movies
+ FROM title
+ WHERE kind_id = 1 AND production_year BETWEEN 2000 AND 2020
+ GROUP BY production_year
+ ORDER BY n_movies DESC
+ LIMIT 0,5;")
+```
+
+(The busiest year in this range is 2016, with 59,702 movies.) Every column in `SELECT` that is not a summary must also be in `GROUP BY`.
+
+## Your turn
+
+1. How many people in the `name` table have `gender = 'f'`?
+
+2. For Viola Davis, how many credits as an actress does she have in each `kind_id`? (Check: `kind_id` 1, movies, should be 51. Why is that a bit more than the number of rows in your filmography?)
+
+3. *If you have time:* in the `title` table, find the average `production_year` for each `kind_id`. Which kind of title is the oldest, on average?
+
+```{r}
+# your code here
+```
+
+```{r}
+#| eval: false
+dbDisconnect(db)
+```

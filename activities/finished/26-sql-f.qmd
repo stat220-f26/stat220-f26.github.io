@@ -1,0 +1,312 @@
+---
+title: "26: SQL (answer key)"
+---
+
+```{r}
+library(tidyverse)
+library(nycflights23)
+```
+
+::: callout-note
+## About this key
+
+Queries that need the database are shown but not run (`eval: false`), and the output underneath each one is pasted from a real run of the query. The warm-up runs live. Connect first with `db <- dbConnect_scidb(dbname = "imdb")` from the `mdsr` package.
+:::
+
+# Warm Up
+
+`nycflights23` only has flights *from* New York, so "MSP flights" means flights *to* MSP.
+
+```{r}
+# How many flights?
+nrow(flights)
+
+# JFK to MSP
+flights |>
+  filter(origin == "JFK", dest == "MSP") |>
+  nrow()
+
+# Average delay of MSP flights in September
+flights |>
+  filter(dest == "MSP", month == 9) |>
+  summarize(
+    avg_dep_delay = mean(dep_delay, na.rm = TRUE),
+    avg_arr_delay = mean(arr_delay, na.rm = TRUE)
+  )
+```
+
+"Flight delay" is ambiguous. Flights to MSP in September leave about 15 minutes late on average, but arrive on time (the average arrival delay is slightly negative). Either answer is fine if the student says which one they used, and remembers `na.rm = TRUE`.
+
+# Intro to SQL
+
+## Set up the database connection
+
+```{r}
+#| eval: false
+library(mdsr)
+library(DBI)
+db <- dbConnect_scidb(dbname = "imdb")
+
+dbGetQuery(db, "SELECT * FROM kind_type
+                LIMIT 0,10;")
+```
+
+```
+  id           kind
+1  1          movie
+2  2      tv series
+3  3       tv movie
+4  4    video movie
+5  5 tv mini series
+6  6     video game
+7  7        episode
+```
+
+`kind_type` 1 is "movie".
+
+## Simple queries
+
+```{r}
+#| eval: false
+dbGetQuery(db, "SELECT id, title, imdb_index, kind_id, production_year
+                FROM title
+                WHERE title = 'Fences' AND kind_id = 1;")
+```
+
+```
+       id  title imdb_index kind_id production_year
+1 3597614 Fences        III       1            2014
+2 3597615 Fences       <NA>       1            2016
+3 3597617 Fences       <NA>       1              NA
+4 3597612 Fences          I       1            2014
+5 3597609 Fences       <NA>       1            2009
+6 3597616 Fences       <NA>       1            2017
+7 3597613 Fences         II       1            2014
+8 3597611 Fences       <NA>       1            2013
+```
+
+Any title works. Students will probably find several rows for a popular title, so they should add `production_year` or `LIKE` to narrow it down (the 2016 one is the film with Viola Davis).
+
+```{r}
+#| eval: false
+dbGetQuery(db, "SELECT id, name, imdb_index, gender
+                FROM name
+                WHERE name LIKE 'Davis, Viola%';")
+```
+
+```
+       id         name imdb_index gender
+1 2977373 Davis, Viola         II      f
+2 2977372 Davis, Viola          I      f
+3 4273298 Davis, Viola        III   <NA>
+```
+
+There are **three** people named Viola Davis. Names are stored as "Last, First", so `WHERE name = 'Viola Davis'` returns nothing. The `id`s are 2977372, 2977373 and 4273298.
+
+## Finding data info
+
+```{r}
+#| eval: false
+dbListFields(db, "name")
+dbListFields(db, "cast_info")
+dbListFields(db, "char_name")
+```
+
+```
+name:      id, name, imdb_index, imdb_id, gender, name_pcode_cf, name_pcode_nf, surname_pcode, md5sum
+cast_info: id, person_id, movie_id, person_role_id, note, nr_order, role_id
+char_name: id, name, imdb_index, imdb_id, name_pcode_nf, surname_pcode, md5sum
+```
+
+The tables don't share column *names* (all three have an `id`, but they mean different things). They share *values*: `cast_info` is the link table between the others.
+
+| `cast_info` column | matches | Meaning |
+|:--|:--|:--|
+| `person_id` | `name.id` | who |
+| `movie_id` | `title.id` | which title |
+| `person_role_id` | `char_name.id` | which character |
+| `role_id` | `role_type.id` | actor, actress, director, ... |
+
+## `JOIN`ing Viola Davis
+
+1. Which of the three `id`s has rows in `cast_info`?
+
+```{r}
+#| eval: false
+dbGetQuery(db, "SELECT person_id, role_id, COUNT(*) AS n
+                FROM cast_info
+                WHERE person_id IN (2977372, 2977373, 4273298)
+                GROUP BY person_id, role_id;")
+```
+
+```
+  person_id role_id   n
+1   2977372       2 433
+2   2977372       3  32
+3   2977373       2   1
+```
+
+`2977372` is the Viola Davis we want: 433 credits as an actress (`role_id` 2) and 32 as a producer (`role_id` 3). (This uses `GROUP BY`, which students haven't seen yet at this point. They can find it by running the `cast_info` query for each `id` one at a time, with `LIMIT`.)
+
+2. Her rows as an actress:
+
+```{r}
+#| eval: false
+dbGetQuery(db, "SELECT *
+                FROM cast_info
+                WHERE person_id = 2977372 AND role_id = 2
+                LIMIT 0,5;")
+```
+
+```
+        id person_id movie_id person_role_id note nr_order role_id
+1 23147362   2977372  3206068         418310 <NA>       NA       2
+2 23147363   2977372  3206331            637 <NA>       NA       2
+3 23147364   2977372  3206767            637 <NA>       NA       2
+4 23147365   2977372  3208095          29580 <NA>      115       2
+5 23147366   2977372  3210140          29580 <NA>       NA       2
+```
+
+3. The characters she played:
+
+```{r}
+#| eval: false
+dbGetQuery(db, "SELECT cast_info.movie_id, char_name.name AS character_name
+                FROM cast_info
+                JOIN char_name ON char_name.id = cast_info.person_role_id
+                WHERE cast_info.person_id = 2977372 AND cast_info.role_id = 2
+                LIMIT 0,5;")
+```
+
+```
+  movie_id      character_name
+1  3206068   Herself - Nominee
+2  3206331             Herself
+3  3206767             Herself
+4  3208095 Herself - Presenter
+5  3210140 Herself - Presenter
+```
+
+Her first rows here are all appearances as "Herself", not film roles, which is why the next step restricts to movies.
+
+## Full filmography
+
+```{r}
+#| eval: false
+dbGetQuery(db, "SELECT title.title, title.production_year, char_name.name AS role
+                FROM cast_info
+                JOIN title ON title.id = cast_info.movie_id
+                JOIN char_name ON char_name.id = cast_info.person_role_id
+                WHERE cast_info.person_id = 2977372
+                  AND cast_info.role_id = 2
+                  AND title.kind_id = 1
+                ORDER BY title.production_year;")
+```
+
+```
+                                   title production_year           role
+1  The Personal History of Rachel DuPree              NA  Rachel Dupree
+2         Untitled Barbara Jordan Biopic              NA Barbara Jordan
+3        Untitled Harriet Tubman Project              NA Harriet Tubman
+4                  The Substance of Fire            1996          Nurse
+5           Miss Apprehension and Squirt            1998  Sharon Hughes
+6                           Out of Sight            1998        Moselle
+7                                Traffic            2000  Social Worker
+8                         Kate & Leopold            2001    Policewoman
+9                       The Shrink Is In            2001          Robin
+10                        Antwone Fisher            2002        Eva May
+...
+45                             Lila & Eve            2015           Lila
+46                                Custody            2016 Martha Schulman
+47                                 Fences            2016    Rose Maxson
+48                          Suicide Squad            2016  Amanda Waller
+49                                 Widows            2018       Veronica
+```
+
+49 rows. The three projects with no `production_year` (not yet released) come **first**, because MySQL sorts missing values before everything else in `ORDER BY`. Adding `AND title.production_year IS NOT NULL` would drop them. Without `title.kind_id = 1`, the result has hundreds of rows (mostly TV episodes).
+
+## SQL chunks
+
+The same query in a SQL chunk. Options start with `--|`, and `connection` names the R object holding the connection:
+
+````markdown
+```{{sql}}
+--| connection: db
+--| output.var: filmography
+SELECT title.title, title.production_year, char_name.name AS role
+FROM cast_info
+JOIN title ON title.id = cast_info.movie_id
+JOIN char_name ON char_name.id = cast_info.person_role_id
+WHERE cast_info.person_id = 2977372
+  AND cast_info.role_id = 2
+  AND title.kind_id = 1
+ORDER BY title.production_year;
+```
+````
+
+Common mistakes: using `#|` instead of `--|` for the options, or running the chunk before `db` exists.
+
+# `COUNT` and `GROUP BY`
+
+1. How many people in `name` have `gender = 'f'`?
+
+```{r}
+#| eval: false
+dbGetQuery(db, "SELECT COUNT(*) AS n_female
+                FROM name
+                WHERE gender = 'f';")
+```
+
+```
+  n_female
+1  1478977
+```
+
+2. Viola Davis's credits as an actress, by `kind_id`:
+
+```{r}
+#| eval: false
+dbGetQuery(db, "SELECT title.kind_id, COUNT(*) AS n
+                FROM cast_info
+                JOIN title ON title.id = cast_info.movie_id
+                WHERE cast_info.person_id = 2977372 AND cast_info.role_id = 2
+                GROUP BY title.kind_id;")
+```
+
+```
+  kind_id   n
+1       1  51
+2       2   4
+3       3  60
+4       4   5
+5       7 313
+```
+
+Of her 433 credits, 313 are TV episodes (`kind_id` 7) and 60 are TV movies (`kind_id` 3), and only 51 are movies. Many of the others are appearances as herself. There are 51 movie credits but 49 rows in the filmography because 2 of those credits have no character name, so the inner `JOIN` on `char_name` drops them. (A `LEFT JOIN` would keep them, with a missing `role`.)
+
+3. If time: average `production_year` by `kind_id`:
+
+```{r}
+#| eval: false
+dbGetQuery(db, "SELECT kind_id, AVG(production_year) AS avg_year
+                FROM title
+                GROUP BY kind_id
+                ORDER BY avg_year;")
+```
+
+```
+  kind_id  avg_year
+1       1  1987.251
+2       3  1995.327
+3       6  2000.797
+4       2  2001.974
+5       7  2002.773
+6       4  2005.790
+```
+
+Movies (`kind_id` 1) are the oldest on average, at about 1987, and video movies (4) are the newest. There is no `kind_id` 5 (TV mini series) in the output because no rows in `title` have it.
+
+```{r}
+#| eval: false
+dbDisconnect(db)
+```

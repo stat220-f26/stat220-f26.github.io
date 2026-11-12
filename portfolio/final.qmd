@@ -211,14 +211,15 @@ Please upload your slides to [this folder](https://drive.google.com/drive/folder
 
 |           | **Monday (Nov 16)** | **Wednesday (Nov 18)** |
 |-----------|---------------------|------------------------|
-| **9:50**  | tbd | tbd |
-| **10:00** | tbd | tbd |
-| **10:10** | tbd | tbd |
-| **10:20** | tbd | tbd |
-| **10:30** | tbd | tbd |
-| **10:40** | tbd | tbd |
+| **9:50**  | stormy-tulips | snowy-lilacs |
+| **10:00** | foggy-clover | frosty-ferns |
+| **10:10** | cloudy-maples | drizzly-daisies  |
+| **10:20** | thundery-thistles | blizzard-basil |
+| **10:30** | misty-moss | icy-yarrow |
+| **10:40** | sleety-sage | breezy-aspens |
+| **10:50** | gusty-sunflowers | NA |
 
-*(The presentation order will be posted once groups are assigned. We will use the last few minutes of class for catch-up and for finishing the peer feedback form.)* <!-- TODO(Amanda): fill in group names + final slot count; also confirm the slides upload folder above is the F26 folder. -->
+*(The presentation order will be posted once groups are assigned. We will use the last few minutes of class for catch-up and for finishing the peer feedback form.)* 
 
 # FAQs
 
