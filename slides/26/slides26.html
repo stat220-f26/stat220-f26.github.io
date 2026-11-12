@@ -222,7 +222,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_aa3906bf" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_39e9418d" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -233,8 +233,8 @@ Prof Amanda Luby
 </section><section id="nycflights23flights-is-a-subset-of-all-flights-data" class="slide level2"><h2>
 <code>nycflights23::flights</code> is a subset of all flights data</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
-<span id="cb1-2"><a></a>  <span class="fu">select</span>(year) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a></a>  <span class="fu">select</span>(year) <span class="sc">|&gt;</span></span>
 <span id="cb1-3"><a></a>  <span class="fu">distinct</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
@@ -245,7 +245,7 @@ Prof Amanda Luby
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">%&gt;%</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
@@ -257,8 +257,8 @@ Prof Amanda Luby
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a></a>  <span class="fu">select</span>(origin) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a></a>  <span class="fu">select</span>(origin) <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a></a>  <span class="fu">distinct</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
@@ -287,8 +287,8 @@ Prof Amanda Luby
 [4] "tbl_lazy"              "tbl"      </code></pre>
 </section><section id="we-can-access-information-about-flights-with-dplyr-commands" class="slide level2 smaller"><h2>We can access information about <code>flights</code> with {dplyr} commands:</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a></a>  <span class="fu">select</span>(year) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a></a>  <span class="fu">select</span>(year) <span class="sc">|&gt;</span></span>
 <span id="cb10-3"><a></a>  <span class="fu">distinct</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code># Source:   SQL [?? x 1]
@@ -300,7 +300,7 @@ Prof Amanda Luby
 3  2015</code></pre>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>flights <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>flights <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code># Source:   SQL [?? x 1]
 # Database: mysql  [mdsr_public@mdsr.crcbo51tmesf.us-east-2.rds.amazonaws.com:3306/airlines]
@@ -319,8 +319,8 @@ Prof Amanda Luby
 <p><img data-src="../img/sql-images.003.png"></p>
 </section><section id="under-the-hood" class="slide level2"><h2>Under the hood:</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a></a>  <span class="fu">select</span>(origin) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a></a>  <span class="fu">select</span>(origin) <span class="sc">|&gt;</span></span>
 <span id="cb14-3"><a></a>  <span class="fu">distinct</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>is generating the following SQL code:</p>
@@ -385,333 +385,7 @@ Prof Amanda Luby
 8      ACV
 9      ACY
 10     ADK
-11     ADQ
-12     AEX
-13     AGS
-14     AKN
-15     ALB
-16     ALO
-17     AMA
-18     ANC
-19     APN
-20     ART
-21     ASE
-22     ATL
-23     ATW
-24     AUS
-25     AVL
-26     AVP
-27     AZA
-28     AZO
-29     BDL
-30     BET
-31     BFL
-32     BGM
-33     BGR
-34     BHM
-35     BIL
-36     BIS
-37     BJI
-38     BKG
-39     BLI
-40     BMI
-41     BNA
-42     BOI
-43     BOS
-44     BPT
-45     BQK
-46     BQN
-47     BRD
-48     BRO
-49     BRW
-50     BTM
-51     BTR
-52     BTV
-53     BUF
-54     BUR
-55     BWI
-56     BZN
-57     CAE
-58     CAK
-59     CDC
-60     CDV
-61     CEC
-62     CHA
-63     CHO
-64     CHS
-65     CIC
-66     CID
-67     CIU
-68     CLD
-69     CLE
-70     CLL
-71     CLT
-72     CMH
-73     CMI
-74     CMX
-75     CNY
-76     COD
-77     COS
-78     COU
-79     CPR
-80     CRP
-81     CRW
-82     CSG
-83     CVG
-84     CWA
-85     CYS
-86     DAB
-87     DAL
-88     DAY
-89     DBQ
-90     DCA
-91     DEN
-92     DFW
-93     DHN
-94     DIK
-95     DLG
-96     DLH
-97     DRO
-98     DRT
-99     DSM
-100    DTW
-101    DVL
-102    EAU
-103    ECP
-104    EGE
-105    EKO
-106    ELM
-107    ELP
-108    ERI
-109    ESC
-110    EUG
-111    EVV
-112    EWN
-113    EWR
-114    EYW
-115    FAI
-116    FAR
-117    FAT
-118    FAY
-119    FCA
-120    FLG
-121    FLL
-122    FNT
-123    FOE
-124    FSD
-125    FSM
-126    FWA
-127    GCC
-128    GCK
-129    GEG
-130    GFK
-131    GGG
-132    GJT
-133    GNV
-134    GPT
-135    GRB
-136    GRI
-137    GRK
-138    GRR
-139    GSO
-140    GSP
-141    GST
-142    GTF
-143    GTR
-144    GUC
-145    GUM
-146    HDN
-147    HIB
-148    HLN
-149    HNL
-150    HOB
-151    HOU
-152    HPN
-153    HRL
-154    HSV
-155    HYA
-156    HYS
-157    IAD
-158    IAG
-159    IAH
-160    ICT
-161    IDA
-162    ILG
-163    ILM
-164    IMT
-165    IND
-166    INL
-167    IPL
-168    ISN
-169    ISP
-170    ITH
-171    ITO
-172    IYK
-173    JAC
-174    JAN
-175    JAX
-176    JFK
-177    JLN
-178    JMS
-179    JNU
-180    KOA
-181    KTN
-182    LAN
-183    LAR
-184    LAS
-185    LAW
-186    LAX
-187    LBB
-188    LBE
-189    LCH
-190    LEX
-191    LFT
-192    LGA
-193    LGB
-194    LIH
-195    LIT
-196    LMT
-197    LNK
-198    LRD
-199    LSE
-200    LWS
-201    MAF
-202    MBS
-203    MCI
-204    MCN
-205    MCO
-206    MDT
-207    MDW
-208    MEI
-209    MEM
-210    MFE
-211    MFR
-212    MGM
-213    MHK
-214    MHT
-215    MIA
-216    MKE
-217    MKG
-218    MLB
-219    MLI
-220    MLU
-221    MMH
-222    MOB
-223    MOD
-224    MOT
-225    MQT
-226    MRY
-227    MSN
-228    MSO
-229    MSP
-230    MSY
-231    MTJ
-232    MVY
-233    MYR
-234    OAJ
-235    OAK
-236    OGG
-237    OKC
-238    OMA
-239    OME
-240    ONT
-241    ORD
-242    ORF
-243    ORH
-244    OTH
-245    OTZ
-246    PAH
-247    PBG
-248    PBI
-249    PDX
-250    PHF
-251    PHL
-252    PHX
-253    PIA
-254    PIB
-255    PIH
-256    PIT
-257    PLN
-258    PNS
-259    PPG
-260    PSC
-261    PSE
-262    PSG
-263    PSP
-264    PUB
-265    PVD
-266    PWM
-267    RAP
-268    RDD
-269    RDM
-270    RDU
-271    RFD
-272    RHI
-273    RIC
-274    RKS
-275    RNO
-276    ROA
-277    ROC
-278    ROW
-279    RST
-280    RSW
-281    SAF
-282    SAN
-283    SAT
-284    SAV
-285    SBA
-286    SBN
-287    SBP
-288    SCC
-289    SCE
-290    SDF
-291    SEA
-292    SFO
-293    SGF
-294    SGU
-295    SHD
-296    SHV
-297    SIT
-298    SJC
-299    SJT
-300    SJU
-301    SLC
-302    SMF
-303    SMX
-304    SNA
-305    SPI
-306    SPN
-307    SPS
-308    SRQ
-309    STC
-310    STL
-311    STT
-312    STX
-313    SUN
-314    SUX
-315    SWF
-316    SYR
-317    TLH
-318    TOL
-319    TPA
-320    TRI
-321    TTN
-322    TUL
-323    TUS
-324    TVC
-325    TWF
-326    TXK
-327    TYR
-328    TYS
-329    UST
-330    VEL
-331    VLD
-332    VPS
-333    WRG
-334    WYS
-335    XNA
-336    YAK
-337    YUM</code></pre>
+...</code></pre>
 </div>
 </section><section><section id="a-quick-overview-of-sql-commands" class="title-slide slide level1 center"><h1>A quick overview of SQL commands</h1>
 
@@ -724,7 +398,7 @@ Prof Amanda Luby
 </div>
 <p>which means “select everything from the flights dataset”.</p>
 <div class="fragment">
-<p><strong>DO NOT EXECUTE THIS QUERY!</strong> This will cause all 180 million records to be dumped! This will not only crash your computer, but also tie up the server for everyone else.</p>
+<p><strong>DO NOT EXECUTE THIS QUERY!</strong> This will cause all 18 million records to be dumped! This will not only crash your computer, but also tie up the server for everyone else.</p>
 <p>A safe version is:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>SELECT <span class="sc">*</span> FROM flights LIMIT <span class="dv">0</span>,<span class="dv">10</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -746,7 +420,7 @@ Prof Amanda Luby
 5    ABY</code></pre>
 </section><section id="your-turn" class="slide level2"><h2>Your turn</h2>
 <div class="task">
-<p>Run the following code to connect to the imdb database. This data lives in the basement of Bass Hall at Smith College.</p>
+<p>Run the following code to connect to the imdb database. It lives on a shared, read-only server, so please keep your queries small (use <code>LIMIT</code>).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">library</span>(mdsr)</span>
 <span id="cb23-2"><a></a><span class="fu">library</span>(DBI)</span>
@@ -754,15 +428,14 @@ Prof Amanda Luby
 </div>
 <p>Check that your connection works by running the following “query”</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>db <span class="sc">%&gt;%</span></span>
-<span id="cb24-2"><a></a>  <span class="fu">dbGetQuery</span>(<span class="st">"SELECT * FROM kind_type</span></span>
-<span id="cb24-3"><a></a><span class="st">             LIMIT 0,10;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">dbGetQuery</span>(db, <span class="st">"SELECT * FROM kind_type</span></span>
+<span id="cb24-2"><a></a><span class="st">             LIMIT 0,10;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>What <code>kind_type</code> number corresponds to “movies”?</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_e72dec8d" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_0c42d75d" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -775,9 +448,8 @@ Prof Amanda Luby
 <div class="column" style="width:40%;">
 <p><code>kind_type</code> is a “lookup table” for the <code>kind_id</code> variable</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>db <span class="sc">%&gt;%</span></span>
-<span id="cb25-2"><a></a>  <span class="fu">dbGetQuery</span>(<span class="st">"SELECT * FROM kind_type</span></span>
-<span id="cb25-3"><a></a><span class="st">             LIMIT 0,10;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">dbGetQuery</span>(db, <span class="st">"SELECT * FROM kind_type</span></span>
+<span id="cb25-2"><a></a><span class="st">             LIMIT 0,10;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code>  id           kind
 1  1          movie
@@ -790,9 +462,8 @@ Prof Amanda Luby
 </div><div class="column" style="width:60%;">
 <p><code>title</code> has information about “titles” in imdb</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>db <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a></a>  <span class="fu">dbGetQuery</span>(<span class="st">"SELECT * FROM title</span></span>
-<span id="cb27-3"><a></a><span class="st">             LIMIT 0,10;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">dbGetQuery</span>(db, <span class="st">"SELECT * FROM title</span></span>
+<span id="cb27-2"><a></a><span class="st">             LIMIT 0,10;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li class="fragment"><code>id</code></li>
@@ -811,10 +482,9 @@ Prof Amanda Luby
 <p><img data-src="../img/empire-poster.jpg" style="width:80.0%"></p>
 </div><div class="column" style="width:60%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>db <span class="sc">%&gt;%</span></span>
-<span id="cb28-2"><a></a>  <span class="fu">dbGetQuery</span>(<span class="st">"SELECT *</span></span>
-<span id="cb28-3"><a></a><span class="st">              FROM title</span></span>
-<span id="cb28-4"><a></a><span class="st">              WHERE title = 'The Empire Strikes Back';"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">dbGetQuery</span>(db, <span class="st">"SELECT *</span></span>
+<span id="cb28-2"><a></a><span class="st">              FROM title</span></span>
+<span id="cb28-3"><a></a><span class="st">              WHERE title = 'The Empire Strikes Back';"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code>        id                   title imdb_index kind_id production_year  
 1   476823 The Empire Strikes Back       &lt;NA&gt;       7            1980      
@@ -831,11 +501,10 @@ Prof Amanda Luby
 </section><section id="restricting-to-kind_id-1" class="slide level2"><h2>Restricting to <code>kind_id = 1</code>
 </h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>db <span class="sc">%&gt;%</span></span>
-<span id="cb30-2"><a></a>  <span class="fu">dbGetQuery</span>(<span class="st">"SELECT *</span></span>
-<span id="cb30-3"><a></a><span class="st">              FROM title</span></span>
-<span id="cb30-4"><a></a><span class="st">              WHERE title = 'The Empire Strikes Back'</span></span>
-<span id="cb30-5"><a></a><span class="st">                AND kind_id = 1;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">dbGetQuery</span>(db, <span class="st">"SELECT *</span></span>
+<span id="cb30-2"><a></a><span class="st">              FROM title</span></span>
+<span id="cb30-3"><a></a><span class="st">              WHERE title = 'The Empire Strikes Back'</span></span>
+<span id="cb30-4"><a></a><span class="st">                AND kind_id = 1;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code> [1] id              title           imdb_index      kind_id         production_year imdb_id         phonetic_code  
  [8] episode_of_id   season_nr       episode_nr      series_years    md5sum         
@@ -850,11 +519,10 @@ Prof Amanda Luby
 </ul>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>db <span class="sc">%&gt;%</span></span>
-<span id="cb32-2"><a></a>  <span class="fu">dbGetQuery</span>(<span class="st">"SELECT *</span></span>
-<span id="cb32-3"><a></a><span class="st">              FROM title</span></span>
-<span id="cb32-4"><a></a><span class="st">              WHERE title LIKE '%The Empire Strikes Back%'</span></span>
-<span id="cb32-5"><a></a><span class="st">                AND kind_id = 1;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">dbGetQuery</span>(db, <span class="st">"SELECT *</span></span>
+<span id="cb32-2"><a></a><span class="st">              FROM title</span></span>
+<span id="cb32-3"><a></a><span class="st">              WHERE title LIKE '%The Empire Strikes Back%'</span></span>
+<span id="cb32-4"><a></a><span class="st">                AND kind_id = 1;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="fragment">
@@ -866,12 +534,11 @@ Prof Amanda Luby
 <code>ORDER BY</code> is like <code>arrange()</code>
 </h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>db <span class="sc">%&gt;%</span></span>
-<span id="cb34-2"><a></a>  <span class="fu">dbGetQuery</span>(<span class="st">"SELECT title, kind_id, production_year</span></span>
-<span id="cb34-3"><a></a><span class="st">              FROM title</span></span>
-<span id="cb34-4"><a></a><span class="st">              WHERE title LIKE '%The Empire Strikes Back%'</span></span>
-<span id="cb34-5"><a></a><span class="st">                AND kind_id = 1</span></span>
-<span id="cb34-6"><a></a><span class="st">             ORDER BY production_year;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">dbGetQuery</span>(db, <span class="st">"SELECT title, kind_id, production_year</span></span>
+<span id="cb34-2"><a></a><span class="st">              FROM title</span></span>
+<span id="cb34-3"><a></a><span class="st">              WHERE title LIKE '%The Empire Strikes Back%'</span></span>
+<span id="cb34-4"><a></a><span class="st">                AND kind_id = 1</span></span>
+<span id="cb34-5"><a></a><span class="st">             ORDER BY production_year;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code>                                           title kind_id production_year
 1 Star Wars: Episode V - The Empire Strikes Back       1            1980
@@ -881,8 +548,7 @@ Prof Amanda Luby
 <ol type="1">
 <li>Find your favorite movie in the <code>title</code> table</li>
 <li>Find <a href="https://www.imdb.com/name/nm0205626/?ref_=nv_sr_1">Viola Davis</a> in the <code>name</code> table</li>
-<li>Make note of Viola Davis’s <code>id</code>
-</li>
+<li>Make note of Viola Davis’s <code>id</code> (you may find more than one row: write down all of them)</li>
 </ol>
 </div>
 <p><em>Note:</em> The first few rows/columns of the <code>name</code> table look like this:</p>
@@ -896,7 +562,7 @@ Prof Amanda Luby
 7   779            A., Narayana Rao       &lt;NA&gt;      NA      m         A5656</code></pre>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_f991848e" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_984de02b" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -929,7 +595,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_7c8ca37d" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_3b421303" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -940,36 +606,30 @@ Prof Amanda Luby
 </section><section id="finding-cast-info-for-the-empire-strikes-back" class="slide level2"><h2>Finding cast info for <em>The Empire Strikes Back</em>
 </h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>db <span class="sc">%&gt;%</span></span>
-<span id="cb41-2"><a></a>  <span class="fu">dbGetQuery</span>(<span class="st">"SELECT *</span></span>
-<span id="cb41-3"><a></a><span class="st">              FROM cast_info</span></span>
-<span id="cb41-4"><a></a><span class="st">              WHERE movie_id = 4260164;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">dbGetQuery</span>(db,</span>
+<span id="cb41-2"><a></a><span class="st">"SELECT *</span></span>
+<span id="cb41-3"><a></a><span class="st"> FROM cast_info</span></span>
+<span id="cb41-4"><a></a><span class="st"> WHERE movie_id = 4260164</span></span>
+<span id="cb41-5"><a></a><span class="st"> LIMIT 0,10;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<pre><code>          id person_id movie_id person_role_id
-1     456375     64737  4260164          77625
-2     831054    110718  4260164          23193
-3     988117    131244  4260164         149050
-4    1321284    173608  4260164          23193
-5    1838022    240742  4260164         366363
-6    1918455    251152  4260164          23193
-7    1918456    251152  4260164         380517
-8    1918457    251152  4260164           3008
-9    1918458    251152  4260164         380518
-10   2421549    314562  4260164         470037
-11   2460699    320252  4260164          74921
-12   2470089    321439  4260164          23193
-13   2552967    331521  4260164         492966
-14   2577789    335003  4260164          77625
-15   2577790    335003  4260164          23193
-16   2782990    359535  4260164         528429
-17   2823197    363347  4260164         532943
-18   3198645    405084  4260164         586143</code></pre>
+<pre><code>        id person_id movie_id person_role_id         note nr_order role_id
+1   456375     64737  4260164          77625 (uncredited)       NA       1
+2   831054    110718  4260164          23193 (uncredited)       NA       1
+3   988117    131244  4260164         149050         &lt;NA&gt;        8       1
+4  1321284    173608  4260164          23193 (uncredited)       NA       1
+5  1838022    240742  4260164         366363         &lt;NA&gt;       25       1
+6  1918455    251152  4260164          23193 (uncredited)       NA       1
+7  1918456    251152  4260164         380517 (uncredited)       NA       1
+8  1918457    251152  4260164           3008 (uncredited)       NA       1
+9  1918458    251152  4260164         380518 (uncredited)       NA       1
+10 2421549    314562  4260164         470037 (uncredited)       NA       1</code></pre>
+<p>There are 162 rows in all. Each row is one person playing one role in the movie.</p>
 </section><section id="relational-databases" class="slide level2"><h2>Relational databases</h2>
 <p>Most databases contain multiple <em>tables</em> that are linked together via <em>keys</em></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">|&gt;</span></span>
 <span id="cb43-2"><a></a>  <span class="fu">select</span>(origin, dest, arr_delay, sched_arr_time)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 435,352 × 4
@@ -990,10 +650,10 @@ Prof Amanda Luby
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>nycflights23<span class="sc">::</span>airports <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>nycflights23<span class="sc">::</span>airports <span class="sc">|&gt;</span></span>
 <span id="cb45-2"><a></a>  <span class="fu">select</span>(faa, name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,251 × 2
+<pre><code># A tibble: 1,255 × 2
    faa   name                               
    &lt;chr&gt; &lt;chr&gt;                              
  1 AAF   Apalachicola Regional Airport      
@@ -1006,7 +666,7 @@ Prof Amanda Luby
  8 ABY   Southwest Georgia Regional Airport 
  9 ACK   Nantucket Memorial Airport         
 10 ACT   Waco Regional Airport              
-# ℹ 1,241 more rows</code></pre>
+# ℹ 1,245 more rows</code></pre>
 </div>
 </div>
 </div></div>
@@ -1019,20 +679,20 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,351 × 4
-   season castaway_id castaway city         
-    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;        
- 1      1 US0001      Sonja    Walnut Creek 
- 2      1 US0002      B.B.     Mission Hills
- 3      1 US0003      Stacey   San Francisco
- 4      1 US0004      Ramona   Edison       
- 5      1 US0005      Dirk     Spring Green 
- 6      1 US0006      Joel     Sherwood     
- 7      1 US0007      Gretchen Clarksville  
- 8      1 US0008      Greg     Gold Hill    
- 9      1 US0009      Jenna    Franklin     
-10      1 US0010      Gervase  Willingboro  
-# ℹ 1,341 more rows</code></pre>
+<pre><code># A tibble: 1,417 × 4
+   season castaway_id castaway  city 
+    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;
+ 1     50 US0554      Angelina  &lt;NA&gt; 
+ 2     50 US0477      Aubry     &lt;NA&gt; 
+ 3     50 US0682      Charlie   &lt;NA&gt; 
+ 4     50 US0515      Chrissy   &lt;NA&gt; 
+ 5     50 US0550      Christian &lt;NA&gt; 
+ 6     50 US0179      Cirie     &lt;NA&gt; 
+ 7     50 US0277      Coach     &lt;NA&gt; 
+ 8     50 US0031      Colby     &lt;NA&gt; 
+ 9     50 US0666      Dee       &lt;NA&gt; 
+10     50 US0668      Emily     &lt;NA&gt; 
+# ℹ 1,407 more rows</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -1041,20 +701,20 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12,853 × 4
+<pre><code># A tibble: 13,559 × 4
    season episode castaway_id count
     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
- 1      1       1 US0001          2
- 2      1       1 US0002          3
- 3      1       1 US0003          1
- 4      1       1 US0004          2
- 5      1       1 US0005          1
- 6      1       1 US0006          2
- 7      1       1 US0007          1
- 8      1       1 US0008          0
- 9      1       1 US0009          0
-10      1       1 US0010          0
-# ℹ 12,843 more rows</code></pre>
+ 1     49       1 US0734         11
+ 2     49       1 US0735          2
+ 3     49       1 US0736          8
+ 4     49       1 US0737          2
+ 5     49       1 US0738          5
+ 6     49       1 US0739          6
+ 7     49       1 US0740          2
+ 8     49       1 US0741          3
+ 9     49       1 US0742          1
+10     49       1 US0743          4
+# ℹ 13,549 more rows</code></pre>
 </div>
 </div>
 </div></div>
@@ -1085,11 +745,10 @@ Prof Amanda Luby
 </section><section id="joining-cast_info-with-name" class="slide level2"><h2>Joining <code>cast_info</code> with <code>name</code>
 </h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a>db <span class="sc">%&gt;%</span></span>
-<span id="cb52-2"><a></a>  <span class="fu">dbGetQuery</span>(<span class="st">"SELECT name.name, cast_info.role_id, cast_info.id</span></span>
-<span id="cb52-3"><a></a><span class="st">              FROM cast_info </span></span>
-<span id="cb52-4"><a></a><span class="st">              JOIN name ON name.id = cast_info.person_id</span></span>
-<span id="cb52-5"><a></a><span class="st">              WHERE cast_info.movie_id = 4260164;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="fu">dbGetQuery</span>(db, <span class="st">"SELECT name.name, cast_info.role_id, cast_info.id</span></span>
+<span id="cb52-2"><a></a><span class="st">              FROM cast_info </span></span>
+<span id="cb52-3"><a></a><span class="st">              JOIN name ON name.id = cast_info.person_id</span></span>
+<span id="cb52-4"><a></a><span class="st">              WHERE cast_info.movie_id = 4260164;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code>                    name role_id       id
 1          Anderson, Bob       1   456375
@@ -1102,170 +761,86 @@ Prof Amanda Luby
 8      Bonehill, Richard       1  1918457
 9      Bonehill, Richard       1  1918458
 10     Buchanan, Stephen       1  2421549
-11       Bulloch, Jeremy       1  2460699
-12           Bunn, Chris       1  2470089
-13          Bush, Morris       1  2552967
-14   Butterfield, Trevor       1  2577789
-15   Butterfield, Trevor       1  2577790
-16          Cannon, John       1  2782990
-17           Capri, Mark       1  2823197
-18       Chancer, Norman       1  3198645
-19         Clarkin, Tony       1  3489450
-20       Colley, Kenneth       1  3628448
-21       Culver, Michael       1  4076672
-22          Curry, Shaun       1  4111227
-23      Daniels, Anthony       1  4258294
-24           Dew, Martin       1  4746501
-25        Diamond, Peter       1  4778785
-26           Dicks, John       1  4805837
-27          Dowdall, Jim       1  5027304
-28         Duff, Norwich       1  5114468
-29          Durrant, Ian       1  5187916
-30          Durrant, Ian       1  5187917
-31         Edmonds, Mike       1  5297030
-32          Egeland, Tom       1  5329913
-33          Fell, Stuart       1  5751358
-34            Flood, Tom       1  6001245
-35           Flyng, Alan       1  6017235
-36        Ford, Harrison       1  6065250
-37    Frandy, Michael A.       1  6166865
-38       Ginter, Patrick       1  6788995
-39        Glover, Julian       1  6846167
-40        Guinness, Alec       1  7333662
-41          Hamill, Mark       1  7553770
-42          Harris, Alan       1  7693030
-43          Harris, Alan       1  7693031
-44          Harte, Jerry       1  7733886
-45          Hassett, Ray       1  7774220
-46         Henry, Walter       1  7970199
-47          Hollis, John       1  8245152
-48        Jerricho, Paul       1  8943973
-49         Johns, Milton       1  9000588
-50         Johnston, Joe       1  9049926
-51     Jones, James Earl       1  9087548
-52           Jones, Mark       1  9094827
-53        Juritzen, Arve       1  9195011
-54           Klein, Paul       1  9758928
-55         Lawson, Denis       1 10426753
-56           Liston, Ian       1 10815190
-57       Maguire, Oliver       1 11299547
-58  Malcolm, Christopher       1 11350613
-59         Mayhew, Peter       1 11855787
-60        McDiarmid, Ian       1 11959790
-61         McDonald, Mac       1 11964406
-62        McKenzie, Jack       1 12051853
-63      McQuarrie, Ralph       1 12114884
-64           Meek, Steve       1 12158323
-65           Meek, Steve       1 12158324
-66           Meek, Steve       1 12158325
-67           Meek, Steve       1 12158326
-68     Morrison, Temuera       1 12827085
-69          Morse, Ralph       1 12837775
-70          Morse, Ralph       1 12837776
-71          Morse, Ralph       1 12837777
-72          Morton, John       1 12847511
-73     Nelson, C. Andrew       1 13236741
-74     Oldfield, Richard       1 13706977
-75             Oz, Frank       1 13904681
-76        Parsons, Chris       1 14107068
-77        Parsons, Chris       1 14107069
-78        Parsons, Chris       1 14107070
-79       Pierre, Quentin       1 14511803
-80         Prowse, David       1 14856580
-81          Purvis, Jack       1 14907129
-82    Ratzenberger, John       1 15151143
-83         Revill, Clive       1 15334726
-84       Richards, Terry       1 15421244
-85        Robinson, Doug       1 15607513
-86            Roy, Peter       1 15920888
-87     Santiago, Michael       1 16288621
-88         Scobey, Robin       1 16597889
-89       Sheard, Michael       1 16850620
-90       Sidoli, Richard       1 16976970
-91           Smart, Tony       1 17181679
-92          Swaden, Alan       1 17898412
-93       Tucker, Burnell       1 18654677
-94             Webb, Des       1 19549833
-95          Weed, Harold       1 19569076
-96   Williams, Billy Dee       1 19816424
-97       Williams, Treat       1 19861318
-98       Wingreen, Jason       1 19932982
-99    Burleigh, Mercedes       2 22065151
-100      Eaton, Marjorie       2 23714606
-101   English, Stephanie       2 23827497
-102       Fisher, Carrie       2 24118291
-103   Hillkurtz, Tiffany       2 25440840
-104        Hudson, Susie       2 25611329
-105       Kahn, Brigitte       2 26067669
-106        Munroe, Cathy       2 28489278
-107        Munroe, Cathy       2 28489279
-108        Turk, Marolyn       2 32005767
-109           Bloom, Jim       3 33810516
-110 Kazanjian, Howard G.       3 36687048
-111          Kurtz, Gary       3 36955895
-112        Lucas, George       3 37346243
-113       McCallum, Rick       3 37635440
-114        Watts, Robert       3 40487470
-115      Brackett, Leigh       4 41424051
-116     Kasdan, Lawrence       4 43147420
-117        Lucas, George       4 43587592
-118    Suschitzky, Peter       5 47281720
-119       Williams, John       6 48776706
-120          Mollo, John       7 49123496
-121      Kershner, Irvin       8 50730448
-122    Christopher, T.M.       9 52721735
-123         Hirsch, Paul       9 53207706
-124        Lucas, George       9 53493513
-125        Lucas, Marcia       9 53493810
-126         Alsup, Bunny      10 54581789
-127         Arnold, Alan      10 54699066
-128  Barclay, David Alan      10 54843188
-129            Bay, Jane      10 54914313
-130         Butcher, Ron      10 55393183
-131     Calcutt, Stephen      10 55429175
-132           Carey, Des      10 55494970
-133            Coke, Liz      10 55764944
-134            Cook, Ron      10 55826031
-135       Dearlove, Jack      10 56110777
-136      Farrar, Kathryn      10 56531540
-137             Fox, Tim      10 56721146
-138      Ginter, Patrick      10 56962987
-139      Ginter, Patrick      10 56962988
-140          Gordon, Ken      10 57051018
-141      Harley, Barbara      10 57287646
-142         Harris, Alan      10 57296475
-143        Harris, James      10 57299166
-144         Herman, Miki      10 57407191
-145     Larkins, Michael      10 58210103
-146           Laws, Nick      10 58240124
-147         Mann, Pamela      10 58639136
-148       Marshall, Mark      10 58700660
-149          Meek, Steve      10 58918051
-150       Midener, Wendy      10 58996308
-151        Miller, Craig      10 59013965
-152         Morton, John      10 59167531
-153      Mullen, Kathryn      10 59199054
-154       Parsons, Chris      10 59587881
-155          Phipps, Ron      10 59733436
-156        Rawlings, Kay      10 59969850
-157            Roy, Deep      10 60259469
-158         Shaw, Debbie      10 60582998
-159  Wessler, Charles B.      10 61582649
-160        Wing, Kristen      10 61692701
-161          Wolff, Marc      10 61718635
-162     Reynolds, Norman      11 62275936</code></pre>
-</section></section><section><section id="interlude-sql-in-rmarkdown" class="title-slide slide level1 center"><h1>Interlude: SQL in RMarkdown</h1>
+...</code></pre>
+</section></section><section><section id="interlude-sql-in-quarto" class="title-slide slide level1 center"><h1>Interlude: SQL in Quarto</h1>
 
-</section><section id="your-turn-3" class="slide level2 scrollable"><h2>Your turn</h2>
+</section><section id="sql-chunks" class="slide level2"><h2>SQL chunks</h2>
+<p>Instead of wrapping a query in <code>dbGetQuery()</code>, you can write SQL directly in a SQL chunk. First connect in an R chunk (as before), then:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb54-1"><a></a><span class="in">```{sql}</span></span>
+<span id="cb54-2"><a></a><span class="co">--| connection: db</span></span>
+<span id="cb54-3"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> kind_type <span class="kw">LIMIT</span> <span class="dv">0</span>,<span class="dv">3</span>;</span>
+<span id="cb54-4"><a></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li class="fragment">
+<code>connection: db</code> tells the chunk which R object holds your database connection</li>
+<li class="fragment">Options in a SQL chunk start with <code>--|</code> (SQL comments), not <code>#|</code>
+</li>
+<li class="fragment">Add <code>--| output.var: kinds</code> to also save the result as an R data frame called <code>kinds</code>
+</li>
+<li class="fragment">The query is the same, whichever way you run it</li>
+</ul></section><section id="your-turn-3" class="slide level2 scrollable"><h2>Your turn</h2>
 <div class="task">
 <ol type="1">
-<li><p>Find all the rows in <code>cast_info</code> that correspond to Viola Davis as an actress</p></li>
-<li><p>Add the names of the characters she played by <code>JOIN</code>ing the <code>char_name</code> table</p></li>
+<li><p>You found several rows named “Davis, Viola” in <code>name</code>. Which <code>id</code> has rows in <code>cast_info</code> (where it is called <code>person_id</code>)?</p></li>
+<li><p>Keep only her rows as an actress: <code>role_id = 2</code>. (<code>role_type</code> is the lookup table for <code>role_id</code>, like <code>kind_type</code> was for <code>kind_id</code>.)</p></li>
+<li><p>Add the names of the characters she played by <code>JOIN</code>ing the <code>char_name</code> table (<code>person_role_id</code> in <code>cast_info</code> matches <code>id</code> in <code>char_name</code>)</p></li>
 </ol>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_983473fd" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_b77b51d7" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+</div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section><section id="counting-count" class="slide level2"><h2>Counting: <code>COUNT()</code>
+</h2>
+<p><code>COUNT(*)</code> is like <code>n()</code>: it counts rows</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">dbGetQuery</span>(db,</span>
+<span id="cb55-2"><a></a><span class="st">"SELECT COUNT(*) AS n_movies</span></span>
+<span id="cb55-3"><a></a><span class="st"> FROM title</span></span>
+<span id="cb55-4"><a></a><span class="st"> WHERE kind_id = 1;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<pre><code>  n_movies
+1  1061161</code></pre>
+</section><section id="group-by-gives-one-row-per-group" class="slide level2"><h2>
+<code>GROUP BY</code> gives one row per group</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="fu">dbGetQuery</span>(db,</span>
+<span id="cb57-2"><a></a><span class="st">"SELECT production_year, COUNT(*) AS n_movies</span></span>
+<span id="cb57-3"><a></a><span class="st"> FROM title</span></span>
+<span id="cb57-4"><a></a><span class="st"> WHERE kind_id = 1 AND production_year BETWEEN 2000 AND 2020</span></span>
+<span id="cb57-5"><a></a><span class="st"> GROUP BY production_year</span></span>
+<span id="cb57-6"><a></a><span class="st"> ORDER BY n_movies DESC</span></span>
+<span id="cb57-7"><a></a><span class="st"> LIMIT 0,5;"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<pre><code>  production_year n_movies
+1            2016    59702
+2            2014    57983
+3            2015    56561
+4            2013    53855
+5            2017    53459</code></pre>
+<ul>
+<li class="fragment">Like <code>group_by()</code> + <code>summarize()</code>. Other summaries: <code>AVG()</code>, <code>SUM()</code>, <code>MIN()</code>, <code>MAX()</code>
+</li>
+<li class="fragment">
+<code>AS</code> names the new column, and <code>ORDER BY</code> can sort by that name</li>
+<li class="fragment">Every column in <code>SELECT</code> that is <em>not</em> a summary must also be in <code>GROUP BY</code>
+</li>
+</ul></section><section id="your-turn-4" class="slide level2 scrollable"><h2>Your turn</h2>
+<div class="task">
+<ol type="1">
+<li><p>How many people in the <code>name</code> table have <code>gender = 'f'</code>?</p></li>
+<li><p>For Viola Davis, how many credits as an actress does she have in each <code>kind_id</code>? (Check: <code>kind_id</code> 1, movies, should be 51. Why is that a bit more than the 49 rows in your filmography?)</p></li>
+</ol>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_50f4dca0" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -1283,10 +858,7 @@ Prof Amanda Luby
 <li><code>HAVING</code></li>
 <li><code>ORDER BY</code></li>
 <li><code>LIMIT</code></li>
-</ol></section><section id="your-turn-4" class="slide level2"><h2>Your turn</h2>
-<div class="task">
-<p>Find Viola Davis’s full filmography, in chronological order. Include each movie’s <code>title</code>, <code>production_year</code>, and the <code>name</code> of the character that she played.</p>
-</div>
+</ol>
 
 
 </section></section>
