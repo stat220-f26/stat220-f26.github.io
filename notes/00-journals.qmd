@@ -83,3 +83,11 @@ ggplot(tibble(topic = factor(topics, levels = rev(topics))),
 - Day 19 | p28-29: anything confusing or that sparked interest?
 
 - Day 22 | p30-31: Something you've made (in this class or another one) that could be improved with one of the tools that we talked about today
+
+- Day 23 | p32-33: Sketch an improved version of the app
+
+- Day 24 | p32-33: 
+
+- Day 25 | p32-33: 
+
+- Day 26 | No journal entry! 
