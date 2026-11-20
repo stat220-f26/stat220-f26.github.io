@@ -101,6 +101,8 @@ d |>
   opt_row_striping()
 ```
 
+*Note:* You likely ran into issues when working with your final project data that we didn't cover in class, and may have had to do some internet searches or AI prompts to solve them. That's OK! Please make sure to include an "external sources" statement that tells me if/how you used these tools. If your code looks substantially different than what we covered in class and you don't submit such a statement, your group may receive a 10% penalty on the final project, and will be treated as a possible academic integrity violation. This statement can be included in your README, as a separate .md file in your github repo, or be emailed to me separately. 
+
 # Final Project Submission
 
 You should submit your final GitHub repo to gradescope by **noon on Monday, November 23** (the last day of the finals period). I will start by looking at your README.md, which should contain: 
